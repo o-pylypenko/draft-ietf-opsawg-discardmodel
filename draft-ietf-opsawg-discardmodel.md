@@ -225,6 +225,16 @@ discards/no-buffer/:
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
+## Information Model - YANG Module {#infomodel-module}
+
+The "ietf-packet-discard-reporting" module uses the "sx" structure defined in {{!RFC8791}}.
+
+~~~~~~~~~~
+<CODE BEGINS>
+{::include-fold ./yang/ietf-packet-discard-reporting-sx.yang}
+<CODE ENDS>
+~~~~~~~~~~
+
 # Data Model   {#datamodel}
 
 This data model implements the information model defined in {{infomodel}} for the interface and device components.  This is classed as a Network Element model as defined by {{?RFC1157}}.
@@ -236,7 +246,6 @@ There is a direct mapping between the information model components and their dat
 ~~~~~~~~~~
 {::include ./yang/draft-ietf-data-model-tree.txt}
 ~~~~~~~~~~
-
 
 ## Implementation Requirements {#requirements}
 
@@ -348,16 +357,6 @@ The content of this document has benefitted from feedback from JR Rivers, Ronan 
 
 --- back
 
-# Information Model - YANG Module {#infomodel-module}
-
-The "ietf-packet-discard-reporting" yang module uses the "sx" structure defined in {{!RFC8791}}.
-
-~~~~~~~~~~
-<CODE BEGINS>
-{::include ./yang/ietf-packet-discard-reporting-sx.yang}
-<CODE ENDS>
-~~~~~~~~~~
-
 
 ## Where do packets get dropped? {#wheredropped}
 
@@ -365,7 +364,7 @@ Understanding where packets are discarded in a network device is essential for i
 
 Packets ingress on the left and egress on the right:
 
-~~~~~~~~~~
+~~~~~~~~~~ aasvg
 
 
                                                       +----------+
