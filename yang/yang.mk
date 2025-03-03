@@ -15,7 +15,7 @@ else
 endif
 
 YANG=$(wildcard $(YANGDIR)/*.yang)
-STDYANG=$(wildcard $(YANGDIR)/draft-*.yang)
+STDYANG=$(wildcard $(YANGDIR)/ietf-*.yang)
 EXPJSON=$(wildcard $(EXDIR)/*.json)
 TXT=$(patsubst $(YANGDIR)/%.yang,%-tree.txt,$(YANG))
 

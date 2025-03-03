@@ -190,7 +190,7 @@ The hierarchical structure allows for future extension while maintaining backwar
 The following YANG tree diagram shows the complete structure:
 
 ~~~~~~~~~~
-{::include ./yang/draft-ietf-opsawg-discardmodel-tree.txt}
+{::include ./yang/ietf-packet-discard-reporting-sx-tree.txt}
 ~~~~~~~~~~
 
 The corresponding YANG module is defined in {{infomodel-module}}.
@@ -244,7 +244,7 @@ This data model implements the information model defined in {{infomodel}} for th
 There is a direct mapping between the information model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaves.  The following YANG tree diagram shows the complete structure:
 
 ~~~~~~~~~~
-{::include ./yang/draft-ietf-data-model-tree.txt}
+{::include ./yang/ietf-packet-discard-reporting-tree.txt}
 ~~~~~~~~~~
 
 ## Implementation Requirements {#requirements}
@@ -298,7 +298,7 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 ~~~~~~~~~~
 <CODE BEGINS>
-{::include ./yang/ietf-packet-discard-reporting.yang}
+{::include-fold ./yang/ietf-packet-discard-reporting.yang}
 <CODE ENDS>
 ~~~~~~~~~~
 
