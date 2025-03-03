@@ -891,9 +891,6 @@ Table of Contents
 
 6.  Data model - YANG Module
 
-   The "ietf-packet-discard-reporting" yang module uses the "sx"
-   structure defined in [RFC8791].
-
    <CODE BEGINS>
    module ietf-packet-discard-reporting {
      yang-version 1.1;
