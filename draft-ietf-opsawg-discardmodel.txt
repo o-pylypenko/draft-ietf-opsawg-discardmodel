@@ -104,8 +104,6 @@ Table of Contents
 
 1.  Introduction
 
-   ============
-
    The primary function of a network is to transport and deliver packets
    according to service level objectives.  For network operators,
    understanding both where and why packet loss occurs within a network
@@ -165,8 +163,6 @@ Table of Contents
 
 2.  Terminology
 
-   ===========
-
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in
@@ -195,11 +191,11 @@ Table of Contents
 
 3.  Problem Statement
 
-   ================= The fundamental problem for network operators is
-   how to automatically detect when unintended packet loss is occurring
-   and determine the appropriate action to mitigate it.  For any network
-   there are a small set of potential actions that can be taken to
-   mitigate customer impact when unintended packet loss is detected:
+   The fundamental problem for network operators is how to automatically
+   detect when unintended packet loss is occurring and determine the
+   appropriate action to mitigate it.  For any network there are a small
+   set of potential actions that can be taken to mitigate customer
+   impact when unintended packet loss is detected:
 
    1.  Take a problematic device, link, or set of devices and/or links
        out of service.
@@ -244,19 +240,18 @@ Table of Contents
 
 4.  Information Model
 
-   ================= The information model is defined using YANG
-   [RFC6020] with Data Structure Extensions [RFC8791], allowing the
-   model to remain abstract and decoupled from specific implementations
-   in accordance with [RFC3444].  This abstraction supports different
-   data model implementations - for example, in YANG, IPFIX [RFC7011],
-   gMNI [gMNI] or SNMP [RFC1157] - while ensuring consistency across
+   The information model is defined using YANG [RFC6020] with Data
+   Structure Extensions [RFC8791], allowing the model to remain abstract
+   and decoupled from specific implementations in accordance with
+   [RFC3444].  This abstraction supports different data model
+   implementations - for example, in YANG, IPFIX [RFC7011], gMNI [gMNI]
+   or SNMP [RFC1157] - while ensuring consistency across
    implementations.  Using YANG for the information model enables this
    abstraction, leverages the community's familiarity with its syntax,
    and ensures lossless translation to the corresponding YANG data
    model, which is defined in Section 5.
 
 4.1.  Structure
-
 
    The information model defines a hierarchical classification scheme
    for packet discards, which captures where in a device the discards
@@ -573,7 +568,6 @@ Table of Contents
 
 4.2.  Sub-type Definitions
 
-
    discards/policy/:  These are intended discards, meaning packets
       dropped by a device due to a configured policy, including: ACLs,
       traffic policers, Reverse Path Forwarding (RPF) checks, DDoS
@@ -619,12 +613,11 @@ Table of Contents
 
 5.  Data Model
 
-   ========== This data model implements the information model defined
-   in Section 4 for the interface and device components.  This is
-   classed as a Network Element model as defined by [RFC1157].
+   This data model implements the information model defined in Section 4
+   for the interface and device components.  This is classed as a
+   Network Element model as defined by [RFC1157].
 
 5.1.  Structure
-
 
    There is a direct mapping between the information model components
    and their data model implementations, with each component in the
@@ -796,7 +789,6 @@ Table of Contents
 
 5.2.  Implementation Requirements
 
-
    The following requirements apply to the implementation of the data
    model and are intended to ensure consistent implementation across
    different vendors and platforms while allowing for platform-specific
@@ -858,7 +850,6 @@ Table of Contents
 
 5.3.  Usage Examples
 
-
    If all of the requirements are met, a "good" unicast IPv4 packet
    received would increment:
 
@@ -899,8 +890,6 @@ Table of Contents
    *  interface/ingress/discards/policy/l3/rpf/packets
 
 6.  Data model - YANG Module
-
-   ========================
 
    The "ietf-packet-discard-reporting" yang module uses the "sx"
    structure defined in [RFC8791].
@@ -1500,12 +1489,10 @@ Table of Contents
 
 7.  Security Considerations
 
-   ======================= This section discusses security
-   considerations for both the information model and its implementation
-   as a data model.
+   This section discusses security considerations for both the
+   information model and its implementation as a data model.
 
 7.1.  Information Model
-
 
    The information model defined in Appendix A specifies a YANG module
    using [RFC8791] data extensions.  It defines a set of identities,
@@ -1516,7 +1503,6 @@ Table of Contents
    module that need to be considered.
 
 7.2.  Data Model
-
 
    The YANG module specified in Section 6 defines a schema for data with
    data nodes that contain read-only state.  It is designed to be
@@ -1537,8 +1523,6 @@ Table of Contents
 
 8.  IANA Considerations
 
-   ===================
-
    IANA is requested to register the following URI in the "ns"
    subregistry within the "IETF XML Registry" [RFC3688]:
 
@@ -1558,8 +1542,6 @@ Table of Contents
 
 9.  Contributors
 
-   ============
-
    Nadav Chachmon
    Cisco Systems, Inc.
    170 West Tasman Dr.
@@ -1569,8 +1551,8 @@ Table of Contents
 
 10.  Acknowledgments
 
-   =============== The content of this document has benefitted from
-   feedback from JR Rivers, Ronan Waide, Chris DeBruin, and Marcoz Sanz.
+   The content of this document has benefitted from feedback from JR
+   Rivers, Ronan Waide, Chris DeBruin, and Marcoz Sanz.
 
 11.  References
 
@@ -1677,8 +1659,6 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc8446>.
 
 Appendix A.  Information Model - YANG Module
-
-   ===============================
 
    The "ietf-packet-discard-reporting" yang module uses the "sx"
    structure defined in [RFC8791].
@@ -2349,17 +2329,17 @@ Appendix A.  Information Model - YANG Module
 
 A.1.  Where do packets get dropped?
 
-   ============================= Understanding where packets are
-   discarded in a network device is essential for interpreting discard
-   signals and determining appropriate mitigation actions.  Figure 1
-   depicts an example of where and why packets may be discarded in a
-   typical single-ASIC, shared-buffered type device.  While actual
-   device architectures vary between vendors and platforms, with some
-   using multiple ASICs, distributed forwarding, or different buffering
-   architectures, this example illustrates the common processing stages
-   where packets may be dropped.  The logical model for classifying and
-   reporting discards remains consistent regardless of the underlying
-   hardware architecture.
+   Understanding where packets are discarded in a network device is
+   essential for interpreting discard signals and determining
+   appropriate mitigation actions.  Figure 1 depicts an example of where
+   and why packets may be discarded in a typical single-ASIC, shared-
+   buffered type device.  While actual device architectures vary between
+   vendors and platforms, with some using multiple ASICs, distributed
+   forwarding, or different buffering architectures, this example
+   illustrates the common processing stages where packets may be
+   dropped.  The logical model for classifying and reporting discards
+   remains consistent regardless of the underlying hardware
+   architecture.
 
    Packets ingress on the left and egress on the right:
 
@@ -2395,8 +2375,6 @@ Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
    causes and mitigation actions.
 
 Appendix B.  Example signal-to-mitigation action mapping
-
-   ===========================================
 
    The effectiveness of automated mitigation depends on correctly
    mapping discard signals to root causes and appropriate actions.
@@ -2462,9 +2440,9 @@ Appendix B.  Example signal-to-mitigation action mapping
 
 Appendix C.  Implementation Experience
 
-   ========================= This appendix captures practical insights
-   gained from implementing this information model across multiple
-   vendors' platforms, as guidance for future implementers.
+   This appendix captures practical insights gained from implementing
+   this information model across multiple vendors' platforms, as
+   guidance for future implementers.
 
    1.   The number and granularity of discard classes defined in the
         information model represent a compromise.  It aims to provide
