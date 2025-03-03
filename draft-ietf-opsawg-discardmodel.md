@@ -94,12 +94,6 @@ informative:
           author:
                ins: C. Marrow
      RFC2475:
-     RFC8289:
-     RFC6241:
-     RFC8040:
-     RFC6242:
-     RFC8446:
-     RFC8341:
 
 --- abstract
 
@@ -221,7 +215,7 @@ discards/error/local/:
 : These are discards due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
-:  These are discards due to buffer exhaustion, i.e. congestion related discards. These can be tail-drop discards or due to an active queue management algorithm, such as RED {{RED93}} or CODEL {{RFC8289}}.
+:  These are discards due to buffer exhaustion, i.e. congestion related discards. These can be tail-drop discards or due to an active queue management algorithm, such as RED {{RED93}} or CODEL {{?RFC8289}}.
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
