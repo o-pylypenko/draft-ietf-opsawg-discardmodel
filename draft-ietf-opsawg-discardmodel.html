@@ -2451,7 +2451,7 @@ module: ietf-packet-discard-reporting
   |  |  |     +--rw multicast
   |  |  |        +--rw packets?   uint64
   |  |  |        +--rw bytes?     uint64
-  |  |  +--rw qos!
+  |  |  +--rw qos
   |  |     +--rw class* [id]
   |  |        +--rw id         string
   |  |        +--rw packets?   uint64
@@ -2474,16 +2474,16 @@ module: ietf-packet-discard-reporting
   |     |        +--rw bytes?     uint64
   |     +--rw errors
   |     |  +--rw l2
-  |     |  |  +--rw rx!
+  |     |  |  +--rw rx
   |     |  |  |  +--rw frames?          uint32
   |     |  |  |  +--rw crc-error?       uint32
   |     |  |  |  +--rw invalid-mac?     uint32
   |     |  |  |  +--rw invalid-vlan?    uint32
   |     |  |  |  +--rw invalid-frame?   uint32
-  |     |  |  +--rw tx!
+  |     |  |  +--rw tx
   |     |  |     +--rw frames?   uint32
   |     |  +--rw l3
-  |     |  |  +--rw rx!
+  |     |  |  +--rw rx
   |     |  |  |  +--rw packets?          uint32
   |     |  |  |  +--rw checksum-error?   uint32
   |     |  |  |  +--rw mtu-exceeded?     uint32
@@ -2492,7 +2492,7 @@ module: ietf-packet-discard-reporting
   |     |  |  +--rw no-route?        uint32
   |     |  |  +--rw invalid-sid?     uint32
   |     |  |  +--rw invalid-label?   uint32
-  |     |  |  +--rw tx!
+  |     |  |  +--rw tx
   |     |  |     +--rw packets?   uint32
   |     |  +--rw internal
   |     |     +--rw packets?        uint32
@@ -2531,7 +2531,7 @@ module: ietf-packet-discard-reporting
      |  |     +--rw multicast
      |  |        +--rw packets?   uint64
      |  |        +--rw bytes?     uint64
-     |  +--rw qos!
+     |  +--rw qos
      |     +--rw class* [id]
      |        +--rw id         string
      |        +--rw packets?   uint64
@@ -2553,16 +2553,16 @@ module: ietf-packet-discard-reporting
         |        +--rw bytes?     uint64
         +--rw errors
         |  +--rw l2
-        |  |  +--rw rx!
+        |  |  +--rw rx
         |  |  |  +--rw frames?          uint32
         |  |  |  +--rw crc-error?       uint32
         |  |  |  +--rw invalid-mac?     uint32
         |  |  |  +--rw invalid-vlan?    uint32
         |  |  |  +--rw invalid-frame?   uint32
-        |  |  +--rw tx!
+        |  |  +--rw tx
         |  |     +--rw frames?   uint32
         |  +--rw l3
-        |  |  +--rw rx!
+        |  |  +--rw rx
         |  |  |  +--rw packets?          uint32
         |  |  |  +--rw checksum-error?   uint32
         |  |  |  +--rw mtu-exceeded?     uint32
@@ -2571,7 +2571,7 @@ module: ietf-packet-discard-reporting
         |  |  +--rw no-route?        uint32
         |  |  +--rw invalid-sid?     uint32
         |  |  +--rw invalid-label?   uint32
-        |  |  +--rw tx!
+        |  |  +--rw tx
         |  |     +--rw packets?   uint32
         |  +--rw internal
         |     +--rw packets?        uint32
@@ -2720,6 +2720,13 @@ module ietf-packet-discard-reporting {
     "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting";
   prefix plr;
 
+  import ietf-packet-discard-reporting-sx {
+    prefix plr-sx;
+    reference
+      "RFC XXXX: Information and Data Models for Packet Discard
+                 Reporting";
+  }
+
   organization
     "IETF OPSAWG (Operations and Management Area Working Group)";
   contact
@@ -2761,7 +2768,8 @@ module ietf-packet-discard-reporting {
     description
       "Initial revision.";
     reference
-      "RFC XXXX: An Information Model for Packet Discard Reporting";
+      "RFC XXXX: Information and Data Models for Packet Discard
+                 Reporting";
   }
 
   /*
@@ -2770,559 +2778,41 @@ module ietf-packet-discard-reporting {
 
   feature per-interface-stats {
     description
-      "Per-interface statistics are available on this device";
+      "Indicates support of per-interface statistics on this device.\
+                                                                   ";
   }
 
   feature per-device-stats {
     description
-      "Global device statistics are available on this device";
-  }
-
-  /*
-   * Identities
-   */
-
-  identity direction {
-    description
-      "Defines a direction for the reported statistics";
-  }
-
-  identity ingress {
-    base direction;
-    description
-      "Reports statistics for the received from the network packets";
-  }
-
-  identity egress {
-    base direction;
-    description
-      "Reports statistics for the sent to the network packets";
-  }
-
-  identity address-family {
-    description
-      "Defines a type for the address family.";
-  }
-
-  identity ipv4 {
-    base address-family;
-    description
-      "Identity for an IPv4 address family.";
-  }
-
-  identity ipv6 {
-    base address-family;
-    description
-      "Identity for an IPv6 address family.";
-  }
-
-  identity all {
-    base address-family;
-    description
-      "Identity for all address families.";
-  }
-
-  /*
-   * Groupings
-   */
-
-  grouping basic-packets-64 {
-    description
-      "Grouping for 64-bit Layer 3 packet counters.";
-    leaf packets {
-      type uint64;
-      description
-        "Number of Layer 3 packets.";
-    }
-  }
-
-  grouping basic-packets-bytes-64 {
-    description
-      "Grouping for 64-bit Layer 3 packet and byte counters.";
-    uses basic-packets-64;
-    leaf bytes {
-      type uint64;
-      description
-        "Number of Layer 3 bytes.";
-    }
-  }
-
-  grouping basic-frames-64 {
-    description
-      "Grouping for 64-bit Layer 2 frame counters.";
-    leaf frames {
-      type uint64;
-      description
-        "Number of Layer 2 frames.";
-    }
-  }
-
-  grouping basic-frames-bytes-64 {
-    description
-      "Grouping for 64-bit Layer 2 frame and byte counters.";
-    uses basic-frames-64;
-    leaf bytes {
-      type uint64;
-      description
-        "Number of Layer 2 bytes.";
-    }
-  }
-
-  grouping basic-packets-32 {
-    description
-      "Grouping for 32-bit Layer 3 packet counters.";
-    leaf packets {
-      type uint32;
-      description
-        "Number of Layer 3 packets.";
-    }
-  }
-
-  grouping basic-packets-bytes-32 {
-    description
-      "Grouping for 32-bit Layer 3 packet and byte counters.";
-    uses basic-packets-32;
-    leaf bytes {
-      type uint32;
-      description
-        "Number of Layer 3 bytes.";
-    }
-  }
-
-  grouping basic-frames-32 {
-    description
-      "Grouping for 32-bit Layer 2 frame counters.";
-    leaf frames {
-      type uint32;
-      description
-        "Number of Layer 2 frames.";
-    }
-  }
-
-  grouping basic-frames-bytes-32 {
-    description
-      "Grouping for 32-bit Layer 2 frame and byte counters.";
-    uses basic-frames-32;
-    leaf bytes {
-      type uint32;
-      description
-        "Number of Layer 2 bytes.";
-    }
-  }
-
-  grouping l2-traffic {
-    description
-      "Layer 2 traffic counters.";
-    uses basic-frames-bytes-64;
-  }
-
-  grouping ip {
-    description
-      "Layer 3 traffic counters per address family.";
-    list address-family-stat {
-      key "address-family";
-      description
-        "Reports per address family traffic counters.";
-      leaf address-family {
-        type identityref {
-          base address-family;
-        }
-        description
-          "Specifies an address family.";
-      }
-      uses basic-packets-bytes-64;
-      container unicast {
-        description
-          "Unicast traffic counters.";
-        uses basic-packets-bytes-64;
-      }
-      container multicast {
-        description
-          "Multicast traffic counters.";
-        uses basic-packets-bytes-64;
-      }
-    }
-  }
-
-  grouping l3-traffic {
-    description
-      "Layer 3 traffic counters.";
-    uses ip;
-  }
-
-  grouping qos {
-    description
-      "Quality of Service (QoS) traffic counters.";
-    list class {
-      key "id";
-      min-elements 1;
-      description
-        "QoS class traffic counters.";
-      leaf id {
-        type string;
-        description
-          "QoS class identifier.";
-      }
-      uses basic-packets-bytes-64;
-    }
-  }
-
-  grouping traffic {
-    description
-      "All traffic counters.";
-    container l2 {
-      description
-        "Layer 2 traffic counters.";
-      uses l2-traffic;
-    }
-    container l3 {
-      description
-        "Layer 3 traffic counters.";
-      uses l3-traffic;
-    }
-    container qos {
-      presence "Qos reporting is enabled";
-      description
-        "QoS traffic counters.";
-      uses qos;
-    }
-  }
-
-  grouping errors-l2-rx {
-    description
-      "Layer 2 ingress frame error discard counters.";
-    container rx {
-      presence "rx";
-      description
-        "Layer 2 ingress frame receive error discard counters.";
-      leaf frames {
-        type uint32;
-        description
-          "The number of frames discarded due to errors with the \
-                                                    received frame.";
-      }
-      leaf crc-error {
-        type uint32;
-        description
-          "The number of frames discarded due to CRC error.";
-      }
-      leaf invalid-mac {
-        type uint32;
-        description
-          "The number of frames discarded due to an invalid MAC \
-                                                           address.";
-      }
-      leaf invalid-vlan {
-        type uint32;
-        description
-          "The number of frames discarded due to an invalid VLAN tag\
-                                                                  .";
-      }
-      leaf invalid-frame {
-        type uint32;
-        description
-          "The number of invalid frames discarded due to other \
-  reasons, not limited to: malformed frames, frame-size violations.";
-      }
-    }
-  }
-
-  grouping errors-l3-rx {
-    description
-      "Layer 3 ingress packet error discard counters.";
-    container rx {
-      presence "rx";
-      description
-        "Layer 3 ingress packet receive error discard counters.";
-      leaf packets {
-        type uint32;
-        description
-          "The number of Layer 3 packets discarded due to errors in \
-                                               the received packet.";
-      }
-      leaf checksum-error {
-        type uint32;
-        description
-          "The number of received packets discarded due to a \
-                                                    checksum error.";
-      }
-      leaf mtu-exceeded {
-        type uint32;
-        description
-          "The number of received packets discarded due to MTU \
-                                                          exceeded.";
-      }
-      leaf invalid-packet {
-        type uint32;
-        description
-          "The number of invalid packets discarded due to other \
-reasons, not limited to: invalid packet length, invalid header \
-fields, invalid options, invalid protocol version, invalid flags or \
-                                   control bits, malformed packets.";
-      }
-    }
-    leaf ttl-expired {
-      type uint32;
-      description
-        "The number of received packets discarded due to expired TTL\
-                                                                  .";
-    }
-    leaf no-route {
-      type uint32;
-      description
-        "The number of packets discarded due to not matching a \
-                                                       valid route.";
-    }
-    leaf invalid-sid {
-      type uint32;
-      description
-        "The number of packets discarded due to an invalid Segment \
-                                                  Routing (SR) SID.";
-    }
-    leaf invalid-label {
-      type uint32;
-      description
-        "The number of packets discarded due to an invalid MPLS \
-                                                             label.";
-    }
-  }
-
-  grouping errors-l3-int {
-    description
-      "Internal error discard counters.";
-    leaf packets {
-      type uint32;
-      description
-        "The number of packets discarded due to internal errors.";
-    }
-    leaf parity-error {
-      type uint32;
-      description
-        "The number of packets discarded due to parity errors.";
-    }
-  }
-
-  grouping errors-l2-tx {
-    description
-      "Layer 2 transmit error discard counters.";
-    container tx {
-      presence "tx";
-      description
-        "Layer 2 transmit frame error discard counters.";
-      leaf frames {
-        type uint32;
-        description
-          "The number of Layer 2 frames discarded due to errors \
-                                                 when transmitting.";
-      }
-    }
-  }
-
-  grouping errors-l3-tx {
-    description
-      "Layer 3 transmit error discard counters.";
-    container tx {
-      presence "tx";
-      description
-        "Layer 3 transmit packet error discard counters.";
-      leaf packets {
-        type uint32;
-        description
-          "The number of Layer 3 packets discarded due to errors \
-                                                 when transmitting.";
-      }
-    }
-  }
-
-  grouping errors {
-    description
-      "Error discard counters.";
-    container l2 {
-      description
-        "Layer 2 frame error discard counters.";
-      uses errors-l2-rx;
-      uses errors-l2-tx;
-    }
-    container l3 {
-      description
-        "Layer 3 packet error discard counters.";
-      uses errors-l3-rx;
-      uses errors-l3-tx;
-    }
-    container internal {
-      description
-        "Internal error discard counters.";
-      uses errors-l3-int;
-    }
-  }
-
-  grouping policy-l2 {
-    description
-      "Layer 2 policy frame discard counters.";
-    leaf frames {
-      type uint32;
-      description
-        "The number of Layer 2 frames discarded due to policy.";
-    }
-    leaf acl {
-      type uint32;
-      description
-        "The number of frames discarded due to Layer 2 ACLs.";
-    }
-  }
-
-  grouping policy-l3 {
-    description
-      "Layer 3 policy packet discard counters.";
-    leaf packets {
-      type uint32;
-      description
-        "The number of Layer 3 packets discarded due to policy.";
-    }
-    leaf acl {
-      type uint32;
-      description
-        "The number of packets discarded due to Layer 3 ACLs.";
-    }
-    container policer {
-      description
-        "The number of packets discarded due ingress policer \
-                                                        violations.";
-      uses basic-packets-bytes-32;
-    }
-    leaf null-route {
-      type uint32;
-      description
-        "The number of packets discarded due to matching a null \
-                                                             route.";
-    }
-    leaf rpf {
-      type uint32;
-      description
-        "The number of packets discarded due to failing Reverse \
-                                       Path Forwarding (RPF) check.";
-    }
-    leaf ddos {
-      type uint32;
-      description
-        "The number of packets discarded due to DDoS protection \
-                                                          policies.";
-    }
-  }
-
-  grouping discards {
-    description
-      "Discard counters.";
-    container l2 {
-      description
-        "Ingress Layer 2 frame discard counters.";
-      uses l2-traffic;
-    }
-    container l3 {
-      description
-        "Ingress Layer 3 packet discard counters.";
-      uses l3-traffic;
-    }
-    container errors {
-      description
-        "Ingress error discard counters.";
-      uses errors;
-    }
-    container policy {
-      description
-        "Ingress policy-related discard counters.";
-      uses policy;
-    }
-    container no-buffer {
-      description
-        "Ingress discard counters due to buffer
-         unavailability.";
-      uses qos;
-    }
-  }
-
-  grouping policy {
-    description
-      "Policy-related discard counters.";
-    container l2 {
-      description
-        "Layer 2 policy frame discard counters.";
-      uses policy-l2;
-    }
-    container l3 {
-      description
-        "Layer 3 policy packet discard counters.";
-      uses policy-l3;
-    }
-  }
-
-  grouping device {
-    description
-      "Device-level traffic and discard counters.";
-    container traffic {
-      description
-        "Traffic counters.";
-      uses traffic;
-    }
-    container discards {
-      description "Discard counters.";
-      uses discards;
-    }
-  }
-
-  grouping interface {
-    description
-      "Interface-level traffic and discard counters.";
-    list traffic {
-      key "direction";
-      description
-        "Traffic counters.";
-      leaf direction {
-        type identityref {
-          base direction;
-        }
-        description
-          "Specifies a direction.";
-      }
-      uses traffic;
-    }
-    list discards {
-      key "direction";
-      description
-        "Discard counters.";
-      leaf direction {
-        type identityref {
-          base direction;
-        }
-        description
-          "Specifies a direction.";
-      }
-      uses discards;
-    }
+      "Indicates support of global device statistics on this device.\
+                                                                   ";
   }
 
   /*
    * Main structure definition
    */
+
+ /**TO DO: Need to find where to graft the reporting***/
+
   list interface {
     if-feature "per-interface-stats";
     key "name";
     description
-      "Indicates a list of interfaces for which packet discard \
-                                        reporting data is provided.";
+      "Indicates a list of interfaces for which packet discard
+       reporting data is provided.";
     leaf name {
       type string;
       description
         "Indicates the name of the interface.";
     }
-    uses interface;
+    uses plr-sx:interface;
   }
   container device {
     if-feature "per-device-stats";
     presence "Device-level statistics are available.";
     description
       "Device level packet counters.";
-    uses device;
+    uses plr-sx:device;
   }
 }
 
@@ -3525,36 +3015,109 @@ Email: nchachmo@cisco.com
 <p id="appendix-A-2">Packets ingress on the left and egress on the right:<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 <span id="name-example-of-where-packets-ge"></span><div id="ex-drop">
 <figure id="figure-1">
-        <div class="alignLeft art-text artwork" id="appendix-A-3.1">
-<pre>
-
-                                                      +----------+
-                                                      |          |
-                                                      |  CPU     |
-                                                      |          |
-                                                      +--+---^---+
-                                                from_cpu |   | to_cpu
-                                                         |   |
-                          +------------------------------v---+-------------------------------+
-                          |                                                                  |
-
-            +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
-            |          |  |          |  |          |  |          |  |          |  |          |  |          |
- Packet rx -&gt;  Phy     +--&gt;  Mac     +--&gt; Ingress  +--&gt; Buffers  +--&gt; Egresss  +--&gt;  Mac     +--&gt;  Phy     +-&gt; Packet tx
-            |          |  |          |  |  Pipeline|  |          |  |  Pipeline|  |          |  |          |
-            +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
-
-  Intended                               policy/acl                  policy/acl
-  Discards:                              policy/policer              policy/policer
-                                         policy/urpf
-                                         policy/null-route
-
-Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
-  Discards:                              error/local
-                                         error/l3/no-route
-                                         error/l3/rx/ttl-expired
-
-</pre>
+        <div id="appendix-A-3.1">
+          <div class="alignLeft art-svg artwork" id="appendix-A-3.1.1">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" height="464" width="968" viewBox="0 0 968 464" class="diagram" text-anchor="middle" font-family="monospace" font-size="13px" stroke-linecap="round">
+              <path d="M 104,208 L 104,224" fill="none" stroke="black"></path>
+              <path d="M 104,256 L 104,272" fill="none" stroke="black"></path>
+              <path d="M 192,208 L 192,272" fill="none" stroke="black"></path>
+              <path d="M 216,160 L 216,176" fill="none" stroke="black"></path>
+              <path d="M 216,208 L 216,224" fill="none" stroke="black"></path>
+              <path d="M 216,256 L 216,272" fill="none" stroke="black"></path>
+              <path d="M 304,208 L 304,272" fill="none" stroke="black"></path>
+              <path d="M 328,208 L 328,224" fill="none" stroke="black"></path>
+              <path d="M 328,256 L 328,272" fill="none" stroke="black"></path>
+              <path d="M 416,208 L 416,272" fill="none" stroke="black"></path>
+              <path d="M 440,48 L 440,112" fill="none" stroke="black"></path>
+              <path d="M 440,208 L 440,224" fill="none" stroke="black"></path>
+              <path d="M 440,256 L 440,272" fill="none" stroke="black"></path>
+              <path d="M 464,112 L 464,160" fill="none" stroke="black"></path>
+              <path d="M 496,112 L 496,160" fill="none" stroke="black"></path>
+              <path d="M 528,48 L 528,112" fill="none" stroke="black"></path>
+              <path d="M 528,208 L 528,272" fill="none" stroke="black"></path>
+              <path d="M 552,208 L 552,224" fill="none" stroke="black"></path>
+              <path d="M 552,256 L 552,272" fill="none" stroke="black"></path>
+              <path d="M 640,208 L 640,272" fill="none" stroke="black"></path>
+              <path d="M 664,208 L 664,224" fill="none" stroke="black"></path>
+              <path d="M 664,256 L 664,272" fill="none" stroke="black"></path>
+              <path d="M 752,160 L 752,176" fill="none" stroke="black"></path>
+              <path d="M 752,208 L 752,272" fill="none" stroke="black"></path>
+              <path d="M 776,208 L 776,224" fill="none" stroke="black"></path>
+              <path d="M 776,256 L 776,272" fill="none" stroke="black"></path>
+              <path d="M 864,208 L 864,272" fill="none" stroke="black"></path>
+              <path d="M 440,48 L 528,48" fill="none" stroke="black"></path>
+              <path d="M 440,112 L 488,112" fill="none" stroke="black"></path>
+              <path d="M 504,112 L 528,112" fill="none" stroke="black"></path>
+              <path d="M 216,160 L 456,160" fill="none" stroke="black"></path>
+              <path d="M 472,160 L 752,160" fill="none" stroke="black"></path>
+              <path d="M 104,208 L 192,208" fill="none" stroke="black"></path>
+              <path d="M 216,208 L 304,208" fill="none" stroke="black"></path>
+              <path d="M 328,208 L 416,208" fill="none" stroke="black"></path>
+              <path d="M 440,208 L 528,208" fill="none" stroke="black"></path>
+              <path d="M 552,208 L 640,208" fill="none" stroke="black"></path>
+              <path d="M 664,208 L 752,208" fill="none" stroke="black"></path>
+              <path d="M 776,208 L 864,208" fill="none" stroke="black"></path>
+              <path d="M 192,240 L 216,240" fill="none" stroke="black"></path>
+              <path d="M 304,240 L 328,240" fill="none" stroke="black"></path>
+              <path d="M 416,240 L 440,240" fill="none" stroke="black"></path>
+              <path d="M 528,240 L 552,240" fill="none" stroke="black"></path>
+              <path d="M 640,240 L 664,240" fill="none" stroke="black"></path>
+              <path d="M 752,240 L 776,240" fill="none" stroke="black"></path>
+              <path d="M 864,240 L 880,240" fill="none" stroke="black"></path>
+              <path d="M 104,272 L 192,272" fill="none" stroke="black"></path>
+              <path d="M 216,272 L 304,272" fill="none" stroke="black"></path>
+              <path d="M 328,272 L 416,272" fill="none" stroke="black"></path>
+              <path d="M 440,272 L 528,272" fill="none" stroke="black"></path>
+              <path d="M 552,272 L 640,272" fill="none" stroke="black"></path>
+              <path d="M 664,272 L 752,272" fill="none" stroke="black"></path>
+              <path d="M 776,272 L 864,272" fill="none" stroke="black"></path>
+              <polygon class="arrowhead" points="888,240 876,234.4 876,245.6" fill="black" transform="rotate(0,880,240)"></polygon>
+              <polygon class="arrowhead" points="784,240 772,234.4 772,245.6" fill="black" transform="rotate(0,776,240)"></polygon>
+              <polygon class="arrowhead" points="672,240 660,234.4 660,245.6" fill="black" transform="rotate(0,664,240)"></polygon>
+              <polygon class="arrowhead" points="560,240 548,234.4 548,245.6" fill="black" transform="rotate(0,552,240)"></polygon>
+              <polygon class="arrowhead" points="504,112 492,106.4 492,117.6" fill="black" transform="rotate(270,496,112)"></polygon>
+              <polygon class="arrowhead" points="472,160 460,154.4 460,165.6" fill="black" transform="rotate(90,464,160)"></polygon>
+              <polygon class="arrowhead" points="448,240 436,234.4 436,245.6" fill="black" transform="rotate(0,440,240)"></polygon>
+              <polygon class="arrowhead" points="336,240 324,234.4 324,245.6" fill="black" transform="rotate(0,328,240)"></polygon>
+              <polygon class="arrowhead" points="224,240 212,234.4 212,245.6" fill="black" transform="rotate(0,216,240)"></polygon>
+              <g class="text">
+                <text x="472" y="84">CPU</text>
+                <text x="420" y="132">from_cpu</text>
+                <text x="532" y="132">to_cpu</text>
+                <text x="36" y="244">Packet</text>
+                <text x="76" y="244">rx</text>
+                <text x="100" y="244">-&gt;</text>
+                <text x="136" y="244">Phy</text>
+                <text x="248" y="244">Mac</text>
+                <text x="368" y="244">Ingress</text>
+                <text x="480" y="244">Buffers</text>
+                <text x="592" y="244">Egresss</text>
+                <text x="696" y="244">Mac</text>
+                <text x="808" y="244">Phy</text>
+                <text x="916" y="244">Packet</text>
+                <text x="956" y="244">tx</text>
+                <text x="380" y="260">Pipeline</text>
+                <text x="604" y="260">Pipeline</text>
+                <text x="52" y="308">Intended</text>
+                <text x="372" y="308">policy/acl</text>
+                <text x="596" y="308">policy/acl</text>
+                <text x="56" y="324">Discards:</text>
+                <text x="388" y="324">policy/policer</text>
+                <text x="612" y="324">policy/policer</text>
+                <text x="376" y="340">policy/urpf</text>
+                <text x="400" y="356">policy/null-route</text>
+                <text x="44" y="388">Unintended</text>
+                <text x="264" y="388">error/rx/l2</text>
+                <text x="376" y="388">error/l3/rx</text>
+                <text x="480" y="388">no-buffer</text>
+                <text x="600" y="388">error/l3/tx</text>
+                <text x="56" y="404">Discards:</text>
+                <text x="376" y="404">error/local</text>
+                <text x="400" y="420">error/l3/no-route</text>
+                <text x="424" y="436">error/l3/rx/ttl-expired</text>
+              </g>
+            </svg><a href="#appendix-A-3.1.1" class="pilcrow">¶</a>
+</div>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
 <a href="#name-example-of-where-packets-ge" class="selfRef">Example of where packets get dropped</a>
