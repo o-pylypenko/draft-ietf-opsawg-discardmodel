@@ -231,7 +231,7 @@ The "ietf-packet-discard-reporting" module uses the "sx" structure defined in {{
 
 ~~~~~~~~~~
 <CODE BEGINS>
-{::include-fold ./yang/draft-ietf-opsawg-discardmodel.yang}
+{::include-fold ./yang/ietf-packet-discard-reporting-sx.yang}
 <CODE ENDS>
 ~~~~~~~~~~
 
@@ -298,7 +298,7 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 ~~~~~~~~~~
 <CODE BEGINS>
-{::include-fold ./yang/draft-ietf-data-model.yang}
+{::include ./yang/ietf-packet-discard-reporting.yang}
 <CODE ENDS>
 ~~~~~~~~~~
 
@@ -364,7 +364,7 @@ Understanding where packets are discarded in a network device is essential for i
 
 Packets ingress on the left and egress on the right:
 
-~~~~~~~~~~
+~~~~~~~~~~ aasvg
 
 
                                                       +----------+
