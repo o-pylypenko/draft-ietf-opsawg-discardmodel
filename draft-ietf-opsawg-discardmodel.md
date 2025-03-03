@@ -94,12 +94,6 @@ informative:
           author:
                ins: C. Marrow
      RFC2475:
-     RFC8289:
-     RFC6241:
-     RFC8040:
-     RFC6242:
-     RFC8446:
-     RFC8341:
 
 --- abstract
 
@@ -219,7 +213,7 @@ discards/error/local/:
 : These are discards due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
-:  These are discards due to buffer exhaustion, i.e. congestion related discards. These can be tail-drop discards or due to an active queue management algorithm, such as RED {{RED93}} or CODEL {{RFC8289}}.
+:  These are discards due to buffer exhaustion, i.e. congestion related discards. These can be tail-drop discards or due to an active queue management algorithm, such as RED {{RED93}} or CODEL {{?RFC8289}}.
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
@@ -311,11 +305,33 @@ The information model defined in {{infomodel-module}} specifies a YANG module us
 
 ## Data Model {#security-datamodel}
 
-The YANG module specified in {{datamodel-module}} defines a schema for data with data nodes that contain read-only state.  It is designed to be accessed via network management protocols such as NETCONF {{?RFC6241}} or RESTCONF {{?RFC8040}}. The lowest NETCONF layer is the secure transport layer, and the mandatory-to-implement secure transport is Secure Shell (SSH) {{?RFC6242}}. The lowest RESTCONF layer is HTTPS, and the mandatory-to-implement secure transport is TLS {{?RFC8446}}.
+This section is modeled after the template described in {{Section 3.7 of ?I-D.ietf-netmod-rfc8407bis}}.
 
-The Network Configuration Access Control Model (NACM) {{?RFC8341}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
+The YANG module specified in {{datamodel-module}} defines a data model that is
+designed to be accessed via YANG-based management protocols, such as
+NETCONF {{?RFC6241}} and RESTCONF {{?RFC8040}}. These protocols have to
+use a secure transport layer (e.g., SSH {{?RFC4252}}, TLS {{?RFC8446}}, and
+QUIC {{?RFC9000}}) and have to use mutual authentication.
 
-The module does not expose any data nodes that are writable, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
+The Network Configuration Access Control Model (NACM) {{!RFC8341}}
+provides the means to restrict access for particular NETCONF or
+RESTCONF users to a preconfigured subset of all available NETCONF or
+RESTCONF protocol operations and content.
+
+There are a number of data nodes defined in this YANG module that are
+writable/creatable/deletable (i.e., "config true", which is the
+default).  All writable data nodes are likely to be reasonably
+sensitive or vulnerable in some network environments.  Write
+operations (e.g., edit-config) and delete operations to these data
+nodes without proper protection or authentication can have a negative
+effect on network operations.  The following subtrees and data nodes
+have particular sensitivities/vulnerabilities:
+
+interfaces:
+: TBC
+
+devices:
+: tbc
 
 
 # IANA Considerations {#iana}
@@ -323,6 +339,10 @@ The module does not expose any data nodes that are writable, or RPCs. As such, t
 IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" {{!RFC3688}}:
 
 ~~~~
+   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
+   Registrant Contact:  The IESG.
+   XML:  N/A; the requested URI is an XML namespace.
+
    URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
@@ -332,6 +352,12 @@ IANA is requested to register the following URI in the "ns" subregistry within t
    Names" subregistry {{!RFC6020}} within the "YANG Parameters" registry:
 
 ~~~~
+   Name:  ietf-packet-discard-reporting-sx
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
+   Prefix:  plr-sx
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
+
    Name:  ietf-packet-discard-reporting
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
    Prefix:  plr
