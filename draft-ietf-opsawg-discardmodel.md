@@ -117,7 +117,7 @@ This document defines an information model and corresponding data model for pack
 
 The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.
 
-{{problem}} describes the problem space and requirements. {{infomodel}} defines the information model and classification scheme. {{datamodel}} specifies the corresponding data model and implementation requirements together with a set of usage examples. {{datamodel-module}} provides the complete YANG module definition for the data model. The appendices provide the  YANG module definition for the information model, together with additional context and implementation guidance.
+{{problem}} describes the problem space and requirements. {{infomodel}} defines the information model and classification scheme. {{datamodel}} specifies the corresponding data model and implementation requirements together with a set of usage examples, and the complete YANG module definition for the data model. The appendices provide additional context and implementation guidance.
 
 # Terminology {#terminology}
 
@@ -165,7 +165,7 @@ The information model is defined using YANG {{?RFC6020}} with Data Structure Ext
 
 The information model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This organisation enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
 
-A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. Appendix B illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
+A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
 
 - Component:
   - interface: discards of traffic to or from a specific network interface.
@@ -194,8 +194,6 @@ The following YANG tree diagram shows the complete structure:
 ~~~~~~~~~~
 
 The corresponding YANG module is defined in {{infomodel-module}}.
-
-For additional context, {{wheredropped}} provides an example of where packets may be discarded in a device.
 
 ## Sub-type Definitions
 
@@ -294,7 +292,7 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 - interface/ingress/discards/policy/l3/rpf/packets
 
 
-# Data model - YANG Module {#datamodel-module}
+## Data model - YANG Module {#datamodel-module}
 
 ~~~~~~~~~~
 <CODE BEGINS>
@@ -396,7 +394,7 @@ Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
 ~~~~~~~~~~
 {: #ex-drop title="Example of where packets get dropped"}
 
-See Appendix C for examples of how these discard signals map to root causes and mitigation actions.
+See Appendix B for examples of how these discard signals map to root causes and mitigation actions.
 
 # Example signal-to-mitigation action mapping {#mapping}
 
