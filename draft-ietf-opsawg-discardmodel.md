@@ -108,7 +108,6 @@ This document defines an information model and corresponding data model for pack
 --- middle
 
 # Introduction        {#introduction}
-============
 
 The primary function of a network is to transport and deliver packets according to service level objectives. For network operators, understanding both where and why packet loss occurs within a network is essential for effective operation. Device-reported packet loss provides the most direct signal for identifying service impact. While certain types of packet loss, such as policy-based discards, are intentional and part of normal network operation, unintended packet loss can impact customer services.  To automate network operations, operators must be able to detect customer-impacting packet loss, determine its root cause, and apply appropriate mitigation actions. Precise classification of packet loss is crucial to ensure that anomalous packet loss is easily detected and that the right action is taken to mitigate the impact. Taking the wrong action can make problems worse; for example, removing a congested device from service can exacerbate congestion by redirecting traffic to other already congested links or devices.
 
@@ -121,7 +120,6 @@ The scope of this document is limited to reporting packet loss at Layer 3 and fr
 {{problem}} describes the problem space and requirements. {{infomodel}} defines the information model and classification scheme. {{datamodel}} specifies the corresponding data model and implementation requirements together with a set of usage examples. {{datamodel-module}} provides the complete YANG module definition for the data model. The appendices provide the  YANG module definition for the information model, together with additional context and implementation guidance.
 
 # Terminology {#terminology}
-===========
 
 {::boilerplate bcp14-tagged}
 
@@ -134,7 +132,7 @@ Unintended discards are packets that were dropped, which the network operator ot
 Tree diagrams used in this document follow the notation defined in {{?RFC8340}}.
 
 # Problem Statement   {#problem}
-=================
+
 The fundamental problem for network operators is how to automatically detect when unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected:
 
 1. Take a problematic device, link, or set of devices and/or links out of service.
@@ -160,11 +158,11 @@ FEATURE-DISCARD-CLASS:
 While FEATURE-DISCARD-LOCATION, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC1213}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following information model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
 # Information Model   {#infomodel}
-=================
+
 The information model is defined using YANG {{?RFC6020}} with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gMNI {{gMNI}} or SNMP {{?RFC1157}} - while ensuring consistency across implementations. Using YANG for the information model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
 ## Structure {#infomodel-structure}
----------
+
 The information model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This organisation enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
 
 A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. Appendix B illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
@@ -195,13 +193,11 @@ The following YANG tree diagram shows the complete structure:
 {::include ./yang/draft-ietf-opsawg-discardmodel-tree.txt}
 ~~~~~~~~~~
 
-
 The corresponding YANG module is defined in {{infomodel-module}}.
 
 For additional context, {{wheredropped}} provides an example of where packets may be discarded in a device.
 
 ## Sub-type Definitions
---------------------
 
 discards/policy/:
 : These are intended discards, meaning packets dropped by a device due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules and explicit null routes
@@ -230,11 +226,11 @@ discards/no-buffer/:
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
 # Data Model   {#datamodel}
-==========
+
 This data model implements the information model defined in {{infomodel}} for the interface and device components.  This is classed as a Network Element model as defined by {{?RFC1157}}.
 
 ## Structure {#datamodel-structure}
----------
+
 There is a direct mapping between the information model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaves.  The following YANG tree diagram shows the complete structure:
 
 ~~~~~~~~~~
@@ -243,7 +239,7 @@ There is a direct mapping between the information model components and their dat
 
 
 ## Implementation Requirements {#requirements}
----------------------------
+
 The following requirements apply to the implementation of the data model and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.  While the model defines a comprehensive set of counters and statistics, implementations MAY support a subset of the defined features based on device capabilities and operational requirements. However, implementations MUST clearly document which features are supported and how they map to the model.
 
 Requirements 1-10 relate to packets forwarded or discarded by the device, while requirement 11 relates to packets destined for or originating from the device:
@@ -261,7 +257,6 @@ Requirements 1-10 relate to packets forwarded or discarded by the device, while 
 11. Traffic to the device control plane has its own class, however, traffic from the device control plane SHOULD be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
---------------
 
 If all of the requirements are met, a "good" unicast IPv4 packet received would increment:
 
@@ -291,7 +286,6 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 
 # Data model - YANG Module {#datamodel-module}
-========================
 
 The "ietf-packet-discard-reporting" yang module uses the "sx" structure defined in {{!RFC8791}}.
 
@@ -303,15 +297,15 @@ The "ietf-packet-discard-reporting" yang module uses the "sx" structure defined 
 
 
 # Security Considerations {#security}
-=======================
+
 This section discusses security considerations for both the information model and its implementation as a data model.
 
 ## Information Model {#security-infomodel}
------------------
+
 The information model defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
 
 ## Data Model {#security-datamodel}
-----------
+
 The YANG module specified in {{datamodel-module}} defines a schema for data with data nodes that contain read-only state.  It is designed to be accessed via network management protocols such as NETCONF {{?RFC6241}} or RESTCONF {{?RFC8040}}. The lowest NETCONF layer is the secure transport layer, and the mandatory-to-implement secure transport is Secure Shell (SSH) {{?RFC6242}}. The lowest RESTCONF layer is HTTPS, and the mandatory-to-implement secure transport is TLS {{?RFC8446}}.
 
 The Network Configuration Access Control Model (NACM) {{?RFC8341}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
@@ -320,7 +314,6 @@ The module does not expose any data nodes that are writable, or RPCs. As such, t
 
 
 # IANA Considerations {#iana}
-===================
 
 IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" {{!RFC3688}}:
 
@@ -343,7 +336,6 @@ IANA is requested to register the following URI in the "ns" subregistry within t
 
 
 # Contributors {#contributors}
-============
 
     Nadav Chachmon
     Cisco Systems, Inc.
@@ -353,13 +345,12 @@ IANA is requested to register the following URI in the "ns" subregistry within t
     Email: nchachmo@cisco.com
 
 # Acknowledgments {#acknowledgements}
-===============
+
 The content of this document has benefitted from feedback from JR Rivers, Ronan Waide, Chris DeBruin, and Marcoz Sanz.
 
 --- back
 
 # Information Model - YANG Module {#infomodel-module}
-===============================
 
 The "ietf-packet-discard-reporting" yang module uses the "sx" structure defined in {{!RFC8791}}.
 
@@ -371,7 +362,7 @@ The "ietf-packet-discard-reporting" yang module uses the "sx" structure defined 
 
 
 ## Where do packets get dropped? {#wheredropped}
-=============================
+
 Understanding where packets are discarded in a network device is essential for interpreting discard signals and determining appropriate mitigation actions.  {{ex-drop}} depicts an example of where and why packets may be discarded in a typical single-ASIC, shared-buffered type device. While actual device architectures vary between vendors and platforms, with some using multiple ASICs, distributed forwarding, or different buffering architectures, this example illustrates the common processing stages where packets may be dropped. The logical model for classifying and reporting discards remains consistent regardless of the underlying hardware architecture.
 
 Packets ingress on the left and egress on the right:
@@ -411,7 +402,6 @@ Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
 See Appendix C for examples of how these discard signals map to root causes and mitigation actions.
 
 # Example signal-to-mitigation action mapping {#mapping}
-===========================================
 
 The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  {{ex-table}} gives example discard signal-to-mitigation action mappings based on the features described in section 3.
 
@@ -434,7 +424,7 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent.
 
 # Implementation Experience {#experience}
-=========================
+
 This appendix captures practical insights gained from implementing this information model across multiple vendors' platforms, as guidance for future implementers.
 
 1. The number and granularity of discard classes defined in the information model represent a compromise.  It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.
