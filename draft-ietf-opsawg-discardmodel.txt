@@ -87,16 +87,16 @@ Table of Contents
      5.1.  Structure
      5.2.  Implementation Requirements
      5.3.  Usage Examples
-   6.  Data model - YANG Module
-   7.  Security Considerations
-     7.1.  Information Model
-     7.2.  Data Model
-   8.  IANA Considerations
-   9.  Contributors
-   10. Acknowledgments
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+     5.4.  Data model - YANG Module
+   6.  Security Considerations
+     6.1.  Information Model
+     6.2.  Data Model
+   7.  IANA Considerations
+   8.  Contributors
+   9.  Acknowledgments
+   10. References
+     10.1.  Normative References
+     10.2.  Informative References
    Appendix A.  Where do packets get dropped?
    Appendix B.  Example signal-to-mitigation action mapping
    Appendix C.  Implementation Experience
@@ -156,10 +156,9 @@ Table of Contents
    Section 3 describes the problem space and requirements.  Section 4
    defines the information model and classification scheme.  Section 5
    specifies the corresponding data model and implementation
-   requirements together with a set of usage examples.  Section 6
-   provides the complete YANG module definition for the data model.  The
-   appendices provide the YANG module definition for the information
-   model, together with additional context and implementation guidance.
+   requirements together with a set of usage examples, and the complete
+   YANG module definition for the data model.  The appendices provide
+   additional context and implementation guidance.
 
 2.  Terminology
 
@@ -264,7 +263,7 @@ Table of Contents
 
    A complete classification path follows the pattern:
    component/direction/type/layer/sub-type/sub-sub-type/.../metric.
-   Appendix B illustrates where these discards typically occur in a
+   Appendix A illustrates where these discards typically occur in a
    network device.  The elements of the tree are defined as follows:
 
    *  Component:
@@ -562,9 +561,6 @@ Table of Contents
                    +-- bytes?     uint64
 
    The corresponding YANG module is defined in Section 4.3.
-
-   For additional context, Appendix A provides an example of where
-   packets may be discarded in a device.
 
 4.2.  Sub-type Definitions
 
@@ -1596,7 +1592,7 @@ Table of Contents
 
    *  interface/ingress/discards/policy/l3/rpf/packets
 
-6.  Data model - YANG Module
+5.4.  Data model - YANG Module
 
    <CODE BEGINS>
    module ietf-packet-discard-reporting {
@@ -1701,12 +1697,12 @@ Table of Contents
    }
    <CODE ENDS>
 
-7.  Security Considerations
+6.  Security Considerations
 
    This section discusses security considerations for both the
    information model and its implementation as a data model.
 
-7.1.  Information Model
+6.1.  Information Model
 
    The information model defined in Section 4.3 specifies a YANG module
    using [RFC8791] data extensions.  It defines a set of identities,
@@ -1716,10 +1712,10 @@ Table of Contents
    As such, there are no additional security issues related to the YANG
    module that need to be considered.
 
-7.2.  Data Model
+6.2.  Data Model
 
-   The YANG module specified in Section 6 defines a schema for data with
-   data nodes that contain read-only state.  It is designed to be
+   The YANG module specified in Section 5.4 defines a schema for data
+   with data nodes that contain read-only state.  It is designed to be
    accessed via network management protocols such as NETCONF [RFC6241]
    or RESTCONF [RFC8040].  The lowest NETCONF layer is the secure
    transport layer, and the mandatory-to-implement secure transport is
@@ -1735,7 +1731,7 @@ Table of Contents
    As such, there are no additional security issues related to the YANG
    module that need to be considered.
 
-8.  IANA Considerations
+7.  IANA Considerations
 
    IANA is requested to register the following URI in the "ns"
    subregistry within the "IETF XML Registry" [RFC3688]:
@@ -1754,7 +1750,7 @@ Table of Contents
       Maintained by IANA?  N
       Reference:  RFC XXXX
 
-9.  Contributors
+8.  Contributors
 
    Nadav Chachmon
    Cisco Systems, Inc.
@@ -1763,14 +1759,14 @@ Table of Contents
    United States of America
    Email: nchachmo@cisco.com
 
-10.  Acknowledgments
+9.  Acknowledgments
 
    The content of this document has benefitted from feedback from JR
    Rivers, Ronan Waide, Chris DeBruin, and Marcoz Sanz.
 
-11.  References
+10.  References
 
-11.1.  Normative References
+10.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1794,7 +1790,7 @@ Table of Contents
               Structure Extensions", RFC 8791, DOI 10.17487/RFC8791,
               June 2020, <https://www.rfc-editor.org/rfc/rfc8791>.
 
-11.2.  Informative References
+10.2.  Informative References
 
    [gMNI]     Marrow, C., "gRPC Network Management Interface, IETF 98,
               March 2017,
@@ -1916,7 +1912,7 @@ Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
 
             Figure 1: Example of where packets get dropped
 
-   See Appendix C for examples of how these discard signals map to root
+   See Appendix B for examples of how these discard signals map to root
    causes and mitigation actions.
 
 Appendix B.  Example signal-to-mitigation action mapping
