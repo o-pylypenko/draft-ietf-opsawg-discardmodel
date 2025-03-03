@@ -1769,7 +1769,8 @@ module ietf-packet-discard-reporting-sx {
     description
       "Initial revision.";
     reference
-      "RFC XXXX: An Information Model for Packet Discard Reporting";
+      "RFC XXXX: Information and Data Models for Packet Discard
+                 Reporting";
   }
 
   /*
@@ -2712,8 +2713,6 @@ module: ietf-packet-discard-reporting
       </h2>
 <div class="breakable sourcecode" id="section-6-1">
 <pre>&lt;CODE BEGINS&gt;
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-packet-discard-reporting {
   yang-version 1.1;
   namespace
@@ -2748,10 +2747,9 @@ module ietf-packet-discard-reporting {
      Author:   Mohamed Boucadair
                &lt;mailto:mohamed.boucadair@orange.com&gt;";
   description
-    "This module defines an information model for packet discard
-     reporting.
+    "This module defines a data model for packet discard reporting.
 
-     Copyright (c) 2024 IETF Trust and the persons identified as
+     Copyright (c) 2025 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -2764,7 +2762,7 @@ module ietf-packet-discard-reporting {
      This version of this YANG module is part of RFC XXXX; see the
      RFC itself for full legal notices.";
 
-  revision 2024-06-04 {
+  revision 2025-03-03 {
     description
       "Initial revision.";
     reference
@@ -2778,21 +2776,21 @@ module ietf-packet-discard-reporting {
 
   feature per-interface-stats {
     description
-      "Indicates support of per-interface statistics on this device.\
-                                                                   ";
+      "Indicates support of per-interface statistics on this
+       device.";
   }
 
   feature per-device-stats {
     description
-      "Indicates support of global device statistics on this device.\
-                                                                   ";
+      "Indicates support of global device statistics on this
+       device.";
   }
 
   /*
    * Main structure definition
    */
 
- /**TO DO: Need to find where to graft the reporting***/
+  /**TO DO: Need to find where to graft the reporting***/
 
   list interface {
     if-feature "per-interface-stats";
