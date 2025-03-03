@@ -19,8 +19,8 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "Information and Data Models for Packet Discard Reporting"
+abbrev: "IM and DM for Packet Discard Reporting"
 category: info
 
 docname: draft-todo-yourname-protocol-latest
