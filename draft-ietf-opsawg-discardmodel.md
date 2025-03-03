@@ -287,8 +287,6 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 # Data model - YANG Module {#datamodel-module}
 
-The "ietf-packet-discard-reporting" yang module uses the "sx" structure defined in {{!RFC8791}}.
-
 ~~~~~~~~~~
 <CODE BEGINS>
 {::include ./yang/draft-ietf-data-model.yang}
