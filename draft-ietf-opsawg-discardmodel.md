@@ -153,7 +153,7 @@ While FEATURE-DISCARD-LOCATION, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATI
 
 # Information Model   {#infomodel}
 
-The information model is defined using YANG {{?RFC6020}}, {{?RFC7950}},  with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gMNI {{gMNI}} or SNMPv3 {{?RFC3411}} - while ensuring consistency across implementations. Using YANG for the information model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
+The information model is defined using YANG {{?RFC7950}},  with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gMNI {{gMNI}} or SNMPv3 {{?RFC3411}} - while ensuring consistency across implementations. Using YANG for the information model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
 ## Structure {#infomodel-structure}
 
