@@ -123,7 +123,7 @@ Table of Contents
 
    Existing metrics for reporting packet loss, such as ifInDiscards,
    ifOutDiscards, ifInErrors, and ifOutErrors defined in MIB-II
-   [RFC1213] and the YANG Data Model for Interface Management [RFC8343],
+   [RFC2863] and the YANG Data Model for Interface Management [RFC8343],
    are insufficient for automating network operations.  First, they lack
    precision; for instance, ifInDiscards aggregates all discarded
    inbound packets without specifying the cause, making it challenging
@@ -230,7 +230,7 @@ Table of Contents
       policy discards typically require no automated action
 
    While FEATURE-DISCARD-LOCATION, FEATURE-DISCARD-RATE, and FEATURE-
-   DISCARD-DURATION are implicitly supported by MIB-II [RFC1213] and the
+   DISCARD-DURATION are implicitly supported by MIB-II [RFC2863] and the
    YANG Data Model for Interface Management [RFC8343], FEATURE-DISCARD-
    CLASS requires a more detailed classification scheme than they
    define.  The following information model defines such a
@@ -239,12 +239,12 @@ Table of Contents
 
 4.  Information Model
 
-   The information model is defined using YANG [RFC6020] with Data
-   Structure Extensions [RFC8791], allowing the model to remain abstract
-   and decoupled from specific implementations in accordance with
-   [RFC3444].  This abstraction supports different data model
-   implementations - for example, in YANG, IPFIX [RFC7011], gMNI [gMNI]
-   or SNMP [RFC1157] - while ensuring consistency across
+   The information model is defined using YANG [RFC6020], [RFC7950],
+   with Data Structure Extensions [RFC8791], allowing the model to
+   remain abstract and decoupled from specific implementations in
+   accordance with [RFC3444].  This abstraction supports different data
+   model implementations - for example, in YANG, IPFIX [RFC7011], gMNI
+   [gMNI] or SNMPv3 [RFC3411] - while ensuring consistency across
    implementations.  Using YANG for the information model enables this
    abstraction, leverages the community's familiarity with its syntax,
    and ensures lossless translation to the corresponding YANG data
@@ -1839,15 +1839,20 @@ Table of Contents
               DOI 10.17487/RFC1157, May 1990,
               <https://www.rfc-editor.org/rfc/rfc1157>.
 
-   [RFC1213]  McCloghrie, K. and M. Rose, "Management Information Base
-              for Network Management of TCP/IP-based internets: MIB-II",
-              STD 17, RFC 1213, DOI 10.17487/RFC1213, March 1991,
-              <https://www.rfc-editor.org/rfc/rfc1213>.
-
    [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
               and W. Weiss, "An Architecture for Differentiated
               Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
               <https://www.rfc-editor.org/rfc/rfc2475>.
+
+   [RFC2863]  McCloghrie, K. and F. Kastenholz, "The Interfaces Group
+              MIB", RFC 2863, DOI 10.17487/RFC2863, June 2000,
+              <https://www.rfc-editor.org/rfc/rfc2863>.
+
+   [RFC3411]  Harrington, D., Presuhn, R., and B. Wijnen, "An
+              Architecture for Describing Simple Network Management
+              Protocol (SNMP) Management Frameworks", STD 62, RFC 3411,
+              DOI 10.17487/RFC3411, December 2002,
+              <https://www.rfc-editor.org/rfc/rfc3411>.
 
    [RFC3444]  Pras, A. and J. Schoenwaelder, "On the Difference between
               Information Models and Data Models", RFC 3444,
@@ -1874,6 +1879,10 @@ Table of Contents
               Information Export (IPFIX)", RFC 7270,
               DOI 10.17487/RFC7270, June 2014,
               <https://www.rfc-editor.org/rfc/rfc7270>.
+
+   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
+              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+              <https://www.rfc-editor.org/rfc/rfc7950>.
 
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
