@@ -1854,9 +1854,9 @@ module ietf-packet-discard-reporting-sx {
    * Groupings
    */
 
-  grouping basic-packets-64 {
+  grouping basic-packets {
     description
-      "Grouping for 64-bit Layer 3 packet counters.";
+      "Grouping for Layer 3 packet counters.";
     leaf packets {
       type yang:counter64;
       description
@@ -1864,11 +1864,10 @@ module ietf-packet-discard-reporting-sx {
     }
   }
 
-  grouping basic-packets-bytes-64 {
+  grouping basic-packets-bytes {
     description
-      "Grouping for 64-bit Layer 3 packet and byte
-       counters.";
-    uses basic-packets-64;
+      "Grouping for Layer 3 packet and byte counters.";
+    uses basic-packets;
     leaf bytes {
       type yang:counter64;
       description
@@ -1876,9 +1875,9 @@ module ietf-packet-discard-reporting-sx {
     }
   }
 
-  grouping basic-frames-64 {
+  grouping basic-frames {
     description
-      "Grouping for 64-bit Layer 2 frame counters.";
+      "Grouping for Layer 2 frame counters.";
     leaf frames {
       type yang:counter64;
       description
@@ -1886,54 +1885,10 @@ module ietf-packet-discard-reporting-sx {
     }
   }
 
-  grouping basic-frames-bytes-64 {
+  grouping basic-frames-bytes {
     description
-      "Grouping for 64-bit Layer 2 frame and byte
-       counters.";
-    uses basic-frames-64;
-    leaf bytes {
-      type yang:counter64;
-      description
-        "Number of Layer 2 bytes.";
-    }
-  }
-
-  grouping basic-packets-32 {
-    description
-      "Grouping for 32-bit Layer 3 packet counters.";
-    leaf packets {
-      type yang:counter64;
-      description
-        "Number of Layer 3 packets.";
-    }
-  }
-
-  grouping basic-packets-bytes-32 {
-    description
-      "Grouping for 32-bit Layer 3 packet and byte
-       counters.";
-    uses basic-packets-32;
-    leaf bytes {
-      type yang:counter64;
-      description
-        "Number of Layer 3 bytes.";
-    }
-  }
-
-  grouping basic-frames-32 {
-    description
-      "Grouping for 32-bit Layer 2 frame counters.";
-    leaf frames {
-      type yang:counter64;
-      description
-        "Number of Layer 2 frames.";
-    }
-  }
-
-  grouping basic-frames-bytes-32 {
-    description
-      "Grouping for 32-bit Layer 2 frame and byte counters.";
-    uses basic-frames-32;
+      "Grouping for Layer 2 frame and byte counters.";
+    uses basic-frames;
     leaf bytes {
       type yang:counter64;
       description
@@ -1944,7 +1899,7 @@ module ietf-packet-discard-reporting-sx {
   grouping l2-traffic {
     description
       "Layer 2 traffic counters.";
-    uses basic-frames-bytes-64;
+    uses basic-frames-bytes;
   }
 
   grouping ip {
@@ -1961,16 +1916,16 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies an address family.";
       }
-      uses basic-packets-bytes-64;
+      uses basic-packets-bytes;
       container unicast {
         description
           "Unicast traffic counters.";
-        uses basic-packets-bytes-64;
+        uses basic-packets-bytes;
       }
       container multicast {
         description
           "Multicast traffic counters.";
-        uses basic-packets-bytes-64;
+        uses basic-packets-bytes;
       }
     }
   }
@@ -1994,7 +1949,7 @@ module ietf-packet-discard-reporting-sx {
         description
           "QoS class identifier.";
       }
-      uses basic-packets-bytes-64;
+      uses basic-packets-bytes;
     }
   }
 
@@ -2220,7 +2175,7 @@ module ietf-packet-discard-reporting-sx {
       description
         "The number of packets discarded due ingress
          policer violations.";
-      uses basic-packets-bytes-32;
+      uses basic-packets-bytes;
     }
     leaf null-route {
       type yang:counter64;
@@ -2348,7 +2303,7 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies a direction.";
       }
-      uses basic-packets-bytes-32;
+      uses basic-packets-bytes;
     }
     list discards {
       key "direction";
@@ -2361,11 +2316,11 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies a direction.";
       }
-      uses basic-packets-bytes-32;
+      uses basic-packets-bytes;
       container policy {
         description
           "Number of control plane packets discarded due to policy.";
-        uses basic-packets-32;
+        uses basic-packets;
       }
     }
   }
