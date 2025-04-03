@@ -59,6 +59,12 @@ module ietf-packet-discard-reporting {
    * Features
    */
 
+  feature control-plane-stats {
+    description
+      "Indicates support of control plane statistics on this
+       device.";
+  }
+
   feature per-interface-stats {
     description
       "Indicates support of per-interface statistics on this
@@ -77,6 +83,13 @@ module ietf-packet-discard-reporting {
 
   /**TO DO: Need to find where to graft the reporting***/
 
+  container control-plane {
+    if-feature "control-plane-stats";
+    presence "Control plane statistics are available.";
+    description
+      "Control plane packet counters.";
+    uses plr-sx:control-plane;
+  }
   list interface {
     if-feature "per-interface-stats";
     key "name";
