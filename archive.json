@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-03T00:41:27.985406+00:00",
+  "timestamp": "2025-04-06T00:45:00.401259+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -315,18 +315,26 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-02T16:09:37Z",
-      "updatedAt": "2025-04-02T16:33:02Z",
+      "updatedAt": "2025-04-03T14:25:26Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "a02563029445a6a995f406c919a26f866ada81f5",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "counter64_update",
-      "headRefOid": "b5660eab31e637ebd06e81a9cc2ab86210ab38a0",
+      "headRefOid": "c26817d62e75a6e78d79ff86030a23e30c72ed64",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Looks good Oleks.  For consistency need to delete para 8 from Implementation experience Appendix.",
+          "createdAt": "2025-04-03T13:36:54Z",
+          "updatedAt": "2025-04-03T13:36:54Z"
+        }
+      ],
       "reviews": []
     }
   ]
