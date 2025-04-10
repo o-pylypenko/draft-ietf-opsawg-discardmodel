@@ -310,255 +310,255 @@ Table of Contents
        +-- control-plane {control-plane-stats}?
        |  +-- traffic* [direction]
        |  |  +-- direction    identityref
-       |  |  +-- packets?     uint32
-       |  |  +-- bytes?       uint32
+       |  |  +-- packets?     yang:counter64
+       |  |  +-- bytes?       yang:counter64
        |  +-- discards* [direction]
        |     +-- direction    identityref
-       |     +-- packets?     uint32
-       |     +-- bytes?       uint32
+       |     +-- packets?     yang:counter64
+       |     +-- bytes?       yang:counter64
        |     +-- policy
-       |        +-- packets?   uint32
+       |        +-- packets?   yang:counter64
        +-- interface* [name] {per-interface-stats}?
        |  +-- name        string
        |  +-- traffic* [direction]
        |  |  +-- direction    identityref
        |  |  +-- l2
-       |  |  |  +-- frames?   uint64
-       |  |  |  +-- bytes?    uint64
+       |  |  |  +-- frames?   yang:counter64
+       |  |  |  +-- bytes?    yang:counter64
        |  |  +-- l3
        |  |  |  +-- address-family-stat* [address-family]
        |  |  |     +-- address-family    identityref
-       |  |  |     +-- packets?          uint64
-       |  |  |     +-- bytes?            uint64
+       |  |  |     +-- packets?          yang:counter64
+       |  |  |     +-- bytes?            yang:counter64
        |  |  |     +-- unicast
-       |  |  |     |  +-- packets?   uint64
-       |  |  |     |  +-- bytes?     uint64
+       |  |  |     |  +-- packets?   yang:counter64
+       |  |  |     |  +-- bytes?     yang:counter64
        |  |  |     +-- multicast
-       |  |  |        +-- packets?   uint64
-       |  |  |        +-- bytes?     uint64
+       |  |  |        +-- packets?   yang:counter64
+       |  |  |        +-- bytes?     yang:counter64
        |  |  +-- qos
        |  |     +-- class* [id]
        |  |        +-- id         string
-       |  |        +-- packets?   uint64
-       |  |        +-- bytes?     uint64
+       |  |        +-- packets?   yang:counter64
+       |  |        +-- bytes?     yang:counter64
        |  +-- discards* [direction]
        |     +-- direction    identityref
        |     +-- l2
-       |     |  +-- frames?   uint64
-       |     |  +-- bytes?    uint64
+       |     |  +-- frames?   yang:counter64
+       |     |  +-- bytes?    yang:counter64
        |     +-- l3
        |     |  +-- address-family-stat* [address-family]
        |     |     +-- address-family    identityref
-       |     |     +-- packets?          uint64
-       |     |     +-- bytes?            uint64
+       |     |     +-- packets?          yang:counter64
+       |     |     +-- bytes?            yang:counter64
        |     |     +-- unicast
-       |     |     |  +-- packets?   uint64
-       |     |     |  +-- bytes?     uint64
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
        |     |     +-- multicast
-       |     |        +-- packets?   uint64
-       |     |        +-- bytes?     uint64
+       |     |        +-- packets?   yang:counter64
+       |     |        +-- bytes?     yang:counter64
        |     +-- errors
        |     |  +-- l2
        |     |  |  +-- rx
-       |     |  |  |  +-- frames?          uint32
-       |     |  |  |  +-- crc-error?       uint32
-       |     |  |  |  +-- invalid-mac?     uint32
-       |     |  |  |  +-- invalid-vlan?    uint32
-       |     |  |  |  +-- invalid-frame?   uint32
+       |     |  |  |  +-- frames?          yang:counter64
+       |     |  |  |  +-- crc-error?       yang:counter64
+       |     |  |  |  +-- invalid-mac?     yang:counter64
+       |     |  |  |  +-- invalid-vlan?    yang:counter64
+       |     |  |  |  +-- invalid-frame?   yang:counter64
        |     |  |  +-- tx
-       |     |  |     +-- frames?   uint32
+       |     |  |     +-- frames?   yang:counter64
        |     |  +-- l3
        |     |  |  +-- rx
-       |     |  |  |  +-- packets?          uint32
-       |     |  |  |  +-- checksum-error?   uint32
-       |     |  |  |  +-- mtu-exceeded?     uint32
-       |     |  |  |  +-- invalid-packet?   uint32
-       |     |  |  +-- ttl-expired?     uint32
-       |     |  |  +-- no-route?        uint32
-       |     |  |  +-- invalid-sid?     uint32
-       |     |  |  +-- invalid-label?   uint32
+       |     |  |  |  +-- packets?          yang:counter64
+       |     |  |  |  +-- checksum-error?   yang:counter64
+       |     |  |  |  +-- mtu-exceeded?     yang:counter64
+       |     |  |  |  +-- invalid-packet?   yang:counter64
+       |     |  |  +-- ttl-expired?     yang:counter64
+       |     |  |  +-- no-route?        yang:counter64
+       |     |  |  +-- invalid-sid?     yang:counter64
+       |     |  |  +-- invalid-label?   yang:counter64
        |     |  |  +-- tx
-       |     |  |     +-- packets?   uint32
+       |     |  |     +-- packets?   yang:counter64
        |     |  +-- internal
-       |     |     +-- packets?        uint32
-       |     |     +-- parity-error?   uint32
+       |     |     +-- packets?        yang:counter64
+       |     |     +-- parity-error?   yang:counter64
        |     +-- policy
        |     |  +-- l2
-       |     |  |  +-- frames?   uint32
-       |     |  |  +-- acl?      uint32
+       |     |  |  +-- frames?   yang:counter64
+       |     |  |  +-- acl?      yang:counter64
        |     |  +-- l3
-       |     |     +-- packets?      uint32
-       |     |     +-- acl?          uint32
+       |     |     +-- packets?      yang:counter64
+       |     |     +-- acl?          yang:counter64
        |     |     +-- policer
-       |     |     |  +-- packets?   uint32
-       |     |     |  +-- bytes?     uint32
-       |     |     +-- null-route?   uint32
-       |     |     +-- rpf?          uint32
-       |     |     +-- ddos?         uint32
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
+       |     |     +-- null-route?   yang:counter64
+       |     |     +-- rpf?          yang:counter64
+       |     |     +-- ddos?         yang:counter64
        |     +-- no-buffer
        |        +-- class* [id]
        |           +-- id         string
-       |           +-- packets?   uint64
-       |           +-- bytes?     uint64
+       |           +-- packets?   yang:counter64
+       |           +-- bytes?     yang:counter64
        +-- flow* [direction] {flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
        |  |  +-- l2
-       |  |  |  +-- frames?   uint64
-       |  |  |  +-- bytes?    uint64
+       |  |  |  +-- frames?   yang:counter64
+       |  |  |  +-- bytes?    yang:counter64
        |  |  +-- l3
        |  |  |  +-- address-family-stat* [address-family]
        |  |  |     +-- address-family    identityref
-       |  |  |     +-- packets?          uint64
-       |  |  |     +-- bytes?            uint64
+       |  |  |     +-- packets?          yang:counter64
+       |  |  |     +-- bytes?            yang:counter64
        |  |  |     +-- unicast
-       |  |  |     |  +-- packets?   uint64
-       |  |  |     |  +-- bytes?     uint64
+       |  |  |     |  +-- packets?   yang:counter64
+       |  |  |     |  +-- bytes?     yang:counter64
        |  |  |     +-- multicast
-       |  |  |        +-- packets?   uint64
-       |  |  |        +-- bytes?     uint64
+       |  |  |        +-- packets?   yang:counter64
+       |  |  |        +-- bytes?     yang:counter64
        |  |  +-- qos
        |  |     +-- class* [id]
        |  |        +-- id         string
-       |  |        +-- packets?   uint64
-       |  |        +-- bytes?     uint64
+       |  |        +-- packets?   yang:counter64
+       |  |        +-- bytes?     yang:counter64
        |  +-- discards
        |     +-- l2
-       |     |  +-- frames?   uint64
-       |     |  +-- bytes?    uint64
+       |     |  +-- frames?   yang:counter64
+       |     |  +-- bytes?    yang:counter64
        |     +-- l3
        |     |  +-- address-family-stat* [address-family]
        |     |     +-- address-family    identityref
-       |     |     +-- packets?          uint64
-       |     |     +-- bytes?            uint64
+       |     |     +-- packets?          yang:counter64
+       |     |     +-- bytes?            yang:counter64
        |     |     +-- unicast
-       |     |     |  +-- packets?   uint64
-       |     |     |  +-- bytes?     uint64
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
        |     |     +-- multicast
-       |     |        +-- packets?   uint64
-       |     |        +-- bytes?     uint64
+       |     |        +-- packets?   yang:counter64
+       |     |        +-- bytes?     yang:counter64
        |     +-- errors
        |     |  +-- l2
        |     |  |  +-- rx
-       |     |  |  |  +-- frames?          uint32
-       |     |  |  |  +-- crc-error?       uint32
-       |     |  |  |  +-- invalid-mac?     uint32
-       |     |  |  |  +-- invalid-vlan?    uint32
-       |     |  |  |  +-- invalid-frame?   uint32
+       |     |  |  |  +-- frames?          yang:counter64
+       |     |  |  |  +-- crc-error?       yang:counter64
+       |     |  |  |  +-- invalid-mac?     yang:counter64
+       |     |  |  |  +-- invalid-vlan?    yang:counter64
+       |     |  |  |  +-- invalid-frame?   yang:counter64
        |     |  |  +-- tx
-       |     |  |     +-- frames?   uint32
+       |     |  |     +-- frames?   yang:counter64
        |     |  +-- l3
        |     |  |  +-- rx
-       |     |  |  |  +-- packets?          uint32
-       |     |  |  |  +-- checksum-error?   uint32
-       |     |  |  |  +-- mtu-exceeded?     uint32
-       |     |  |  |  +-- invalid-packet?   uint32
-       |     |  |  +-- ttl-expired?     uint32
-       |     |  |  +-- no-route?        uint32
-       |     |  |  +-- invalid-sid?     uint32
-       |     |  |  +-- invalid-label?   uint32
+       |     |  |  |  +-- packets?          yang:counter64
+       |     |  |  |  +-- checksum-error?   yang:counter64
+       |     |  |  |  +-- mtu-exceeded?     yang:counter64
+       |     |  |  |  +-- invalid-packet?   yang:counter64
+       |     |  |  +-- ttl-expired?     yang:counter64
+       |     |  |  +-- no-route?        yang:counter64
+       |     |  |  +-- invalid-sid?     yang:counter64
+       |     |  |  +-- invalid-label?   yang:counter64
        |     |  |  +-- tx
-       |     |  |     +-- packets?   uint32
+       |     |  |     +-- packets?   yang:counter64
        |     |  +-- internal
-       |     |     +-- packets?        uint32
-       |     |     +-- parity-error?   uint32
+       |     |     +-- packets?        yang:counter64
+       |     |     +-- parity-error?   yang:counter64
        |     +-- policy
        |     |  +-- l2
-       |     |  |  +-- frames?   uint32
-       |     |  |  +-- acl?      uint32
+       |     |  |  +-- frames?   yang:counter64
+       |     |  |  +-- acl?      yang:counter64
        |     |  +-- l3
-       |     |     +-- packets?      uint32
-       |     |     +-- acl?          uint32
+       |     |     +-- packets?      yang:counter64
+       |     |     +-- acl?          yang:counter64
        |     |     +-- policer
-       |     |     |  +-- packets?   uint32
-       |     |     |  +-- bytes?     uint32
-       |     |     +-- null-route?   uint32
-       |     |     +-- rpf?          uint32
-       |     |     +-- ddos?         uint32
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
+       |     |     +-- null-route?   yang:counter64
+       |     |     +-- rpf?          yang:counter64
+       |     |     +-- ddos?         yang:counter64
        |     +-- no-buffer
        |        +-- class* [id]
        |           +-- id         string
-       |           +-- packets?   uint64
-       |           +-- bytes?     uint64
+       |           +-- packets?   yang:counter64
+       |           +-- bytes?     yang:counter64
        +-- device {per-device-stats}?
           +-- traffic
           |  +-- l2
-          |  |  +-- frames?   uint64
-          |  |  +-- bytes?    uint64
+          |  |  +-- frames?   yang:counter64
+          |  |  +-- bytes?    yang:counter64
           |  +-- l3
           |  |  +-- address-family-stat* [address-family]
           |  |     +-- address-family    identityref
-          |  |     +-- packets?          uint64
-          |  |     +-- bytes?            uint64
+          |  |     +-- packets?          yang:counter64
+          |  |     +-- bytes?            yang:counter64
           |  |     +-- unicast
-          |  |     |  +-- packets?   uint64
-          |  |     |  +-- bytes?     uint64
+          |  |     |  +-- packets?   yang:counter64
+          |  |     |  +-- bytes?     yang:counter64
           |  |     +-- multicast
-          |  |        +-- packets?   uint64
-          |  |        +-- bytes?     uint64
+          |  |        +-- packets?   yang:counter64
+          |  |        +-- bytes?     yang:counter64
           |  +-- qos
           |     +-- class* [id]
           |        +-- id         string
-          |        +-- packets?   uint64
-          |        +-- bytes?     uint64
+          |        +-- packets?   yang:counter64
+          |        +-- bytes?     yang:counter64
           +-- discards
              +-- l2
-             |  +-- frames?   uint64
-             |  +-- bytes?    uint64
+             |  +-- frames?   yang:counter64
+             |  +-- bytes?    yang:counter64
              +-- l3
              |  +-- address-family-stat* [address-family]
              |     +-- address-family    identityref
-             |     +-- packets?          uint64
-             |     +-- bytes?            uint64
+             |     +-- packets?          yang:counter64
+             |     +-- bytes?            yang:counter64
              |     +-- unicast
-             |     |  +-- packets?   uint64
-             |     |  +-- bytes?     uint64
+             |     |  +-- packets?   yang:counter64
+             |     |  +-- bytes?     yang:counter64
              |     +-- multicast
-             |        +-- packets?   uint64
-             |        +-- bytes?     uint64
+             |        +-- packets?   yang:counter64
+             |        +-- bytes?     yang:counter64
              +-- errors
              |  +-- l2
              |  |  +-- rx
-             |  |  |  +-- frames?          uint32
-             |  |  |  +-- crc-error?       uint32
-             |  |  |  +-- invalid-mac?     uint32
-             |  |  |  +-- invalid-vlan?    uint32
-             |  |  |  +-- invalid-frame?   uint32
+             |  |  |  +-- frames?          yang:counter64
+             |  |  |  +-- crc-error?       yang:counter64
+             |  |  |  +-- invalid-mac?     yang:counter64
+             |  |  |  +-- invalid-vlan?    yang:counter64
+             |  |  |  +-- invalid-frame?   yang:counter64
              |  |  +-- tx
-             |  |     +-- frames?   uint32
+             |  |     +-- frames?   yang:counter64
              |  +-- l3
              |  |  +-- rx
-             |  |  |  +-- packets?          uint32
-             |  |  |  +-- checksum-error?   uint32
-             |  |  |  +-- mtu-exceeded?     uint32
-             |  |  |  +-- invalid-packet?   uint32
-             |  |  +-- ttl-expired?     uint32
-             |  |  +-- no-route?        uint32
-             |  |  +-- invalid-sid?     uint32
-             |  |  +-- invalid-label?   uint32
+             |  |  |  +-- packets?          yang:counter64
+             |  |  |  +-- checksum-error?   yang:counter64
+             |  |  |  +-- mtu-exceeded?     yang:counter64
+             |  |  |  +-- invalid-packet?   yang:counter64
+             |  |  +-- ttl-expired?     yang:counter64
+             |  |  +-- no-route?        yang:counter64
+             |  |  +-- invalid-sid?     yang:counter64
+             |  |  +-- invalid-label?   yang:counter64
              |  |  +-- tx
-             |  |     +-- packets?   uint32
+             |  |     +-- packets?   yang:counter64
              |  +-- internal
-             |     +-- packets?        uint32
-             |     +-- parity-error?   uint32
+             |     +-- packets?        yang:counter64
+             |     +-- parity-error?   yang:counter64
              +-- policy
              |  +-- l2
-             |  |  +-- frames?   uint32
-             |  |  +-- acl?      uint32
+             |  |  +-- frames?   yang:counter64
+             |  |  +-- acl?      yang:counter64
              |  +-- l3
-             |     +-- packets?      uint32
-             |     +-- acl?          uint32
+             |     +-- packets?      yang:counter64
+             |     +-- acl?          yang:counter64
              |     +-- policer
-             |     |  +-- packets?   uint32
-             |     |  +-- bytes?     uint32
-             |     +-- null-route?   uint32
-             |     +-- rpf?          uint32
-             |     +-- ddos?         uint32
+             |     |  +-- packets?   yang:counter64
+             |     |  +-- bytes?     yang:counter64
+             |     +-- null-route?   yang:counter64
+             |     +-- rpf?          yang:counter64
+             |     +-- ddos?         yang:counter64
              +-- no-buffer
                 +-- class* [id]
                    +-- id         string
-                   +-- packets?   uint64
-                   +-- bytes?     uint64
+                   +-- packets?   yang:counter64
+                   +-- bytes?     yang:counter64
 
    The corresponding YANG module is defined in Section 4.3.
 
@@ -619,6 +619,11 @@ Table of Contents
        "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx";
      prefix plr-sx;
 
+     import ietf-yang-types {
+       prefix yang;
+       reference
+         "RFC 6991: Common YANG Data Types";
+     }
      import ietf-yang-structure-ext {
        prefix sx;
        reference
@@ -747,88 +752,43 @@ Table of Contents
       * Groupings
       */
 
-     grouping basic-packets-64 {
+     grouping basic-packets {
        description
-         "Grouping for 64-bit Layer 3 packet counters.";
+         "Grouping for Layer 3 packet counters.";
        leaf packets {
-         type uint64;
+         type yang:counter64;
          description
            "Number of Layer 3 packets.";
        }
      }
 
-     grouping basic-packets-bytes-64 {
+     grouping basic-packets-bytes {
        description
-         "Grouping for 64-bit Layer 3 packet and byte
-          counters.";
-       uses basic-packets-64;
+         "Grouping for Layer 3 packet and byte counters.";
+       uses basic-packets;
        leaf bytes {
-         type uint64;
+         type yang:counter64;
          description
            "Number of Layer 3 bytes.";
        }
      }
 
-     grouping basic-frames-64 {
+     grouping basic-frames {
        description
-         "Grouping for 64-bit Layer 2 frame counters.";
+         "Grouping for Layer 2 frame counters.";
        leaf frames {
-         type uint64;
+         type yang:counter64;
          description
            "Number of Layer 2 frames.";
        }
      }
 
-     grouping basic-frames-bytes-64 {
+     grouping basic-frames-bytes {
        description
-         "Grouping for 64-bit Layer 2 frame and byte
-          counters.";
-       uses basic-frames-64;
+         "Grouping for Layer 2 frame and byte counters.";
+       uses basic-frames;
        leaf bytes {
-         type uint64;
-         description
-           "Number of Layer 2 bytes.";
-       }
-     }
-
-     grouping basic-packets-32 {
-       description
-         "Grouping for 32-bit Layer 3 packet counters.";
-       leaf packets {
-         type uint32;
-         description
-           "Number of Layer 3 packets.";
-       }
-     }
-
-     grouping basic-packets-bytes-32 {
-       description
-         "Grouping for 32-bit Layer 3 packet and byte
-          counters.";
-       uses basic-packets-32;
-       leaf bytes {
-         type uint32;
-         description
-           "Number of Layer 3 bytes.";
-       }
-     }
-
-     grouping basic-frames-32 {
-       description
-         "Grouping for 32-bit Layer 2 frame counters.";
-       leaf frames {
-         type uint32;
-         description
-           "Number of Layer 2 frames.";
-       }
-     }
-
-     grouping basic-frames-bytes-32 {
-       description
-         "Grouping for 32-bit Layer 2 frame and byte counters.";
-       uses basic-frames-32;
-       leaf bytes {
-         type uint32;
+         type yang:counter64;
          description
            "Number of Layer 2 bytes.";
        }
@@ -837,7 +797,7 @@ Table of Contents
      grouping l2-traffic {
        description
          "Layer 2 traffic counters.";
-       uses basic-frames-bytes-64;
+       uses basic-frames-bytes;
      }
 
      grouping ip {
@@ -854,16 +814,16 @@ Table of Contents
            description
              "Specifies an address family.";
          }
-         uses basic-packets-bytes-64;
+         uses basic-packets-bytes;
          container unicast {
            description
              "Unicast traffic counters.";
-           uses basic-packets-bytes-64;
+           uses basic-packets-bytes;
          }
          container multicast {
            description
              "Multicast traffic counters.";
-           uses basic-packets-bytes-64;
+           uses basic-packets-bytes;
          }
        }
      }
@@ -887,7 +847,7 @@ Table of Contents
            description
              "QoS class identifier.";
          }
-         uses basic-packets-bytes-64;
+         uses basic-packets-bytes;
        }
      }
 
@@ -919,30 +879,30 @@ Table of Contents
            "Layer 2 ingress frame receive error discard
             counters.";
          leaf frames {
-           type uint32;
+           type yang:counter64;
            description
              "The number of frames discarded due to errors
               with the received frame.";
          }
          leaf crc-error {
-           type uint32;
+           type yang:counter64;
            description
              "The number of frames discarded due to CRC error.";
          }
          leaf invalid-mac {
-           type uint32;
+           type yang:counter64;
            description
              "The number of frames discarded due to an invalid
               MAC address.";
          }
          leaf invalid-vlan {
-           type uint32;
+           type yang:counter64;
            description
              "The number of frames discarded due to an invalid
               VLAN tag.";
          }
          leaf invalid-frame {
-           type uint32;
+           type yang:counter64;
            description
              "The number of invalid frames discarded due to other
               reasons, not limited to: malformed frames, frame-size
@@ -959,25 +919,25 @@ Table of Contents
            "Layer 3 ingress packet receive error discard
             counters.";
          leaf packets {
-           type uint32;
+           type yang:counter64;
            description
              "The number of Layer 3 packets discarded due to
               errors in the received packet.";
          }
          leaf checksum-error {
-           type uint32;
+           type yang:counter64;
            description
              "The number of received packets discarded due
               to a checksum error.";
          }
          leaf mtu-exceeded {
-           type uint32;
+           type yang:counter64;
            description
              "The number of received packets discarded due to
               MTU exceeded.";
          }
          leaf invalid-packet {
-           type uint32;
+           type yang:counter64;
            description
              "The number of invalid packets discarded due to other
               reasons, not limited to: invalid packet length, invalid
@@ -986,25 +946,25 @@ Table of Contents
          }
        }
        leaf ttl-expired {
-         type uint32;
+         type yang:counter64;
          description
            "The number of received packets discarded due to
             expired TTL.";
        }
        leaf no-route {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to not matching
             a valid route.";
        }
        leaf invalid-sid {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to an invalid
             Segment Routing (SR) SID.";
        }
        leaf invalid-label {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to an invalid
             MPLS label.";
@@ -1015,13 +975,13 @@ Table of Contents
        description
          "Internal error discard counters.";
        leaf packets {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to internal
             errors.";
        }
        leaf parity-error {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to parity
             errors.";
@@ -1035,7 +995,7 @@ Table of Contents
          description
            "Layer 2 transmit frame error discard counters.";
          leaf frames {
-           type uint32;
+           type yang:counter64;
            description
              "The number of Layer 2 frames discarded due to
               errors when transmitting.";
@@ -1050,7 +1010,7 @@ Table of Contents
          description
            "Layer 3 transmit packet error discard counters.";
          leaf packets {
-           type uint32;
+           type yang:counter64;
            description
              "The number of Layer 3 packets discarded due to
               errors when transmitting.";
@@ -1084,13 +1044,13 @@ Table of Contents
        description
          "Layer 2 policy frame discard counters.";
        leaf frames {
-         type uint32;
+         type yang:counter64;
          description
            "The number of Layer 2 frames discarded due
             to policy.";
        }
        leaf acl {
-         type uint32;
+         type yang:counter64;
          description
            "The number of frames discarded due to Layer 2 ACLs.";
        }
@@ -1100,12 +1060,12 @@ Table of Contents
        description
          "Layer 3 policy packet discard counters.";
        leaf packets {
-         type uint32;
+         type yang:counter64;
          description
            "The number of Layer 3 packets discarded due to policy.";
        }
        leaf acl {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to Layer 3 ACLs.";
        }
@@ -1113,22 +1073,22 @@ Table of Contents
          description
            "The number of packets discarded due ingress
             policer violations.";
-         uses basic-packets-bytes-32;
+         uses basic-packets-bytes;
        }
        leaf null-route {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to matching
             a null route.";
        }
        leaf rpf {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to failing
             Reverse Path Forwarding (RPF) check.";
        }
        leaf ddos {
-         type uint32;
+         type yang:counter64;
          description
            "The number of packets discarded due to DDoS
             protection policies.";
@@ -1241,7 +1201,7 @@ Table of Contents
            description
              "Specifies a direction.";
          }
-         uses basic-packets-bytes-32;
+         uses basic-packets-bytes;
        }
        list discards {
          key "direction";
@@ -1254,11 +1214,11 @@ Table of Contents
            description
              "Specifies a direction.";
          }
-         uses basic-packets-bytes-32;
+         uses basic-packets-bytes;
          container policy {
            description
              "Number of control plane packets discarded due to policy.";
-           uses basic-packets-32;
+           uses basic-packets;
          }
        }
      }
@@ -1328,167 +1288,178 @@ Table of Contents
    The following YANG tree diagram shows the complete structure:
 
    module: ietf-packet-discard-reporting
+     +--rw control-plane! {control-plane-stats}?
+     |  +--rw traffic* [direction]
+     |  |  +--rw direction    identityref
+     |  |  +--rw packets?     yang:counter64
+     |  |  +--rw bytes?       yang:counter64
+     |  +--rw discards* [direction]
+     |     +--rw direction    identityref
+     |     +--rw packets?     yang:counter64
+     |     +--rw bytes?       yang:counter64
+     |     +--rw policy
+     |        +--rw packets?   yang:counter64
      +--rw interface* [name] {per-interface-stats}?
      |  +--rw name        string
      |  +--rw traffic* [direction]
      |  |  +--rw direction    identityref
      |  |  +--rw l2
-     |  |  |  +--rw frames?   uint64
-     |  |  |  +--rw bytes?    uint64
+     |  |  |  +--rw frames?   yang:counter64
+     |  |  |  +--rw bytes?    yang:counter64
      |  |  +--rw l3
      |  |  |  +--rw address-family-stat* [address-family]
      |  |  |     +--rw address-family    identityref
-     |  |  |     +--rw packets?          uint64
-     |  |  |     +--rw bytes?            uint64
+     |  |  |     +--rw packets?          yang:counter64
+     |  |  |     +--rw bytes?            yang:counter64
      |  |  |     +--rw unicast
-     |  |  |     |  +--rw packets?   uint64
-     |  |  |     |  +--rw bytes?     uint64
+     |  |  |     |  +--rw packets?   yang:counter64
+     |  |  |     |  +--rw bytes?     yang:counter64
      |  |  |     +--rw multicast
-     |  |  |        +--rw packets?   uint64
-     |  |  |        +--rw bytes?     uint64
+     |  |  |        +--rw packets?   yang:counter64
+     |  |  |        +--rw bytes?     yang:counter64
      |  |  +--rw qos
      |  |     +--rw class* [id]
      |  |        +--rw id         string
-     |  |        +--rw packets?   uint64
-     |  |        +--rw bytes?     uint64
+     |  |        +--rw packets?   yang:counter64
+     |  |        +--rw bytes?     yang:counter64
      |  +--rw discards* [direction]
      |     +--rw direction    identityref
      |     +--rw l2
-     |     |  +--rw frames?   uint64
-     |     |  +--rw bytes?    uint64
+     |     |  +--rw frames?   yang:counter64
+     |     |  +--rw bytes?    yang:counter64
      |     +--rw l3
      |     |  +--rw address-family-stat* [address-family]
      |     |     +--rw address-family    identityref
-     |     |     +--rw packets?          uint64
-     |     |     +--rw bytes?            uint64
+     |     |     +--rw packets?          yang:counter64
+     |     |     +--rw bytes?            yang:counter64
      |     |     +--rw unicast
-     |     |     |  +--rw packets?   uint64
-     |     |     |  +--rw bytes?     uint64
+     |     |     |  +--rw packets?   yang:counter64
+     |     |     |  +--rw bytes?     yang:counter64
      |     |     +--rw multicast
-     |     |        +--rw packets?   uint64
-     |     |        +--rw bytes?     uint64
+     |     |        +--rw packets?   yang:counter64
+     |     |        +--rw bytes?     yang:counter64
      |     +--rw errors
      |     |  +--rw l2
      |     |  |  +--rw rx
-     |     |  |  |  +--rw frames?          uint32
-     |     |  |  |  +--rw crc-error?       uint32
-     |     |  |  |  +--rw invalid-mac?     uint32
-     |     |  |  |  +--rw invalid-vlan?    uint32
-     |     |  |  |  +--rw invalid-frame?   uint32
+     |     |  |  |  +--rw frames?          yang:counter64
+     |     |  |  |  +--rw crc-error?       yang:counter64
+     |     |  |  |  +--rw invalid-mac?     yang:counter64
+     |     |  |  |  +--rw invalid-vlan?    yang:counter64
+     |     |  |  |  +--rw invalid-frame?   yang:counter64
      |     |  |  +--rw tx
-     |     |  |     +--rw frames?   uint32
+     |     |  |     +--rw frames?   yang:counter64
      |     |  +--rw l3
      |     |  |  +--rw rx
-     |     |  |  |  +--rw packets?          uint32
-     |     |  |  |  +--rw checksum-error?   uint32
-     |     |  |  |  +--rw mtu-exceeded?     uint32
-     |     |  |  |  +--rw invalid-packet?   uint32
-     |     |  |  +--rw ttl-expired?     uint32
-     |     |  |  +--rw no-route?        uint32
-     |     |  |  +--rw invalid-sid?     uint32
-     |     |  |  +--rw invalid-label?   uint32
+     |     |  |  |  +--rw packets?          yang:counter64
+     |     |  |  |  +--rw checksum-error?   yang:counter64
+     |     |  |  |  +--rw mtu-exceeded?     yang:counter64
+     |     |  |  |  +--rw invalid-packet?   yang:counter64
+     |     |  |  +--rw ttl-expired?     yang:counter64
+     |     |  |  +--rw no-route?        yang:counter64
+     |     |  |  +--rw invalid-sid?     yang:counter64
+     |     |  |  +--rw invalid-label?   yang:counter64
      |     |  |  +--rw tx
-     |     |  |     +--rw packets?   uint32
+     |     |  |     +--rw packets?   yang:counter64
      |     |  +--rw internal
-     |     |     +--rw packets?        uint32
-     |     |     +--rw parity-error?   uint32
+     |     |     +--rw packets?        yang:counter64
+     |     |     +--rw parity-error?   yang:counter64
      |     +--rw policy
      |     |  +--rw l2
-     |     |  |  +--rw frames?   uint32
-     |     |  |  +--rw acl?      uint32
+     |     |  |  +--rw frames?   yang:counter64
+     |     |  |  +--rw acl?      yang:counter64
      |     |  +--rw l3
-     |     |     +--rw packets?      uint32
-     |     |     +--rw acl?          uint32
+     |     |     +--rw packets?      yang:counter64
+     |     |     +--rw acl?          yang:counter64
      |     |     +--rw policer
-     |     |     |  +--rw packets?   uint32
-     |     |     |  +--rw bytes?     uint32
-     |     |     +--rw null-route?   uint32
-     |     |     +--rw rpf?          uint32
-     |     |     +--rw ddos?         uint32
+     |     |     |  +--rw packets?   yang:counter64
+     |     |     |  +--rw bytes?     yang:counter64
+     |     |     +--rw null-route?   yang:counter64
+     |     |     +--rw rpf?          yang:counter64
+     |     |     +--rw ddos?         yang:counter64
      |     +--rw no-buffer
      |        +--rw class* [id]
      |           +--rw id         string
-     |           +--rw packets?   uint64
-     |           +--rw bytes?     uint64
+     |           +--rw packets?   yang:counter64
+     |           +--rw bytes?     yang:counter64
      +--rw device! {per-device-stats}?
         +--rw traffic
         |  +--rw l2
-        |  |  +--rw frames?   uint64
-        |  |  +--rw bytes?    uint64
+        |  |  +--rw frames?   yang:counter64
+        |  |  +--rw bytes?    yang:counter64
         |  +--rw l3
         |  |  +--rw address-family-stat* [address-family]
         |  |     +--rw address-family    identityref
-        |  |     +--rw packets?          uint64
-        |  |     +--rw bytes?            uint64
+        |  |     +--rw packets?          yang:counter64
+        |  |     +--rw bytes?            yang:counter64
         |  |     +--rw unicast
-        |  |     |  +--rw packets?   uint64
-        |  |     |  +--rw bytes?     uint64
+        |  |     |  +--rw packets?   yang:counter64
+        |  |     |  +--rw bytes?     yang:counter64
         |  |     +--rw multicast
-        |  |        +--rw packets?   uint64
-        |  |        +--rw bytes?     uint64
+        |  |        +--rw packets?   yang:counter64
+        |  |        +--rw bytes?     yang:counter64
         |  +--rw qos
         |     +--rw class* [id]
         |        +--rw id         string
-        |        +--rw packets?   uint64
-        |        +--rw bytes?     uint64
+        |        +--rw packets?   yang:counter64
+        |        +--rw bytes?     yang:counter64
         +--rw discards
            +--rw l2
-           |  +--rw frames?   uint64
-           |  +--rw bytes?    uint64
+           |  +--rw frames?   yang:counter64
+           |  +--rw bytes?    yang:counter64
            +--rw l3
            |  +--rw address-family-stat* [address-family]
            |     +--rw address-family    identityref
-           |     +--rw packets?          uint64
-           |     +--rw bytes?            uint64
+           |     +--rw packets?          yang:counter64
+           |     +--rw bytes?            yang:counter64
            |     +--rw unicast
-           |     |  +--rw packets?   uint64
-           |     |  +--rw bytes?     uint64
+           |     |  +--rw packets?   yang:counter64
+           |     |  +--rw bytes?     yang:counter64
            |     +--rw multicast
-           |        +--rw packets?   uint64
-           |        +--rw bytes?     uint64
+           |        +--rw packets?   yang:counter64
+           |        +--rw bytes?     yang:counter64
            +--rw errors
            |  +--rw l2
            |  |  +--rw rx
-           |  |  |  +--rw frames?          uint32
-           |  |  |  +--rw crc-error?       uint32
-           |  |  |  +--rw invalid-mac?     uint32
-           |  |  |  +--rw invalid-vlan?    uint32
-           |  |  |  +--rw invalid-frame?   uint32
+           |  |  |  +--rw frames?          yang:counter64
+           |  |  |  +--rw crc-error?       yang:counter64
+           |  |  |  +--rw invalid-mac?     yang:counter64
+           |  |  |  +--rw invalid-vlan?    yang:counter64
+           |  |  |  +--rw invalid-frame?   yang:counter64
            |  |  +--rw tx
-           |  |     +--rw frames?   uint32
+           |  |     +--rw frames?   yang:counter64
            |  +--rw l3
            |  |  +--rw rx
-           |  |  |  +--rw packets?          uint32
-           |  |  |  +--rw checksum-error?   uint32
-           |  |  |  +--rw mtu-exceeded?     uint32
-           |  |  |  +--rw invalid-packet?   uint32
-           |  |  +--rw ttl-expired?     uint32
-           |  |  +--rw no-route?        uint32
-           |  |  +--rw invalid-sid?     uint32
-           |  |  +--rw invalid-label?   uint32
+           |  |  |  +--rw packets?          yang:counter64
+           |  |  |  +--rw checksum-error?   yang:counter64
+           |  |  |  +--rw mtu-exceeded?     yang:counter64
+           |  |  |  +--rw invalid-packet?   yang:counter64
+           |  |  +--rw ttl-expired?     yang:counter64
+           |  |  +--rw no-route?        yang:counter64
+           |  |  +--rw invalid-sid?     yang:counter64
+           |  |  +--rw invalid-label?   yang:counter64
            |  |  +--rw tx
-           |  |     +--rw packets?   uint32
+           |  |     +--rw packets?   yang:counter64
            |  +--rw internal
-           |     +--rw packets?        uint32
-           |     +--rw parity-error?   uint32
+           |     +--rw packets?        yang:counter64
+           |     +--rw parity-error?   yang:counter64
            +--rw policy
            |  +--rw l2
-           |  |  +--rw frames?   uint32
-           |  |  +--rw acl?      uint32
+           |  |  +--rw frames?   yang:counter64
+           |  |  +--rw acl?      yang:counter64
            |  +--rw l3
-           |     +--rw packets?      uint32
-           |     +--rw acl?          uint32
+           |     +--rw packets?      yang:counter64
+           |     +--rw acl?          yang:counter64
            |     +--rw policer
-           |     |  +--rw packets?   uint32
-           |     |  +--rw bytes?     uint32
-           |     +--rw null-route?   uint32
-           |     +--rw rpf?          uint32
-           |     +--rw ddos?         uint32
+           |     |  +--rw packets?   yang:counter64
+           |     |  +--rw bytes?     yang:counter64
+           |     +--rw null-route?   yang:counter64
+           |     +--rw rpf?          yang:counter64
+           |     +--rw ddos?         yang:counter64
            +--rw no-buffer
               +--rw class* [id]
                  +--rw id         string
-                 +--rw packets?   uint64
-                 +--rw bytes?     uint64
+                 +--rw packets?   yang:counter64
+                 +--rw bytes?     yang:counter64
 
 5.2.  Implementation Requirements
 
@@ -1656,6 +1627,12 @@ Table of Contents
       * Features
       */
 
+     feature control-plane-stats {
+       description
+         "Indicates support of control plane statistics on this
+          device.";
+     }
+
      feature per-interface-stats {
        description
          "Indicates support of per-interface statistics on this
@@ -1674,6 +1651,13 @@ Table of Contents
 
      /**TO DO: Need to find where to graft the reporting***/
 
+     container control-plane {
+       if-feature "control-plane-stats";
+       presence "Control plane statistics are available.";
+       description
+         "Control plane packet counters.";
+       uses plr-sx:control-plane;
+     }
      list interface {
        if-feature "per-interface-stats";
        key "name";
@@ -2082,20 +2066,16 @@ Appendix C.  Implementation Experience
         detecting a significant change in ACL discards after a
         configuration change compared to before.
 
-   8.   Where traffic byte counters need to be 64-bit, packet and
-        discard counters that increase at a lower rate may be encoded in
-        32-bit.
-
-   9.   Aggregate counters need to be able to deal with the possibility
+   8.   Aggregate counters need to be able to deal with the possibility
         of discontinuities in the underlying counters.
 
-   10.  In cases where the reporting device is the source or destination
+   9.   In cases where the reporting device is the source or destination
         of a tunnel, the ingress protocol for a packet may differ from
-        the egress protocol; if IPv4 is tunnelled over IPv6 for example.
-        Some implementations may attribute egress discards to the
-        ingress protocol.
+        the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some
+        implementations may attribute egress discards to the ingress
+        protocol.
 
-   11.  While the classification tree is seven layers deep, a minimal
+   10.  While the classification tree is seven layers deep, a minimal
         implementation may only implement the top six layers.
 
 Authors' Addresses
