@@ -4,6 +4,11 @@ module ietf-packet-discard-reporting-sx {
     "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx";
   prefix plr-sx;
 
+  import ietf-yang-types {
+    prefix yang;
+    reference
+      "RFC 6991: Common YANG Data Types";
+  }
   import ietf-yang-structure-ext {
     prefix sx;
     reference
@@ -132,88 +137,43 @@ module ietf-packet-discard-reporting-sx {
    * Groupings
    */
 
-  grouping basic-packets-64 {
+  grouping basic-packets {
     description
-      "Grouping for 64-bit Layer 3 packet counters.";
+      "Grouping for Layer 3 packet counters.";
     leaf packets {
-      type uint64;
+      type yang:counter64;
       description
         "Number of Layer 3 packets.";
     }
   }
 
-  grouping basic-packets-bytes-64 {
+  grouping basic-packets-bytes {
     description
-      "Grouping for 64-bit Layer 3 packet and byte
-       counters.";
-    uses basic-packets-64;
+      "Grouping for Layer 3 packet and byte counters.";
+    uses basic-packets;
     leaf bytes {
-      type uint64;
+      type yang:counter64;
       description
         "Number of Layer 3 bytes.";
     }
   }
 
-  grouping basic-frames-64 {
+  grouping basic-frames {
     description
-      "Grouping for 64-bit Layer 2 frame counters.";
+      "Grouping for Layer 2 frame counters.";
     leaf frames {
-      type uint64;
+      type yang:counter64;
       description
         "Number of Layer 2 frames.";
     }
   }
 
-  grouping basic-frames-bytes-64 {
+  grouping basic-frames-bytes {
     description
-      "Grouping for 64-bit Layer 2 frame and byte
-       counters.";
-    uses basic-frames-64;
+      "Grouping for Layer 2 frame and byte counters.";
+    uses basic-frames;
     leaf bytes {
-      type uint64;
-      description
-        "Number of Layer 2 bytes.";
-    }
-  }
-
-  grouping basic-packets-32 {
-    description
-      "Grouping for 32-bit Layer 3 packet counters.";
-    leaf packets {
-      type uint32;
-      description
-        "Number of Layer 3 packets.";
-    }
-  }
-
-  grouping basic-packets-bytes-32 {
-    description
-      "Grouping for 32-bit Layer 3 packet and byte
-       counters.";
-    uses basic-packets-32;
-    leaf bytes {
-      type uint32;
-      description
-        "Number of Layer 3 bytes.";
-    }
-  }
-
-  grouping basic-frames-32 {
-    description
-      "Grouping for 32-bit Layer 2 frame counters.";
-    leaf frames {
-      type uint32;
-      description
-        "Number of Layer 2 frames.";
-    }
-  }
-
-  grouping basic-frames-bytes-32 {
-    description
-      "Grouping for 32-bit Layer 2 frame and byte counters.";
-    uses basic-frames-32;
-    leaf bytes {
-      type uint32;
+      type yang:counter64;
       description
         "Number of Layer 2 bytes.";
     }
@@ -222,7 +182,7 @@ module ietf-packet-discard-reporting-sx {
   grouping l2-traffic {
     description
       "Layer 2 traffic counters.";
-    uses basic-frames-bytes-64;
+    uses basic-frames-bytes;
   }
 
   grouping ip {
@@ -239,16 +199,16 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies an address family.";
       }
-      uses basic-packets-bytes-64;
+      uses basic-packets-bytes;
       container unicast {
         description
           "Unicast traffic counters.";
-        uses basic-packets-bytes-64;
+        uses basic-packets-bytes;
       }
       container multicast {
         description
           "Multicast traffic counters.";
-        uses basic-packets-bytes-64;
+        uses basic-packets-bytes;
       }
     }
   }
@@ -272,7 +232,7 @@ module ietf-packet-discard-reporting-sx {
         description
           "QoS class identifier.";
       }
-      uses basic-packets-bytes-64;
+      uses basic-packets-bytes;
     }
   }
 
@@ -304,30 +264,30 @@ module ietf-packet-discard-reporting-sx {
         "Layer 2 ingress frame receive error discard
          counters.";
       leaf frames {
-        type uint32;
+        type yang:counter64;
         description
           "The number of frames discarded due to errors
            with the received frame.";
       }
       leaf crc-error {
-        type uint32;
+        type yang:counter64;
         description
           "The number of frames discarded due to CRC error.";
       }
       leaf invalid-mac {
-        type uint32;
+        type yang:counter64;
         description
           "The number of frames discarded due to an invalid
            MAC address.";
       }
       leaf invalid-vlan {
-        type uint32;
+        type yang:counter64;
         description
           "The number of frames discarded due to an invalid
            VLAN tag.";
       }
       leaf invalid-frame {
-        type uint32;
+        type yang:counter64;
         description
           "The number of invalid frames discarded due to other
            reasons, not limited to: malformed frames, frame-size
@@ -344,25 +304,25 @@ module ietf-packet-discard-reporting-sx {
         "Layer 3 ingress packet receive error discard
          counters.";
       leaf packets {
-        type uint32;
+        type yang:counter64;
         description
           "The number of Layer 3 packets discarded due to
            errors in the received packet.";
       }
       leaf checksum-error {
-        type uint32;
+        type yang:counter64;
         description
           "The number of received packets discarded due
            to a checksum error.";
       }
       leaf mtu-exceeded {
-        type uint32;
+        type yang:counter64;
         description
           "The number of received packets discarded due to
            MTU exceeded.";
       }
       leaf invalid-packet {
-        type uint32;
+        type yang:counter64;
         description
           "The number of invalid packets discarded due to other
            reasons, not limited to: invalid packet length, invalid
@@ -371,25 +331,25 @@ module ietf-packet-discard-reporting-sx {
       }
     }
     leaf ttl-expired {
-      type uint32;
+      type yang:counter64;
       description
         "The number of received packets discarded due to
          expired TTL.";
     }
     leaf no-route {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to not matching
          a valid route.";
     }
     leaf invalid-sid {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to an invalid
          Segment Routing (SR) SID.";
     }
     leaf invalid-label {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to an invalid
          MPLS label.";
@@ -400,13 +360,13 @@ module ietf-packet-discard-reporting-sx {
     description
       "Internal error discard counters.";
     leaf packets {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to internal
          errors.";
     }
     leaf parity-error {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to parity
          errors.";
@@ -420,7 +380,7 @@ module ietf-packet-discard-reporting-sx {
       description
         "Layer 2 transmit frame error discard counters.";
       leaf frames {
-        type uint32;
+        type yang:counter64;
         description
           "The number of Layer 2 frames discarded due to
            errors when transmitting.";
@@ -435,7 +395,7 @@ module ietf-packet-discard-reporting-sx {
       description
         "Layer 3 transmit packet error discard counters.";
       leaf packets {
-        type uint32;
+        type yang:counter64;
         description
           "The number of Layer 3 packets discarded due to
            errors when transmitting.";
@@ -469,13 +429,13 @@ module ietf-packet-discard-reporting-sx {
     description
       "Layer 2 policy frame discard counters.";
     leaf frames {
-      type uint32;
+      type yang:counter64;
       description
         "The number of Layer 2 frames discarded due
          to policy.";
     }
     leaf acl {
-      type uint32;
+      type yang:counter64;
       description
         "The number of frames discarded due to Layer 2 ACLs.";
     }
@@ -485,12 +445,12 @@ module ietf-packet-discard-reporting-sx {
     description
       "Layer 3 policy packet discard counters.";
     leaf packets {
-      type uint32;
+      type yang:counter64;
       description
         "The number of Layer 3 packets discarded due to policy.";
     }
     leaf acl {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to Layer 3 ACLs.";
     }
@@ -498,22 +458,22 @@ module ietf-packet-discard-reporting-sx {
       description
         "The number of packets discarded due ingress
          policer violations.";
-      uses basic-packets-bytes-32;
+      uses basic-packets-bytes;
     }
     leaf null-route {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to matching
          a null route.";
     }
     leaf rpf {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to failing
          Reverse Path Forwarding (RPF) check.";
     }
     leaf ddos {
-      type uint32;
+      type yang:counter64;
       description
         "The number of packets discarded due to DDoS
          protection policies.";
@@ -626,7 +586,7 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies a direction.";
       }
-      uses basic-packets-bytes-32;
+      uses basic-packets-bytes;
     }
     list discards {
       key "direction";
@@ -639,11 +599,11 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies a direction.";
       }
-      uses basic-packets-bytes-32;
+      uses basic-packets-bytes;
       container policy {
         description
           "Number of control plane packets discarded due to policy.";
-        uses basic-packets-32;
+        uses basic-packets;
       }
     }
   }

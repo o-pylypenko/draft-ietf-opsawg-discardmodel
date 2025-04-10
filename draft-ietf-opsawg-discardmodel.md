@@ -455,7 +455,6 @@ This appendix captures practical insights gained from implementing this informat
 5. Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured, in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.
 6. It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.
 7. It is not possible to identify a configuration error - e.g., when intended discards are unintended - with device discard metrics alone.  For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL, i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before.
-8. Where traffic byte counters need to be 64-bit, packet and discard counters that increase at a lower rate may be encoded in 32-bit.
-9. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
-10. In cases where the reporting device is the source or destination of a tunnel, the ingress protocol for a packet may differ from the egress protocol; if IPv4 is tunnelled over IPv6 for example.  Some implementations may attribute egress discards to the ingress protocol.
-11. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
+8. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
+9. In cases where the reporting device is the source or destination of a tunnel, the ingress protocol for a packet may differ from the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some implementations may attribute egress discards to the ingress protocol.
+10. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
