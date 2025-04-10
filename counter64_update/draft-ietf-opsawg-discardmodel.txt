@@ -2071,9 +2071,9 @@ Appendix C.  Implementation Experience
 
    9.   In cases where the reporting device is the source or destination
         of a tunnel, the ingress protocol for a packet may differ from
-        the egress protocol; if IPv4 is tunnelled over IPv6 for example.
-        Some implementations may attribute egress discards to the
-        ingress protocol.
+        the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some
+        implementations may attribute egress discards to the ingress
+        protocol.
 
    10.  While the classification tree is seven layers deep, a minimal
         implementation may only implement the top six layers.
