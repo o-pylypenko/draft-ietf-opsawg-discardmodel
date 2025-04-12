@@ -19,12 +19,12 @@ Expires: 12 October 2025                                         J. Haas
 
 Abstract
 
-   This document defines an information model and corresponding data
-   model for packet discard reporting.  The information model provides
-   an implementation-independent framework for classifying packet loss
-   to enable automated network mitigation of unintended packet loss.
-   The data model specifies a YANG implementation of this framework for
-   network elements.
+   This document defines an information model and a corresponding YANG
+   data model for packet discard reporting.  The information model
+   provides an implementation-independent framework for classifying
+   packet loss to enable automated network mitigation of unintended
+   packet loss.  The YANG data model specifies an implementation of this
+   framework for network elements.
 
 About This Document
 
@@ -82,12 +82,12 @@ Table of Contents
    4.  Information Model
      4.1.  Structure
      4.2.  Sub-type Definitions
-     4.3.  Information Model - YANG Module
+     4.3.  "ietf-packet-discard-reporting-sx" YANG Module
    5.  Data Model
      5.1.  Structure
      5.2.  Implementation Requirements
      5.3.  Usage Examples
-     5.4.  Data model - YANG Module
+     5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Security Considerations
      6.1.  Information Model
      6.2.  Data Model
@@ -141,8 +141,8 @@ Table of Contents
    facilitate automated root cause analysis and impact mitigation, e.g.,
    the "For us" reason code.
 
-   This document defines an information model and corresponding data
-   model for packet loss reporting which address these issues.  The
+   This document defines an information model and corresponding YANG
+   data model for packet loss reporting which address these issues.  The
    information model provides precise classification of packet loss to
    enable accurate automated mitigation.  The data model specifies a
    YANG implementation of this framework for network elements, while
@@ -155,10 +155,10 @@ Table of Contents
 
    Section 3 describes the problem space and requirements.  Section 4
    defines the information model and classification scheme.  Section 5
-   specifies the corresponding data model and implementation
+   specifies the corresponding YANG data model and implementation
    requirements together with a set of usage examples, and the complete
-   YANG module definition for the data model.  The appendices provide
-   additional context and implementation guidance.
+   YANG module definition.  The appendices provide additional context
+   and implementation guidance.
 
 2.  Terminology
 
@@ -607,9 +607,9 @@ Table of Contents
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
 
-4.3.  Information Model - YANG Module
+4.3.  "ietf-packet-discard-reporting-sx" YANG Module
 
-   The "ietf-packet-discard-reporting" module uses the "sx" structure
+   The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
    defined in [RFC8791].
 
    <CODE BEGINS>
@@ -1563,7 +1563,10 @@ Table of Contents
 
    *  interface/ingress/discards/policy/l3/rpf/packets
 
-5.4.  Data model - YANG Module
+5.4.  "ietf-packet-discard-reporting" YANG Module
+
+   The "ietf-packet-discard-reporting" module imports "ietf-packet-
+   discard-reporting-sx" module.
 
    <CODE BEGINS>
    module ietf-packet-discard-reporting {
@@ -1683,9 +1686,6 @@ Table of Contents
 
 6.  Security Considerations
 
-   This section discusses security considerations for both the
-   information model and its implementation as a data model.
-
 6.1.  Information Model
 
    The information model defined in Section 4.3 specifies a YANG module
@@ -1720,6 +1720,17 @@ Table of Contents
    nodes without proper protection or authentication can have a negative
    effect on network operations.  The following subtrees and data nodes
    have particular sensitivities/vulnerabilities:
+
+   interfaces:  TBC
+
+   devices:  tbc
+
+   Some of the readable data nodes in this YANG module may be considered
+   sensitive or vulnerable in some network environments.  It is thus
+   important to control read access (e.g., via get, get-config, or
+   notification) to these data nodes.  Specifically, the following
+   subtrees and data nodes have particular sensitivities/
+   vulnerabilities:
 
    interfaces:  TBC
 
