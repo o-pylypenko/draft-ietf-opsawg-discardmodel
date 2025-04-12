@@ -97,7 +97,7 @@ informative:
 
 --- abstract
 
-This document defines an information model and corresponding data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss to enable automated network mitigation of unintended packet loss.  The data model specifies a YANG implementation of this framework for network elements.
+This document defines an information model and a corresponding YANG data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss to enable automated network mitigation of unintended packet loss.  The YANG data model specifies an implementation of this framework for network elements.
 
 --- middle
 
@@ -107,11 +107,11 @@ The primary function of a network is to transport and deliver packets according 
 
 Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, are insufficient for automating network operations.  First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, {{?RFC7270}} provides support for reporting discards per flow in IPFIX using forwardingStatus, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation, e.g., the "For us" reason code.
 
-This document defines an information model and corresponding data model for packet loss reporting which address these issues.  The information model provides precise classification of packet loss to enable accurate automated mitigation.  The data model specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
+This document defines an information model and corresponding YANG data model for packet loss reporting which address these issues.  The information model provides precise classification of packet loss to enable accurate automated mitigation.  The data model specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
 
 The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.
 
-{{problem}} describes the problem space and requirements. {{infomodel}} defines the information model and classification scheme. {{datamodel}} specifies the corresponding data model and implementation requirements together with a set of usage examples, and the complete YANG module definition for the data model. The appendices provide additional context and implementation guidance.
+{{problem}} describes the problem space and requirements. {{infomodel}} defines the information model and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.
 
 # Terminology {#terminology}
 
@@ -217,9 +217,9 @@ discards/no-buffer/:
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
-## Information Model - YANG Module {#infomodel-module}
+## "ietf-packet-discard-reporting-sx" YANG Module {#infomodel-module}
 
-The "ietf-packet-discard-reporting" module uses the "sx" structure defined in {{!RFC8791}}.
+The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in {{!RFC8791}}.
 
 ~~~~~~~~~~
 <CODE BEGINS>
@@ -286,7 +286,9 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 - interface/ingress/discards/policy/l3/rpf/packets
 
 
-## Data model - YANG Module {#datamodel-module}
+## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
+
+The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx" module.
 
 ~~~~~~~~~~
 <CODE BEGINS>
@@ -296,8 +298,6 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 
 # Security Considerations {#security}
-
-This section discusses security considerations for both the information model and its implementation as a data model.
 
 ## Information Model {#security-infomodel}
 
@@ -333,6 +333,18 @@ interfaces:
 devices:
 : tbc
 
+Some of the readable data nodes in this YANG module may be considered
+sensitive or vulnerable in some network environments.  It is thus
+important to control read access (e.g., via get, get-config, or
+notification) to these data nodes. Specifically, the following
+subtrees and data nodes have particular sensitivities/
+vulnerabilities:
+
+interfaces:
+: TBC
+
+devices:
+: tbc
 
 # IANA Considerations {#iana}
 
