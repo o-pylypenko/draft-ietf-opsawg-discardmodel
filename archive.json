@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-10T00:41:42.932504+00:00",
+  "timestamp": "2025-04-13T02:08:49.656898+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -49,7 +49,24 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 10,
+      "id": "I_kwDOOCO1i86yOysW",
+      "title": "Why we do we have \"rw\"?",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/10",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I think we have all these to be config false as we used them for reporting.",
+      "createdAt": "2025-04-12T05:07:50Z",
+      "updatedAt": "2025-04-12T05:07:50Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
@@ -308,24 +325,26 @@
       "id": "PR_kwDOOCO1i86RHlom",
       "title": "Switching to counter64 and adding control plane to data model",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/8",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "o-pylypenko",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-04-02T16:09:37Z",
-      "updatedAt": "2025-04-03T14:25:26Z",
+      "updatedAt": "2025-04-10T18:56:42Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "a02563029445a6a995f406c919a26f866ada81f5",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "counter64_update",
-      "headRefOid": "c26817d62e75a6e78d79ff86030a23e30c72ed64",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7d815a7b43fb0276f90fc46021980dd99052c305",
+      "closedAt": "2025-04-10T18:56:42Z",
+      "mergedAt": "2025-04-10T18:56:42Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "2b5db7b6a974957c61db455ff3a02a7b55e42f2a"
+      },
       "comments": [
         {
           "author": "johnevansuk",
@@ -335,6 +354,68 @@
           "updatedAt": "2025-04-03T13:36:54Z"
         }
       ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86kWQw3",
+          "commit": {
+            "abbreviatedOid": "c26817d"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me.  \r\n\r\nThanks. ",
+          "createdAt": "2025-04-10T15:32:59Z",
+          "updatedAt": "2025-04-10T15:35:05Z",
+          "comments": [
+            {
+              "originalPosition": 9,
+              "body": "```suggestion\r\n9. In cases where the reporting device is the source or destination of a tunnel, the ingress protocol for a packet may differ from the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some implementations may attribute egress discards to the ingress protocol.\r\n```",
+              "createdAt": "2025-04-10T15:32:59Z",
+              "updatedAt": "2025-04-10T15:35:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86kY-ZK",
+          "commit": {
+            "abbreviatedOid": "c26817d"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "lgtm",
+          "createdAt": "2025-04-10T18:54:01Z",
+          "updatedAt": "2025-04-10T18:54:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOOCO1i86SV68U",
+      "title": "reflect change to sec template",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/9",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-04-12T05:05:50Z",
+      "updatedAt": "2025-04-12T05:16:26Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "60f750cc97b035e8f8f8de59c3923e31ba3c9ad5",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-3",
+      "headRefOid": "429ea9f2ad87a8a1b20af203c651c6e5ff426aa0",
+      "closedAt": "2025-04-12T05:16:26Z",
+      "mergedAt": "2025-04-12T05:16:26Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "4ef332182d194f6ab163f298b3f9f25b733d94f0"
+      },
+      "comments": [],
       "reviews": []
     }
   ]
