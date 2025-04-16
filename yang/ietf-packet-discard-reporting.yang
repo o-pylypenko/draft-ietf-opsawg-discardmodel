@@ -86,6 +86,7 @@ module ietf-packet-discard-reporting {
   container control-plane {
     if-feature "control-plane-stats";
     presence "Control plane statistics are available.";
+    config false;
     description
       "Control plane packet counters.";
     uses plr-sx:control-plane;
@@ -93,6 +94,7 @@ module ietf-packet-discard-reporting {
   list interface {
     if-feature "per-interface-stats";
     key "name";
+    config false;
     description
       "Indicates a list of interfaces for which packet discard
        reporting data is provided.";
@@ -106,6 +108,7 @@ module ietf-packet-discard-reporting {
   container device {
     if-feature "per-device-stats";
     presence "Device-level statistics are available.";
+    config false;
     description
       "Device level packet counters.";
     uses plr-sx:device;
