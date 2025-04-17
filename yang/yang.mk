@@ -1,7 +1,5 @@
 YANGDIR ?= yang
 
-EXDIR ?= json-example
-
 STDYANGDIR ?= tools/yang
 $(STDYANGDIR):
 	git clone --depth 10 -b main https://github.com/YangModels/yang $@
@@ -16,8 +14,7 @@ endif
 
 YANG=$(wildcard $(YANGDIR)/*.yang)
 STDYANG=$(wildcard $(YANGDIR)/ietf-*.yang)
-EXPJSON=$(wildcard $(EXDIR)/*.json)
-TXT=$(patsubst $(YANGDIR)/%.yang,%-tree.txt,$(YANG))
+TXT=$(patsubst %.yang,%-tree.txt,$(YANG))
 
 .PHONY: yang-lint yang-gen-tree yang-clean
 
@@ -28,14 +25,7 @@ else
 	pyang -V --ietf -f tree --tree-line-length=69 -p $(YANG_PATH) $(STDYANG)
 endif
 
-yang-lint: $(STDYANG) $(STDYANGDIR)
-ifeq ($(STDYANG),)
-	$(info No files matching $(YANGDIR)/ietf-*.yang found. Skipping yanglint.)
-else
-	yanglint --verbose -p $(YANGDIR) -p $(STDYANGDIR)/standard/ietf/RFC/ -p $(STDYANGDIR)/experimental/ietf-extracted-YANG-modules $(STDYANG) $(EXPJSON)
-endif
-
-yang-gen-tree: yang-lint $(TXT)
+yang-gen-tree: pyang-lint $(TXT)
 
 yang-clean:
 	rm -f $(TXT)
