@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-13T02:08:49.656898+00:00",
+  "timestamp": "2025-04-17T00:42:18.176930+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOOCO1i86yOysW",
       "title": "Why we do we have \"rw\"?",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/10",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I think we have all these to be config false as we used them for reporting.",
       "createdAt": "2025-04-12T05:07:50Z",
-      "updatedAt": "2025-04-12T05:07:50Z",
-      "closedAt": null,
+      "updatedAt": "2025-04-16T14:39:32Z",
+      "closedAt": "2025-04-16T14:39:32Z",
       "comments": []
     }
   ],
@@ -415,6 +415,74 @@
       "mergeCommit": {
         "oid": "4ef332182d194f6ab163f298b3f9f25b733d94f0"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 11,
+      "id": "PR_kwDOOCO1i86S2fIZ",
+      "title": "Marking parent containers as RO",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/11",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Fix #10\n",
+      "createdAt": "2025-04-16T14:32:35Z",
+      "updatedAt": "2025-04-16T14:39:31Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "4ef332182d194f6ab163f298b3f9f25b733d94f0",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "config_false",
+      "headRefOid": "90bfefacd22fae4053dd21557271edc561c76d6c",
+      "closedAt": "2025-04-16T14:39:30Z",
+      "mergedAt": "2025-04-16T14:39:30Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "62b4e73a1b43deca9052c7854b0ba04bee7bcd07"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86lRWbn",
+          "commit": {
+            "abbreviatedOid": "90bfefa"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-04-16T14:38:15Z",
+          "updatedAt": "2025-04-16T14:38:15Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOOCO1i86S2lQY",
+      "title": "trees in separate",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/12",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-04-16T14:42:34Z",
+      "updatedAt": "2025-04-16T14:43:01Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "62b4e73a1b43deca9052c7854b0ba04bee7bcd07",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "add-tree",
+      "headRefOid": "2cc736c6d103c000aaffd73b770798646d4e8c8d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
