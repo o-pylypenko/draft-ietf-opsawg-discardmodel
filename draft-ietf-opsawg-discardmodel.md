@@ -184,7 +184,7 @@ The hierarchical structure allows for future extension while maintaining backwar
 The following YANG tree diagram shows the complete structure:
 
 ~~~~~~~~~~
-{::include ./yang/ietf-packet-discard-reporting-sx-tree.txt}
+{::include ./yang/trees/ietf-packet-discard-reporting-sx.tree}
 ~~~~~~~~~~
 
 The corresponding YANG module is defined in {{infomodel-module}}.
@@ -236,7 +236,7 @@ This data model implements the information model defined in {{infomodel}} for th
 There is a direct mapping between the information model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaves.  The following YANG tree diagram shows the complete structure:
 
 ~~~~~~~~~~
-{::include ./yang/ietf-packet-discard-reporting-tree.txt}
+{::include ./yang/trees/ietf-packet-discard-reporting.tree}
 ~~~~~~~~~~
 
 ## Implementation Requirements {#requirements}
