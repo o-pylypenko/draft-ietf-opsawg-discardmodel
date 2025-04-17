@@ -84,7 +84,7 @@ module ietf-packet-discard-reporting-sx {
 
   feature flow-reporting {
     description
-      "Indicates support of flow reporting on this device";
+      "Indicates support of flow reporting on this device.";
   }
 
   /*
@@ -93,21 +93,21 @@ module ietf-packet-discard-reporting-sx {
 
   identity direction {
     description
-      "Defines a direction for the reported statistics";
+      "Defines a direction for the reported statistics.";
   }
 
   identity ingress {
     base direction;
     description
       "Reports statistics for the received from the network
-       packets";
+       packets.";
   }
 
   identity egress {
     base direction;
     description
       "Reports statistics for the sent to the network
-       packets";
+       packets.";
   }
 
   identity address-family {
