@@ -36,6 +36,7 @@ jobs:
       run: |
         git config --global user.name 'ID Bot'
         git config --global user.email 'idbot@example.com'
+        ls -laR .
         git add 'yang/*tree.txt'
         git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generate files"
         git push
