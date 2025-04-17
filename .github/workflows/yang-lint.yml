@@ -29,3 +29,12 @@ jobs:
     - name: "Lint using pyang"
       run: |
         make pyang-lint
+
+
+    - name: "Adding tree files"
+      run: |
+        git config --global user.name 'ID Bot'
+        git config --global user.email 'idbot@example.com'
+        git add 'yang/*tree.txt'
+        git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generate files"
+        echo "Running locally, skipping push"
