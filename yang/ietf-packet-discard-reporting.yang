@@ -11,6 +11,12 @@ module ietf-packet-discard-reporting {
                  Reporting";
   }
 
+  import ietf-netconf-acm {
+    prefix nacm;
+    reference
+      "RFC 8341: Network Configuration Access Control Model";
+  }
+
   organization
     "IETF OPSAWG (Operations and Management Area Working Group)";
   contact
@@ -89,6 +95,7 @@ module ietf-packet-discard-reporting {
 
   container control-plane {
     if-feature "control-plane-stats";
+    nacm:default-deny-all;
     presence "Control plane statistics are available.";
     config false;
     description
@@ -98,6 +105,7 @@ module ietf-packet-discard-reporting {
   list interface {
     if-feature "per-interface-stats";
     key "name";
+    nacm:default-deny-all;
     config false;
     description
       "Indicates a list of interfaces for which packet discard
@@ -112,6 +120,7 @@ module ietf-packet-discard-reporting {
   container device {
     if-feature "per-device-stats";
     presence "Device-level statistics are available.";
+    nacm:default-deny-all;
     config false;
     description
       "Device level packet counters.";
