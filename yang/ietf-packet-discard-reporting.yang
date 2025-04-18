@@ -75,13 +75,13 @@ module ietf-packet-discard-reporting {
        device.";
   }
 
-  feature per-interface-stats {
+  feature interface-stats {
     description
-      "Indicates support of per-interface statistics on this
+      "Indicates support of interface statistics on this
        device.";
   }
 
-  feature per-device-stats {
+  feature device-stats {
     description
       "Indicates support of global device statistics on this
        device.";
@@ -90,8 +90,6 @@ module ietf-packet-discard-reporting {
   /*
    * Main structure definition
    */
-
-  /**TO DO: Need to find where to graft the reporting***/
 
   container control-plane {
     if-feature "control-plane-stats";
@@ -103,7 +101,7 @@ module ietf-packet-discard-reporting {
     uses plr-sx:control-plane;
   }
   list interface {
-    if-feature "per-interface-stats";
+    if-feature "interface-stats";
     key "name";
     nacm:default-deny-all;
     config false;
@@ -118,7 +116,7 @@ module ietf-packet-discard-reporting {
     uses plr-sx:interface;
   }
   container device {
-    if-feature "per-device-stats";
+    if-feature "device-stats";
     presence "Device-level statistics are available.";
     nacm:default-deny-all;
     config false;
