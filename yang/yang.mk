@@ -22,7 +22,7 @@ pyang-lint: pyang-setup $(STDYANG)
 ifeq ($(STDYANG),)
 	$(info No files matching $(YANGDIR)/ietf-*.yang found. Skipping pyang-lint.)
 else
-	pyang -V --ietf -f tree --tree-line-length=69 -p $(YANG_PATH) $(STDYANG)
+	pyang --ietf --max-line-length 69 -p $(YANG_PATH) $(STDYANG)
 endif
 
 yang-gen-tree: $(YANGDIR)/trees pyang-lint $(TXT)
@@ -30,5 +30,7 @@ yang-gen-tree: $(YANGDIR)/trees pyang-lint $(TXT)
 yang-clean:
 	rm -f $(TXT)
 
-$(YANGDIR)/trees/%.tree: $(YANGDIR)/%.yang $(YANGDIR)/trees
+FORCE:
+
+$(YANGDIR)/trees/%.tree: $(YANGDIR)/%.yang $(YANGDIR)/trees FORCE
 	pyang $(OPTIONS) -p $(YANG_PATH) $< > $@
