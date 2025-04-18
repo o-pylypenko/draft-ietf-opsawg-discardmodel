@@ -1582,6 +1582,12 @@ Table of Contents
                     Reporting";
      }
 
+     import ietf-netconf-acm {
+       prefix nacm;
+       reference
+         "RFC 8341: Network Configuration Access Control Model";
+     }
+
      organization
        "IETF OPSAWG (Operations and Management Area Working Group)";
      contact
@@ -1660,6 +1666,7 @@ Table of Contents
 
      container control-plane {
        if-feature "control-plane-stats";
+       nacm:default-deny-all;
        presence "Control plane statistics are available.";
        config false;
        description
@@ -1669,6 +1676,7 @@ Table of Contents
      list interface {
        if-feature "per-interface-stats";
        key "name";
+       nacm:default-deny-all;
        config false;
        description
          "Indicates a list of interfaces for which packet discard
@@ -1683,6 +1691,7 @@ Table of Contents
      container device {
        if-feature "per-device-stats";
        presence "Device-level statistics are available.";
+       nacm:default-deny-all;
        config false;
        description
          "Device level packet counters.";
