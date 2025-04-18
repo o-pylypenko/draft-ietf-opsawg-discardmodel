@@ -12,7 +12,7 @@ module: ietf-packet-discard-reporting-sx
     |     +-- bytes?       yang:counter64
     |     +-- policy
     |        +-- packets?   yang:counter64
-    +-- interface* [name] {per-interface-stats}?
+    +-- interface* [name] {interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -174,7 +174,7 @@ module: ietf-packet-discard-reporting-sx
     |           +-- id         string
     |           +-- packets?   yang:counter64
     |           +-- bytes?     yang:counter64
-    +-- device {per-device-stats}?
+    +-- device {device-stats}?
        +-- traffic
        |  +-- l2
        |  |  +-- frames?   yang:counter64
