@@ -119,7 +119,7 @@ The scope of this document is limited to reporting packet loss at Layer 3 and fr
 
 A packet discard accounts for any instance where a packet is dropped by a device, regardless of whether the discard was intentional or unintentional.
 
-Intended discards are packets dropped due to deliberate network policies or configurations designed to enforce security or quality of service. For example, packets dropped because they match an Access Control List (ACL) denying certain traffic types.
+Intended discards are packets dropped due to deliberate network policies or configurations designed to enforce security or Quality of Service (QoS). For example, packets dropped because they match an Access Control List (ACL) denying certain traffic types.
 
 Unintended discards are packets that were dropped, which the network operator otherwise intended to deliver, i.e. which indicates an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.
 
@@ -157,15 +157,122 @@ The information model is defined using YANG {{?RFC7950}},  with Data Structure E
 
 ## Structure {#infomodel-structure}
 
-The information model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This organisation enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
+The information model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
+
+The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full YANG tree diagram of the IM is provided in {{sec-im-full-tree}}.
+
+~~~~~~~~~~
+module: ietf-packet-discard-reporting-sx
+
+  structure packet-discard-reporting:
+    +-- control-plane {control-plane-stats}?
+    |  +-- traffic* [direction]
+    |  |  ...
+    |  +-- discards* [direction]
+    |     ...
+    +-- interface* [name] {per-interface-stats}?
+    |  +-- name        string
+    |  +-- traffic* [direction]
+    |  |  +-- direction    identityref
+    |  |  +-- l2
+    |  |  |  ...
+    |  |  +-- l3
+    |  |  |  ...
+    |  |  +-- qos
+    |  |     +-- class* [id]
+    |  |        ...
+    |  +-- discards* [direction]
+    |     +-- direction    identityref
+    |     +-- l2
+    |     |  ...
+    |     +-- l3
+    |     |  ...
+    |     +-- errors
+    |     |  +-- l2
+    |     |  |  ...
+    |     |  +-- l3
+    |     |  |  ...
+    |     |  +-- internal
+    |     |     ...
+    |     +-- policy
+    |     |  +-- l2
+    |     |  |  ...
+    |     |  +-- l3
+    |     |     ...
+    |     +-- no-buffer
+    |        +-- class* [id]
+    |           ...
+    +-- flow* [direction] {flow-reporting}?
+    |  +-- direction    identityref
+    |  +-- traffic
+    |  |  +-- l2
+    |  |  |  ...
+    |  |  +-- l3
+    |  |  |  ...
+    |  |  +-- qos
+    |  |     +-- class* [id]
+    |  |        ...
+    |  +-- discards
+    |     +-- l2
+    |     |  ...
+    |     +-- l3
+    |     |  ...
+    |     +-- errors
+    |     |  +-- l2
+    |     |  |  ...
+    |     |  +-- l3
+    |     |  |  ...
+    |     |  +-- internal
+    |     |     ...
+    |     +-- policy
+    |     |  +-- l2
+    |     |  |  ...
+    |     |  +-- l3
+    |     |     ...
+    |     +-- no-buffer
+    |        +-- class* [id]
+    |           ...
+    +-- device {per-device-stats}?
+       +-- traffic
+       |  +-- l2
+       |  |  ...
+       |  +-- l3
+       |  |  ...
+       |  +-- qos
+       |     +-- class* [id]
+       |        ...
+       +-- discards
+          +-- l2
+          |  ...
+          +-- l3
+          |  ...
+          +-- errors
+          |  +-- l2
+          |  |  ...
+          |  +-- l3
+          |  |  ...
+          |  +-- internal
+          |     ...
+          +-- policy
+          |  +-- l2
+          |  |  ...
+          |  +-- l3
+          |     ...
+          +-- no-buffer
+             +-- class* [id]
+                ...
+~~~~~~~~~~
+{: #tree-im-abstract title="Abstract IM Tree Structure"}
+
+The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allwo for better mapping to underlying data models, the IM supports a set of "features" to declare the supported type.
 
 A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
 
 - Component:
+  - control-plane: discards of traffic to or from a device's control plane.
   - interface: discards of traffic to or from a specific network interface.
-  - device: discards of traffic transiting the device.
-  - control-plane: discards of traffic to or from the device's control plane.
   - flow: discards of traffic associated with a specific traffic flow.
+  - device: discards of traffic transiting the device.
 
 - Direction:
   - ingress: counters for incoming packets or frames.
@@ -176,23 +283,17 @@ A complete classification path follows the pattern: component/direction/type/lay
   - discards: counters for packets or frames that were dropped.
 
 - Layer:
-  - l2: Layer 2 traffic and discards, i.e. frame and byte counts.
-  - l3: Layer 3 traffic and discards, i.e. packet and byte counts.
+  - l2: Layer 2 traffic and discards, i.e., frame and byte counts.
+  - l3: Layer 3 traffic and discards, i.e., packet and byte counts.
 
 The hierarchical structure allows for future extension while maintaining backward compatibility. New discard types can be added as new branches without affecting existing implementations.
-
-The following YANG tree diagram shows the complete structure:
-
-~~~~~~~~~~
-{::include ./yang/trees/ietf-packet-discard-reporting-sx.tree}
-~~~~~~~~~~
 
 The corresponding YANG module is defined in {{infomodel-module}}.
 
 ## Sub-type Definitions
 
 discards/policy/:
-: These are intended discards, meaning packets dropped by a device due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules and explicit null routes
+: These are intended discards, meaning packets dropped by a device due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules, and explicit null routes
 
 discards/error/:
 : These are unintended discards due to errors in processing packets or frames.  There are multiple sub-classes.
@@ -201,13 +302,13 @@ discards/error/l2/rx/:
 : These are frames discarded due to errors in the received Layer 2 frame, including: CRC errors, invalid MAC addresses, invalid VLAN tags, frame size violations and other malformed frame conditions
 
 discards/error/l3/rx/:
-: These are discards which occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors, i.e. incorrect version, incorrect header length, invalid options and other malformed packet conditions
+: These are discards which occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors, i.e., incorrect version, incorrect header length, invalid options and other malformed packet conditions
 
 discards/error/l3/rx/ttl-expired:
 : These are discards due to TTL (or Hop limit) expiry, which can occur for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, routing loops in the network.
 
 discards/error/l3/no-route/:
-: These are discards which occur due to a packet not matching any route in the routing table, e.g. which may be due to routing configuration errors or may be transient discards during convergence.
+: These are discards which occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
 
 discards/error/local/:
 : These are discards due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
@@ -229,15 +330,85 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 # Data Model   {#datamodel}
 
-This data model implements the information model defined in {{infomodel}} for the interface and device components.  This is classed as a Network Element model as defined by {{?RFC1157}}.
+This data model implements the Information Model defined in {{infomodel}} for the interface and device components.  This is classified as a Network Element model as defined by {{?RFC1157}}.
 
 ## Structure {#datamodel-structure}
 
-There is a direct mapping between the information model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaves.  The following YANG tree diagram shows the complete structure:
+There is a direct mapping between the Information Model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaf data nodes. The abstract tree is shown in {{tree-dm-abstract}}.
 
 ~~~~~~~~~~
-{::include ./yang/trees/ietf-packet-discard-reporting.tree}
+module: ietf-packet-discard-reporting
+
+  +--ro control-plane! {control-plane-stats}?
+  |  +--ro traffic* [direction]
+  |  |  ...
+  |  +--ro discards* [direction]
+  |     ...
+  +--ro interface* [name] {per-interface-stats}?
+  |  +--ro name        string
+  |  +--ro traffic* [direction]
+  |  |  +--ro direction    identityref
+  |  |  +--ro l2
+  |  |  |  ...
+  |  |  +--ro l3
+  |  |  |  ...
+  |  |  +--ro qos
+  |  |     +--ro class* [id]
+  |  |        ...
+  |  +--ro discards* [direction]
+  |     +--ro direction    identityref
+  |     +--ro l2
+  |     |  ...
+  |     +--ro l3
+  |     |  ...
+  |     +--ro errors
+  |     |  +--ro l2
+  |     |  |  ...
+  |     |  +--ro l3
+  |     |  |  ...
+  |     |  +--ro internal
+  |     |     ...
+  |     +--ro policy
+  |     |  +--ro l2
+  |     |  |  ...
+  |     |  +--ro l3
+  |     |     ...
+  |     +--ro no-buffer
+  |        +--ro class* [id]
+  |           ...
+  +--ro device! {per-device-stats}?
+     +--ro traffic
+     |  +--ro l2
+     |  |  ...
+     |  +--ro l3
+     |  |  ...
+     |  +--ro qos
+     |     +--ro class* [id]
+     |        ...
+     +--ro discards
+        +--ro l2
+        |  ...
+        +--ro l3
+        |  ...
+        +--ro errors
+        |  +--ro l2
+        |  |  ...
+        |  +--ro l3
+        |  |  ...
+        |  +--ro internal
+        |     ...
+        +--ro policy
+        |  +--ro l2
+        |  |  ...
+        |  +--ro l3
+        |     ...
+        +--ro no-buffer
+           +--ro class* [id]
+              ...
 ~~~~~~~~~~
+{: #tree-dm-abstract title="Abstract DM Tree Structure"}
+
+The full tree structure is provided in {{sec-dm-full-tree}}.
 
 ## Implementation Requirements {#requirements}
 
@@ -251,7 +422,7 @@ Requirements 1-10 relate to packets forwarded or discarded by the device, while 
 4. An individual packet MUST only be accounted for by either the Layer 3 traffic class or the Layer 3 discard classes within a single direction or context, i.e., ingress or egress or device.  This is to avoid double counting.
 5. A frame accounted for at Layer 2 SHOULD NOT be accounted for at Layer 3 and vice versa.  An implementation MUST indicate which layers traffic and discards are counted against.  This is to avoid double counting.
 6. The aggregate Layer 2 and Layer 3 traffic and discard classes SHOULD account for all underlying frames or packets received, transmitted, and discarded across all other classes.
-7. The aggregate Quality of Service (QoS) traffic and no buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
+7. The aggregate QoS traffic and no buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
 8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined.
 10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class0, which represents the default class.
@@ -259,7 +430,7 @@ Requirements 1-10 relate to packets forwarded or discarded by the device, while 
 
 ## Usage Examples {#examples}
 
-If all of the requirements are met, a "good" unicast IPv4 packet received would increment:
+If all of the requirements listed in {{requirements}} are met, a "good" unicast IPv4 packet received would increment:
 
 - interface/ingress/traffic/l3/v4/unicast/packets
 - interface/ingress/traffic/l3/v4/unicast/bytes
@@ -318,20 +489,7 @@ provides the means to restrict access for particular NETCONF or
 RESTCONF users to a preconfigured subset of all available NETCONF or
 RESTCONF protocol operations and content.
 
-There are a number of data nodes defined in this YANG module that are
-writable/creatable/deletable (i.e., "config true", which is the
-default).  All writable data nodes are likely to be reasonably
-sensitive or vulnerable in some network environments.  Write
-operations (e.g., edit-config) and delete operations to these data
-nodes without proper protection or authentication can have a negative
-effect on network operations.  The following subtrees and data nodes
-have particular sensitivities/vulnerabilities:
-
-interfaces:
-: TBC
-
-devices:
-: tbc
+There are no particularly sensitive writable data nodes.
 
 Some of the readable data nodes in this YANG module may be considered
 sensitive or vulnerable in some network environments.  It is thus
@@ -340,11 +498,12 @@ notification) to these data nodes. Specifically, the following
 subtrees and data nodes have particular sensitivities/
 vulnerabilities:
 
-interfaces:
-: TBC
-
-devices:
-: tbc
+control-plane, interfaces, and devices:
+: Access to these data nodes would reveal information about the
+attacks to which an element is subject, misconfigurations, etc.
+: Also, an attacker who can inject packets can infer the efficiency
+of its attack by monitoring (the increase of) some discard counters (e.g., policy)
+and adjust its attack strategy accordingly.
 
 # IANA Considerations {#iana}
 
@@ -394,7 +553,7 @@ The content of this document has benefitted from feedback from JR Rivers, Ronan 
 --- back
 
 
-## Where do packets get dropped? {#wheredropped}
+# Where Do Packets Get Dropped? {#wheredropped}
 
 Understanding where packets are discarded in a network device is essential for interpreting discard signals and determining appropriate mitigation actions.  {{ex-drop}} depicts an example of where and why packets may be discarded in a typical single-ASIC, shared-buffered type device. While actual device architectures vary between vendors and platforms, with some using multiple ASICs, distributed forwarding, or different buffering architectures, this example illustrates the common processing stages where packets may be dropped. The logical model for classifying and reporting discards remains consistent regardless of the underlying hardware architecture.
 
@@ -434,7 +593,7 @@ Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
 
 See Appendix B for examples of how these discard signals map to root causes and mitigation actions.
 
-# Example signal-to-mitigation action mapping {#mapping}
+# Example Signal-to-mitigation Action Mapping {#mapping}
 
 The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  {{ex-table}} gives example discard signal-to-mitigation action mappings based on the features described in section 3.
 
@@ -470,3 +629,19 @@ This appendix captures practical insights gained from implementing this informat
 8. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
 9. In cases where the reporting device is the source or destination of a tunnel, the ingress protocol for a packet may differ from the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some implementations may attribute egress discards to the ingress protocol.
 10. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
+
+# Full Information Model Tree {#sec-im-full-tree}
+
+The following YANG tree diagram shows the complete IM structure:
+
+~~~~~~~~~~
+{::include ./yang/trees/ietf-packet-discard-reporting-sx.tree}
+~~~~~~~~~~
+
+# Full Data Model Tree {#sec-dm-full-tree}
+
+The following YANG tree diagram shows the complete data module structure:
+
+~~~~~~~~~~
+{::include ./yang/trees/ietf-packet-discard-reporting.tree}
+~~~~~~~~~~
