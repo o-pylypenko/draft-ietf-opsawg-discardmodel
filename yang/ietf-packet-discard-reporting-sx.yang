@@ -64,13 +64,13 @@ module ietf-packet-discard-reporting-sx {
    * Features
    */
 
-  feature per-interface-stats {
+  feature interface-stats {
     description
-      "Indicates support of per-interface statistics on this
+      "Indicates support of interface statistics on this
        device.";
   }
 
-  feature per-device-stats {
+  feature device-stats {
     description
       "Indicates support of global device statistics on this
        device.";
@@ -623,7 +623,7 @@ module ietf-packet-discard-reporting-sx {
       uses control-plane;
     }
     list interface {
-      if-feature "per-interface-stats";
+      if-feature "interface-stats";
       key "name";
       description
         "Indicates a list of interfaces for which packet
@@ -650,7 +650,7 @@ module ietf-packet-discard-reporting-sx {
       uses device;
     }
     container device {
-      if-feature "per-device-stats";
+      if-feature "device-stats";
       description
         "Device level packet counters.";
       uses device;
