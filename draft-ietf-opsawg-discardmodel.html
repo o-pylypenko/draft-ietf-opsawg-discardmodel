@@ -1411,7 +1411,7 @@ module: ietf-packet-discard-reporting-sx
     |     +-- bytes?       yang:counter64
     |     +-- policy
     |        +-- packets?   yang:counter64
-    +-- interface* [name] {per-interface-stats}?
+    +-- interface* [name] {interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -1573,7 +1573,7 @@ module: ietf-packet-discard-reporting-sx
     |           +-- id         string
     |           +-- packets?   yang:counter64
     |           +-- bytes?     yang:counter64
-    +-- device {per-device-stats}?
+    +-- device {device-stats}?
        +-- traffic
        |  +-- l2
        |  |  +-- frames?   yang:counter64
@@ -1781,13 +1781,13 @@ module ietf-packet-discard-reporting-sx {
    * Features
    */
 
-  feature per-interface-stats {
+  feature interface-stats {
     description
-      "Indicates support of per-interface statistics on this
+      "Indicates support of interface statistics on this
        device.";
   }
 
-  feature per-device-stats {
+  feature device-stats {
     description
       "Indicates support of global device statistics on this
        device.";
@@ -2340,7 +2340,7 @@ module ietf-packet-discard-reporting-sx {
       uses control-plane;
     }
     list interface {
-      if-feature "per-interface-stats";
+      if-feature "interface-stats";
       key "name";
       description
         "Indicates a list of interfaces for which packet
@@ -2367,7 +2367,7 @@ module ietf-packet-discard-reporting-sx {
       uses device;
     }
     container device {
-      if-feature "per-device-stats";
+      if-feature "device-stats";
       description
         "Device level packet counters.";
       uses device;
@@ -2762,13 +2762,13 @@ module ietf-packet-discard-reporting {
        device.";
   }
 
-  feature per-interface-stats {
+  feature interface-stats {
     description
-      "Indicates support of per-interface statistics on this
+      "Indicates support of interface statistics on this
        device.";
   }
 
-  feature per-device-stats {
+  feature device-stats {
     description
       "Indicates support of global device statistics on this
        device.";
@@ -2777,8 +2777,6 @@ module ietf-packet-discard-reporting {
   /*
    * Main structure definition
    */
-
-  /**TO DO: Need to find where to graft the reporting***/
 
   container control-plane {
     if-feature "control-plane-stats";
@@ -2790,7 +2788,7 @@ module ietf-packet-discard-reporting {
     uses plr-sx:control-plane;
   }
   list interface {
-    if-feature "per-interface-stats";
+    if-feature "interface-stats";
     key "name";
     nacm:default-deny-all;
     config false;
@@ -2805,7 +2803,7 @@ module ietf-packet-discard-reporting {
     uses plr-sx:interface;
   }
   container device {
-    if-feature "per-device-stats";
+    if-feature "device-stats";
     presence "Device-level statistics are available.";
     nacm:default-deny-all;
     config false;

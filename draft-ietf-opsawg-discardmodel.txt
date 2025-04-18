@@ -318,7 +318,7 @@ Table of Contents
        |     +-- bytes?       yang:counter64
        |     +-- policy
        |        +-- packets?   yang:counter64
-       +-- interface* [name] {per-interface-stats}?
+       +-- interface* [name] {interface-stats}?
        |  +-- name        string
        |  +-- traffic* [direction]
        |  |  +-- direction    identityref
@@ -480,7 +480,7 @@ Table of Contents
        |           +-- id         string
        |           +-- packets?   yang:counter64
        |           +-- bytes?     yang:counter64
-       +-- device {per-device-stats}?
+       +-- device {device-stats}?
           +-- traffic
           |  +-- l2
           |  |  +-- frames?   yang:counter64
@@ -679,13 +679,13 @@ Table of Contents
       * Features
       */
 
-     feature per-interface-stats {
+     feature interface-stats {
        description
-         "Indicates support of per-interface statistics on this
+         "Indicates support of interface statistics on this
           device.";
      }
 
-     feature per-device-stats {
+     feature device-stats {
        description
          "Indicates support of global device statistics on this
           device.";
@@ -1238,7 +1238,7 @@ Table of Contents
          uses control-plane;
        }
        list interface {
-         if-feature "per-interface-stats";
+         if-feature "interface-stats";
          key "name";
          description
            "Indicates a list of interfaces for which packet
@@ -1265,7 +1265,7 @@ Table of Contents
          uses device;
        }
        container device {
-         if-feature "per-device-stats";
+         if-feature "device-stats";
          description
            "Device level packet counters.";
          uses device;
@@ -1646,13 +1646,13 @@ Table of Contents
           device.";
      }
 
-     feature per-interface-stats {
+     feature interface-stats {
        description
-         "Indicates support of per-interface statistics on this
+         "Indicates support of interface statistics on this
           device.";
      }
 
-     feature per-device-stats {
+     feature device-stats {
        description
          "Indicates support of global device statistics on this
           device.";
@@ -1661,8 +1661,6 @@ Table of Contents
      /*
       * Main structure definition
       */
-
-     /**TO DO: Need to find where to graft the reporting***/
 
      container control-plane {
        if-feature "control-plane-stats";
@@ -1674,7 +1672,7 @@ Table of Contents
        uses plr-sx:control-plane;
      }
      list interface {
-       if-feature "per-interface-stats";
+       if-feature "interface-stats";
        key "name";
        nacm:default-deny-all;
        config false;
@@ -1689,7 +1687,7 @@ Table of Contents
        uses plr-sx:interface;
      }
      container device {
-       if-feature "per-device-stats";
+       if-feature "device-stats";
        presence "Device-level statistics are available.";
        nacm:default-deny-all;
        config false;
