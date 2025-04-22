@@ -127,7 +127,7 @@ Tree diagrams used in this document follow the notation defined in {{?RFC8340}}.
 
 # Problem Statement   {#problem}
 
-The fundamental problem for network operators is how to automatically detect when unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected:
+The fundamental problem for network operators is how to automatically detect when unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected:
 
 1. Take a problematic device, link, or set of devices and/or links out of service.
 2. Return a device, link, or set of devices and/or links back into service.
@@ -310,7 +310,7 @@ discards/error/l3/rx/ttl-expired:
 discards/error/l3/no-route/:
 : These are discards which occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
 
-discards/error/local/:
+discards/error/internal/:
 : These are discards due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
@@ -422,10 +422,10 @@ Requirements 1-10 relate to packets forwarded or discarded by the device, while 
 4. An individual packet MUST only be accounted for by either the Layer 3 traffic class or the Layer 3 discard classes within a single direction or context, i.e., ingress or egress or device.  This is to avoid double counting.
 5. A frame accounted for at Layer 2 SHOULD NOT be accounted for at Layer 3 and vice versa.  An implementation MUST indicate which layers traffic and discards are counted against.  This is to avoid double counting.
 6. The aggregate Layer 2 and Layer 3 traffic and discard classes SHOULD account for all underlying frames or packets received, transmitted, and discarded across all other classes.
-7. The aggregate QoS traffic and no buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
+7. The aggregate QoS traffic and no-buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
 8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined.
-10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class0, which represents the default class.
+10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class_0, which represents the default class.
 11. Traffic to the device control plane has its own class, however, traffic from the device control plane SHOULD be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
@@ -574,8 +574,8 @@ Packets ingress on the left and egress on the right:
 
             +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
             |          |  |          |  |          |  |          |  |          |  |          |  |          |
- Packet rx ->  Phy     +-->  Mac     +--> Ingress  +--> Buffers  +--> Egresss  +-->  Mac     +-->  Phy     +-> Packet tx
-            |          |  |          |  |  Pipeline|  |          |  |  Pipeline|  |          |  |          |
+ Packet rx ->  Phy     +-->  Mac     +--> Ingress  +--> Buffers  +--> Egress   +-->  Mac     +-->  Phy     +-> Packet tx
+            |          |  |          |  | Pipeline |  |          |  | Pipeline |  |          |  |          |
             +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
 
   Intended                               policy/acl                  policy/acl
@@ -584,7 +584,7 @@ Packets ingress on the left and egress on the right:
                                          policy/null-route
 
 Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
-  Discards:                              error/local
+  Discards:                              error/internal
                                          error/l3/no-route
                                          error/l3/rx/ttl-expired
 
@@ -608,7 +608,7 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 | ingress/discards/errors/l3/no-route | Convergence | >Baseline | O(1s) | Y | No action |
 | ingress/discards/errors/l3/no-route | Config error | >Baseline | O(1min) | Y | Roll-back change |
 | ingress/discards/errors/l3/no-route | Invalid destination | >Baseline | O(10min) | N | Escalate to operator |
-| ingress/discards/errors/local | Device errors | >Baseline | O(1min) | Y | Take device out-of-service |
+| ingress/discards/errors/internal | Device errors | >Baseline | O(1min) | Y | Take device out-of-service |
 | egress/discards/no-buffer | Congestion | <=Baseline | | N | No action |
 | egress/discards/no-buffer | Congestion | >Baseline | O(1min) | Y | Bring capacity back into service or move traffic |
 {: #ex-table title="Example Signal-Cause-Mitigation Mapping"}
