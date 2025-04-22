@@ -194,8 +194,8 @@ Table of Contents
 
    The fundamental problem for network operators is how to automatically
    detect when unintended packet loss is occurring and determine the
-   appropriate action to mitigate it.  For any network there are a small
-   set of potential actions that can be taken to mitigate customer
+   appropriate action to mitigate it.  For any network, there are a
+   small set of potential actions that can be taken to mitigate customer
    impact when unintended packet loss is detected:
 
    1.  Take a problematic device, link, or set of devices and/or links
@@ -448,7 +448,7 @@ Table of Contents
       may be due to routing configuration errors or may be transient
       discards during convergence.
 
-   discards/error/local/:  These are discards due to internal device
+   discards/error/internal/:  These are discards due to internal device
       issues, including: parity errors in device memory or other
       internal hardware errors.  Any errored discards not explicitly
       assigned to other classes are also accounted for here.
@@ -925,8 +925,8 @@ Table of Contents
        }
        container policer {
          description
-           "The number of packets discarded due ingress
-            policer violations.";
+           "The number of packets discarded due to policer
+            violations.";
          uses basic-packets-bytes;
        }
        leaf null-route {
@@ -954,28 +954,27 @@ Table of Contents
          "Discard counters.";
        container l2 {
          description
-           "Ingress Layer 2 frame discard counters.";
+           "Layer 2 frame discard counters.";
          uses l2-traffic;
        }
        container l3 {
          description
-           "Ingress Layer 3 packet discard counters.";
+           "Layer 3 packet discard counters.";
          uses l3-traffic;
        }
        container errors {
          description
-           "Ingress error discard counters.";
+           "Error discard counters.";
          uses errors;
        }
        container policy {
          description
-           "Ingress policy-related discard counters.";
+           "Policy-related discard counters.";
          uses policy;
        }
        container no-buffer {
          description
-           "Ingress discard counters due to buffer
-            unavailability.";
+           "Discard counters due to buffer unavailability.";
          uses qos;
        }
      }
@@ -1257,7 +1256,7 @@ Table of Contents
         SHOULD account for all underlying frames or packets received,
         transmitted, and discarded across all other classes.
 
-   7.   The aggregate QoS traffic and no buffer discard classes MUST
+   7.   The aggregate QoS traffic and no-buffer discard classes MUST
         account for all underlying packets received, transmitted, and
         discarded across all other classes.
 
@@ -1269,7 +1268,7 @@ Table of Contents
         ordering of discard class reporting MUST be defined.
 
    10.  If Diffserv [RFC2475] is not used, no-buffer discards SHOULD be
-        reported as class0, which represents the default class.
+        reported as class_0, which represents the default class.
 
    11.  Traffic to the device control plane has its own class, however,
         traffic from the device control plane SHOULD be accounted for in
@@ -1584,9 +1583,9 @@ Table of Contents
               Bierman, A., Boucadair, M., and Q. Wu, "Guidelines for
               Authors and Reviewers of Documents Containing YANG Data
               Models", Work in Progress, Internet-Draft, draft-ietf-
-              netmod-rfc8407bis-23, 15 April 2025,
+              netmod-rfc8407bis-24, 18 April 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              rfc8407bis-23>.
+              rfc8407bis-24>.
 
    [RED93]    Jacobson, V., "Random Early Detection gateways for
               Congestion Avoidance", n.d..
@@ -1695,8 +1694,8 @@ Appendix A.  Where Do Packets Get Dropped?
 
             +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
             |          |  |          |  |          |  |          |  |          |  |          |  |          |
- Packet rx ->  Phy     +-->  Mac     +--> Ingress  +--> Buffers  +--> Egresss  +-->  Mac     +-->  Phy     +-> Packet tx
-            |          |  |          |  |  Pipeline|  |          |  |  Pipeline|  |          |  |          |
+ Packet rx ->  Phy     +-->  Mac     +--> Ingress  +--> Buffers  +--> Egress   +-->  Mac     +-->  Phy     +-> Packet tx
+            |          |  |          |  | Pipeline |  |          |  | Pipeline |  |          |  |          |
             +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
 
   Intended                               policy/acl                  policy/acl
@@ -1705,7 +1704,7 @@ Appendix A.  Where Do Packets Get Dropped?
                                          policy/null-route
 
 Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
-  Discards:                              error/local
+  Discards:                              error/internal
                                          error/l3/no-route
                                          error/l3/rx/ttl-expired
 
@@ -1756,8 +1755,8 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    |route                         |destination|          |        |           |to      |
    |                              |           |          |        |           |operator|
    +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/local |Device     |>Baseline |O(1min) |     Y     |Take    |
-   |                              |errors     |          |        |           |device  |
+   |ingress/discards/errors/      |Device     |>Baseline |O(1min) |     Y     |Take    |
+   |internal                      |errors     |          |        |           |device  |
    |                              |           |          |        |           |out-of- |
    |                              |           |          |        |           |service |
    +------------------------------+-----------+----------+--------+-----------+--------+
