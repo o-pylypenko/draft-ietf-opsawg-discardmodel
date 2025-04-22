@@ -264,7 +264,7 @@ module: ietf-packet-discard-reporting-sx
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
 
-The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allwo for better mapping to underlying data models, the IM supports a set of "features" to declare the supported type.
+The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying data models, the IM supports a set of "features" to declare the supported type.
 
 A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
 
