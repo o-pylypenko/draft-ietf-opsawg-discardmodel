@@ -456,8 +456,8 @@ module ietf-packet-discard-reporting-sx {
     }
     container policer {
       description
-        "The number of packets discarded due ingress
-         policer violations.";
+        "The number of packets discarded due to policer
+         violations.";
       uses basic-packets-bytes;
     }
     leaf null-route {
@@ -485,28 +485,27 @@ module ietf-packet-discard-reporting-sx {
       "Discard counters.";
     container l2 {
       description
-        "Ingress Layer 2 frame discard counters.";
+        "Layer 2 frame discard counters.";
       uses l2-traffic;
     }
     container l3 {
       description
-        "Ingress Layer 3 packet discard counters.";
+        "Layer 3 packet discard counters.";
       uses l3-traffic;
     }
     container errors {
       description
-        "Ingress error discard counters.";
+        "Error discard counters.";
       uses errors;
     }
     container policy {
       description
-        "Ingress policy-related discard counters.";
+        "Policy-related discard counters.";
       uses policy;
     }
     container no-buffer {
       description
-        "Ingress discard counters due to buffer
-         unavailability.";
+        "Discard counters due to buffer unavailability.";
       uses qos;
     }
   }
