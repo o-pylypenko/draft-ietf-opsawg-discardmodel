@@ -425,7 +425,7 @@ Requirements 1-10 relate to packets forwarded or discarded by the device, while 
 7. The aggregate QoS traffic and no-buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
 8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined.
-10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class_0, which represents the default class.
+10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class[id="0"], which represents the default class.
 11. Traffic to the device control plane has its own class, however, traffic from the device control plane SHOULD be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
@@ -434,8 +434,8 @@ If all of the requirements listed in {{requirements}} are met, a "good" unicast 
 
 - interface/ingress/traffic/l3/v4/unicast/packets
 - interface/ingress/traffic/l3/v4/unicast/bytes
-- interface/ingress/traffic/qos/class_0/packets
-- interface/ingress/traffic/qos/class_0/bytes
+- interface/ingress/traffic/qos/class[id="0"]/packets
+- interface/ingress/traffic/qos/class[id="0"]/bytes
 
 A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:
 
@@ -447,8 +447,8 @@ An IPv4 packet discarded on egress due to no buffers would increment:
 
 - interface/egress/discards/l3/v4/unicast/packets
 - interface/egress/discards/l3/v4/unicast/bytes
-- interface/egress/discards/no-buffer/class_0/packets
-- interface/egress/discards/no-buffer/class_0/bytes
+- interface/egress/discards/no-buffer/class[id="0"]/packets
+- interface/egress/discards/no-buffer/class[id="0"]/bytes
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
