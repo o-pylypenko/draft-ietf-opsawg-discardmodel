@@ -562,31 +562,31 @@ Packets ingress on the left and egress on the right:
 ~~~~~~~~~~ aasvg
 
 
-                                                      +----------+
-                                                      |          |
-                                                      |  CPU     |
-                                                      |          |
-                                                      +--+---^---+
-                                                from_cpu |   | to_cpu
-                                                         |   |
-                          +------------------------------v---+-------------------------------+
-                          |                                                                  |
+                                        +----------+
+                                        |          |
+                                        |   CPU    |
+                                        |          |
+                                        +--+---^---+
+                                  from_cpu |   | to_cpu
+                                           |   |
+                 +-------------------------v---+--------------------------+
+                 |                                                        |
 
-            +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
-            |          |  |          |  |          |  |          |  |          |  |          |  |          |
- Packet rx ->  Phy     +-->  Mac     +--> Ingress  +--> Buffers  +--> Egress   +-->  Mac     +-->  Phy     +-> Packet tx
-            |          |  |          |  | Pipeline |  |          |  | Pipeline |  |          |  |          |
-            +----------+  +----------+  +----------+  +----------+  +----------+  +----------+  +----------+
+            +----------+  +----------+  +----------+  +----------+  +----------+
+            |          |  |          |  |          |  |          |  |          |
+ Packet Rx -> PHY/MAC  +--> Ingress  +--> Buffers  +--> Egress   +--> PHY/MAC  +-> Packet Tx
+            |          |  | Pipeline |  |          |  | Pipeline |  |          |
+            +----------+  +----------+  +----------+  +----------+  +----------+
 
-  Intended                               policy/acl                  policy/acl
-  Discards:                              policy/policer              policy/policer
-                                         policy/urpf
-                                         policy/null-route
+  Intended                 policy/acl                  policy/acl
+  Discards:                policy/policer              policy/policer
+                           policy/urpf
+                           policy/null-route
 
-Unintended                 error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
-  Discards:                              error/internal
-                                         error/l3/no-route
-                                         error/l3/rx/ttl-expired
+Unintended   error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
+  Discards:                error/internal
+                           error/l3/no-route
+                           error/l3/rx/ttl-expired
 
 ~~~~~~~~~~
 {: #ex-drop title="Example of where packets get dropped"}
