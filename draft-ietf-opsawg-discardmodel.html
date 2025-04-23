@@ -2366,7 +2366,7 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be defined.<a href="#section-5.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.10">
-            <p id="section-5.2-3.10.1">If Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span> is not used, no-buffer discards <span class="bcp14">SHOULD</span> be reported as class_0, which represents the default class.<a href="#section-5.2-3.10.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.10.1">If Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span> is not used, no-buffer discards <span class="bcp14">SHOULD</span> be reported as class[id="0"], which represents the default class.<a href="#section-5.2-3.10.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.11">
             <p id="section-5.2-3.11.1">Traffic to the device control plane has its own class, however, traffic from the device control plane <span class="bcp14">SHOULD</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.11.1" class="pilcrow">¶</a></p>
@@ -2388,10 +2388,10 @@ module: ietf-packet-discard-reporting
             <p id="section-5.3-2.2.1">interface/ingress/traffic/l3/v4/unicast/bytes<a href="#section-5.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-2.3">
-            <p id="section-5.3-2.3.1">interface/ingress/traffic/qos/class_0/packets<a href="#section-5.3-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-2.3.1">interface/ingress/traffic/qos/class[id="0"]/packets<a href="#section-5.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-2.4">
-            <p id="section-5.3-2.4.1">interface/ingress/traffic/qos/class_0/bytes<a href="#section-5.3-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-2.4.1">interface/ingress/traffic/qos/class[id="0"]/bytes<a href="#section-5.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.3-3">A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
@@ -2415,10 +2415,10 @@ module: ietf-packet-discard-reporting
             <p id="section-5.3-6.2.1">interface/egress/discards/l3/v4/unicast/bytes<a href="#section-5.3-6.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-6.3">
-            <p id="section-5.3-6.3.1">interface/egress/discards/no-buffer/class_0/packets<a href="#section-5.3-6.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-6.3.1">interface/egress/discards/no-buffer/class[id="0"]/packets<a href="#section-5.3-6.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-6.4">
-            <p id="section-5.3-6.4.1">interface/egress/discards/no-buffer/class_0/bytes<a href="#section-5.3-6.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-6.4.1">interface/egress/discards/no-buffer/class[id="0"]/bytes<a href="#section-5.3-6.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.3-7">A multicast IPv6 packet dropped due to RPF check failure would increment:<a href="#section-5.3-7" class="pilcrow">¶</a></p>
