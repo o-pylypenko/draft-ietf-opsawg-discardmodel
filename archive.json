@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-20T00:46:32.974338+00:00",
+  "timestamp": "2025-04-24T00:42:47.690988+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -71,15 +71,15 @@
       "id": "I_kwDOOCO1i86zFrW1",
       "title": "where to graft the data nodes",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/17",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/blob/5e9cc85633fb71f35a4a269fd278a1332a2ed68c/yang/ietf-packet-discard-reporting.yang#L88",
       "createdAt": "2025-04-18T10:01:35Z",
-      "updatedAt": "2025-04-18T17:19:25Z",
-      "closedAt": "2025-04-18T17:19:25Z",
+      "updatedAt": "2025-04-23T09:10:52Z",
+      "closedAt": null,
       "comments": [
         {
           "author": "boucadair",
@@ -87,6 +87,13 @@
           "body": "I added that comment in the past to the module, but I guess we should resolve it and remove the note from the module.\n\n",
           "createdAt": "2025-04-18T10:02:31Z",
           "updatedAt": "2025-04-18T10:02:31Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I still think this one is still pending.",
+          "createdAt": "2025-04-23T09:10:51Z",
+          "updatedAt": "2025-04-23T09:10:51Z"
         }
       ]
     }
@@ -702,6 +709,224 @@
           "body": "",
           "createdAt": "2025-04-18T16:56:18Z",
           "updatedAt": "2025-04-18T16:56:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOOCO1i86Tfr_B",
+      "title": "Typo fixes",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/19",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "* Since direction is a key, removed \"ingress\" from all relevant descriptions\r\n* Replaced `local` with `internal` where appropriate\r\n* `class0` -> `class_0` and `no buffer` -> `no-buffer` to maintain consistency\r\n",
+      "createdAt": "2025-04-22T21:10:22Z",
+      "updatedAt": "2025-04-23T04:12:54Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b850e36cf84eabb45898fded31b1e332ff71e80a",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "typo-fixes",
+      "headRefOid": "96fc5379c1cc62a6ad8fe53bd093927344456e04",
+      "closedAt": "2025-04-22T21:43:59Z",
+      "mergedAt": "2025-04-22T21:43:58Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "b9952738296303e3dab87283d6087025d4aadfd7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86mBqXF",
+          "commit": {
+            "abbreviatedOid": "96fc537"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks Oleks lgtm",
+          "createdAt": "2025-04-22T21:43:51Z",
+          "updatedAt": "2025-04-22T21:43:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i86mDFc2",
+          "commit": {
+            "abbreviatedOid": "96fc537"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-23T03:11:20Z",
+          "updatedAt": "2025-04-23T03:11:20Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "we may change class_0 to class[id=\"0\"]  here and all other similar occurrences. ",
+              "createdAt": "2025-04-23T03:11:20Z",
+              "updatedAt": "2025-04-23T03:11:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86mDGBm",
+          "commit": {
+            "abbreviatedOid": "96fc537"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-23T03:13:54Z",
+          "updatedAt": "2025-04-23T03:13:54Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "Can we rework this diagram to fit page limit? May be move boxes starting form Egress pipeline to be positioned below the Phy/Mac/Ingress/Buffers?",
+              "createdAt": "2025-04-23T03:13:54Z",
+              "updatedAt": "2025-04-23T03:13:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86mDRaN",
+          "commit": {
+            "abbreviatedOid": "96fc537"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-23T04:07:49Z",
+          "updatedAt": "2025-04-23T04:07:49Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "So it should be 72 characters? ",
+              "createdAt": "2025-04-23T04:07:49Z",
+              "updatedAt": "2025-04-23T04:07:49Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86mDSmc",
+          "commit": {
+            "abbreviatedOid": "96fc537"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-04-23T04:12:54Z",
+          "updatedAt": "2025-04-23T04:12:54Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "Yes.\r\n\r\nSo far, we have: \r\n\r\n  ** There are 61 instances of too long lines in the document, the longest\r\n     one being 48 characters in excess of 72.",
+              "createdAt": "2025-04-23T04:12:54Z",
+              "updatedAt": "2025-04-23T04:12:54Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOOCO1i86Tf8KH",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/20",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "typo",
+      "createdAt": "2025-04-22T21:50:16Z",
+      "updatedAt": "2025-04-23T03:47:10Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b9952738296303e3dab87283d6087025d4aadfd7",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-2",
+      "headRefOid": "94ec1056a7794727267d8a76be5a7ae9a30b2a32",
+      "closedAt": "2025-04-23T03:47:10Z",
+      "mergedAt": "2025-04-23T03:47:10Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "2c95cfbec0ba4878627f0c7ca6ebb65f6630cfc5"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 21,
+      "id": "PR_kwDOOCO1i86ThP77",
+      "title": "fix class_0",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/21",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-04-23T03:54:18Z",
+      "updatedAt": "2025-04-23T03:58:33Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "2c95cfbec0ba4878627f0c7ca6ebb65f6630cfc5",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-6",
+      "headRefOid": "8f2ea8bca872cf31f780062ed05400999f8abbc3",
+      "closedAt": "2025-04-23T03:58:33Z",
+      "mergedAt": "2025-04-23T03:58:33Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "af3efe7d39e63b6689f97809b77726e455dc83dd"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 22,
+      "id": "PR_kwDOOCO1i86TqFnf",
+      "title": "typo fixes",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/22",
+      "state": "OPEN",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "- **Typo fixes**\n- **Squeezing diagram**\n",
+      "createdAt": "2025-04-23T20:38:28Z",
+      "updatedAt": "2025-04-23T21:02:39Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "af3efe7d39e63b6689f97809b77726e455dc83dd",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "typo-fixes",
+      "headRefOid": "286ab7410cb3c694a757df364993b1b9e2098cb3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86mN98o",
+          "commit": {
+            "abbreviatedOid": "286ab74"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "thanks Oleks",
+          "createdAt": "2025-04-23T21:02:39Z",
+          "updatedAt": "2025-04-23T21:02:39Z",
           "comments": []
         }
       ]
