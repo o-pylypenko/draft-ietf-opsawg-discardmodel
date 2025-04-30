@@ -560,33 +560,31 @@ Understanding where packets are discarded in a network device is essential for i
 Packets ingress on the left and egress on the right:
 
 ~~~~~~~~~~ aasvg
+                               +---------+
+                               |         |
+                               |   CPU   |
+                               |         |
+                               +--+---^--+
+                         from_cpu |   | to_cpu
+                                  |   |
+         +------------------------v---+------------------------+
+         |                                                     |
+    +----v----+  +----------+  +---------+  +----------+  +----+----+
+    |         |  |          |  |         |  |          |  |         |
+Rx -> PHY/MAC +--> Ingress  +--> Buffers +--> Egress   +--> PHY/MAC +-> Tx
+    |         |  | Pipeline |  |         |  | Pipeline |  |         |
+    +---------+  +----------+  +---------+  +----------+  +---------+
 
-
-                                        +----------+
-                                        |          |
-                                        |   CPU    |
-                                        |          |
-                                        +--+---^---+
-                                  from_cpu |   | to_cpu
-                                           |   |
-                 +-------------------------v---+--------------------------+
-                 |                                                        |
-
-            +----------+  +----------+  +----------+  +----------+  +----------+
-            |          |  |          |  |          |  |          |  |          |
- Packet Rx -> PHY/MAC  +--> Ingress  +--> Buffers  +--> Egress   +--> PHY/MAC  +-> Packet Tx
-            |          |  | Pipeline |  |          |  | Pipeline |  |          |
-            +----------+  +----------+  +----------+  +----------+  +----------+
-
-  Intended                 policy/acl                  policy/acl
-  Discards:                policy/policer              policy/policer
-                           policy/urpf
-                           policy/null-route
-
-Unintended   error/rx/l2   error/l3/rx   no-buffer     error/l3/tx
-  Discards:                error/internal
-                           error/l3/no-route
-                           error/l3/rx/ttl-expired
+Unintended:
+    error/rx/l2  error/l3/rx   no-buffer    error/l3/tx
+                 error/l3/no-route
+                 error/l3/rx/ttl-expired
+                 error/internal
+Intended:
+                 policy/acl                 policy/acl
+                 policy/policer             policy/policer
+                 policy/urpf
+                 policy/null-route
 
 ~~~~~~~~~~
 {: #ex-drop title="Example of where packets get dropped"}
