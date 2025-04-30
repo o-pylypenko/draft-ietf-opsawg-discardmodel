@@ -571,7 +571,7 @@ Packets ingress on the left and egress on the right:
          |                                                     |
     +----v----+  +----------+  +---------+  +----------+  +----+----+
     |         |  |          |  |         |  |          |  |         |
-Rx -> PHY/MAC +--> Ingress  +--> Buffers +--> Egress   +--> PHY/MAC +-> Tx
+Rx--> PHY/MAC +--> Ingress  +--> Buffers +--> Egress   +--> PHY/MAC +-> Tx
     |         |  | Pipeline |  |         |  | Pipeline |  |         |
     +---------+  +----------+  +---------+  +----------+  +---------+
 
