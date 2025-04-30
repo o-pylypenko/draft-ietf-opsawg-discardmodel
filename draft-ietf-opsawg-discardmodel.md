@@ -560,12 +560,12 @@ Understanding where packets are discarded in a network device is essential for i
 Packets ingress on the left and egress on the right:
 
 ~~~~~~~~~~ aasvg
-                               +---------+
-                               |         |
-                               |   CPU   |
-                               |         |
-                               +--+---^--+
-                        from_cpu  |   |  to_cpu
+                              +-----------+
+                              |           |
+                              |    CPU    |
+                              |           |
+                              +---+---^---+
+                         from_cpu |   | to_cpu
                                   |   |
          +------------------------v---+------------------------+
          |                                                     |
