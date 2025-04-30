@@ -1693,7 +1693,7 @@ Appendix A.  Where Do Packets Get Dropped?
          |                                                     |
     +----v----+  +----------+  +---------+  +----------+  +----+----+
     |         |  |          |  |         |  |          |  |         |
-Rx -> PHY/MAC +--> Ingress  +--> Buffers +--> Egress   +--> PHY/MAC +-> Tx
+Rx--> PHY/MAC +--> Ingress  +--> Buffers +--> Egress   +--> PHY/MAC +-> Tx
     |         |  | Pipeline |  |         |  | Pipeline |  |         |
     +---------+  +----------+  +---------+  +----------+  +---------+
 
