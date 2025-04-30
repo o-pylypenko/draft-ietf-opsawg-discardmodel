@@ -1687,7 +1687,7 @@ Appendix A.  Where Do Packets Get Dropped?
                                |   CPU   |
                                |         |
                                +--+---^--+
-                         from_cpu |   | to_cpu
+                        from_cpu  |   |  to_cpu
                                   |   |
          +------------------------v---+------------------------+
          |                                                     |
