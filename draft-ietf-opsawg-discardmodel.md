@@ -565,7 +565,7 @@ Packets ingress on the left and egress on the right:
                                |   CPU   |
                                |         |
                                +--+---^--+
-                         from_cpu |   | to_cpu
+                        from_cpu  |   |  to_cpu
                                   |   |
          +------------------------v---+------------------------+
          |                                                     |
