@@ -1682,12 +1682,12 @@ Appendix A.  Where Do Packets Get Dropped?
 
    Packets ingress on the left and egress on the right:
 
-                               +---------+
-                               |         |
-                               |   CPU   |
-                               |         |
-                               +--+---^--+
-                        from_cpu  |   |  to_cpu
+                              +-----------+
+                              |           |
+                              |    CPU    |
+                              |           |
+                              +---+---^---+
+                         from_cpu |   | to_cpu
                                   |   |
          +------------------------v---+------------------------+
          |                                                     |
