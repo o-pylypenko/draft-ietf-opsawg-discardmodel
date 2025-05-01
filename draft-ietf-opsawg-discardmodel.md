@@ -170,7 +170,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  ...
     |  +-- discards* [direction]
     |     ...
-    +-- interface* [name] {per-interface-stats}?
+    +-- interface* [name] {interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -232,7 +232,7 @@ module: ietf-packet-discard-reporting-sx
     |     +-- no-buffer
     |        +-- class* [id]
     |           ...
-    +-- device {per-device-stats}?
+    +-- device {device-stats}?
        +-- traffic
        |  +-- l2
        |  |  ...
@@ -344,7 +344,7 @@ module: ietf-packet-discard-reporting
   |  |  ...
   |  +--ro discards* [direction]
   |     ...
-  +--ro interface* [name] {per-interface-stats}?
+  +--ro interface* [name] {interface-stats}?
   |  +--ro name        string
   |  +--ro traffic* [direction]
   |  |  +--ro direction    identityref
@@ -376,7 +376,7 @@ module: ietf-packet-discard-reporting
   |     +--ro no-buffer
   |        +--ro class* [id]
   |           ...
-  +--ro device! {per-device-stats}?
+  +--ro device! {device-stats}?
      +--ro traffic
      |  +--ro l2
      |  |  ...
