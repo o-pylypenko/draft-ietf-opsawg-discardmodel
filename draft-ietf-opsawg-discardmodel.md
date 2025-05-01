@@ -330,7 +330,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 # Data Model   {#datamodel}
 
-This data model implements the Information Model defined in {{infomodel}} for the interface and device components.  This is classified as a Network Element model as defined by {{?RFC1157}}.
+This data model implements the Information Model defined in {{infomodel}} for the interface, device and control-plane components.  This is classified as a Network Element model as defined by {{?RFC1157}}.
 
 ## Structure {#datamodel-structure}
 
