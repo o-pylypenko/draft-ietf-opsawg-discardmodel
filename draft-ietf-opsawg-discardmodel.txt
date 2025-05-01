@@ -1130,8 +1130,8 @@ Table of Contents
 5.  Data Model
 
    This data model implements the Information Model defined in Section 4
-   for the interface and device components.  This is classified as a
-   Network Element model as defined by [RFC1157].
+   for the interface, device and control-plane components.  This is
+   classified as a Network Element model as defined by [RFC1157].
 
 5.1.  Structure
 
