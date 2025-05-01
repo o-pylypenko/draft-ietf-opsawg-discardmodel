@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-04-27T00:46:36.319352+00:00",
+  "timestamp": "2025-05-01T00:49:56.209069+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -896,24 +896,26 @@
       "id": "PR_kwDOOCO1i86TqFnf",
       "title": "typo fixes",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/22",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "o-pylypenko",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "- **Typo fixes**\n- **Squeezing diagram**\n",
       "createdAt": "2025-04-23T20:38:28Z",
-      "updatedAt": "2025-04-24T03:34:45Z",
+      "updatedAt": "2025-04-30T17:38:14Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "af3efe7d39e63b6689f97809b77726e455dc83dd",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "typo-fixes",
-      "headRefOid": "286ab7410cb3c694a757df364993b1b9e2098cb3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "ac0ef3e7c35c725a2ecb74b3109ab84d381024a1",
+      "closedAt": "2025-04-30T17:38:14Z",
+      "mergedAt": "2025-04-30T17:38:14Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "ab95d3d7916d8aac67010c68b502966555452507"
+      },
       "comments": [],
       "reviews": [
         {
