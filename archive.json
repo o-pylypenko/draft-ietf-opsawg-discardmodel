@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-01T00:49:56.209069+00:00",
+  "timestamp": "2025-05-04T00:49:47.596094+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -945,6 +945,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOOCO1i86UoV0c",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/23",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "minor text edit",
+      "createdAt": "2025-05-01T11:13:51Z",
+      "updatedAt": "2025-05-01T14:56:09Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "1e303fb686a977672ddc373392abc534b9409454",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-3",
+      "headRefOid": "b86a4e929729d4c14f7cc4ce87c96d731d68838f",
+      "closedAt": "2025-05-01T14:56:08Z",
+      "mergedAt": "2025-05-01T14:56:08Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "7899d31ac3569454e2914e7981d30c25beb43508"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
