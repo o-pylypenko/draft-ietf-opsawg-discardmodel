@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-04T00:49:47.596094+00:00",
+  "timestamp": "2025-05-18T00:49:19.235544+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -973,6 +973,48 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOOCO1i86WWhx5",
+      "title": "Typo fixed in my name",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/24",
+      "state": "MERGED",
+      "author": "marsangr",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-05-15T15:34:32Z",
+      "updatedAt": "2025-05-15T15:40:17Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "f2a37d985985ee88441cdb0091203f3940f247e9",
+      "headRepository": "marsangr/draft-ietf-opsawg-discardmodel",
+      "headRefName": "patch-1",
+      "headRefOid": "cce74bf2d9d179725d34f5b360a0103e63e9eec6",
+      "closedAt": "2025-05-15T15:40:17Z",
+      "mergedAt": "2025-05-15T15:40:17Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "1e4a4b6beca13b255c4b26f0e1a3fec7fa43bc46"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86phzD_",
+          "commit": {
+            "abbreviatedOid": "cce74bf"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-15T15:39:07Z",
+          "updatedAt": "2025-05-15T15:39:07Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
