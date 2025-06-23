@@ -427,7 +427,7 @@ Requirements 1-11 relate to packets forwarded or discarded by the device, while 
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined.
 10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class[id="0"], which represents the default class.
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
-12. Traffic to the device control plane has its own class, however, traffic from the device control plane SHOULD be accounted for in the same way as other egress traffic.
+12. Traffic to the device control plane has its own class. However, traffic from the device control plane SHOULD be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
 
