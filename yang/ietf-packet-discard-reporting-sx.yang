@@ -222,17 +222,22 @@ module ietf-packet-discard-reporting-sx {
   grouping qos {
     description
       "Quality of Service (QoS) traffic counters.";
-    list class {
-      key "id";
-      min-elements 1;
+    container qos {
+      presence "QoS statistics are available.";
       description
-        "QoS class traffic counters.";
-      leaf id {
-        type string;
+        "QoS traffic counters.";
+      list class {
+        key "id";
+        min-elements 1;
         description
-          "QoS class identifier.";
+          "QoS class traffic counters.";
+        leaf id {
+          type string;
+          description
+            "QoS class identifier.";
+        }
+        uses basic-packets-bytes;
       }
-      uses basic-packets-bytes;
     }
   }
 
@@ -249,11 +254,7 @@ module ietf-packet-discard-reporting-sx {
         "Layer 3 traffic counters.";
       uses l3-traffic;
     }
-    container qos {
-      description
-        "QoS traffic counters.";
-      uses qos;
-    }
+    uses qos;
   }
 
   grouping errors-l2-rx {

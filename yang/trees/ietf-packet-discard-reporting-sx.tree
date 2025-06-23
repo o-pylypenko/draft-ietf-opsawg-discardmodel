@@ -30,7 +30,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |     +-- multicast
     |  |  |        +-- packets?   yang:counter64
     |  |  |        +-- bytes?     yang:counter64
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     +-- class* [id]
     |  |        +-- id         string
     |  |        +-- packets?   yang:counter64
@@ -90,10 +90,11 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- class* [id]
-    |           +-- id         string
-    |           +-- packets?   yang:counter64
-    |           +-- bytes?     yang:counter64
+    |        +-- qos!
+    |           +-- class* [id]
+    |              +-- id         string
+    |              +-- packets?   yang:counter64
+    |              +-- bytes?     yang:counter64
     +-- flow* [direction] {flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
@@ -111,7 +112,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |     +-- multicast
     |  |  |        +-- packets?   yang:counter64
     |  |  |        +-- bytes?     yang:counter64
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     +-- class* [id]
     |  |        +-- id         string
     |  |        +-- packets?   yang:counter64
@@ -170,10 +171,11 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- class* [id]
-    |           +-- id         string
-    |           +-- packets?   yang:counter64
-    |           +-- bytes?     yang:counter64
+    |        +-- qos!
+    |           +-- class* [id]
+    |              +-- id         string
+    |              +-- packets?   yang:counter64
+    |              +-- bytes?     yang:counter64
     +-- device {device-stats}?
        +-- traffic
        |  +-- l2
@@ -190,7 +192,7 @@ module: ietf-packet-discard-reporting-sx
        |  |     +-- multicast
        |  |        +-- packets?   yang:counter64
        |  |        +-- bytes?     yang:counter64
-       |  +-- qos
+       |  +-- qos!
        |     +-- class* [id]
        |        +-- id         string
        |        +-- packets?   yang:counter64
@@ -249,7 +251,8 @@ module: ietf-packet-discard-reporting-sx
           |     +-- rpf?          yang:counter64
           |     +-- ddos?         yang:counter64
           +-- no-buffer
-             +-- class* [id]
-                +-- id         string
-                +-- packets?   yang:counter64
-                +-- bytes?     yang:counter64
+             +-- qos!
+                +-- class* [id]
+                   +-- id         string
+                   +-- packets?   yang:counter64
+                   +-- bytes?     yang:counter64
