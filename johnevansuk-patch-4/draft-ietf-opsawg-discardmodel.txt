@@ -1273,7 +1273,7 @@ Table of Contents
    11.  When traffic is mirrored, the discard metrics MUST account for
         the original traffic rather than the reflected traffic.
 
-   12.  Traffic to the device control plane has its own class, however,
+   12.  Traffic to the device control plane has its own class.  However,
         traffic from the device control plane SHOULD be accounted for in
         the same way as other egress traffic.
 
