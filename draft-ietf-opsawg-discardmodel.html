@@ -13,22 +13,22 @@
 <meta content="
        This document defines an information model and a corresponding YANG data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss to enable automated network mitigation of unintended packet loss.  The YANG data model specifies an implementation of this framework for network elements. 
     " name="description">
-<meta content="xml2rfc 3.28.1" name="generator">
+<meta content="xml2rfc 3.29.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-opsawg-discardmodel-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.1
-    Python 3.12.10
+  xml2rfc 3.29.0
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
-    lxml 5.3.0
-    platformdirs 4.3.7
+    lxml 5.3.1
+    platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
-    setuptools 70.3.0
+    requests 2.32.4
+    setuptools 80.9.0
     wcwidth 0.2.13
 -->
 <link href="draft-ietf-opsawg-discardmodel.xml" rel="alternate" type="application/rfc+xml">
@@ -1796,17 +1796,22 @@ module ietf-packet-discard-reporting-sx {
   grouping qos {
     description
       "Quality of Service (QoS) traffic counters.";
-    list class {
-      key "id";
-      min-elements 1;
+    container qos {
+      presence "QoS statistics are available.";
       description
-        "QoS class traffic counters.";
-      leaf id {
-        type string;
+        "QoS traffic counters.";
+      list class {
+        key "id";
+        min-elements 1;
         description
-          "QoS class identifier.";
+          "QoS class traffic counters.";
+        leaf id {
+          type string;
+          description
+            "QoS class identifier.";
+        }
+        uses basic-packets-bytes;
       }
-      uses basic-packets-bytes;
     }
   }
 
@@ -1823,11 +1828,7 @@ module ietf-packet-discard-reporting-sx {
         "Layer 3 traffic counters.";
       uses l3-traffic;
     }
-    container qos {
-      description
-        "QoS traffic counters.";
-      uses qos;
-    }
+    uses qos;
   }
 
   grouping errors-l2-rx {
@@ -2595,7 +2596,7 @@ module ietf-packet-discard-reporting {
         <h3 id="name-data-model-2">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-data-model-2" class="section-name selfRef">Data Model</a>
         </h3>
-<p id="section-6.2-1">This section is modeled after the template described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-25#section-3.7" class="relref">Section 3.7</a> of [<a href="#I-D.ietf-netmod-rfc8407bis" class="cite xref">I-D.ietf-netmod-rfc8407bis</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
+<p id="section-6.2-1">This section is modeled after the template described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-28#section-3.7" class="relref">Section 3.7</a> of [<a href="#I-D.ietf-netmod-rfc8407bis" class="cite xref">I-D.ietf-netmod-rfc8407bis</a>]</span>.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">The YANG module specified in <a href="#datamodel-module" class="auto internal xref">Section 5.4</a> defines a data model that is
 designed to be accessed via YANG-based management protocols, such as
 NETCONF <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> and RESTCONF <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>. These YANG-based management protocols (1) have to
@@ -2742,7 +2743,7 @@ Email: nchachmo@cisco.com
 <dd class="break"></dd>
 <dt id="I-D.ietf-netmod-rfc8407bis">[I-D.ietf-netmod-rfc8407bis]</dt>
         <dd>
-<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Boucadair, M.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"Guidelines for Authors and Reviewers of Documents Containing YANG Data Models"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-rfc8407bis-25</span>, <time datetime="2025-05-05" class="refDate">5 May 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-25">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-25</a>&gt;</span>. </dd>
+<span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Boucadair, M.</span>, and <span class="refAuthor">Q. Wu</span>, <span class="refTitle">"Guidelines for Authors and Reviewers of Documents Containing YANG Data Models"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-netmod-rfc8407bis-28</span>, <time datetime="2025-06-05" class="refDate">5 June 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-28">https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-28</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RED93">[RED93]</dt>
         <dd>
@@ -3115,7 +3116,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |     +-- multicast
     |  |  |        +-- packets?   yang:counter64
     |  |  |        +-- bytes?     yang:counter64
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     +-- class* [id]
     |  |        +-- id         string
     |  |        +-- packets?   yang:counter64
@@ -3175,10 +3176,11 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- class* [id]
-    |           +-- id         string
-    |           +-- packets?   yang:counter64
-    |           +-- bytes?     yang:counter64
+    |        +-- qos!
+    |           +-- class* [id]
+    |              +-- id         string
+    |              +-- packets?   yang:counter64
+    |              +-- bytes?     yang:counter64
     +-- flow* [direction] {flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
@@ -3196,7 +3198,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |     +-- multicast
     |  |  |        +-- packets?   yang:counter64
     |  |  |        +-- bytes?     yang:counter64
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     +-- class* [id]
     |  |        +-- id         string
     |  |        +-- packets?   yang:counter64
@@ -3255,10 +3257,11 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- class* [id]
-    |           +-- id         string
-    |           +-- packets?   yang:counter64
-    |           +-- bytes?     yang:counter64
+    |        +-- qos!
+    |           +-- class* [id]
+    |              +-- id         string
+    |              +-- packets?   yang:counter64
+    |              +-- bytes?     yang:counter64
     +-- device {device-stats}?
        +-- traffic
        |  +-- l2
@@ -3275,7 +3278,7 @@ module: ietf-packet-discard-reporting-sx
        |  |     +-- multicast
        |  |        +-- packets?   yang:counter64
        |  |        +-- bytes?     yang:counter64
-       |  +-- qos
+       |  +-- qos!
        |     +-- class* [id]
        |        +-- id         string
        |        +-- packets?   yang:counter64
@@ -3334,10 +3337,11 @@ module: ietf-packet-discard-reporting-sx
           |     +-- rpf?          yang:counter64
           |     +-- ddos?         yang:counter64
           +-- no-buffer
-             +-- class* [id]
-                +-- id         string
-                +-- packets?   yang:counter64
-                +-- bytes?     yang:counter64
+             +-- qos!
+                +-- class* [id]
+                   +-- id         string
+                   +-- packets?   yang:counter64
+                   +-- bytes?     yang:counter64
 </pre><a href="#appendix-D-2" class="pilcrow">¶</a>
 </div>
 </section>
@@ -3380,7 +3384,7 @@ module: ietf-packet-discard-reporting
   |  |  |     +--ro multicast
   |  |  |        +--ro packets?   yang:counter64
   |  |  |        +--ro bytes?     yang:counter64
-  |  |  +--ro qos
+  |  |  +--ro qos!
   |  |     +--ro class* [id]
   |  |        +--ro id         string
   |  |        +--ro packets?   yang:counter64
@@ -3440,10 +3444,11 @@ module: ietf-packet-discard-reporting
   |     |     +--ro rpf?          yang:counter64
   |     |     +--ro ddos?         yang:counter64
   |     +--ro no-buffer
-  |        +--ro class* [id]
-  |           +--ro id         string
-  |           +--ro packets?   yang:counter64
-  |           +--ro bytes?     yang:counter64
+  |        +--ro qos!
+  |           +--ro class* [id]
+  |              +--ro id         string
+  |              +--ro packets?   yang:counter64
+  |              +--ro bytes?     yang:counter64
   +--ro device! {device-stats}?
      +--ro traffic
      |  +--ro l2
@@ -3460,7 +3465,7 @@ module: ietf-packet-discard-reporting
      |  |     +--ro multicast
      |  |        +--ro packets?   yang:counter64
      |  |        +--ro bytes?     yang:counter64
-     |  +--ro qos
+     |  +--ro qos!
      |     +--ro class* [id]
      |        +--ro id         string
      |        +--ro packets?   yang:counter64
@@ -3519,10 +3524,11 @@ module: ietf-packet-discard-reporting
         |     +--ro rpf?          yang:counter64
         |     +--ro ddos?         yang:counter64
         +--ro no-buffer
-           +--ro class* [id]
-              +--ro id         string
-              +--ro packets?   yang:counter64
-              +--ro bytes?     yang:counter64
+           +--ro qos!
+              +--ro class* [id]
+                 +--ro id         string
+                 +--ro packets?   yang:counter64
+                 +--ro bytes?     yang:counter64
 </pre><a href="#appendix-E-2" class="pilcrow">¶</a>
 </div>
 </section>

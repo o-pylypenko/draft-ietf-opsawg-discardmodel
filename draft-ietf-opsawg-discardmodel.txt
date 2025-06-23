@@ -691,17 +691,22 @@ Table of Contents
      grouping qos {
        description
          "Quality of Service (QoS) traffic counters.";
-       list class {
-         key "id";
-         min-elements 1;
+       container qos {
+         presence "QoS statistics are available.";
          description
-           "QoS class traffic counters.";
-         leaf id {
-           type string;
+           "QoS traffic counters.";
+         list class {
+           key "id";
+           min-elements 1;
            description
-             "QoS class identifier.";
+             "QoS class traffic counters.";
+           leaf id {
+             type string;
+             description
+               "QoS class identifier.";
+           }
+           uses basic-packets-bytes;
          }
-         uses basic-packets-bytes;
        }
      }
 
@@ -718,11 +723,7 @@ Table of Contents
            "Layer 3 traffic counters.";
          uses l3-traffic;
        }
-       container qos {
-         description
-           "QoS traffic counters.";
-         uses qos;
-       }
+       uses qos;
      }
 
      grouping errors-l2-rx {
@@ -1583,9 +1584,9 @@ Table of Contents
               Bierman, A., Boucadair, M., and Q. Wu, "Guidelines for
               Authors and Reviewers of Documents Containing YANG Data
               Models", Work in Progress, Internet-Draft, draft-ietf-
-              netmod-rfc8407bis-25, 5 May 2025,
+              netmod-rfc8407bis-28, 5 June 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
-              rfc8407bis-25>.
+              rfc8407bis-28>.
 
    [RED93]    Jacobson, V., "Random Early Detection gateways for
               Congestion Avoidance", n.d..
@@ -1886,7 +1887,7 @@ Appendix D.  Full Information Model Tree
        |  |  |     +-- multicast
        |  |  |        +-- packets?   yang:counter64
        |  |  |        +-- bytes?     yang:counter64
-       |  |  +-- qos
+       |  |  +-- qos!
        |  |     +-- class* [id]
        |  |        +-- id         string
        |  |        +-- packets?   yang:counter64
@@ -1946,10 +1947,11 @@ Appendix D.  Full Information Model Tree
        |     |     +-- rpf?          yang:counter64
        |     |     +-- ddos?         yang:counter64
        |     +-- no-buffer
-       |        +-- class* [id]
-       |           +-- id         string
-       |           +-- packets?   yang:counter64
-       |           +-- bytes?     yang:counter64
+       |        +-- qos!
+       |           +-- class* [id]
+       |              +-- id         string
+       |              +-- packets?   yang:counter64
+       |              +-- bytes?     yang:counter64
        +-- flow* [direction] {flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
@@ -1967,7 +1969,7 @@ Appendix D.  Full Information Model Tree
        |  |  |     +-- multicast
        |  |  |        +-- packets?   yang:counter64
        |  |  |        +-- bytes?     yang:counter64
-       |  |  +-- qos
+       |  |  +-- qos!
        |  |     +-- class* [id]
        |  |        +-- id         string
        |  |        +-- packets?   yang:counter64
@@ -2026,10 +2028,11 @@ Appendix D.  Full Information Model Tree
        |     |     +-- rpf?          yang:counter64
        |     |     +-- ddos?         yang:counter64
        |     +-- no-buffer
-       |        +-- class* [id]
-       |           +-- id         string
-       |           +-- packets?   yang:counter64
-       |           +-- bytes?     yang:counter64
+       |        +-- qos!
+       |           +-- class* [id]
+       |              +-- id         string
+       |              +-- packets?   yang:counter64
+       |              +-- bytes?     yang:counter64
        +-- device {device-stats}?
           +-- traffic
           |  +-- l2
@@ -2046,7 +2049,7 @@ Appendix D.  Full Information Model Tree
           |  |     +-- multicast
           |  |        +-- packets?   yang:counter64
           |  |        +-- bytes?     yang:counter64
-          |  +-- qos
+          |  +-- qos!
           |     +-- class* [id]
           |        +-- id         string
           |        +-- packets?   yang:counter64
@@ -2105,10 +2108,11 @@ Appendix D.  Full Information Model Tree
              |     +-- rpf?          yang:counter64
              |     +-- ddos?         yang:counter64
              +-- no-buffer
-                +-- class* [id]
-                   +-- id         string
-                   +-- packets?   yang:counter64
-                   +-- bytes?     yang:counter64
+                +-- qos!
+                   +-- class* [id]
+                      +-- id         string
+                      +-- packets?   yang:counter64
+                      +-- bytes?     yang:counter64
 
 Appendix E.  Full Data Model Tree
 
@@ -2145,7 +2149,7 @@ Appendix E.  Full Data Model Tree
      |  |  |     +--ro multicast
      |  |  |        +--ro packets?   yang:counter64
      |  |  |        +--ro bytes?     yang:counter64
-     |  |  +--ro qos
+     |  |  +--ro qos!
      |  |     +--ro class* [id]
      |  |        +--ro id         string
      |  |        +--ro packets?   yang:counter64
@@ -2205,10 +2209,11 @@ Appendix E.  Full Data Model Tree
      |     |     +--ro rpf?          yang:counter64
      |     |     +--ro ddos?         yang:counter64
      |     +--ro no-buffer
-     |        +--ro class* [id]
-     |           +--ro id         string
-     |           +--ro packets?   yang:counter64
-     |           +--ro bytes?     yang:counter64
+     |        +--ro qos!
+     |           +--ro class* [id]
+     |              +--ro id         string
+     |              +--ro packets?   yang:counter64
+     |              +--ro bytes?     yang:counter64
      +--ro device! {device-stats}?
         +--ro traffic
         |  +--ro l2
@@ -2225,7 +2230,7 @@ Appendix E.  Full Data Model Tree
         |  |     +--ro multicast
         |  |        +--ro packets?   yang:counter64
         |  |        +--ro bytes?     yang:counter64
-        |  +--ro qos
+        |  +--ro qos!
         |     +--ro class* [id]
         |        +--ro id         string
         |        +--ro packets?   yang:counter64
@@ -2284,10 +2289,11 @@ Appendix E.  Full Data Model Tree
            |     +--ro rpf?          yang:counter64
            |     +--ro ddos?         yang:counter64
            +--ro no-buffer
-              +--ro class* [id]
-                 +--ro id         string
-                 +--ro packets?   yang:counter64
-                 +--ro bytes?     yang:counter64
+              +--ro qos!
+                 +--ro class* [id]
+                    +--ro id         string
+                    +--ro packets?   yang:counter64
+                    +--ro bytes?     yang:counter64
 
 Authors' Addresses
 
