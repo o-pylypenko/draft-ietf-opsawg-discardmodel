@@ -1270,8 +1270,8 @@ Table of Contents
    10.  If Diffserv [RFC2475] is not used, no-buffer discards SHOULD be
         reported as class[id="0"], which represents the default class.
 
-   11.  When traffic is mirrored the discard metrics MUST account for
-        the original traffic, rather than the reflected traffic.
+   11.  When traffic is mirrored, the discard metrics MUST account for
+        the original traffic rather than the reflected traffic.
 
    12.  Traffic to the device control plane has its own class, however,
         traffic from the device control plane SHOULD be accounted for in
