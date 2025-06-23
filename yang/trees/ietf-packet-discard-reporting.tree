@@ -28,7 +28,7 @@ module: ietf-packet-discard-reporting
   |  |  |     +--ro multicast
   |  |  |        +--ro packets?   yang:counter64
   |  |  |        +--ro bytes?     yang:counter64
-  |  |  +--ro qos
+  |  |  +--ro qos!
   |  |     +--ro class* [id]
   |  |        +--ro id         string
   |  |        +--ro packets?   yang:counter64
@@ -88,10 +88,11 @@ module: ietf-packet-discard-reporting
   |     |     +--ro rpf?          yang:counter64
   |     |     +--ro ddos?         yang:counter64
   |     +--ro no-buffer
-  |        +--ro class* [id]
-  |           +--ro id         string
-  |           +--ro packets?   yang:counter64
-  |           +--ro bytes?     yang:counter64
+  |        +--ro qos!
+  |           +--ro class* [id]
+  |              +--ro id         string
+  |              +--ro packets?   yang:counter64
+  |              +--ro bytes?     yang:counter64
   +--ro device! {device-stats}?
      +--ro traffic
      |  +--ro l2
@@ -108,7 +109,7 @@ module: ietf-packet-discard-reporting
      |  |     +--ro multicast
      |  |        +--ro packets?   yang:counter64
      |  |        +--ro bytes?     yang:counter64
-     |  +--ro qos
+     |  +--ro qos!
      |     +--ro class* [id]
      |        +--ro id         string
      |        +--ro packets?   yang:counter64
@@ -167,7 +168,8 @@ module: ietf-packet-discard-reporting
         |     +--ro rpf?          yang:counter64
         |     +--ro ddos?         yang:counter64
         +--ro no-buffer
-           +--ro class* [id]
-              +--ro id         string
-              +--ro packets?   yang:counter64
-              +--ro bytes?     yang:counter64
+           +--ro qos!
+              +--ro class* [id]
+                 +--ro id         string
+                 +--ro packets?   yang:counter64
+                 +--ro bytes?     yang:counter64
