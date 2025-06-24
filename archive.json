@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-18T00:49:19.235544+00:00",
+  "timestamp": "2025-06-24T00:46:41.159162+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -1013,6 +1013,167 @@
           "createdAt": "2025-05-15T15:39:07Z",
           "updatedAt": "2025-05-15T15:39:07Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOOCO1i86bspJ1",
+      "title": "Making QoS a presence container",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/25",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "`min-elements 1` makes qos mandatory. Converting it into a presence container. Another option is to remove `min-elements `",
+      "createdAt": "2025-06-23T16:21:20Z",
+      "updatedAt": "2025-06-23T20:45:26Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "1e4a4b6beca13b255c4b26f0e1a3fec7fa43bc46",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "qos_presence",
+      "headRefOid": "ce9e6afba664780d4f5e5102534f72b675afcdd4",
+      "closedAt": "2025-06-23T20:45:26Z",
+      "mergedAt": "2025-06-23T20:45:26Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "2ef653973bc3b1543619f40098a6e1abd681d0ee"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86v4YS9",
+          "commit": {
+            "abbreviatedOid": "ce9e6af"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-23T16:53:17Z",
+          "updatedAt": "2025-06-23T16:53:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "PR_kwDOOCO1i86btJDy",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/26",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added new requirement 11 related to mirrored traffic",
+      "createdAt": "2025-06-23T17:24:22Z",
+      "updatedAt": "2025-06-23T22:03:56Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "1e4a4b6beca13b255c4b26f0e1a3fec7fa43bc46",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-4",
+      "headRefOid": "86bf4eb7d64730ea037914734236bb7ab4474261",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i86v4tGk",
+          "commit": {
+            "abbreviatedOid": "3fbacdb"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-06-23T17:28:55Z",
+          "updatedAt": "2025-06-23T17:31:14Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\n11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.\r\n```",
+              "createdAt": "2025-06-23T17:28:55Z",
+              "updatedAt": "2025-06-23T17:31:14Z"
+            },
+            {
+              "originalPosition": 15,
+              "body": "```suggestion\r\n12. Traffic to the device control plane has its own class. However, traffic from the device control plane SHOULD be accounted for in the same way as other egress traffic.\r\n```",
+              "createdAt": "2025-06-23T17:29:35Z",
+              "updatedAt": "2025-06-23T17:31:14Z"
+            },
+            {
+              "originalPosition": 15,
+              "body": "Please indicate in which case, it is OK to not follow this SHOULD. If there are no such exceptions, then revert this is a MUST",
+              "createdAt": "2025-06-23T17:30:16Z",
+              "updatedAt": "2025-06-23T17:31:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86v6Wyi",
+          "commit": {
+            "abbreviatedOid": "3fbacdb"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-23T19:29:14Z",
+          "updatedAt": "2025-06-23T19:29:14Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Hi Med - sorry I can't do this one.  In American English it's ok to start a sentence with however, but in British English it never is :) ",
+              "createdAt": "2025-06-23T19:29:14Z",
+              "updatedAt": "2025-06-23T19:29:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86v6XRX",
+          "commit": {
+            "abbreviatedOid": "3fbacdb"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-23T19:30:12Z",
+          "updatedAt": "2025-06-23T19:30:13Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "I will add in the qualification on the SHOULD - thanks!",
+              "createdAt": "2025-06-23T19:30:12Z",
+              "updatedAt": "2025-06-23T19:41:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86v7pOf",
+          "commit": {
+            "abbreviatedOid": "3fbacdb"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-23T22:03:51Z",
+          "updatedAt": "2025-06-23T22:03:51Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "> Hi Med - sorry I can't do this one. In American English it's ok to start a sentence with however, but in British English it never is :)\r\n\r\nI trippled checked this - you're right!\r\n",
+              "createdAt": "2025-06-23T22:03:51Z",
+              "updatedAt": "2025-06-23T22:03:52Z"
+            }
+          ]
         }
       ]
     }
