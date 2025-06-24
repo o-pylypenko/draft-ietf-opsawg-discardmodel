@@ -2337,7 +2337,7 @@ module: ietf-packet-discard-reporting
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-implementation-requirements" class="section-name selfRef">Implementation Requirements</a>
         </h3>
 <p id="section-5.2-1">The following requirements apply to the implementation of the data model and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.  While the model defines a comprehensive set of counters and statistics, implementations <span class="bcp14">MAY</span> support a subset of the defined features based on device capabilities and operational requirements. However, implementations <span class="bcp14">MUST</span> clearly document which features are supported and how they map to the model.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">Requirements 1-10 relate to packets forwarded or discarded by the device, while requirement 11 relates to packets destined for or originating from the device:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">Requirements 1-11 relate to packets forwarded or discarded by the device, while requirement 12 relates to packets destined for or originating from the device:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.2-3">
 <li id="section-5.2-3.1">
             <p id="section-5.2-3.1.1">All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards <span class="bcp14">MUST</span> be accounted for.<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
@@ -2370,7 +2370,10 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.10.1">If Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span> is not used, no-buffer discards <span class="bcp14">SHOULD</span> be reported as class[id="0"], which represents the default class.<a href="#section-5.2-3.10.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.11">
-            <p id="section-5.2-3.11.1">Traffic to the device control plane has its own class, however, traffic from the device control plane <span class="bcp14">SHOULD</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.11.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.11.1">When traffic is mirrored, the discard metrics <span class="bcp14">MUST</span> account for the original traffic rather than the reflected traffic.<a href="#section-5.2-3.11.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-5.2-3.12">
+            <p id="section-5.2-3.12.1">Traffic to the device control plane has its own class. However, traffic from the device control plane <span class="bcp14">MUST</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.12.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>

@@ -1225,8 +1225,8 @@ Table of Contents
    requirements.  However, implementations MUST clearly document which
    features are supported and how they map to the model.
 
-   Requirements 1-10 relate to packets forwarded or discarded by the
-   device, while requirement 11 relates to packets destined for or
+   Requirements 1-11 relate to packets forwarded or discarded by the
+   device, while requirement 12 relates to packets destined for or
    originating from the device:
 
    1.   All instances of Layer 2 frame or Layer 3 packet receipt,
@@ -1271,8 +1271,11 @@ Table of Contents
    10.  If Diffserv [RFC2475] is not used, no-buffer discards SHOULD be
         reported as class[id="0"], which represents the default class.
 
-   11.  Traffic to the device control plane has its own class, however,
-        traffic from the device control plane SHOULD be accounted for in
+   11.  When traffic is mirrored, the discard metrics MUST account for
+        the original traffic rather than the reflected traffic.
+
+   12.  Traffic to the device control plane has its own class.  However,
+        traffic from the device control plane MUST be accounted for in
         the same way as other egress traffic.
 
 5.3.  Usage Examples
