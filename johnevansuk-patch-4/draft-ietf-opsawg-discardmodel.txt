@@ -1274,7 +1274,7 @@ Table of Contents
         the original traffic rather than the reflected traffic.
 
    12.  Traffic to the device control plane has its own class.  However,
-        traffic from the device control plane SHOULD be accounted for in
+        traffic from the device control plane MUST be accounted for in
         the same way as other egress traffic.
 
 5.3.  Usage Examples
