@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-24T00:46:41.159162+00:00",
+  "timestamp": "2025-06-29T22:15:07.471544+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -363,7 +363,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-02T16:09:37Z",
-      "updatedAt": "2025-04-10T18:56:42Z",
+      "updatedAt": "2025-06-25T02:45:03Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "a02563029445a6a995f406c919a26f866ada81f5",
@@ -461,7 +461,7 @@
       "labels": [],
       "body": "Fix #10\n",
       "createdAt": "2025-04-16T14:32:35Z",
-      "updatedAt": "2025-04-16T14:39:31Z",
+      "updatedAt": "2025-06-29T22:14:28Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "4ef332182d194f6ab163f298b3f9f25b733d94f0",
@@ -503,7 +503,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-16T14:42:34Z",
-      "updatedAt": "2025-04-17T09:28:41Z",
+      "updatedAt": "2025-06-25T02:44:47Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "62b4e73a1b43deca9052c7854b0ba04bee7bcd07",
@@ -683,7 +683,7 @@
       "labels": [],
       "body": "* Renaming features\n* fixes #17\n",
       "createdAt": "2025-04-18T16:53:27Z",
-      "updatedAt": "2025-04-18T17:19:24Z",
+      "updatedAt": "2025-06-29T22:14:30Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "0467ff83b10fb2bf2ba18b8cf1b1e792aeb35ab0",
@@ -903,7 +903,7 @@
       "labels": [],
       "body": "- **Typo fixes**\n- **Squeezing diagram**\n",
       "createdAt": "2025-04-23T20:38:28Z",
-      "updatedAt": "2025-04-30T17:38:14Z",
+      "updatedAt": "2025-06-29T22:14:31Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "af3efe7d39e63b6689f97809b77726e455dc83dd",
@@ -1063,24 +1063,26 @@
       "id": "PR_kwDOOCO1i86btJDy",
       "title": "Update draft-ietf-opsawg-discardmodel.md",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/26",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Added new requirement 11 related to mirrored traffic",
       "createdAt": "2025-06-23T17:24:22Z",
-      "updatedAt": "2025-06-23T22:03:56Z",
+      "updatedAt": "2025-06-24T17:04:55Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "1e4a4b6beca13b255c4b26f0e1a3fec7fa43bc46",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-4",
-      "headRefOid": "86bf4eb7d64730ea037914734236bb7ab4474261",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "375510bea400a3a6a03ac8cf1f62e60a2d70c9d1",
+      "closedAt": "2025-06-24T17:04:55Z",
+      "mergedAt": "2025-06-24T17:04:55Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "bace97245a861af24309f45eea89b13ffe3ef44f"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1174,6 +1176,92 @@
               "updatedAt": "2025-06-23T22:03:52Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86v-PaS",
+          "commit": {
+            "abbreviatedOid": "86bf4eb"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-24T06:22:35Z",
+          "updatedAt": "2025-06-24T06:22:36Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": ":-)\r\n\r\nUnless we have an exception for that SHOULD, you can revert it to MUST",
+              "createdAt": "2025-06-24T06:22:36Z",
+              "updatedAt": "2025-06-24T06:22:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86v--1F",
+          "commit": {
+            "abbreviatedOid": "86bf4eb"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-24T07:35:56Z",
+          "updatedAt": "2025-06-24T07:35:56Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Yes -  will do",
+              "createdAt": "2025-06-24T07:35:56Z",
+              "updatedAt": "2025-06-24T07:35:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86v_4jI",
+          "commit": {
+            "abbreviatedOid": "86bf4eb"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-06-24T08:41:22Z",
+          "updatedAt": "2025-06-24T08:41:22Z",
+          "comments": [
+            {
+              "originalPosition": 15,
+              "body": "Done",
+              "createdAt": "2025-06-24T08:41:22Z",
+              "updatedAt": "2025-06-24T08:41:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i86wAszO",
+          "commit": {
+            "abbreviatedOid": "375510b"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-24T09:31:30Z",
+          "updatedAt": "2025-06-24T09:31:30Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i86wHHgn",
+          "commit": {
+            "abbreviatedOid": "375510b"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-24T17:04:50Z",
+          "updatedAt": "2025-06-24T17:04:50Z",
+          "comments": []
         }
       ]
     }
