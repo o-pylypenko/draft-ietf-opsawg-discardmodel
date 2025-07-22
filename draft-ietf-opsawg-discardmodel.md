@@ -141,7 +141,7 @@ FEATURE-DISCARD-SCOPE:
 : Determines which devices, interfaces and/or flows are impacted.
 
 FEATURE-DISCARD-RATE:
-: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be absolute (e.g. pps) or relative (e.g. percent).
+: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., pps) or relative (e.g., percent) values.
 
 FEATURE-DISCARD-DURATION:
 : The duration of the discards which helps to distinguish transient from persistent issues.
