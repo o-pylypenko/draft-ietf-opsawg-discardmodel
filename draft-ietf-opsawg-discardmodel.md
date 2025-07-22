@@ -97,7 +97,7 @@ informative:
 
 --- abstract
 
-This document defines an information model and a corresponding YANG data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss to enable automated network mitigation of unintended packet loss.  The YANG data model specifies an implementation of this framework for network elements.
+This document defines an information model and a corresponding YANG data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss — both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) — to enable automated network mitigation of unintended packet loss.  The YANG data model specifies an implementation of this framework for network elements.
 
 --- middle
 
@@ -127,7 +127,7 @@ Tree diagrams used in this document follow the notation defined in {{?RFC8340}}.
 
 # Problem Statement   {#problem}
 
-The fundamental problem for network operators is how to automatically detect when unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected:
+The fundamental problem for network operators is how to automatically detect when unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected, for example:
 
 1. Take a problematic device, link, or set of devices and/or links out of service.
 2. Return a device, link, or set of devices and/or links back into service.
@@ -137,11 +137,11 @@ The fundamental problem for network operators is how to automatically detect whe
 
 The ability to select the appropriate mitigation action depends on four key features of packet loss:
 
-FEATURE-DISCARD-LOCATION:
+FEATURE-DISCARD-SCOPE:
 : Determines which devices, interfaces and/or flows are impacted.
 
 FEATURE-DISCARD-RATE:
-: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.
+: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be absolute (e.g. pps) or relative (e.g. percent).
 
 FEATURE-DISCARD-DURATION:
 : The duration of the discards which helps to distinguish transient from persistent issues.
@@ -149,7 +149,7 @@ FEATURE-DISCARD-DURATION:
 FEATURE-DISCARD-CLASS:
 : The type or class of discards, which is crucial for selecting the appropriate of mitigation - for example: error discards may require taking faulty components out of service; no-buffer discards may require traffic redistribution; policy discards typically require no automated action
 
-While FEATURE-DISCARD-LOCATION, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following information model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
+While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following information model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
 # Information Model   {#infomodel}
 
@@ -293,16 +293,16 @@ The corresponding YANG module is defined in {{infomodel-module}}.
 ## Sub-type Definitions
 
 discards/policy/:
-: These are intended discards, meaning packets dropped by a device due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules, and explicit null routes
+: These are intended discards, meaning packets dropped by a device due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules, and explicit null routes.
 
 discards/error/:
 : These are unintended discards due to errors in processing packets or frames.  There are multiple sub-classes.
 
 discards/error/l2/rx/:
-: These are frames discarded due to errors in the received Layer 2 frame, including: CRC errors, invalid MAC addresses, invalid VLAN tags, frame size violations and other malformed frame conditions
+: These are frames discarded due to errors in the received Layer 2 frame, including: CRC errors, invalid MAC addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.
 
 discards/error/l3/rx/:
-: These are discards which occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors, i.e., incorrect version, incorrect header length, invalid options and other malformed packet conditions
+: These are discards which occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors, i.e., incorrect version, incorrect header length, invalid options and other malformed packet conditions.
 
 discards/error/l3/rx/ttl-expired:
 : These are discards due to TTL (or Hop limit) expiry, which can occur for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, routing loops in the network.
@@ -479,32 +479,17 @@ The information model defined in {{infomodel-module}} specifies a YANG module us
 
 This section is modeled after the template described in {{Section 3.7 of ?I-D.ietf-netmod-rfc8407bis}}.
 
-The YANG module specified in {{datamodel-module}} defines a data model that is
-designed to be accessed via YANG-based management protocols, such as
-NETCONF {{?RFC6241}} and RESTCONF {{?RFC8040}}. These YANG-based management protocols (1) have to
-use a secure transport layer (e.g., SSH {{?RFC4252}}, TLS {{?RFC8446}}, and
-QUIC {{?RFC9000}}) and (2) have to use mutual authentication.
+The YANG module specified in {{datamodel-module}} defines a data model that is designed to be accessed via YANG-based management protocols, such as NETCONF {{?RFC6241}} and RESTCONF {{?RFC8040}}. These YANG-based management protocols (1) have to use a secure transport layer (e.g., SSH {{?RFC4252}}, TLS {{?RFC8446}}, and QUIC {{?RFC9000}}) and (2) have to use mutual authentication.
 
-The Network Configuration Access Control Model (NACM) {{!RFC8341}}
-provides the means to restrict access for particular NETCONF or
-RESTCONF users to a preconfigured subset of all available NETCONF or
-RESTCONF protocol operations and content.
+The Network Configuration Access Control Model (NACM) {{!RFC8341}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
 
 There are no particularly sensitive writable data nodes.
 
-Some of the readable data nodes in this YANG module may be considered
-sensitive or vulnerable in some network environments.  It is thus
-important to control read access (e.g., via get, get-config, or
-notification) to these data nodes. Specifically, the following
-subtrees and data nodes have particular sensitivities/
-vulnerabilities:
+Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:
 
-control-plane, interfaces, and devices:
-: Access to these data nodes would reveal information about the
-attacks to which an element is subject, misconfigurations, etc.
-: Also, an attacker who can inject packets can infer the efficiency
-of its attack by monitoring (the increase of) some discard counters (e.g., policy)
-and adjust its attack strategy accordingly.
+Control-plane, interfaces, and devices:
+: Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.
+: Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.
 
 # IANA Considerations {#iana}
 
@@ -627,7 +612,7 @@ This appendix captures practical insights gained from implementing this informat
 7. It is not possible to identify a configuration error - e.g., when intended discards are unintended - with device discard metrics alone.  For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL, i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before.
 8. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
 9. In cases where the reporting device is the source or destination of a tunnel, the ingress protocol for a packet may differ from the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some implementations may attribute egress discards to the ingress protocol.
-10. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
+10. While the full classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
 
 # Full Information Model Tree {#sec-im-full-tree}
 
