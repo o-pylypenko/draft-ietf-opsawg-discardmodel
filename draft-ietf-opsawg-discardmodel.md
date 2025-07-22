@@ -427,7 +427,7 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined.
 10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class[id="0"], which represents the default class.
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
-12. NoBuffer discards can be realized differently with different memory architectures. Whether a NoBuffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to egress interface congestion MUST be able to be reported on egress, while discards due to device-level congestion (e.g. due to exceeding the device forwarding rate) MUST be able to be ingress.
+12. NoBuffer discards can be realized differently with different memory architectures. Whether a NoBuffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion MUST be able to be reported on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be able to be `ingress`.
 13. When the ingress and egress headers differ—for example, at a tunnel endpoint—the discard class attribution MUST relate to the outer header at the point of discard.
 14. Traffic to the device control plane has its own class. However, traffic from the device control plane MUST be accounted for in the same way as other egress traffic.
 
