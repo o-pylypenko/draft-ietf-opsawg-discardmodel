@@ -1277,9 +1277,9 @@ Table of Contents
    12.  NoBuffer discards can be realized differently with different
         memory architectures.  Whether a NoBuffer discard is attributed
         to ingress or egress can differ accordingly.  For successful
-        auto-mitigation, discards due to egress interface congestion
+        auto-mitigation, discards due to an egress interface congestion
         MUST be able to be reported on egress, while discards due to
-        device-level congestion (e.g. due to exceeding the device
+        device-level congestion (e.g., due to exceeding the device
         forwarding rate) MUST be able to be ingress.
 
    13.  When the ingress and egress headers differ—for example, at a
