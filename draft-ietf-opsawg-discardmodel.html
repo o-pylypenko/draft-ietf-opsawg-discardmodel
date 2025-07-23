@@ -13,11 +13,11 @@
 <meta content="
        This document defines an information model and a corresponding YANG data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss to enable automated network mitigation of unintended packet loss.  The YANG data model specifies an implementation of this framework for network elements. 
     " name="description">
-<meta content="xml2rfc 3.29.0" name="generator">
+<meta content="xml2rfc 3.30.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-opsawg-discardmodel-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.29.0
+  xml2rfc 3.30.0
     Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -2337,7 +2337,7 @@ module: ietf-packet-discard-reporting
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-implementation-requirements" class="section-name selfRef">Implementation Requirements</a>
         </h3>
 <p id="section-5.2-1">The following requirements apply to the implementation of the data model and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.  While the model defines a comprehensive set of counters and statistics, implementations <span class="bcp14">MAY</span> support a subset of the defined features based on device capabilities and operational requirements. However, implementations <span class="bcp14">MUST</span> clearly document which features are supported and how they map to the model.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">Requirements 1-11 relate to packets forwarded or discarded by the device, while requirement 12 relates to packets destined for or originating from the device:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.2-3">
 <li id="section-5.2-3.1">
             <p id="section-5.2-3.1.1">All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards <span class="bcp14">MUST</span> be accounted for.<a href="#section-5.2-3.1.1" class="pilcrow">¶</a></p>
@@ -2373,7 +2373,13 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.11.1">When traffic is mirrored, the discard metrics <span class="bcp14">MUST</span> account for the original traffic rather than the reflected traffic.<a href="#section-5.2-3.11.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.12">
-            <p id="section-5.2-3.12.1">Traffic to the device control plane has its own class. However, traffic from the device control plane <span class="bcp14">MUST</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.12.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.12.1">NoBuffer discards can be realized differently with different memory architectures. Whether a NoBuffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion <span class="bcp14">MUST</span> be able to be reported on <code>egress</code>, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) <span class="bcp14">MUST</span> be able to be <code>ingress</code>.<a href="#section-5.2-3.12.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-5.2-3.13">
+            <p id="section-5.2-3.13.1">When the ingress and egress headers differ—for example, at a tunnel endpoint—the discard class attribution <span class="bcp14">MUST</span> relate to the outer header at the point of discard.<a href="#section-5.2-3.13.1" class="pilcrow">¶</a></p>
+</li>
+          <li id="section-5.2-3.14">
+            <p id="section-5.2-3.14.1">Traffic to the device control plane has its own class. However, traffic from the device control plane <span class="bcp14">MUST</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.14.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
@@ -3053,28 +3059,22 @@ Email: nchachmo@cisco.com
           <p id="appendix-C-2.2.1">There are many possible ways to define the discard classification tree.  For example, we could have used a multi-rooted tree, rooted in each protocol.  Instead, we opted to define a tree where protocol discards and causal discard classes are accounted for orthogonally.  This decision reduces the number of combinations of classes and has proven sufficient for determining mitigation actions.<a href="#appendix-C-2.2.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-C-2.3">
-          <p id="appendix-C-2.3.1">NoBuffer discards can be realized differently with different memory architectures. Whether a NoBuffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to egress interface congestion should be reported on egress, while discards due to device-level congestion (e.g. due to exceeding the device forwarding rate) should be reported on ingress.<a href="#appendix-C-2.3.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.3.1">Platforms often account for the number of packets discarded where the TTL has expired (or Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message.  There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.<a href="#appendix-C-2.3.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-C-2.4">
-          <p id="appendix-C-2.4.1">Platforms often account for the number of packets discarded where the TTL has expired (or Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message.  There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.<a href="#appendix-C-2.4.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.4.1">Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured, in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.<a href="#appendix-C-2.4.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-C-2.5">
-          <p id="appendix-C-2.5.1">Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured, in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.<a href="#appendix-C-2.5.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.5.1">It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.<a href="#appendix-C-2.5.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-C-2.6">
-          <p id="appendix-C-2.6.1">It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.<a href="#appendix-C-2.6.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.6.1">It is not possible to identify a configuration error - e.g., when intended discards are unintended - with device discard metrics alone.  For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL, i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before.<a href="#appendix-C-2.6.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-C-2.7">
-          <p id="appendix-C-2.7.1">It is not possible to identify a configuration error - e.g., when intended discards are unintended - with device discard metrics alone.  For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL, i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before.<a href="#appendix-C-2.7.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.7.1">Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.<a href="#appendix-C-2.7.1" class="pilcrow">¶</a></p>
 </li>
         <li id="appendix-C-2.8">
-          <p id="appendix-C-2.8.1">Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.<a href="#appendix-C-2.8.1" class="pilcrow">¶</a></p>
-</li>
-        <li id="appendix-C-2.9">
-          <p id="appendix-C-2.9.1">In cases where the reporting device is the source or destination of a tunnel, the ingress protocol for a packet may differ from the egress protocol (e.g., if IPv4 is tunneled over IPv6).  Some implementations may attribute egress discards to the ingress protocol.<a href="#appendix-C-2.9.1" class="pilcrow">¶</a></p>
-</li>
-        <li id="appendix-C-2.10">
-          <p id="appendix-C-2.10.1">While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.<a href="#appendix-C-2.10.1" class="pilcrow">¶</a></p>
+          <p id="appendix-C-2.8.1">While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.<a href="#appendix-C-2.8.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
 </section>
