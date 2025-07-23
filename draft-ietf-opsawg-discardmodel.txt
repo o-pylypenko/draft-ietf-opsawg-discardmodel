@@ -22,9 +22,10 @@ Abstract
    This document defines an information model and a corresponding YANG
    data model for packet discard reporting.  The information model
    provides an implementation-independent framework for classifying
-   packet loss to enable automated network mitigation of unintended
-   packet loss.  The YANG data model specifies an implementation of this
-   framework for network elements.
+   packet loss — both intended (e.g., due to policy) and unintended
+   (e.g., due to congestion or errors) — to enable automated network
+   mitigation of unintended packet loss.  The YANG data model specifies
+   an implementation of this framework for network elements.
 
 About This Document
 
@@ -196,7 +197,7 @@ Table of Contents
    detect when unintended packet loss is occurring and determine the
    appropriate action to mitigate it.  For any network, there are a
    small set of potential actions that can be taken to mitigate customer
-   impact when unintended packet loss is detected:
+   impact when unintended packet loss is detected, for example:
 
    1.  Take a problematic device, link, or set of devices and/or links
        out of service.
@@ -216,11 +217,13 @@ Table of Contents
    The ability to select the appropriate mitigation action depends on
    four key features of packet loss:
 
-   FEATURE-DISCARD-LOCATION:  Determines which devices, interfaces and/
-      or flows are impacted.
+   FEATURE-DISCARD-SCOPE:  Determines which devices, interfaces and/or
+      flows are impacted.
 
    FEATURE-DISCARD-RATE:  The rate and/or magnitude of the discards,
-      indicating the severity and urgency of the problem.
+      indicating the severity and urgency of the problem.  Rate may be
+      expressed using absolute (e.g., pps) or relative (e.g., percent)
+      values.
 
    FEATURE-DISCARD-DURATION:  The duration of the discards which helps
       to distinguish transient from persistent issues.
@@ -231,7 +234,7 @@ Table of Contents
       service; no-buffer discards may require traffic redistribution;
       policy discards typically require no automated action
 
-   While FEATURE-DISCARD-LOCATION, FEATURE-DISCARD-RATE, and FEATURE-
+   While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-
    DISCARD-DURATION are implicitly supported by MIB-II [RFC2863] and the
    YANG Data Model for Interface Management [RFC8343], FEATURE-DISCARD-
    CLASS requires a more detailed classification scheme than they
@@ -421,7 +424,7 @@ Table of Contents
    discards/policy/:  These are intended discards, meaning packets
       dropped by a device due to a configured policy, including: ACLs,
       traffic policers, Reverse Path Forwarding (RPF) checks, DDoS
-      protection rules, and explicit null routes
+      protection rules, and explicit null routes.
 
    discards/error/:  These are unintended discards due to errors in
       processing packets or frames.  There are multiple sub-classes.
@@ -429,14 +432,14 @@ Table of Contents
    discards/error/l2/rx/:  These are frames discarded due to errors in
       the received Layer 2 frame, including: CRC errors, invalid MAC
       addresses, invalid VLAN tags, frame size violations and other
-      malformed frame conditions
+      malformed frame conditions.
 
    discards/error/l3/rx/:  These are discards which occur due to errors
       in the received packet, indicating an upstream problem rather than
       an issue with the device dropping the errored packets, including:
       header checksum errors, MTU exceeded, invalid packet errors, i.e.,
       incorrect version, incorrect header length, invalid options and
-      other malformed packet conditions
+      other malformed packet conditions.
 
    discards/error/l3/rx/ttl-expired:  These are discards due to TTL (or
       Hop limit) expiry, which can occur for the following reasons:
@@ -1504,7 +1507,7 @@ Table of Contents
    subtrees and data nodes have particular sensitivities/
    vulnerabilities:
 
-   control-plane, interfaces, and devices:  Access to these data nodes
+   Control-plane, interfaces, and devices:  Access to these data nodes
       would reveal information about the attacks to which an element is
       subject, misconfigurations, etc.
 
