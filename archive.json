@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-29T22:15:07.471544+00:00",
+  "timestamp": "2025-07-24T00:50:15.972122+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -1262,6 +1262,130 @@
           "createdAt": "2025-06-24T17:04:50Z",
           "updatedAt": "2025-06-24T17:04:50Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "PR_kwDOOCO1i86gECyn",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/27",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Minor edits incorporating Paul Aitken's feedback 1/2",
+      "createdAt": "2025-07-22T12:37:57Z",
+      "updatedAt": "2025-07-23T17:01:53Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "4eb09100db140956d31d686084571545c23585f5",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-5",
+      "headRefOid": "0ee031c66d76e800359bc757a045c28460c855cb",
+      "closedAt": "2025-07-23T17:01:53Z",
+      "mergedAt": "2025-07-23T17:01:53Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "3146c7f3c8c611084cc3036c1f60fed91fbb6d15"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i861XmV_",
+          "commit": {
+            "abbreviatedOid": "d11e89b"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Thanks, John.\r\n\r\nPlease consider ACking Paul for his review.",
+          "createdAt": "2025-07-22T12:50:48Z",
+          "updatedAt": "2025-07-22T12:54:38Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "```suggestion\r\n: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., pps) or relative (e.g., percent) values.\r\n```",
+              "createdAt": "2025-07-22T12:50:48Z",
+              "updatedAt": "2025-07-22T12:54:38Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOOCO1i86gESEf",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/28",
+      "state": "CLOSED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Promoted implementation experience 3 to requirement 12 per Paul Aitken feedback",
+      "createdAt": "2025-07-22T12:56:11Z",
+      "updatedAt": "2025-07-22T13:07:00Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "eb2420bc5ce0f1a3619a65cfef48f139a28d81cc",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-6",
+      "headRefOid": "7889d7163d557c268b9a3e104cbc81651bc2a878",
+      "closedAt": "2025-07-22T13:07:00Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 29,
+      "id": "PR_kwDOOCO1i86gEakh",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/29",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Promoted implementation experience 3 to requirement 12 per Paul Aitken feedback\r\nPromoted implementation experience 9 to requirement 13 per Paul Aitken feedback",
+      "createdAt": "2025-07-22T13:07:28Z",
+      "updatedAt": "2025-07-23T16:52:20Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "eb2420bc5ce0f1a3619a65cfef48f139a28d81cc",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-7",
+      "headRefOid": "c42f4f70c6bafeadbca95128be2dd8908c124a0a",
+      "closedAt": "2025-07-23T16:52:20Z",
+      "mergedAt": "2025-07-23T16:52:20Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "4eb09100db140956d31d686084571545c23585f5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i861YHit",
+          "commit": {
+            "abbreviatedOid": "69b88e7"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "just a nit. Thanks.",
+          "createdAt": "2025-07-22T13:25:12Z",
+          "updatedAt": "2025-07-22T13:26:41Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\n12. NoBuffer discards can be realized differently with different memory architectures. Whether a NoBuffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion MUST be able to be reported on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be able to be `ingress`.\r\n```",
+              "createdAt": "2025-07-22T13:25:12Z",
+              "updatedAt": "2025-07-22T13:26:41Z"
+            }
+          ]
         }
       ]
     }
