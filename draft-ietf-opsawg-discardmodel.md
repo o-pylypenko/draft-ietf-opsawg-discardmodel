@@ -330,7 +330,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 # Data Model   {#datamodel}
 
-This data model implements the Information Model defined in {{infomodel}} for the interface, device and control-plane components.  This is classified as a Network Element model as defined by {{?RFC1157}}.
+This data model implements the Information Model defined in {{infomodel}} for the interface, device, and control-plane components.  This is classified as a Network Element model as defined by {{?RFC1157}}.
 
 ## Structure {#datamodel-structure}
 
@@ -462,7 +462,8 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 ## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
 
-The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx" module.
+The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx", "ietf-netconf-acm" {{!RFC8341}}, "ietf-interfaces" {{!RFC8343}},
+"ietf-routing" {{!RFC8349}}, and "ietf-logical-network-element" {{!RFC8530}}.
 
 ~~~~~~~~~~
 <CODE BEGINS>
@@ -470,12 +471,11 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 <CODE ENDS>
 ~~~~~~~~~~
 
-
 # Security Considerations {#security}
 
 ## Information Model {#security-infomodel}
 
-The information model defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
+The Information Model defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
 
 ## Data Model {#security-datamodel}
 
