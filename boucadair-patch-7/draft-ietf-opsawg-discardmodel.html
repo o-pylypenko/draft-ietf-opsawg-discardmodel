@@ -2243,7 +2243,7 @@ module ietf-packet-discard-reporting-sx {
       <h2 id="name-data-model">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-data-model" class="section-name selfRef">Data Model</a>
       </h2>
-<p id="section-5-1">This data model implements the Information Model defined in <a href="#infomodel" class="auto internal xref">Section 4</a> for the interface, device and control-plane components.  This is classified as a Network Element model as defined by <span>[<a href="#RFC1157" class="cite xref">RFC1157</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This data model implements the Information Model defined in <a href="#infomodel" class="auto internal xref">Section 4</a> for the interface, device, and control-plane components.  This is classified as a Network Element model as defined by <span>[<a href="#RFC1157" class="cite xref">RFC1157</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="datamodel-structure">
 <section id="section-5.1">
         <h3 id="name-structure-2">
@@ -2450,7 +2450,8 @@ module: ietf-packet-discard-reporting
         <h3 id="name-ietf-packet-discard-reportin">
 <a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-ietf-packet-discard-reportin" class="section-name selfRef">"ietf-packet-discard-reporting" YANG Module</a>
         </h3>
-<p id="section-5.4-1">The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx" module.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx", "ietf-netconf-acm" <span>[<a href="#RFC8341" class="cite xref">RFC8341</a>]</span>, "ietf-interfaces" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>,
+"ietf-routing" <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>, and "ietf-logical-network-element" <span>[<a href="#RFC8530" class="cite xref">RFC8530</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-5.4-2">
 <pre>&lt;CODE BEGINS&gt;
 =============== NOTE: '\' line wrapping per RFC 8792 ================
@@ -2604,7 +2605,7 @@ module ietf-packet-discard-reporting {
         <h3 id="name-information-model-2">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-information-model-2" class="section-name selfRef">Information Model</a>
         </h3>
-<p id="section-6.1-1">The information model defined in <a href="#infomodel-module" class="auto internal xref">Section 4.3</a> specifies a YANG module using <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span> data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">The Information Model defined in <a href="#infomodel-module" class="auto internal xref">Section 4.3</a> specifies a YANG module using <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span> data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-datamodel">
@@ -2725,6 +2726,18 @@ Email: nchachmo@cisco.com
         <dd>
 <span class="refAuthor">Bierman, A.</span> and <span class="refAuthor">M. Bjorklund</span>, <span class="refTitle">"Network Configuration Access Control Model"</span>, <span class="seriesInfo">STD 91</span>, <span class="seriesInfo">RFC 8341</span>, <span class="seriesInfo">DOI 10.17487/RFC8341</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8341">https://www.rfc-editor.org/rfc/rfc8341</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8343">[RFC8343]</dt>
+        <dd>
+<span class="refAuthor">Bjorklund, M.</span>, <span class="refTitle">"A YANG Data Model for Interface Management"</span>, <span class="seriesInfo">RFC 8343</span>, <span class="seriesInfo">DOI 10.17487/RFC8343</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8343">https://www.rfc-editor.org/rfc/rfc8343</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8349">[RFC8349]</dt>
+        <dd>
+<span class="refAuthor">Lhotka, L.</span>, <span class="refAuthor">Lindem, A.</span>, and <span class="refAuthor">Y. Qu</span>, <span class="refTitle">"A YANG Data Model for Routing Management (NMDA Version)"</span>, <span class="seriesInfo">RFC 8349</span>, <span class="seriesInfo">DOI 10.17487/RFC8349</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8349">https://www.rfc-editor.org/rfc/rfc8349</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8530">[RFC8530]</dt>
+        <dd>
+<span class="refAuthor">Berger, L.</span>, <span class="refAuthor">Hopps, C.</span>, <span class="refAuthor">Lindem, A.</span>, <span class="refAuthor">Bogdanovic, D.</span>, and <span class="refAuthor">X. Liu</span>, <span class="refTitle">"YANG Model for Logical Network Elements"</span>, <span class="seriesInfo">RFC 8530</span>, <span class="seriesInfo">DOI 10.17487/RFC8530</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8530">https://www.rfc-editor.org/rfc/rfc8530</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8791">[RFC8791]</dt>
       <dd>
 <span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Björklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"YANG Data Structure Extensions"</span>, <span class="seriesInfo">RFC 8791</span>, <span class="seriesInfo">DOI 10.17487/RFC8791</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8791">https://www.rfc-editor.org/rfc/rfc8791</a>&gt;</span>. </dd>
@@ -2801,10 +2814,6 @@ Email: nchachmo@cisco.com
 <dt id="RFC8340">[RFC8340]</dt>
         <dd>
 <span class="refAuthor">Bjorklund, M.</span> and <span class="refAuthor">L. Berger, Ed.</span>, <span class="refTitle">"YANG Tree Diagrams"</span>, <span class="seriesInfo">BCP 215</span>, <span class="seriesInfo">RFC 8340</span>, <span class="seriesInfo">DOI 10.17487/RFC8340</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8340">https://www.rfc-editor.org/rfc/rfc8340</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8343">[RFC8343]</dt>
-        <dd>
-<span class="refAuthor">Bjorklund, M.</span>, <span class="refTitle">"A YANG Data Model for Interface Management"</span>, <span class="seriesInfo">RFC 8343</span>, <span class="seriesInfo">DOI 10.17487/RFC8343</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8343">https://www.rfc-editor.org/rfc/rfc8343</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8446">[RFC8446]</dt>
         <dd>
