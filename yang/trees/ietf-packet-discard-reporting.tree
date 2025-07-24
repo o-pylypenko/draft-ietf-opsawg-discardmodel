@@ -1,175 +1,176 @@
 module: ietf-packet-discard-reporting
-  +--ro control-plane! {control-plane-stats}?
-  |  +--ro traffic* [direction]
-  |  |  +--ro direction    identityref
-  |  |  +--ro packets?     yang:counter64
-  |  |  +--ro bytes?       yang:counter64
-  |  +--ro discards* [direction]
-  |     +--ro direction    identityref
-  |     +--ro packets?     yang:counter64
-  |     +--ro bytes?       yang:counter64
-  |     +--ro policy
-  |        +--ro packets?   yang:counter64
-  +--ro interface* [name] {interface-stats}?
-  |  +--ro name        string
-  |  +--ro traffic* [direction]
-  |  |  +--ro direction    identityref
-  |  |  +--ro l2
-  |  |  |  +--ro frames?   yang:counter64
-  |  |  |  +--ro bytes?    yang:counter64
-  |  |  +--ro l3
-  |  |  |  +--ro address-family-stat* [address-family]
-  |  |  |     +--ro address-family    identityref
-  |  |  |     +--ro packets?          yang:counter64
-  |  |  |     +--ro bytes?            yang:counter64
-  |  |  |     +--ro unicast
-  |  |  |     |  +--ro packets?   yang:counter64
-  |  |  |     |  +--ro bytes?     yang:counter64
-  |  |  |     +--ro multicast
-  |  |  |        +--ro packets?   yang:counter64
-  |  |  |        +--ro bytes?     yang:counter64
-  |  |  +--ro qos!
-  |  |     +--ro class* [id]
-  |  |        +--ro id         string
-  |  |        +--ro packets?   yang:counter64
-  |  |        +--ro bytes?     yang:counter64
-  |  +--ro discards* [direction]
-  |     +--ro direction    identityref
-  |     +--ro l2
-  |     |  +--ro frames?   yang:counter64
-  |     |  +--ro bytes?    yang:counter64
-  |     +--ro l3
-  |     |  +--ro address-family-stat* [address-family]
-  |     |     +--ro address-family    identityref
-  |     |     +--ro packets?          yang:counter64
-  |     |     +--ro bytes?            yang:counter64
-  |     |     +--ro unicast
-  |     |     |  +--ro packets?   yang:counter64
-  |     |     |  +--ro bytes?     yang:counter64
-  |     |     +--ro multicast
-  |     |        +--ro packets?   yang:counter64
-  |     |        +--ro bytes?     yang:counter64
-  |     +--ro errors
-  |     |  +--ro l2
-  |     |  |  +--ro rx
-  |     |  |  |  +--ro frames?          yang:counter64
-  |     |  |  |  +--ro crc-error?       yang:counter64
-  |     |  |  |  +--ro invalid-mac?     yang:counter64
-  |     |  |  |  +--ro invalid-vlan?    yang:counter64
-  |     |  |  |  +--ro invalid-frame?   yang:counter64
-  |     |  |  +--ro tx
-  |     |  |     +--ro frames?   yang:counter64
-  |     |  +--ro l3
-  |     |  |  +--ro rx
-  |     |  |  |  +--ro packets?          yang:counter64
-  |     |  |  |  +--ro checksum-error?   yang:counter64
-  |     |  |  |  +--ro mtu-exceeded?     yang:counter64
-  |     |  |  |  +--ro invalid-packet?   yang:counter64
-  |     |  |  +--ro ttl-expired?     yang:counter64
-  |     |  |  +--ro no-route?        yang:counter64
-  |     |  |  +--ro invalid-sid?     yang:counter64
-  |     |  |  +--ro invalid-label?   yang:counter64
-  |     |  |  +--ro tx
-  |     |  |     +--ro packets?   yang:counter64
-  |     |  +--ro internal
-  |     |     +--ro packets?        yang:counter64
-  |     |     +--ro parity-error?   yang:counter64
-  |     +--ro policy
-  |     |  +--ro l2
-  |     |  |  +--ro frames?   yang:counter64
-  |     |  |  +--ro acl?      yang:counter64
-  |     |  +--ro l3
-  |     |     +--ro packets?      yang:counter64
-  |     |     +--ro acl?          yang:counter64
-  |     |     +--ro policer
-  |     |     |  +--ro packets?   yang:counter64
-  |     |     |  +--ro bytes?     yang:counter64
-  |     |     +--ro null-route?   yang:counter64
-  |     |     +--ro rpf?          yang:counter64
-  |     |     +--ro ddos?         yang:counter64
-  |     +--ro no-buffer
-  |        +--ro qos!
-  |           +--ro class* [id]
-  |              +--ro id         string
-  |              +--ro packets?   yang:counter64
-  |              +--ro bytes?     yang:counter64
-  +--ro device! {device-stats}?
-     +--ro traffic
-     |  +--ro l2
-     |  |  +--ro frames?   yang:counter64
-     |  |  +--ro bytes?    yang:counter64
-     |  +--ro l3
-     |  |  +--ro address-family-stat* [address-family]
-     |  |     +--ro address-family    identityref
-     |  |     +--ro packets?          yang:counter64
-     |  |     +--ro bytes?            yang:counter64
-     |  |     +--ro unicast
-     |  |     |  +--ro packets?   yang:counter64
-     |  |     |  +--ro bytes?     yang:counter64
-     |  |     +--ro multicast
-     |  |        +--ro packets?   yang:counter64
-     |  |        +--ro bytes?     yang:counter64
-     |  +--ro qos!
-     |     +--ro class* [id]
-     |        +--ro id         string
-     |        +--ro packets?   yang:counter64
-     |        +--ro bytes?     yang:counter64
-     +--ro discards
-        +--ro l2
-        |  +--ro frames?   yang:counter64
-        |  +--ro bytes?    yang:counter64
-        +--ro l3
-        |  +--ro address-family-stat* [address-family]
-        |     +--ro address-family    identityref
-        |     +--ro packets?          yang:counter64
-        |     +--ro bytes?            yang:counter64
-        |     +--ro unicast
-        |     |  +--ro packets?   yang:counter64
-        |     |  +--ro bytes?     yang:counter64
-        |     +--ro multicast
-        |        +--ro packets?   yang:counter64
-        |        +--ro bytes?     yang:counter64
-        +--ro errors
-        |  +--ro l2
-        |  |  +--ro rx
-        |  |  |  +--ro frames?          yang:counter64
-        |  |  |  +--ro crc-error?       yang:counter64
-        |  |  |  +--ro invalid-mac?     yang:counter64
-        |  |  |  +--ro invalid-vlan?    yang:counter64
-        |  |  |  +--ro invalid-frame?   yang:counter64
-        |  |  +--ro tx
-        |  |     +--ro frames?   yang:counter64
-        |  +--ro l3
-        |  |  +--ro rx
-        |  |  |  +--ro packets?          yang:counter64
-        |  |  |  +--ro checksum-error?   yang:counter64
-        |  |  |  +--ro mtu-exceeded?     yang:counter64
-        |  |  |  +--ro invalid-packet?   yang:counter64
-        |  |  +--ro ttl-expired?     yang:counter64
-        |  |  +--ro no-route?        yang:counter64
-        |  |  +--ro invalid-sid?     yang:counter64
-        |  |  +--ro invalid-label?   yang:counter64
-        |  |  +--ro tx
-        |  |     +--ro packets?   yang:counter64
-        |  +--ro internal
-        |     +--ro packets?        yang:counter64
-        |     +--ro parity-error?   yang:counter64
-        +--ro policy
-        |  +--ro l2
-        |  |  +--ro frames?   yang:counter64
-        |  |  +--ro acl?      yang:counter64
-        |  +--ro l3
-        |     +--ro packets?      yang:counter64
-        |     +--ro acl?          yang:counter64
-        |     +--ro policer
-        |     |  +--ro packets?   yang:counter64
-        |     |  +--ro bytes?     yang:counter64
-        |     +--ro null-route?   yang:counter64
-        |     +--ro rpf?          yang:counter64
-        |     +--ro ddos?         yang:counter64
-        +--ro no-buffer
-           +--ro qos!
-              +--ro class* [id]
-                 +--ro id         string
-                 +--ro packets?   yang:counter64
-                 +--ro bytes?     yang:counter64
+
+  augment /rt:routing/rt:control-plane-protocols
+            /rt:control-plane-protocol:
+    +--rw traffic* [direction] {control-plane-stats}?
+    |  +--rw direction    identityref
+    |  +--rw packets?     yang:counter64
+    |  +--rw bytes?       yang:counter64
+    +--rw discards* [direction] {control-plane-stats}?
+       +--rw direction    identityref
+       +--rw packets?     yang:counter64
+       +--rw bytes?       yang:counter64
+       +--rw policy
+          +--rw packets?   yang:counter64
+  augment /if:interfaces-state/if:interface/if:statistics:
+    +--ro traffic* [direction] {interface-stats}?
+    |  +--ro direction    identityref
+    |  +--ro l2
+    |  |  +--ro frames?   yang:counter64
+    |  |  +--ro bytes?    yang:counter64
+    |  +--ro l3
+    |  |  +--ro address-family-stat* [address-family]
+    |  |     +--ro address-family    identityref
+    |  |     +--ro packets?          yang:counter64
+    |  |     +--ro bytes?            yang:counter64
+    |  |     +--ro unicast
+    |  |     |  +--ro packets?   yang:counter64
+    |  |     |  +--ro bytes?     yang:counter64
+    |  |     +--ro multicast
+    |  |        +--ro packets?   yang:counter64
+    |  |        +--ro bytes?     yang:counter64
+    |  +--ro qos!
+    |     +--ro class* [id]
+    |        +--ro id         string
+    |        +--ro packets?   yang:counter64
+    |        +--ro bytes?     yang:counter64
+    +--ro discards* [direction] {interface-stats}?
+       +--ro direction    identityref
+       +--ro l2
+       |  +--ro frames?   yang:counter64
+       |  +--ro bytes?    yang:counter64
+       +--ro l3
+       |  +--ro address-family-stat* [address-family]
+       |     +--ro address-family    identityref
+       |     +--ro packets?          yang:counter64
+       |     +--ro bytes?            yang:counter64
+       |     +--ro unicast
+       |     |  +--ro packets?   yang:counter64
+       |     |  +--ro bytes?     yang:counter64
+       |     +--ro multicast
+       |        +--ro packets?   yang:counter64
+       |        +--ro bytes?     yang:counter64
+       +--ro errors
+       |  +--ro l2
+       |  |  +--ro rx
+       |  |  |  +--ro frames?          yang:counter64
+       |  |  |  +--ro crc-error?       yang:counter64
+       |  |  |  +--ro invalid-mac?     yang:counter64
+       |  |  |  +--ro invalid-vlan?    yang:counter64
+       |  |  |  +--ro invalid-frame?   yang:counter64
+       |  |  +--ro tx
+       |  |     +--ro frames?   yang:counter64
+       |  +--ro l3
+       |  |  +--ro rx
+       |  |  |  +--ro packets?          yang:counter64
+       |  |  |  +--ro checksum-error?   yang:counter64
+       |  |  |  +--ro mtu-exceeded?     yang:counter64
+       |  |  |  +--ro invalid-packet?   yang:counter64
+       |  |  +--ro ttl-expired?     yang:counter64
+       |  |  +--ro no-route?        yang:counter64
+       |  |  +--ro invalid-sid?     yang:counter64
+       |  |  +--ro invalid-label?   yang:counter64
+       |  |  +--ro tx
+       |  |     +--ro packets?   yang:counter64
+       |  +--ro internal
+       |     +--ro packets?        yang:counter64
+       |     +--ro parity-error?   yang:counter64
+       +--ro policy
+       |  +--ro l2
+       |  |  +--ro frames?   yang:counter64
+       |  |  +--ro acl?      yang:counter64
+       |  +--ro l3
+       |     +--ro packets?      yang:counter64
+       |     +--ro acl?          yang:counter64
+       |     +--ro policer
+       |     |  +--ro packets?   yang:counter64
+       |     |  +--ro bytes?     yang:counter64
+       |     +--ro null-route?   yang:counter64
+       |     +--ro rpf?          yang:counter64
+       |     +--ro ddos?         yang:counter64
+       +--ro no-buffer
+          +--ro qos!
+             +--ro class* [id]
+                +--ro id         string
+                +--ro packets?   yang:counter64
+                +--ro bytes?     yang:counter64
+  augment /lne:logical-network-elements/lne:logical-network-element:
+    +--rw traffic {device-stats}?
+    |  +--rw l2
+    |  |  +--rw frames?   yang:counter64
+    |  |  +--rw bytes?    yang:counter64
+    |  +--rw l3
+    |  |  +--rw address-family-stat* [address-family]
+    |  |     +--rw address-family    identityref
+    |  |     +--rw packets?          yang:counter64
+    |  |     +--rw bytes?            yang:counter64
+    |  |     +--rw unicast
+    |  |     |  +--rw packets?   yang:counter64
+    |  |     |  +--rw bytes?     yang:counter64
+    |  |     +--rw multicast
+    |  |        +--rw packets?   yang:counter64
+    |  |        +--rw bytes?     yang:counter64
+    |  +--rw qos!
+    |     +--rw class* [id]
+    |        +--rw id         string
+    |        +--rw packets?   yang:counter64
+    |        +--rw bytes?     yang:counter64
+    +--rw discards {device-stats}?
+       +--rw l2
+       |  +--rw frames?   yang:counter64
+       |  +--rw bytes?    yang:counter64
+       +--rw l3
+       |  +--rw address-family-stat* [address-family]
+       |     +--rw address-family    identityref
+       |     +--rw packets?          yang:counter64
+       |     +--rw bytes?            yang:counter64
+       |     +--rw unicast
+       |     |  +--rw packets?   yang:counter64
+       |     |  +--rw bytes?     yang:counter64
+       |     +--rw multicast
+       |        +--rw packets?   yang:counter64
+       |        +--rw bytes?     yang:counter64
+       +--rw errors
+       |  +--rw l2
+       |  |  +--rw rx
+       |  |  |  +--rw frames?          yang:counter64
+       |  |  |  +--rw crc-error?       yang:counter64
+       |  |  |  +--rw invalid-mac?     yang:counter64
+       |  |  |  +--rw invalid-vlan?    yang:counter64
+       |  |  |  +--rw invalid-frame?   yang:counter64
+       |  |  +--rw tx
+       |  |     +--rw frames?   yang:counter64
+       |  +--rw l3
+       |  |  +--rw rx
+       |  |  |  +--rw packets?          yang:counter64
+       |  |  |  +--rw checksum-error?   yang:counter64
+       |  |  |  +--rw mtu-exceeded?     yang:counter64
+       |  |  |  +--rw invalid-packet?   yang:counter64
+       |  |  +--rw ttl-expired?     yang:counter64
+       |  |  +--rw no-route?        yang:counter64
+       |  |  +--rw invalid-sid?     yang:counter64
+       |  |  +--rw invalid-label?   yang:counter64
+       |  |  +--rw tx
+       |  |     +--rw packets?   yang:counter64
+       |  +--rw internal
+       |     +--rw packets?        yang:counter64
+       |     +--rw parity-error?   yang:counter64
+       +--rw policy
+       |  +--rw l2
+       |  |  +--rw frames?   yang:counter64
+       |  |  +--rw acl?      yang:counter64
+       |  +--rw l3
+       |     +--rw packets?      yang:counter64
+       |     +--rw acl?          yang:counter64
+       |     +--rw policer
+       |     |  +--rw packets?   yang:counter64
+       |     |  +--rw bytes?     yang:counter64
+       |     +--rw null-route?   yang:counter64
+       |     +--rw rpf?          yang:counter64
+       |     +--rw ddos?         yang:counter64
+       +--rw no-buffer
+          +--rw qos!
+             +--rw class* [id]
+                +--rw id         string
+                +--rw packets?   yang:counter64
+                +--rw bytes?     yang:counter64
