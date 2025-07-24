@@ -101,13 +101,17 @@ module ietf-packet-discard-reporting {
        device.";
   }
 
-grouping discard-order-policy {
-  config false;
-  description
-    "Defines the implementation-specific precedence of discard classes
-     when multiple discard reasons apply to a single packet.
-     The list is ordered from highest to lowest precedence.";
- 
+  /*
+   * Groupings
+   */
+
+  grouping discard-order-policy {
+    config false;
+    description
+      "Defines the implementation-specific precedence of discard classes
+       when multiple discard reasons apply to a single packet.
+       The list is ordered from highest to lowest precedence.";
+
     leaf-list discard-order-capability {
       type identityref {
         base discard-class;
@@ -116,7 +120,6 @@ grouping discard-order-policy {
         "The discard class identity that has this precedence.";
     }
   }
-}
 
   /*
    * Main structure definition
