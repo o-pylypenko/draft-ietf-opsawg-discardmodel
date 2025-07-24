@@ -102,6 +102,26 @@ module ietf-packet-discard-reporting {
   }
 
   /*
+   * Groupings
+   */
+
+  grouping discard-order-policy {
+    config false;
+    description
+      "Defines the implementation-specific precedence of discard classes
+       when multiple discard reasons apply to a single packet.
+       The list is ordered from highest to lowest precedence.";
+
+    leaf-list discard-order-capability {
+      type identityref {
+        base discard-class;
+      }
+      description
+        "The discard class identity that has this precedence.";
+    }
+  }
+
+  /*
    * Main structure definition
    */
 
@@ -110,6 +130,7 @@ module ietf-packet-discard-reporting {
     nacm:default-deny-all;
     description
       "Adds control plane discard counters.";
+    uses discard-order-policy;
     uses plr-sx:control-plane;
   }
   augment "/if:interfaces-state/if:interface/if:statistics" {
@@ -117,6 +138,7 @@ module ietf-packet-discard-reporting {
     nacm:default-deny-all;
     description
       "Adds packet discard reporting to the interface statistics.";
+    uses discard-order-policy;
     uses plr-sx:interface;
   }
   augment "/lne:logical-network-elements/lne:logical-network-element" {
@@ -124,6 +146,7 @@ module ietf-packet-discard-reporting {
     nacm:default-deny-all;
     description
       "Adds device level packet counters.";
+    uses discard-order-policy;
     uses plr-sx:device;
   }
 }
