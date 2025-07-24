@@ -10,11 +10,25 @@ module ietf-packet-discard-reporting {
       "RFC XXXX: Information and Data Models for Packet Discard
                  Reporting";
   }
-
   import ietf-netconf-acm {
     prefix nacm;
     reference
       "RFC 8341: Network Configuration Access Control Model";
+  }
+  import ietf-interfaces {
+    prefix if;
+    reference
+      "RFC 8343: A YANG Data Model for Interface Management";
+  }
+  import ietf-routing {
+    prefix rt;
+    reference
+      "RFC 8349: A YANG Data Model for Routing Management (NMDA Version)";
+  }
+  import ietf-logical-network-element {
+    prefix lne;
+    reference
+      "RFC 8530: YANG Model for Logical Network Elements";
   }
 
   organization
@@ -91,37 +105,25 @@ module ietf-packet-discard-reporting {
    * Main structure definition
    */
 
-  container control-plane {
+  augment "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
     if-feature "control-plane-stats";
     nacm:default-deny-all;
-    presence "Control plane statistics are available.";
-    config false;
     description
-      "Control plane packet counters.";
+      "Adds control plane discard counters.";
     uses plr-sx:control-plane;
   }
-  list interface {
+  augment "/if:interfaces-state/if:interface/if:statistics" {
     if-feature "interface-stats";
-    key "name";
     nacm:default-deny-all;
-    config false;
     description
-      "Indicates a list of interfaces for which packet discard
-       reporting data is provided.";
-    leaf name {
-      type string;
-      description
-        "Indicates the name of the interface.";
-    }
+      "Adds packet discard reporting to the interface statistics.";
     uses plr-sx:interface;
   }
-  container device {
+  augment "/lne:logical-network-elements/lne:logical-network-element" {
     if-feature "device-stats";
-    presence "Device-level statistics are available.";
     nacm:default-deny-all;
-    config false;
     description
-      "Device level packet counters.";
+      "Adds device level packet counters.";
     uses plr-sx:device;
   }
 }
