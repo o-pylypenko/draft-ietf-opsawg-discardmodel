@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-24T00:50:15.972122+00:00",
+  "timestamp": "2025-07-27T00:55:30.745645+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -1388,6 +1388,68 @@
           ]
         }
       ]
+    },
+    {
+      "number": 30,
+      "id": "PR_kwDOOCO1i86gY-oR",
+      "title": "anchor data model to cp/if/ln",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/30",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "graft the counters to the appropriate anchors",
+      "createdAt": "2025-07-24T06:14:46Z",
+      "updatedAt": "2025-07-24T09:43:04Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "3146c7f3c8c611084cc3036c1f60fed91fbb6d15",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-7",
+      "headRefOid": "ae9a6bac90723309d670d86b1e148fa31c61608a",
+      "closedAt": "2025-07-24T09:43:04Z",
+      "mergedAt": "2025-07-24T09:43:04Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "f4d341ff855cdd05d7dae6c074d6962efe7bc33b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOOCO1i86gbDyA",
+      "title": "Update ietf-packet-discard-reporting.yang",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/31",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Expose discard order capability",
+      "createdAt": "2025-07-24T09:54:07Z",
+      "updatedAt": "2025-07-24T10:38:37Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "f4d341ff855cdd05d7dae6c074d6962efe7bc33b",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-8",
+      "headRefOid": "cce2d79656342ad2cb74c07ecd07af51a867ab9a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "John, this is broken because we don't have discard-class in the module. That identity should be defined first.",
+          "createdAt": "2025-07-24T10:38:37Z",
+          "updatedAt": "2025-07-24T10:38:37Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
