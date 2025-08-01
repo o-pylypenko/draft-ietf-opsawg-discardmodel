@@ -139,7 +139,6 @@ module ietf-packet-discard-reporting {
    */
 
   grouping discard-order-policy {
-    config false;
     description
       "Defines the implementation-specific precedence of discard classes
        when multiple discard reasons apply to a single packet.
@@ -149,6 +148,7 @@ module ietf-packet-discard-reporting {
       type identityref {
         base discard-class;
       }
+      config false;
       description
         "The discard class identity that has this precedence.";
     }
