@@ -102,6 +102,39 @@ module ietf-packet-discard-reporting {
   }
 
   /*
+   * Identities
+   */
+
+  identity discard-class {
+    description
+      "Base identity to identify the discard calss.";
+  }
+
+  identity layer2 {
+    base discard-class;
+    description
+      "Indicates a Layer 2 discard.";
+  }
+
+  identity layer3 {
+    base discard-class;
+    description
+      "Indicates a Layer 3 discard.";
+  }
+
+  identity internal {
+    base discard-class;
+    description
+      "Indicates an internal discard.";
+  }
+
+  identity policy {
+    base discard-class;
+    description
+      "Indicates a discard due to a policy.";
+  }
+
+  /*
    * Groupings
    */
 
