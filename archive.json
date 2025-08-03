@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-27T00:55:30.745645+00:00",
+  "timestamp": "2025-08-03T00:56:21.148580+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -1429,13 +1429,13 @@
       "labels": [],
       "body": "Expose discard order capability",
       "createdAt": "2025-07-24T09:54:07Z",
-      "updatedAt": "2025-07-24T10:38:37Z",
+      "updatedAt": "2025-08-01T16:23:27Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "f4d341ff855cdd05d7dae6c074d6962efe7bc33b",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-8",
-      "headRefOid": "cce2d79656342ad2cb74c07ecd07af51a867ab9a",
+      "headRefOid": "afd5deefb14d51bb982d927121f73c13618c0741",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
