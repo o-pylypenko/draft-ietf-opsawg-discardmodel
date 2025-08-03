@@ -1449,6 +1449,60 @@ Table of Contents
      }
 
      /*
+      * Identities
+      */
+
+     identity discard-class {
+       description
+         "Base identity to identify the discard calss.";
+     }
+
+     identity layer2 {
+       base discard-class;
+       description
+         "Indicates a Layer 2 discard.";
+     }
+
+     identity layer3 {
+       base discard-class;
+       description
+         "Indicates a Layer 3 discard.";
+     }
+
+     identity internal {
+       base discard-class;
+       description
+         "Indicates an internal discard.";
+     }
+
+     identity policy {
+       base discard-class;
+       description
+         "Indicates a discard due to a policy.";
+     }
+
+     /*
+      * Groupings
+      */
+
+     grouping discard-order-policy {
+       description
+         "Defines the implementation-specific precedence of discard \
+                                                                 classes
+          when multiple discard reasons apply to a single packet.
+          The list is ordered from highest to lowest precedence.";
+
+       leaf-list discard-order-capability {
+         type identityref {
+           base discard-class;
+         }
+         config false;
+         description
+           "The discard class identity that has this precedence.";
+       }
+     }
+
+     /*
       * Main structure definition
       */
 
@@ -1458,6 +1512,7 @@ Table of Contents
        nacm:default-deny-all;
        description
          "Adds control plane discard counters.";
+       uses discard-order-policy;
        uses plr-sx:control-plane;
      }
      augment "/if:interfaces-state/if:interface/if:statistics" {
@@ -1465,6 +1520,7 @@ Table of Contents
        nacm:default-deny-all;
        description
          "Adds packet discard reporting to the interface statistics.";
+       uses discard-order-policy;
        uses plr-sx:interface;
      }
      augment "/lne:logical-network-elements/lne:logical-network-element\
@@ -1473,6 +1529,7 @@ Table of Contents
        nacm:default-deny-all;
        description
          "Adds device level packet counters.";
+       uses discard-order-policy;
        uses plr-sx:device;
      }
    }
@@ -2145,6 +2202,8 @@ Appendix E.  Full Data Model Tree
 
      augment /rt:routing/rt:control-plane-protocols
                /rt:control-plane-protocol:
+       +--ro discard-order-capability*   identityref
+       |       {control-plane-stats}?
        +--rw traffic* [direction] {control-plane-stats}?
        |  +--rw direction    identityref
        |  +--rw packets?     yang:counter64
@@ -2156,6 +2215,7 @@ Appendix E.  Full Data Model Tree
           +--rw policy
              +--rw packets?   yang:counter64
      augment /if:interfaces-state/if:interface/if:statistics:
+       +--ro discard-order-capability*   identityref {interface-stats}?
        +--ro traffic* [direction] {interface-stats}?
        |  +--ro direction    identityref
        |  +--ro l2
@@ -2238,6 +2298,7 @@ Appendix E.  Full Data Model Tree
                    +--ro packets?   yang:counter64
                    +--ro bytes?     yang:counter64
      augment /lne:logical-network-elements/lne:logical-network-element:
+       +--ro discard-order-capability*   identityref {device-stats}?
        +--rw traffic {device-stats}?
        |  +--rw l2
        |  |  +--rw frames?   yang:counter64
