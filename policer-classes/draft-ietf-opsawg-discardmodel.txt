@@ -714,7 +714,7 @@ Table of Contents
        container qos {
          presence "QoS statistics are available.";
          description
-           "Per-class QoS discard counters.";
+           "Per-class QoS traffic counters.";
          uses class-list;
        }
      }
