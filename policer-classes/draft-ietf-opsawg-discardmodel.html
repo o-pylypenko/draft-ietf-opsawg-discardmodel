@@ -1815,6 +1815,8 @@ module ietf-packet-discard-reporting-sx {
       "Quality of Service (QoS) traffic counters.";
     container qos {
       presence "QoS statistics are available.";
+      description
+        "Per-class QoS discard counters.";
       uses class-list;
     }
   }
