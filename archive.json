@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-05T00:52:27.732979+00:00",
+  "timestamp": "2025-09-16T00:40:25.349554+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -1028,7 +1028,7 @@
       "labels": [],
       "body": "`min-elements 1` makes qos mandatory. Converting it into a presence container. Another option is to remove `min-elements `",
       "createdAt": "2025-06-23T16:21:20Z",
-      "updatedAt": "2025-06-23T20:45:26Z",
+      "updatedAt": "2025-09-15T06:18:58Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "1e4a4b6beca13b255c4b26f0e1a3fec7fa43bc46",
@@ -1452,6 +1452,79 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOOCO1i86ojcmE",
+      "title": "Add per-class drop counters to policer discards",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/32",
+      "state": "CLOSED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "- **Making QoS a presence container**\n- **Auto-generating yang trees**\n- **Add per-class drop counters to policer discards**\n",
+      "createdAt": "2025-09-15T05:32:18Z",
+      "updatedAt": "2025-09-15T05:43:14Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "e5cd32e665696d0966c085b4dadc23aceb2fa942",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "policer-classes",
+      "headRefOid": "863a00e902ca4df117889155a42680fccc508df8",
+      "closedAt": "2025-09-15T05:43:13Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOOCO1i86oji4a",
+      "title": "Add per-class drop counters to policer discards",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/33",
+      "state": "OPEN",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Added optional per-class statistics to the policer container",
+      "createdAt": "2025-09-15T05:46:52Z",
+      "updatedAt": "2025-09-15T08:55:55Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "e5cd32e665696d0966c085b4dadc23aceb2fa942",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "policer-classes",
+      "headRefOid": "76db204c5803338ab65dc177affd193cb5270aa4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87AI3Hr",
+          "commit": {
+            "abbreviatedOid": "76db204"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-09-15T08:54:30Z",
+          "updatedAt": "2025-09-15T08:55:55Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n```\r\n\r\nno need to track this manually.",
+              "createdAt": "2025-09-15T08:54:30Z",
+              "updatedAt": "2025-09-15T08:55:55Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
