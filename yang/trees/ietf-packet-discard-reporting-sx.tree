@@ -86,6 +86,11 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- policer
     |     |     |  +-- packets?   yang:counter64
     |     |     |  +-- bytes?     yang:counter64
+    |     |     |  +-- classes!
+    |     |     |     +-- class* [id]
+    |     |     |        +-- id         string
+    |     |     |        +-- packets?   yang:counter64
+    |     |     |        +-- bytes?     yang:counter64
     |     |     +-- null-route?   yang:counter64
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
@@ -167,6 +172,11 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- policer
     |     |     |  +-- packets?   yang:counter64
     |     |     |  +-- bytes?     yang:counter64
+    |     |     |  +-- classes!
+    |     |     |     +-- class* [id]
+    |     |     |        +-- id         string
+    |     |     |        +-- packets?   yang:counter64
+    |     |     |        +-- bytes?     yang:counter64
     |     |     +-- null-route?   yang:counter64
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
@@ -247,6 +257,11 @@ module: ietf-packet-discard-reporting-sx
           |     +-- policer
           |     |  +-- packets?   yang:counter64
           |     |  +-- bytes?     yang:counter64
+          |     |  +-- classes!
+          |     |     +-- class* [id]
+          |     |        +-- id         string
+          |     |        +-- packets?   yang:counter64
+          |     |        +-- bytes?     yang:counter64
           |     +-- null-route?   yang:counter64
           |     +-- rpf?          yang:counter64
           |     +-- ddos?         yang:counter64

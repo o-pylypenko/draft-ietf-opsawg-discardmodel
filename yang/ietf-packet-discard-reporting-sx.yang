@@ -219,25 +219,31 @@ module ietf-packet-discard-reporting-sx {
     uses ip;
   }
 
+  grouping class-list {
+    description
+      "Class-based traffic counters.";
+    list class {
+      key "id";
+      min-elements 1;
+      description
+        "Class traffic counters.";
+      leaf id {
+        type string;
+        description
+          "Class identifier.";
+      }
+      uses basic-packets-bytes;
+    }
+  }
+
   grouping qos {
     description
       "Quality of Service (QoS) traffic counters.";
     container qos {
       presence "QoS statistics are available.";
       description
-        "QoS traffic counters.";
-      list class {
-        key "id";
-        min-elements 1;
-        description
-          "QoS class traffic counters.";
-        leaf id {
-          type string;
-          description
-            "QoS class identifier.";
-        }
-        uses basic-packets-bytes;
-      }
+        "Per-class QoS traffic counters.";
+      uses class-list;
     }
   }
 
@@ -460,6 +466,12 @@ module ietf-packet-discard-reporting-sx {
         "The number of packets discarded due to policer
          violations.";
       uses basic-packets-bytes;
+      container classes {
+        presence "Per-class policer statistics are available.";
+        description
+          "Per-class policer discard counters.";
+        uses class-list;
+      }
     }
     leaf null-route {
       type yang:counter64;

@@ -2,7 +2,6 @@
 title: Information and Data Models for Packet Discard Reporting
 abbrev: IM and DM for Packet Discard Reporting
 docname: draft-ietf-opsawg-discardmodel-latest
-date: 2025-06-30
 category: std
 
 ipr: trust200902
