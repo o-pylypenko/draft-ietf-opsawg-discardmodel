@@ -1639,17 +1639,6 @@ module ietf-packet-discard-reporting-sx {
    * Features
    */
 
-  feature interface-stats {
-    description
-      "Indicates support of interface statistics on this
-       device.";
-  }
-
-  feature device-stats {
-    description
-      "Indicates support of global device statistics on this
-       device.";
-  }
 
   feature control-plane-stats {
     description
@@ -1657,9 +1646,21 @@ module ietf-packet-discard-reporting-sx {
        device.";
   }
 
+  feature interface-stats {
+    description
+      "Indicates support of interface statistics on this
+       device.";
+  }
+
   feature flow-reporting {
     description
       "Indicates support of flow reporting on this device.";
+  }
+
+  feature device-stats {
+    description
+      "Indicates support of global device statistics on this
+       device.";
   }
 
   /*

@@ -545,17 +545,6 @@ Table of Contents
       * Features
       */
 
-     feature interface-stats {
-       description
-         "Indicates support of interface statistics on this
-          device.";
-     }
-
-     feature device-stats {
-       description
-         "Indicates support of global device statistics on this
-          device.";
-     }
 
      feature control-plane-stats {
        description
@@ -563,9 +552,21 @@ Table of Contents
           device.";
      }
 
+     feature interface-stats {
+       description
+         "Indicates support of interface statistics on this
+          device.";
+     }
+
      feature flow-reporting {
        description
          "Indicates support of flow reporting on this device.";
+     }
+
+     feature device-stats {
+       description
+         "Indicates support of global device statistics on this
+          device.";
      }
 
      /*
