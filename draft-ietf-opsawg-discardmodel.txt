@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 1 January 2026                                          J. Haas
+Expires: 21 March 2026                                           J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                            30 June 2025
+                                                       17 September 2025
 
 
         Information and Data Models for Packet Discard Reporting
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 January 2026.
+   This Internet-Draft will expire on 21 March 2026.
 
 Copyright Notice
 
@@ -691,25 +691,31 @@ Table of Contents
        uses ip;
      }
 
+     grouping class-list {
+       description
+         "Class-based traffic counters.";
+       list class {
+         key "id";
+         min-elements 1;
+         description
+           "Class traffic counters.";
+         leaf id {
+           type string;
+           description
+             "Class identifier.";
+         }
+         uses basic-packets-bytes;
+       }
+     }
+
      grouping qos {
        description
          "Quality of Service (QoS) traffic counters.";
        container qos {
          presence "QoS statistics are available.";
          description
-           "QoS traffic counters.";
-         list class {
-           key "id";
-           min-elements 1;
-           description
-             "QoS class traffic counters.";
-           leaf id {
-             type string;
-             description
-               "QoS class identifier.";
-           }
-           uses basic-packets-bytes;
-         }
+           "Per-class QoS traffic counters.";
+         uses class-list;
        }
      }
 
@@ -932,6 +938,12 @@ Table of Contents
            "The number of packets discarded due to policer
             violations.";
          uses basic-packets-bytes;
+         container classes {
+           presence "Per-class policer statistics are available.";
+           description
+             "Per-class policer discard counters.";
+           uses class-list;
+         }
        }
        leaf null-route {
          type yang:counter64;
@@ -2022,6 +2034,11 @@ Appendix D.  Full Information Model Tree
        |     |     +-- policer
        |     |     |  +-- packets?   yang:counter64
        |     |     |  +-- bytes?     yang:counter64
+       |     |     |  +-- classes!
+       |     |     |     +-- class* [id]
+       |     |     |        +-- id         string
+       |     |     |        +-- packets?   yang:counter64
+       |     |     |        +-- bytes?     yang:counter64
        |     |     +-- null-route?   yang:counter64
        |     |     +-- rpf?          yang:counter64
        |     |     +-- ddos?         yang:counter64
@@ -2103,6 +2120,11 @@ Appendix D.  Full Information Model Tree
        |     |     +-- policer
        |     |     |  +-- packets?   yang:counter64
        |     |     |  +-- bytes?     yang:counter64
+       |     |     |  +-- classes!
+       |     |     |     +-- class* [id]
+       |     |     |        +-- id         string
+       |     |     |        +-- packets?   yang:counter64
+       |     |     |        +-- bytes?     yang:counter64
        |     |     +-- null-route?   yang:counter64
        |     |     +-- rpf?          yang:counter64
        |     |     +-- ddos?         yang:counter64
@@ -2183,6 +2205,11 @@ Appendix D.  Full Information Model Tree
              |     +-- policer
              |     |  +-- packets?   yang:counter64
              |     |  +-- bytes?     yang:counter64
+             |     |  +-- classes!
+             |     |     +-- class* [id]
+             |     |        +-- id         string
+             |     |        +-- packets?   yang:counter64
+             |     |        +-- bytes?     yang:counter64
              |     +-- null-route?   yang:counter64
              |     +-- rpf?          yang:counter64
              |     +-- ddos?         yang:counter64
@@ -2288,6 +2315,11 @@ Appendix E.  Full Data Model Tree
           |     +--ro policer
           |     |  +--ro packets?   yang:counter64
           |     |  +--ro bytes?     yang:counter64
+          |     |  +--ro classes!
+          |     |     +--ro class* [id]
+          |     |        +--ro id         string
+          |     |        +--ro packets?   yang:counter64
+          |     |        +--ro bytes?     yang:counter64
           |     +--ro null-route?   yang:counter64
           |     +--ro rpf?          yang:counter64
           |     +--ro ddos?         yang:counter64
@@ -2369,6 +2401,11 @@ Appendix E.  Full Data Model Tree
           |     +--rw policer
           |     |  +--rw packets?   yang:counter64
           |     |  +--rw bytes?     yang:counter64
+          |     |  +--rw classes!
+          |     |     +--rw class* [id]
+          |     |        +--rw id         string
+          |     |        +--rw packets?   yang:counter64
+          |     |        +--rw bytes?     yang:counter64
           |     +--rw null-route?   yang:counter64
           |     +--rw rpf?          yang:counter64
           |     +--rw ddos?         yang:counter64
