@@ -123,11 +123,13 @@ Intended discards are packets dropped due to deliberate network policies or conf
 
 Unintended discards are packets that were dropped, which the network operator otherwise intended to deliver, i.e. which indicates an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.
 
+Device discard counters do not by themselves establish operator intent. Discards reported under policy (e.g., ACL/policer) indicate only that traffic matched a configured rule; such discards may still be unintended if the configuration is in error. Determining intent for policy discards requires external context (e.g., configuration validation and change history) which is out of scope for this specification.
+
 Tree diagrams used in this document follow the notation defined in {{?RFC8340}}.
 
 # Problem Statement   {#problem}
 
-The fundamental problem for network operators is how to automatically detect when unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected, for example:
+The fundamental problem for network operators is how to automatically detect when and where unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected, for example:
 
 1. Take a problematic device, link, or set of devices and/or links out of service.
 2. Return a device, link, or set of devices and/or links back into service.
@@ -147,7 +149,7 @@ FEATURE-DISCARD-DURATION:
 : The duration of the discards which helps to distinguish transient from persistent issues.
 
 FEATURE-DISCARD-CLASS:
-: The type or class of discards, which is crucial for selecting the appropriate of mitigation - for example: error discards may require taking faulty components out of service; no-buffer discards may require traffic redistribution; policy discards typically require no automated action
+: The type or class of discards, which is crucial for selecting the appropriate of mitigation - for example: error discards may require taking faulty components out of service; no-buffer discards may require traffic redistribution; intended policy discards typically require no automated action
 
 While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following information model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
@@ -459,6 +461,12 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 - interface/ingress/discards/l3/v6/multicast/bytes
 - interface/ingress/discards/policy/l3/rpf/packets
 
+A “good” Layer-2 frame received would increment:
+- interface/ingress/traffic/l2/frames
+- interface/ingress/traffic/l2/bytes
+- interface/ingress/traffic/qos/class[id="0"]/packets
+- interface/ingress/traffic/qos/class[id="0"]/bytes
+
 
 ## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
 
@@ -550,8 +558,8 @@ Packets ingress on the left and egress on the right:
 ~~~~~~~~~~ aasvg
                               +-----------+
                               |           |
-                              |    CPU    |
-                              |           |
+                              |  Control  |
+                              |  Plane    |
                               +---+---^---+
                          from_cpu |   | to_cpu
                                   |   |
