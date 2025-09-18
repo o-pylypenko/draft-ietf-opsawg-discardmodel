@@ -7,7 +7,17 @@ category: std
 ipr: trust200902
 area: Operations and Management Area
 workgroup: "Operations and Management Area Working Group"
-keyword: Internet-Draft
+keyword:
+ - Troubelshooting
+ - Diagnostic
+ - Network Automation
+ - Network Service
+ - Resilience
+ - Robustness
+ - Root cause
+ - Anomaly
+ - Incident
+ - Customer experience
 
 venue:
   group: "Operations and Management Area Working Group"
@@ -96,21 +106,21 @@ informative:
 
 --- abstract
 
-This document defines an information model and a corresponding YANG data model for packet discard reporting. The information model provides an implementation-independent framework for classifying packet loss — both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) — to enable automated network mitigation of unintended packet loss.  The YANG data model specifies an implementation of this framework for network elements.
+This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss — both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) — to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this framework for network elements.
 
 --- middle
 
 # Introduction        {#introduction}
 
-The primary function of a network is to transport and deliver packets according to service level objectives. For network operators, understanding both where and why packet loss occurs within a network is essential for effective operation. Device-reported packet loss provides the most direct signal for identifying service impact. While certain types of packet loss, such as policy-based discards, are intentional and part of normal network operation, unintended packet loss can impact customer services.  To automate network operations, operators must be able to detect customer-impacting packet loss, determine its root cause, and apply appropriate mitigation actions. Precise classification of packet loss is crucial to ensure that anomalous packet loss is easily detected and that the right action is taken to mitigate the impact. Taking the wrong action can make problems worse; for example, removing a congested device from service can exacerbate congestion by redirecting traffic to other already congested links or devices.
+The primary function of a network is to transport and deliver packets according to service level objectives. For network operators, understanding both where and why packet loss occurs within a network is essential for effective operation. Device-reported packet loss provides the most direct signal for identifying service impact. While certain types of packet loss, such as policy-based discards, are intentional and part of normal network operation, unintended packet loss can impact customer services.  To automate network operations, operators must be able to detect customer-impacting packet loss, determine its root cause, and apply appropriate mitigation actions. Precise classification of packet loss is thus crucial to ensure that anomalous packet loss is easily detected and that the right action is taken to mitigate the impact. Taking the wrong action can make problems worse; for example, removing a congested device from service can exacerbate congestion by redirecting traffic to other already congested links or devices.
 
-Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, are insufficient for automating network operations.  First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, {{?RFC7270}} provides support for reporting discards per flow in IPFIX using forwardingStatus, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation, e.g., the "For us" reason code.
+Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in "The Interfaces Group MIB" {{?RFC2863}} and "A YANG Data Model for Interface Management" {{?RFC8343}}, are insufficient for automating network operations. First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, {{?RFC7270}} provides support for reporting discards per flow in IP Flow Information Export (IPFIX) {{?RFC7011}} using forwardingStatus, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation (e.g., the "For us" reason code).
 
-This document defines an information model and corresponding YANG data model for packet loss reporting which address these issues.  The information model provides precise classification of packet loss to enable accurate automated mitigation.  The data model specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
+This document defines an Information Model and specifies a corresponding YANG data model for packet loss reporting which address these issues.  The Information Model provides precise classification of packet loss to enable accurate automated mitigation. The data model specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
 
 The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.
 
-{{problem}} describes the problem space and requirements. {{infomodel}} defines the information model and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.
+{{problem}} describes the problem space and requirements. {{infomodel}} defines the Information Model and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.
 
 # Terminology {#terminology}
 
@@ -139,7 +149,7 @@ The fundamental problem for network operators is how to automatically detect whe
 The ability to select the appropriate mitigation action depends on four key features of packet loss:
 
 FEATURE-DISCARD-SCOPE:
-: Determines which devices, interfaces and/or flows are impacted.
+: Determines which devices, interfaces, and/or flows are impacted.
 
 FEATURE-DISCARD-RATE:
 : The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., pps) or relative (e.g., percent) values.
@@ -150,15 +160,15 @@ FEATURE-DISCARD-DURATION:
 FEATURE-DISCARD-CLASS:
 : The type or class of discards, which is crucial for selecting the appropriate of mitigation - for example: error discards may require taking faulty components out of service; no-buffer discards may require traffic redistribution; intended policy discards typically require no automated action
 
-While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following information model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
+While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following Information Model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
 # Information Model   {#infomodel}
 
-The information model is defined using YANG {{?RFC7950}},  with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gMNI {{gMNI}} or SNMPv3 {{?RFC3411}} - while ensuring consistency across implementations. Using YANG for the information model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
+The Information Model is defined using YANG {{?RFC7950}},  with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gMNI {{gMNI}} or SNMPv3 {{?RFC3411}} - while ensuring consistency across implementations. Using YANG for the Information Model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
 ## Structure {#infomodel-structure}
 
-The information model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
+The Information Model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
 
 The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full YANG tree diagram of the IM is provided in {{sec-im-full-tree}}.
 
@@ -265,7 +275,7 @@ module: ietf-packet-discard-reporting-sx
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
 
-The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying data models, the IM supports a set of "features" to declare the supported type.
+The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying data models, the IM supports a set of "features" to control the supported type.
 
 A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
 
@@ -284,8 +294,8 @@ A complete classification path follows the pattern: component/direction/type/lay
   - discards: counters for packets or frames that were dropped.
 
 - Layer:
-  - l2: Layer 2 traffic and discards, i.e., frame and byte counts.
-  - l3: Layer 3 traffic and discards, i.e., packet and byte counts.
+  - l2: Layer 2 traffic and discards. This covers both frame and byte counts.
+  - l3: Layer 3 traffic and discards. This covers both packet and byte counts.
 
 The hierarchical structure allows for future extension while maintaining backward compatibility. New discard types can be added as new branches without affecting existing implementations.
 
@@ -331,7 +341,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 # Data Model   {#datamodel}
 
-This data model implements the Information Model defined in {{infomodel}} for the interface, device, and control-plane components.  This is classified as a Network Element model as defined by {{?RFC1157}}.
+This data model implements the Information Model defined in {{infomodel}} for the interface, device, and control-plane components. This is classified as a Network Element model as defined by {{?RFC1157}}.
 
 ## Structure {#datamodel-structure}
 
@@ -460,7 +470,7 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 - interface/ingress/discards/l3/v6/multicast/bytes
 - interface/ingress/discards/policy/l3/rpf/packets
 
-A “good” Layer-2 frame received would increment:
+A "good" Layer-2 frame received would increment:
 - interface/ingress/traffic/l2/frames
 - interface/ingress/traffic/l2/bytes
 - interface/ingress/traffic/qos/class[id="0"]/packets
@@ -477,6 +487,19 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 {::include-fold ./yang/ietf-packet-discard-reporting.yang}
 <CODE ENDS>
 ~~~~~~~~~~
+
+# Deployment Considerations Experience {#experience}
+
+This section captures practical insights gained from implementing the model across multiple vendors' platforms, as guidance for future implementers and operators:
+
+1. The number and granularity of discard classes defined in the Information Model represent a compromise. It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.
+2. There are many possible ways to define the discard classification tree.  For example, an approach is to use a multi-rooted tree, rooted in each protocol. Instead, a better approach is to define a tree where protocol discards and causal discard classes are accounted for orthogonally.  This decision reduces the number of combinations of classes and has proven sufficient for determining mitigation actions.
+3. Platforms often account for the number of packets discarded where the TTL has expired (or IPv6 Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message {{?RFC4884}}. There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.
+4. Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.
+5. It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.
+6. It is not possible to identify a configuration error (e.g., when intended discards are unintended) with device discard metrics alone. For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL (i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before).
+7. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
+8. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
 
 # Security Considerations {#security}
 
@@ -545,6 +568,10 @@ IANA is requested to register the following URI in the "ns" subregistry within t
 
 The content of this document has benefitted from feedback from JR Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.
 
+Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.
+
+Thanks to Ladislav Lhotka for the YANGDOCTORS review.
+
 --- back
 
 
@@ -607,19 +634,6 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 {: #ex-table title="Example Signal-Cause-Mitigation Mapping"}
 
 The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent.
-
-# Implementation Experience {#experience}
-
-This appendix captures practical insights gained from implementing this information model across multiple vendors' platforms, as guidance for future implementers.
-
-1. The number and granularity of discard classes defined in the information model represent a compromise.  It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.
-2. There are many possible ways to define the discard classification tree.  For example, we could have used a multi-rooted tree, rooted in each protocol.  Instead, we opted to define a tree where protocol discards and causal discard classes are accounted for orthogonally.  This decision reduces the number of combinations of classes and has proven sufficient for determining mitigation actions.
-3. Platforms often account for the number of packets discarded where the TTL has expired (or Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message.  There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.
-4. Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured, in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.
-5. It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.
-6. It is not possible to identify a configuration error - e.g., when intended discards are unintended - with device discard metrics alone.  For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL, i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before.
-7. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
-8. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
 
 # Full Information Model Tree {#sec-im-full-tree}
 
