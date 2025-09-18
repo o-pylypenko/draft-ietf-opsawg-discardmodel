@@ -1371,8 +1371,6 @@ Table of Contents
    network-element" [RFC8530].
 
    <CODE BEGINS>
-   =============== NOTE: '\' line wrapping per RFC 8792 ================
-
    module ietf-packet-discard-reporting {
      yang-version 1.1;
      namespace
@@ -1398,8 +1396,8 @@ Table of Contents
      import ietf-routing {
        prefix rt;
        reference
-         "RFC 8349: A YANG Data Model for Routing Management (NMDA \
-                                                              Version)";
+         "RFC 8349: A YANG Data Model for Routing Management
+                    (NMDA Version)";
      }
      import ietf-logical-network-element {
        prefix lne;
@@ -1516,9 +1514,10 @@ Table of Contents
 
      grouping discard-order-policy {
        description
-         "Defines the implementation-specific precedence of discard \
-                                                                 classes
-          when multiple discard reasons apply to a single packet.
+         "Defines the implementation-specific precedence of discard
+          classes when multiple discard reasons apply to a single
+          packet.
+
           The list is ordered from highest to lowest precedence.";
 
        leaf-list discard-order-capability {
@@ -1535,8 +1534,8 @@ Table of Contents
       * Main structure definition
       */
 
-     augment "/rt:routing/rt:control-plane-protocols/rt:control-plane-\
-                                                             protocol" {
+     augment "/rt:routing/rt:control-plane-protocols"
+           + "/rt:control-plane-protocol" {
        if-feature "control-plane-stats";
        nacm:default-deny-all;
        description
@@ -1552,8 +1551,8 @@ Table of Contents
        uses discard-order-policy;
        uses plr-sx:interface;
      }
-     augment "/lne:logical-network-elements/lne:logical-network-element\
-                                                                     " {
+     augment "/lne:logical-network-elements"
+           + "/lne:logical-network-element" {
        if-feature "device-stats";
        nacm:default-deny-all;
        description

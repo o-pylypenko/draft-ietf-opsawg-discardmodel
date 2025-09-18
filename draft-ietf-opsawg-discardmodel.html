@@ -2482,8 +2482,6 @@ module: ietf-packet-discard-reporting
 "ietf-routing" <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>, and "ietf-logical-network-element" <span>[<a href="#RFC8530" class="cite xref">RFC8530</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-5.4-2">
 <pre>&lt;CODE BEGINS&gt;
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-packet-discard-reporting {
   yang-version 1.1;
   namespace
@@ -2509,8 +2507,8 @@ module ietf-packet-discard-reporting {
   import ietf-routing {
     prefix rt;
     reference
-      "RFC 8349: A YANG Data Model for Routing Management (NMDA \
-                                                           Version)";
+      "RFC 8349: A YANG Data Model for Routing Management
+                 (NMDA Version)";
   }
   import ietf-logical-network-element {
     prefix lne;
@@ -2627,9 +2625,10 @@ module ietf-packet-discard-reporting {
 
   grouping discard-order-policy {
     description
-      "Defines the implementation-specific precedence of discard \
-                                                              classes
-       when multiple discard reasons apply to a single packet.
+      "Defines the implementation-specific precedence of discard
+       classes when multiple discard reasons apply to a single
+       packet.
+
        The list is ordered from highest to lowest precedence.";
 
     leaf-list discard-order-capability {
@@ -2646,8 +2645,8 @@ module ietf-packet-discard-reporting {
    * Main structure definition
    */
 
-  augment "/rt:routing/rt:control-plane-protocols/rt:control-plane-\
-                                                          protocol" {
+  augment "/rt:routing/rt:control-plane-protocols"
+        + "/rt:control-plane-protocol" {
     if-feature "control-plane-stats";
     nacm:default-deny-all;
     description
@@ -2663,8 +2662,8 @@ module ietf-packet-discard-reporting {
     uses discard-order-policy;
     uses plr-sx:interface;
   }
-  augment "/lne:logical-network-elements/lne:logical-network-element\
-                                                                  " {
+  augment "/lne:logical-network-elements"
+        + "/lne:logical-network-element" {
     if-feature "device-stats";
     nacm:default-deny-all;
     description
