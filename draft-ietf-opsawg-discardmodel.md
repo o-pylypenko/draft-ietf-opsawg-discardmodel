@@ -14,7 +14,10 @@ keyword:
  - Network Service
  - Resilience
  - Robustness
- - Root cause 
+ - Root cause
+ - Anomaly
+ - Incident
+ - Customer experience
 
 venue:
   group: "Operations and Management Area Working Group"
