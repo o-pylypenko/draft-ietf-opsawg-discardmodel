@@ -89,20 +89,20 @@ Table of Contents
      5.2.  Implementation Requirements
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
-   6.  Security Considerations
-     6.1.  Information Model
-     6.2.  Data Model
-   7.  IANA Considerations
-   8.  Contributors
-   9.  Acknowledgments
-   10. References
-     10.1.  Normative References
-     10.2.  Informative References
+   6.  Deployment Considerations Experience
+   7.  Security Considerations
+     7.1.  Information Model
+     7.2.  Data Model
+   8.  IANA Considerations
+   9.  Contributors
+   10. Acknowledgments
+   11. References
+     11.1.  Normative References
+     11.2.  Informative References
    Appendix A.  Where Do Packets Get Dropped?
    Appendix B.  Example Signal-to-mitigation Action Mapping
-   Appendix C.  Implementation Experience
-   Appendix D.  Full Information Model Tree
-   Appendix E.  Full Data Model Tree
+   Appendix C.  Full Information Model Tree
+   Appendix D.  Full Data Model Tree
    Authors' Addresses
 
 1.  Introduction
@@ -276,7 +276,7 @@ Table of Contents
    map to mitigation actions.
 
    The abstract structure of the IM is depicted in Figure 1.  The full
-   YANG tree diagram of the IM is provided in Appendix D.
+   YANG tree diagram of the IM is provided in Appendix C.
 
    module: ietf-packet-discard-reporting-sx
 
@@ -1239,7 +1239,7 @@ Table of Contents
 
                     Figure 2: Abstract DM Tree Structure
 
-   The full tree structure is provided in Appendix E.
+   The full tree structure is provided in Appendix D.
 
 5.2.  Implementation Requirements
 
@@ -1564,9 +1564,68 @@ Table of Contents
    }
    <CODE ENDS>
 
-6.  Security Considerations
+6.  Deployment Considerations Experience
 
-6.1.  Information Model
+   This section captures practical insights gained from implementing the
+   model across multiple vendors' platforms, as guidance for future
+   implementers and operators:
+
+   1.  The number and granularity of discard classes defined in the
+       Information Model represent a compromise.  It aims to provide
+       sufficient detail to enable appropriate automated actions while
+       avoiding excessive detail, which may hinder quick problem
+       identification.  Additionally, it helps to limit the quantity of
+       data produced per interface, constraining the data volume and
+       device CPU impacts.  While further granularity is possible, the
+       defined schema has generally proven to be sufficient for the task
+       of mitigating unintended packet loss.
+
+   2.  There are many possible ways to define the discard classification
+       tree.  For example, an approach is to use a multi-rooted tree,
+       rooted in each protocol.  Instead, a better approach is to define
+       a tree where protocol discards and causal discard classes are
+       accounted for orthogonally.  This decision reduces the number of
+       combinations of classes and has proven sufficient for determining
+       mitigation actions.
+
+   3.  Platforms often account for the number of packets discarded where
+       the TTL has expired (or IPv6 Hop Limit exceeded), and the device
+       CPU has returned an ICMP Time Exceeded message [RFC4884].  There
+       is typically a policer applied to limit the number of packets
+       sent to the device CPU, however, which implicitly limits the rate
+       of TTL discards that are processed.  One method to account for
+       all packet discards due to TTL expired, even those that are
+       dropped by a policer when being forwarded to the CPU, is to use
+       accounting of all ingress packets received with TTL=1 as a proxy
+       measure.
+
+   4.  Where no route discards are implemented with a default null
+       route, separate discard accounting is required for any explicit
+       null routes configured in order to differentiate between
+       interface/ingress/discards/policy/null-route/packets and
+       interface/ingress/discards/errors/no-route/packets.
+
+   5.  It is useful to account separately for transit packets discarded
+       by ACLs or policers, and packets discarded by ACLs or policers
+       which limit the number of packets to the device control plane.
+
+   6.  It is not possible to identify a configuration error (e.g., when
+       intended discards are unintended) with device discard metrics
+       alone.  For example, additional context is needed to determine if
+       ACL discards are intended or due to a misconfigured ACL (i.e.,
+       with configuration validation before deployment or by detecting a
+       significant change in ACL discards after a configuration change
+       compared to before).
+
+   7.  Aggregate counters need to be able to deal with the possibility
+       of discontinuities in the underlying counters.
+
+   8.  While the classification tree is seven layers deep, a minimal
+       implementation may only implement the top six layers.
+
+7.  Security Considerations
+
+7.1.  Information Model
 
    The Information Model defined in Section 4.3 specifies a YANG module
    using [RFC8791] data extensions.  It defines a set of identities,
@@ -1576,7 +1635,7 @@ Table of Contents
    As such, there are no additional security issues related to the YANG
    module that need to be considered.
 
-6.2.  Data Model
+7.2.  Data Model
 
    This section is modeled after the template described in Section 3.7
    of [I-D.ietf-netmod-rfc8407bis].
@@ -1611,7 +1670,7 @@ Table of Contents
       counters (e.g., policy) and adjust its attack strategy
       accordingly.
 
-7.  IANA Considerations
+8.  IANA Considerations
 
    IANA is requested to register the following URI in the "ns"
    subregistry within the "IETF XML Registry" [RFC3688]:
@@ -1640,7 +1699,7 @@ Table of Contents
      Maintained by IANA?  N
      Reference:  RFC XXXX
 
-8.  Contributors
+9.  Contributors
 
    Nadav Chachmon
    Cisco Systems, Inc.
@@ -1649,7 +1708,7 @@ Table of Contents
    United States of America
    Email: nchachmo@cisco.com
 
-9.  Acknowledgments
+10.  Acknowledgments
 
    The content of this document has benefitted from feedback from JR
    Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.
@@ -1659,9 +1718,9 @@ Table of Contents
 
    Thanks to Ladislav Lhotka for teh YANGDOCTORS review.
 
-10.  References
+11.  References
 
-10.1.  Normative References
+11.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1704,7 +1763,7 @@ Table of Contents
               Structure Extensions", RFC 8791, DOI 10.17487/RFC8791,
               June 2020, <https://www.rfc-editor.org/rfc/rfc8791>.
 
-10.2.  Informative References
+11.2.  Informative References
 
    [gMNI]     Marrow, C., "gRPC Network Management Interface, IETF 98,
               March 2017,
@@ -1751,6 +1810,11 @@ Table of Contents
    [RFC4252]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Authentication Protocol", RFC 4252, DOI 10.17487/RFC4252,
               January 2006, <https://www.rfc-editor.org/rfc/rfc4252>.
+
+   [RFC4884]  Bonica, R., Gan, D., Tappan, D., and C. Pignataro,
+              "Extended ICMP to Support Multi-Part Messages", RFC 4884,
+              DOI 10.17487/RFC4884, April 2007,
+              <https://www.rfc-editor.org/rfc/rfc4884>.
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
@@ -1906,65 +1970,7 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and
    network dependent.
 
-Appendix C.  Implementation Experience
-
-   This appendix captures practical insights gained from implementing
-   this Information Model across multiple vendors' platforms, as
-   guidance for future implementers.
-
-   1.  The number and granularity of discard classes defined in the
-       Information Model represent a compromise.  It aims to provide
-       sufficient detail to enable appropriate automated actions while
-       avoiding excessive detail, which may hinder quick problem
-       identification.  Additionally, it helps to limit the quantity of
-       data produced per interface, constraining the data volume and
-       device CPU impacts.  While further granularity is possible, the
-       defined schema has generally proven to be sufficient for the task
-       of mitigating unintended packet loss.
-
-   2.  There are many possible ways to define the discard classification
-       tree.  For example, we could have used a multi-rooted tree,
-       rooted in each protocol.  Instead, we opted to define a tree
-       where protocol discards and causal discard classes are accounted
-       for orthogonally.  This decision reduces the number of
-       combinations of classes and has proven sufficient for determining
-       mitigation actions.
-
-   3.  Platforms often account for the number of packets discarded where
-       the TTL has expired (or Hop Limit exceeded), and the device CPU
-       has returned an ICMP Time Exceeded message.  There is typically a
-       policer applied to limit the number of packets sent to the device
-       CPU, however, which implicitly limits the rate of TTL discards
-       that are processed.  One method to account for all packet
-       discards due to TTL expired, even those that are dropped by a
-       policer when being forwarded to the CPU, is to use accounting of
-       all ingress packets received with TTL=1 as a proxy measure.
-
-   4.  Where no route discards are implemented with a default null
-       route, separate discard accounting is required for any explicit
-       null routes configured, in order to differentiate between
-       interface/ingress/discards/policy/null-route/packets and
-       interface/ingress/discards/errors/no-route/packets.
-
-   5.  It is useful to account separately for transit packets discarded
-       by ACLs or policers, and packets discarded by ACLs or policers
-       which limit the number of packets to the device control plane.
-
-   6.  It is not possible to identify a configuration error - e.g., when
-       intended discards are unintended - with device discard metrics
-       alone.  For example, additional context is needed to determine if
-       ACL discards are intended or due to a misconfigured ACL, i.e.,
-       with configuration validation before deployment or by detecting a
-       significant change in ACL discards after a configuration change
-       compared to before.
-
-   7.  Aggregate counters need to be able to deal with the possibility
-       of discontinuities in the underlying counters.
-
-   8.  While the classification tree is seven layers deep, a minimal
-       implementation may only implement the top six layers.
-
-Appendix D.  Full Information Model Tree
+Appendix C.  Full Information Model Tree
 
    The following YANG tree diagram shows the complete IM structure:
 
@@ -2242,7 +2248,7 @@ Appendix D.  Full Information Model Tree
                       +-- packets?   yang:counter64
                       +-- bytes?     yang:counter64
 
-Appendix E.  Full Data Model Tree
+Appendix D.  Full Data Model Tree
 
    The following YANG tree diagram shows the complete data module
    structure:
