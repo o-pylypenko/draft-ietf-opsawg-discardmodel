@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-16T00:40:25.349554+00:00",
+  "timestamp": "2025-09-18T00:40:21.456199+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -1484,24 +1484,26 @@
       "id": "PR_kwDOOCO1i86oji4a",
       "title": "Add per-class drop counters to policer discards",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/33",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "o-pylypenko",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Added optional per-class statistics to the policer container",
       "createdAt": "2025-09-15T05:46:52Z",
-      "updatedAt": "2025-09-15T08:55:55Z",
+      "updatedAt": "2025-09-17T17:01:49Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "e5cd32e665696d0966c085b4dadc23aceb2fa942",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "policer-classes",
-      "headRefOid": "76db204c5803338ab65dc177affd193cb5270aa4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a053237de6928784194c5bfdd95f0b78c9724f6e",
+      "closedAt": "2025-09-17T17:01:48Z",
+      "mergedAt": "2025-09-17T17:01:48Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "9ff51aafc6261836137577d7a01d2a9aada8399d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1525,6 +1527,62 @@
           ]
         }
       ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOOCO1i86pHjS0",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/34",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Changes from Randy Bush feedback",
+      "createdAt": "2025-09-17T16:58:26Z",
+      "updatedAt": "2025-09-17T21:22:56Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "8f66eec3622f8286862de6eaadfd533cd6d9cd08",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-9",
+      "headRefOid": "4a46c1fb446ae10521385b4c332fbe36afd48928",
+      "closedAt": "2025-09-17T21:22:56Z",
+      "mergedAt": "2025-09-17T21:22:56Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "b5a1441854a62d7783126d40b0006a82d7df83f5"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOOCO1i86pKNDi",
+      "title": "Maintaining consistent feature ordering",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/35",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-09-17T21:35:24Z",
+      "updatedAt": "2025-09-17T21:38:25Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b5a1441854a62d7783126d40b0006a82d7df83f5",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "features-reorder",
+      "headRefOid": "6a52a0a5b3e22e8bf1afbe1ed7f66a61ec8a3a43",
+      "closedAt": "2025-09-17T21:36:20Z",
+      "mergedAt": "2025-09-17T21:36:20Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "f617087d291469acd9b11d158220a5cfdbab3cfe"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
