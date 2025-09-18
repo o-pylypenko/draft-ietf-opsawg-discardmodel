@@ -23,7 +23,8 @@ module ietf-packet-discard-reporting {
   import ietf-routing {
     prefix rt;
     reference
-      "RFC 8349: A YANG Data Model for Routing Management (NMDA Version)";
+      "RFC 8349: A YANG Data Model for Routing Management
+                 (NMDA Version)";
   }
   import ietf-logical-network-element {
     prefix lne;
@@ -140,8 +141,10 @@ module ietf-packet-discard-reporting {
 
   grouping discard-order-policy {
     description
-      "Defines the implementation-specific precedence of discard classes
-       when multiple discard reasons apply to a single packet.
+      "Defines the implementation-specific precedence of discard
+       classes when multiple discard reasons apply to a single
+       packet.
+
        The list is ordered from highest to lowest precedence.";
 
     leaf-list discard-order-capability {
@@ -158,7 +161,8 @@ module ietf-packet-discard-reporting {
    * Main structure definition
    */
 
-  augment "/rt:routing/rt:control-plane-protocols/rt:control-plane-protocol" {
+  augment "/rt:routing/rt:control-plane-protocols"
+        + "/rt:control-plane-protocol" {
     if-feature "control-plane-stats";
     nacm:default-deny-all;
     description
@@ -174,7 +178,8 @@ module ietf-packet-discard-reporting {
     uses discard-order-policy;
     uses plr-sx:interface;
   }
-  augment "/lne:logical-network-elements/lne:logical-network-element" {
+  augment "/lne:logical-network-elements"
+        + "/lne:logical-network-element" {
     if-feature "device-stats";
     nacm:default-deny-all;
     description
