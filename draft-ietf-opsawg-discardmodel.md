@@ -8,7 +8,7 @@ ipr: trust200902
 area: Operations and Management Area
 workgroup: "Operations and Management Area Working Group"
 keyword:
- - Troubelshooting
+ - Troubleshooting
  - Diagnostic
  - Network Automation
  - Network Service
@@ -84,25 +84,18 @@ normative:
 informative:
      RED93:
           title: Random Early Detection gateways for Congestion Avoidance
-          author:
+          authors:
                ins: S. Floyd
-          author:
                ins: V. Jacobson
      gMNI:
           title: gRPC Network Management Interface, IETF 98, March 2017, <https://datatracker.ietf.org/meeting/98/materials/slides-98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>
-          author:
+          authors:
                ins: Shakir, R.
-          author:
                ins: Shaikh, A.
-          author:
                ins: Borman, P.
-          author:
                ins: Hines, M.
-          author:
                ins: Lebsack, C.
-          author:
                ins: C. Marrow
-     RFC2475:
 
 --- abstract
 
@@ -158,13 +151,13 @@ FEATURE-DISCARD-DURATION:
 : The duration of the discards which helps to distinguish transient from persistent issues.
 
 FEATURE-DISCARD-CLASS:
-: The type or class of discards, which is crucial for selecting the appropriate of mitigation - for example: error discards may require taking faulty components out of service; no-buffer discards may require traffic redistribution; intended policy discards typically require no automated action
+: The type or class of discards, which is crucial for selecting the appropriate mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no automated action.
 
-While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by MIB-II {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The following Information Model defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
+While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The Information Model provided in {{infomodel}} defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
 # Information Model   {#infomodel}
 
-The Information Model is defined using YANG {{?RFC7950}},  with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gMNI {{gMNI}} or SNMPv3 {{?RFC3411}} - while ensuring consistency across implementations. Using YANG for the Information Model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
+The Information Model is defined using YANG {{!RFC7950}}, with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations - for example, in YANG, IPFIX {{?RFC7011}}, gNMI {{gMNI}} or SNMPv3 {{?RFC3411}} - while ensuring consistency across implementations. Using YANG for the Information Model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
 ## Structure {#infomodel-structure}
 
@@ -325,7 +318,7 @@ discards/error/internal/:
 : These are discards due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
-:  These are discards due to buffer exhaustion, i.e. congestion related discards. These can be tail-drop discards or due to an active queue management algorithm, such as RED {{RED93}} or CODEL {{?RFC8289}}.
+:  These are discards due to buffer exhaustion, i.e. congestion related discards. These can be tail-drop discards or due to an active queue management algorithm, such as RED {{RED93}} or CoDel {{?RFC8289}}.
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
@@ -341,7 +334,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 # Data Model   {#datamodel}
 
-This data model implements the Information Model defined in {{infomodel}} for the interface, device, and control-plane components. This is classified as a Network Element model as defined by {{?RFC1157}}.
+This data model implements the Information Model defined in {{infomodel}} for the interface, device, and control-plane components. It is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).
 
 ## Structure {#datamodel-structure}
 
@@ -436,9 +429,9 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 7. The aggregate QoS traffic and no-buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
 8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined.
-10. If Diffserv {{RFC2475}} is not used, no-buffer discards SHOULD be reported as class[id="0"], which represents the default class.
+10. If Diffserv {{?RFC2475}} is not used, no-buffer discards SHOULD be reported as class[id="0"], which represents the default class.
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
-12. NoBuffer discards can be realized differently with different memory architectures. Whether a NoBuffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion MUST be able to be reported on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be able to be `ingress`.
+12. No-buffer discards can be realized differently with different memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
 13. When the ingress and egress headers differ—for example, at a tunnel endpoint—the discard class attribution MUST relate to the outer header at the point of discard.
 14. Traffic to the device control plane has its own class. However, traffic from the device control plane MUST be accounted for in the same way as other egress traffic.
 
