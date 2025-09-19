@@ -247,9 +247,9 @@ Table of Contents
    DISCARD-DURATION are implicitly supported by the Interfaces Group MIB
    [RFC2863] and the YANG Data Model for Interface Management [RFC8343],
    FEATURE-DISCARD-CLASS requires a more detailed classification scheme
-   than they define.  The following Information Model defines such a
-   classification scheme to enable automated mapping from loss signals
-   to appropriate mitigation actions.
+   than they define.  The Information Model provided in Section 4
+   defines such a classification scheme to enable automated mapping from
+   loss signals to appropriate mitigation actions.
 
 4.  Information Model
 
