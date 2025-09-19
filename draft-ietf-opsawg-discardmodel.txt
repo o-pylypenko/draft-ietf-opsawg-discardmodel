@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 22 March 2026                                           J. Haas
+Expires: 23 March 2026                                           J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                       18 September 2025
+                                                       19 September 2025
 
 
         Information and Data Models for Packet Discard Reporting
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 March 2026.
+   This Internet-Draft will expire on 23 March 2026.
 
 Copyright Notice
 
@@ -238,18 +238,18 @@ Table of Contents
       to distinguish transient from persistent issues.
 
    FEATURE-DISCARD-CLASS:  The type or class of discards, which is
-      crucial for selecting the appropriate of mitigation - for example:
-      error discards may require taking faulty components out of
-      service; no-buffer discards may require traffic redistribution;
-      intended policy discards typically require no automated action
+      crucial for selecting the appropriate mitigation.  Examples may
+      be: error discards may require taking faulty components out of
+      service, no-buffer discards may require traffic redistribution, or
+      intended policy discards typically require no automated action.
 
    While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-
-   DISCARD-DURATION are implicitly supported by MIB-II [RFC2863] and the
-   YANG Data Model for Interface Management [RFC8343], FEATURE-DISCARD-
-   CLASS requires a more detailed classification scheme than they
-   define.  The following Information Model defines such a
-   classification scheme to enable automated mapping from loss signals
-   to appropriate mitigation actions.
+   DISCARD-DURATION are implicitly supported by the Interfaces Group MIB
+   [RFC2863] and the YANG Data Model for Interface Management [RFC8343],
+   FEATURE-DISCARD-CLASS requires a more detailed classification scheme
+   than they define.  The Information Model provided in Section 4
+   defines such a classification scheme to enable automated mapping from
+   loss signals to appropriate mitigation actions.
 
 4.  Information Model
 
@@ -257,7 +257,7 @@ Table of Contents
    Structure Extensions [RFC8791], allowing the model to remain abstract
    and decoupled from specific implementations in accordance with
    [RFC3444].  This abstraction supports different data model
-   implementations - for example, in YANG, IPFIX [RFC7011], gMNI [gMNI]
+   implementations - for example, in YANG, IPFIX [RFC7011], gNMI [gMNI]
    or SNMPv3 [RFC3411] - while ensuring consistency across
    implementations.  Using YANG for the Information Model enables this
    abstraction, leverages the community's familiarity with its syntax,
@@ -470,7 +470,7 @@ Table of Contents
    discards/no-buffer/:  These are discards due to buffer exhaustion,
       i.e. congestion related discards.  These can be tail-drop discards
       or due to an active queue management algorithm, such as RED
-      [RED93] or CODEL [RFC8289].
+      [RED93] or CoDel [RFC8289].
 
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
@@ -1158,8 +1158,9 @@ Table of Contents
 5.  Data Model
 
    This data model implements the Information Model defined in Section 4
-   for the interface, device, and control-plane components.  This is
-   classified as a Network Element model as defined by [RFC1157].
+   for the interface, device, and control-plane components.  It is a
+   device-local (network element) operational state model: counters are
+   scoped to a single device (interfaces and control plane).
 
 5.1.  Structure
 
@@ -1301,13 +1302,13 @@ Table of Contents
    11.  When traffic is mirrored, the discard metrics MUST account for
         the original traffic rather than the reflected traffic.
 
-   12.  NoBuffer discards can be realized differently with different
-        memory architectures.  Whether a NoBuffer discard is attributed
+   12.  No-buffer discards can be realized differently with different
+        memory architectures.  Whether a no-buffer discard is attributed
         to ingress or egress can differ accordingly.  For successful
         auto-mitigation, discards due to an egress interface congestion
-        MUST be able to be reported on egress, while discards due to
-        device-level congestion (e.g., due to exceeding the device
-        forwarding rate) MUST be able to be ingress.
+        MUST be reportable on egress, while discards due to device-level
+        congestion (e.g., due to exceeding the device forwarding rate)
+        MUST be reportable on ingress.
 
    13.  When the ingress and egress headers differ—for example, at a
         tunnel endpoint—the discard class attribution MUST relate to the
@@ -1735,6 +1736,10 @@ Table of Contents
               DOI 10.17487/RFC6020, October 2010,
               <https://www.rfc-editor.org/rfc/rfc6020>.
 
+   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
+              RFC 7950, DOI 10.17487/RFC7950, August 2016,
+              <https://www.rfc-editor.org/rfc/rfc7950>.
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
@@ -1764,8 +1769,7 @@ Table of Contents
 
 11.2.  Informative References
 
-   [gMNI]     Marrow, C., "gRPC Network Management Interface, IETF 98,
-              March 2017,
+   [gMNI]     "gRPC Network Management Interface, IETF 98, March 2017,
               <https://datatracker.ietf.org/meeting/98/materials/slides-
               98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>",
               n.d..
@@ -1778,13 +1782,8 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               rfc8407bis-28>.
 
-   [RED93]    Jacobson, V., "Random Early Detection gateways for
-              Congestion Avoidance", n.d..
-
-   [RFC1157]  Case, J., Fedor, M., Schoffstall, M., and J. Davin,
-              "Simple Network Management Protocol (SNMP)", RFC 1157,
-              DOI 10.17487/RFC1157, May 1990,
-              <https://www.rfc-editor.org/rfc/rfc1157>.
+   [RED93]    "Random Early Detection gateways for Congestion
+              Avoidance", n.d..
 
    [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
               and W. Weiss, "An Architecture for Differentiated
@@ -1831,10 +1830,6 @@ Table of Contents
               Information Export (IPFIX)", RFC 7270,
               DOI 10.17487/RFC7270, June 2014,
               <https://www.rfc-editor.org/rfc/rfc7270>.
-
-   [RFC7950]  Bjorklund, M., Ed., "The YANG 1.1 Data Modeling Language",
-              RFC 7950, DOI 10.17487/RFC7950, August 2016,
-              <https://www.rfc-editor.org/rfc/rfc7950>.
 
    [RFC8040]  Bierman, A., Bjorklund, M., and K. Watsen, "RESTCONF
               Protocol", RFC 8040, DOI 10.17487/RFC8040, January 2017,
