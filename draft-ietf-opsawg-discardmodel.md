@@ -84,25 +84,18 @@ normative:
 informative:
      RED93:
           title: Random Early Detection gateways for Congestion Avoidance
-          author:
+          authors:
                ins: S. Floyd
-          author:
                ins: V. Jacobson
      gMNI:
           title: gRPC Network Management Interface, IETF 98, March 2017, <https://datatracker.ietf.org/meeting/98/materials/slides-98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>
-          author:
+          authors:
                ins: Shakir, R.
-          author:
                ins: Shaikh, A.
-          author:
                ins: Borman, P.
-          author:
                ins: Hines, M.
-          author:
                ins: Lebsack, C.
-          author:
                ins: C. Marrow
-     RFC2475:
 
 --- abstract
 
