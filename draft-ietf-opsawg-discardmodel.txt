@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 23 March 2026                                           J. Haas
+Expires: 5 April 2026                                            J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                       19 September 2025
+                                                          2 October 2025
 
 
         Information and Data Models for Packet Discard Reporting
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 March 2026.
+   This Internet-Draft will expire on 5 April 2026.
 
 Copyright Notice
 
@@ -257,12 +257,11 @@ Table of Contents
    Structure Extensions [RFC8791], allowing the model to remain abstract
    and decoupled from specific implementations in accordance with
    [RFC3444].  This abstraction supports different data model
-   implementations - for example, in YANG, IPFIX [RFC7011], gNMI [gMNI]
-   or SNMPv3 [RFC3411] - while ensuring consistency across
-   implementations.  Using YANG for the Information Model enables this
-   abstraction, leverages the community's familiarity with its syntax,
-   and ensures lossless translation to the corresponding YANG data
-   model, which is defined in Section 5.
+   implementations, such as YANG or IPFIX [RFC7011], while ensuring
+   consistency across implementations.  Using YANG for the Information
+   Model enables this abstraction, leverages the community's familiarity
+   with its syntax, and ensures lossless translation to the
+   corresponding YANG data model, which is defined in Section 5.
 
 4.1.  Structure
 
@@ -467,10 +466,11 @@ Table of Contents
       internal hardware errors.  Any errored discards not explicitly
       assigned to other classes are also accounted for here.
 
-   discards/no-buffer/:  These are discards due to buffer exhaustion,
-      i.e. congestion related discards.  These can be tail-drop discards
-      or due to an active queue management algorithm, such as RED
-      [RED93] or CoDel [RFC8289].
+   discards/no-buffer/:  These are discards due to buffer exhaustion
+      (that is congestion related discards).  These can be tail-drop
+      discards or due to an active queue management algorithm, such as
+      Random Early Detection (RED) [RED93] or Controlled Delay (CoDel)
+      [RFC8289].
 
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
@@ -1793,12 +1793,6 @@ Table of Contents
    [RFC2863]  McCloghrie, K. and F. Kastenholz, "The Interfaces Group
               MIB", RFC 2863, DOI 10.17487/RFC2863, June 2000,
               <https://www.rfc-editor.org/rfc/rfc2863>.
-
-   [RFC3411]  Harrington, D., Presuhn, R., and B. Wijnen, "An
-              Architecture for Describing Simple Network Management
-              Protocol (SNMP) Management Frameworks", STD 62, RFC 3411,
-              DOI 10.17487/RFC3411, December 2002,
-              <https://www.rfc-editor.org/rfc/rfc3411>.
 
    [RFC3444]  Pras, A. and J. Schoenwaelder, "On the Difference between
               Information Models and Data Models", RFC 3444,
