@@ -638,7 +638,7 @@ The following YANG tree diagram shows the complete IM structure:
 
 # Full Data Model Tree {#sec-dm-full-tree}
 
-The following YANG tree diagram shows the complete data module structure:
+The following YANG tree diagram shows the complete DM structure:
 
 ~~~~~~~~~~
 {::include ./yang/trees/ietf-packet-discard-reporting.tree}
