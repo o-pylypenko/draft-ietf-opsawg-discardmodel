@@ -109,11 +109,11 @@ The primary function of a network is to transport and deliver packets according 
 
 Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in "The Interfaces Group MIB" {{?RFC2863}} and "A YANG Data Model for Interface Management" {{?RFC8343}}, are insufficient for automating network operations. First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, {{?RFC7270}} provides support for reporting discards per flow in IP Flow Information Export (IPFIX) {{?RFC7011}} using forwardingStatus, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation (e.g., the "For us" reason code).
 
-This document defines an Information Model and specifies a corresponding YANG data model for packet loss reporting which address these issues.  The Information Model provides precise classification of packet loss to enable accurate automated mitigation. The data model specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
+This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting which address these issues.  The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
 
 The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.
 
-{{problem}} describes the problem space and requirements. {{infomodel}} defines the Information Model and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.
+{{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.
 
 # Terminology {#terminology}
 
@@ -153,15 +153,15 @@ FEATURE-DISCARD-DURATION:
 FEATURE-DISCARD-CLASS:
 : The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no automated action.
 
-While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The Information Model provided in {{infomodel}} defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
+While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
-# Information Model   {#infomodel}
+# Information Model (IM)   {#infomodel}
 
-The Information Model is defined using YANG {{!RFC7950}}, with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different data model implementations, such as YANG or IPFIX {{?RFC7011}}, while ensuring consistency across implementations. Using YANG for the Information Model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
+The IM is defined using YANG {{!RFC7950}}, with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different DM implementations, such as YANG or IPFIX {{?RFC7011}}, while ensuring consistency across implementations. Using YANG for the IM enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
 ## Structure {#infomodel-structure}
 
-The Information Model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
+The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
 
 The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full YANG tree diagram of the IM is provided in {{sec-im-full-tree}}.
 
@@ -268,7 +268,7 @@ module: ietf-packet-discard-reporting-sx
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
 
-The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying data models, the IM supports a set of "features" to control the supported type.
+The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying DMs, the IM supports a set of "features" to control the supported type.
 
 A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
 
@@ -332,13 +332,13 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 <CODE ENDS>
 ~~~~~~~~~~
 
-# Data Model   {#datamodel}
+# Data Model (DM)   {#datamodel}
 
-This data model implements the Information Model defined in {{infomodel}} for the interface, device, and control-plane components. It is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).
+This DM implements the IM defined in {{infomodel}} for the interface, device, and control-plane components. It is a device model per {{Section 2.1 of ?RFC8969}}. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).
 
 ## Structure {#datamodel-structure}
 
-There is a direct mapping between the Information Model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaf data nodes. The abstract tree is shown in {{tree-dm-abstract}}.
+There is a direct mapping between the IM components and their DM implementations, with each component in the hierarchy represented by corresponding YANG containers and leaf data nodes. The abstract tree is shown in {{tree-dm-abstract}}.
 
 ~~~~~~~~~~
 module: ietf-packet-discard-reporting
@@ -416,7 +416,7 @@ The full tree structure is provided in {{sec-dm-full-tree}}.
 
 ## Implementation Requirements {#requirements}
 
-The following requirements apply to the implementation of the data model and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.  While the model defines a comprehensive set of counters and statistics, implementations MAY support a subset of the defined features based on device capabilities and operational requirements. However, implementations MUST clearly document which features are supported and how they map to the model.
+The following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed. While the model defines a comprehensive set of counters and statistics, implementations MAY support a subset of the defined features based on device capabilities and operational requirements. However, implementations MUST clearly document which features are supported and how they map to the DM.
 
 Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device:
 
@@ -439,31 +439,32 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 
 If all of the requirements listed in {{requirements}} are met, a "good" unicast IPv4 packet received would increment:
 
-- interface/ingress/traffic/l3/v4/unicast/packets
-- interface/ingress/traffic/l3/v4/unicast/bytes
+- interface/ingress/traffic/l3/ipv4/unicast/packets
+- interface/ingress/traffic/l3/ipv4/unicast/bytes
 - interface/ingress/traffic/qos/class[id="0"]/packets
 - interface/ingress/traffic/qos/class[id="0"]/bytes
 
 A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:
 
-- interface/ingress/discards/l3/v6/unicast/packets
-- interface/ingress/discards/l3/v6/unicast/bytes
+- interface/ingress/discards/l3/ipv6/unicast/packets
+- interface/ingress/discards/l3/ipv6/unicast/bytes
 - interface/ingress/discards/l3/rx/ttl-expired/packets
 
 An IPv4 packet discarded on egress due to no buffers would increment:
 
-- interface/egress/discards/l3/v4/unicast/packets
-- interface/egress/discards/l3/v4/unicast/bytes
+- interface/egress/discards/l3/ipv4/unicast/packets
+- interface/egress/discards/l3/ipv4/unicast/bytes
 - interface/egress/discards/no-buffer/class[id="0"]/packets
 - interface/egress/discards/no-buffer/class[id="0"]/bytes
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
-- interface/ingress/discards/l3/v6/multicast/packets
-- interface/ingress/discards/l3/v6/multicast/bytes
+- interface/ingress/discards/l3/ipv6/multicast/packets
+- interface/ingress/discards/l3/ipv6/multicast/bytes
 - interface/ingress/discards/policy/l3/rpf/packets
 
 A "good" Layer-2 frame received would increment:
+
 - interface/ingress/traffic/l2/frames
 - interface/ingress/traffic/l2/bytes
 - interface/ingress/traffic/qos/class[id="0"]/packets
@@ -485,7 +486,7 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 
 This section captures practical insights gained from implementing the model across multiple vendors' platforms, as guidance for future implementers and operators:
 
-1. The number and granularity of discard classes defined in the Information Model represent a compromise. It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.
+1. The number and granularity of discard classes defined in the IM represent a compromise. It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.
 2. There are many possible ways to define the discard classification tree.  For example, an approach is to use a multi-rooted tree, rooted in each protocol. Instead, a better approach is to define a tree where protocol discards and causal discard classes are accounted for orthogonally.  This decision reduces the number of combinations of classes and has proven sufficient for determining mitigation actions.
 3. Platforms often account for the number of packets discarded where the TTL has expired (or IPv6 Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message {{?RFC4884}}. There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.
 4. Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.
@@ -498,7 +499,7 @@ This section captures practical insights gained from implementing the model acro
 
 ## Information Model {#security-infomodel}
 
-The Information Model defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
+The IM defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
 
 ## Data Model {#security-datamodel}
 
