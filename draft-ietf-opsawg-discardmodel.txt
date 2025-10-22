@@ -2239,8 +2239,7 @@ Appendix C.  Full Information Model Tree
 
 Appendix D.  Full Data Model Tree
 
-   The following YANG tree diagram shows the complete data module
-   structure:
+   The following YANG tree diagram shows the complete DM structure:
 
    module: ietf-packet-discard-reporting
 
