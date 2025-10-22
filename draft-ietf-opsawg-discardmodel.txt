@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 5 April 2026                                            J. Haas
+Expires: 25 April 2026                                           J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                          2 October 2025
+                                                         22 October 2025
 
 
         Information and Data Models for Packet Discard Reporting
@@ -59,7 +59,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 April 2026.
+   This Internet-Draft will expire on 25 April 2026.
 
 Copyright Notice
 
@@ -231,17 +231,18 @@ Table of Contents
 
    FEATURE-DISCARD-RATE:  The rate and/or magnitude of the discards,
       indicating the severity and urgency of the problem.  Rate may be
-      expressed using absolute (e.g., pps) or relative (e.g., percent)
-      values.
+      expressed using absolute (e.g., pps (packets per second)) or
+      relative (e.g., percent) values.
 
    FEATURE-DISCARD-DURATION:  The duration of the discards which helps
       to distinguish transient from persistent issues.
 
    FEATURE-DISCARD-CLASS:  The type or class of discards, which is
-      crucial for selecting the appropriate mitigation.  Examples may
-      be: error discards may require taking faulty components out of
-      service, no-buffer discards may require traffic redistribution, or
-      intended policy discards typically require no automated action.
+      crucial for selecting the appropriate type of mitigation.
+      Examples may be: error discards may require taking faulty
+      components out of service, no-buffer discards may require traffic
+      redistribution, or intended policy discards typically require no
+      automated action.
 
    While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-
    DISCARD-DURATION are implicitly supported by the Interfaces Group MIB
