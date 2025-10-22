@@ -145,13 +145,13 @@ FEATURE-DISCARD-SCOPE:
 : Determines which devices, interfaces, and/or flows are impacted.
 
 FEATURE-DISCARD-RATE:
-: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., pps) or relative (e.g., percent) values.
+: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., pps (packets per second)) or relative (e.g., percent) values.
 
 FEATURE-DISCARD-DURATION:
 : The duration of the discards which helps to distinguish transient from persistent issues.
 
 FEATURE-DISCARD-CLASS:
-: The type or class of discards, which is crucial for selecting the appropriate mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no automated action.
+: The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no automated action.
 
 While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The Information Model provided in {{infomodel}} defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
