@@ -1183,7 +1183,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.3.1" class="keepWithNext"><a href="#section-3" class="auto internal xref">3</a>.  <a href="#name-problem-statement" class="internal xref">Problem Statement</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-information-model" class="internal xref">Information Model</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-information-model-im" class="internal xref">Information Model (IM)</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-structure" class="internal xref">Structure</a></p>
@@ -1197,7 +1197,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5">
-            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-data-model" class="internal xref">Data Model</a></p>
+            <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-data-model-dm" class="internal xref">Data Model (DM)</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-structure-2" class="internal xref">Structure</a></p>
@@ -1220,10 +1220,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.7.1"><a href="#section-7" class="auto internal xref">7</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.1">
-                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-information-model-2" class="internal xref">Information Model</a></p>
+                <p id="section-toc.1-1.7.2.1.1"><a href="#section-7.1" class="auto internal xref">7.1</a>.  <a href="#name-information-model" class="internal xref">Information Model</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.7.2.2">
-                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-data-model-2" class="internal xref">Data Model</a></p>
+                <p id="section-toc.1-1.7.2.2.1"><a href="#section-7.2" class="auto internal xref">7.2</a>.  <a href="#name-data-model" class="internal xref">Data Model</a></p>
 </li>
             </ul>
 </li>
@@ -1273,9 +1273,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-1-1">The primary function of a network is to transport and deliver packets according to service level objectives. For network operators, understanding both where and why packet loss occurs within a network is essential for effective operation. Device-reported packet loss provides the most direct signal for identifying service impact. While certain types of packet loss, such as policy-based discards, are intentional and part of normal network operation, unintended packet loss can impact customer services.  To automate network operations, operators must be able to detect customer-impacting packet loss, determine its root cause, and apply appropriate mitigation actions. Precise classification of packet loss is thus crucial to ensure that anomalous packet loss is easily detected and that the right action is taken to mitigate the impact. Taking the wrong action can make problems worse; for example, removing a congested device from service can exacerbate congestion by redirecting traffic to other already congested links or devices.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in "The Interfaces Group MIB" <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and "A YANG Data Model for Interface Management" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, are insufficient for automating network operations. First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, <span>[<a href="#RFC7270" class="cite xref">RFC7270</a>]</span> provides support for reporting discards per flow in IP Flow Information Export (IPFIX) <span>[<a href="#RFC7011" class="cite xref">RFC7011</a>]</span> using forwardingStatus, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation (e.g., the "For us" reason code).<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">This document defines an Information Model and specifies a corresponding YANG data model for packet loss reporting which address these issues.  The Information Model provides precise classification of packet loss to enable accurate automated mitigation. The data model specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-3">This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting which address these issues.  The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5"><a href="#problem" class="auto internal xref">Section 3</a> describes the problem space and requirements. <a href="#infomodel" class="auto internal xref">Section 4</a> defines the Information Model and classification scheme. <a href="#datamodel" class="auto internal xref">Section 5</a> specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5"><a href="#problem" class="auto internal xref">Section 3</a> describes the problem space and requirements. <a href="#infomodel" class="auto internal xref">Section 4</a> defines the IM and classification scheme. <a href="#datamodel" class="auto internal xref">Section 5</a> specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.<a href="#section-1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="terminology">
@@ -1340,21 +1340,21 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-3-5">While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and the YANG Data Model for Interface Management <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The Information Model provided in <a href="#infomodel" class="auto internal xref">Section 4</a> defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-5">While FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and the YANG Data Model for Interface Management <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in <a href="#infomodel" class="auto internal xref">Section 4</a> defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.<a href="#section-3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="infomodel">
 <section id="section-4">
-      <h2 id="name-information-model">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-information-model" class="section-name selfRef">Information Model</a>
+      <h2 id="name-information-model-im">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-information-model-im" class="section-name selfRef">Information Model (IM)</a>
       </h2>
-<p id="section-4-1">The Information Model is defined using YANG <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>, with Data Structure Extensions <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>, allowing the model to remain abstract and decoupled from specific implementations in accordance with <span>[<a href="#RFC3444" class="cite xref">RFC3444</a>]</span>. This abstraction supports different data model implementations, such as YANG or IPFIX <span>[<a href="#RFC7011" class="cite xref">RFC7011</a>]</span>, while ensuring consistency across implementations. Using YANG for the Information Model enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in <a href="#datamodel" class="auto internal xref">Section 5</a>.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">The IM is defined using YANG <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>, with Data Structure Extensions <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>, allowing the model to remain abstract and decoupled from specific implementations in accordance with <span>[<a href="#RFC3444" class="cite xref">RFC3444</a>]</span>. This abstraction supports different DM implementations, such as YANG or IPFIX <span>[<a href="#RFC7011" class="cite xref">RFC7011</a>]</span>, while ensuring consistency across implementations. Using YANG for the IM enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in <a href="#datamodel" class="auto internal xref">Section 5</a>.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="infomodel-structure">
 <section id="section-4.1">
         <h3 id="name-structure">
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-structure" class="section-name selfRef">Structure</a>
         </h3>
-<p id="section-4.1-1">The Information Model defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1-1">The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.1-2">The abstract structure of the IM is depicted in <a href="#tree-im-abstract" class="auto internal xref">Figure 1</a>. The full YANG tree diagram of the IM is provided in <a href="#sec-im-full-tree" class="auto internal xref">Appendix C</a>.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <span id="name-abstract-im-tree-structure"></span><div id="tree-im-abstract">
 <figure id="figure-1">
@@ -1465,7 +1465,7 @@ module: ietf-packet-discard-reporting-sx
 <a href="#name-abstract-im-tree-structure" class="selfRef">Abstract IM Tree Structure</a>
           </figcaption></figure>
 </div>
-<p id="section-4.1-4">The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying data models, the IM supports a set of "features" to control the supported type.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
+<p id="section-4.1-4">The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying DMs, the IM supports a set of "features" to control the supported type.<a href="#section-4.1-4" class="pilcrow">¶</a></p>
 <p id="section-4.1-5">A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. <a href="#wheredropped" class="auto internal xref">Appendix A</a> illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:<a href="#section-4.1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-6.1">
@@ -2262,16 +2262,16 @@ module ietf-packet-discard-reporting-sx {
 </div>
 <div id="datamodel">
 <section id="section-5">
-      <h2 id="name-data-model">
-<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-data-model" class="section-name selfRef">Data Model</a>
+      <h2 id="name-data-model-dm">
+<a href="#section-5" class="section-number selfRef">5. </a><a href="#name-data-model-dm" class="section-name selfRef">Data Model (DM)</a>
       </h2>
-<p id="section-5-1">This data model implements the Information Model defined in <a href="#infomodel" class="auto internal xref">Section 4</a> for the interface, device, and control-plane components. It is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This DM implements the IM defined in <a href="#infomodel" class="auto internal xref">Section 4</a> for the interface, device, and control-plane components. It is a device model per <span><a href="https://rfc-editor.org/rfc/rfc8969#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC8969" class="cite xref">RFC8969</a>]</span>. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).<a href="#section-5-1" class="pilcrow">¶</a></p>
 <div id="datamodel-structure">
 <section id="section-5.1">
         <h3 id="name-structure-2">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-structure-2" class="section-name selfRef">Structure</a>
         </h3>
-<p id="section-5.1-1">There is a direct mapping between the Information Model components and their data model implementations, with each component in the hierarchy represented by corresponding YANG containers and leaf data nodes. The abstract tree is shown in <a href="#tree-dm-abstract" class="auto internal xref">Figure 2</a>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">There is a direct mapping between the IM components and their DM implementations, with each component in the hierarchy represented by corresponding YANG containers and leaf data nodes. The abstract tree is shown in <a href="#tree-dm-abstract" class="auto internal xref">Figure 2</a>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <span id="name-abstract-dm-tree-structure"></span><div id="tree-dm-abstract">
 <figure id="figure-2">
           <div class="alignLeft art-text artwork" id="section-5.1-2.1">
@@ -2358,7 +2358,7 @@ module: ietf-packet-discard-reporting
         <h3 id="name-implementation-requirements">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-implementation-requirements" class="section-name selfRef">Implementation Requirements</a>
         </h3>
-<p id="section-5.2-1">The following requirements apply to the implementation of the data model and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.  While the model defines a comprehensive set of counters and statistics, implementations <span class="bcp14">MAY</span> support a subset of the defined features based on device capabilities and operational requirements. However, implementations <span class="bcp14">MUST</span> clearly document which features are supported and how they map to the model.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">The following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed. While the model defines a comprehensive set of counters and statistics, implementations <span class="bcp14">MAY</span> support a subset of the defined features based on device capabilities and operational requirements. However, implementations <span class="bcp14">MUST</span> clearly document which features are supported and how they map to the DM.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device:<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-5.2-3">
 <li id="section-5.2-3.1">
@@ -2414,10 +2414,10 @@ module: ietf-packet-discard-reporting
 <p id="section-5.3-1">If all of the requirements listed in <a href="#requirements" class="auto internal xref">Section 5.2</a> are met, a "good" unicast IPv4 packet received would increment:<a href="#section-5.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3-2.1">
-            <p id="section-5.3-2.1.1">interface/ingress/traffic/l3/v4/unicast/packets<a href="#section-5.3-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-2.1.1">interface/ingress/traffic/l3/ipv4/unicast/packets<a href="#section-5.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-2.2">
-            <p id="section-5.3-2.2.1">interface/ingress/traffic/l3/v4/unicast/bytes<a href="#section-5.3-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-2.2.1">interface/ingress/traffic/l3/ipv4/unicast/bytes<a href="#section-5.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-2.3">
             <p id="section-5.3-2.3.1">interface/ingress/traffic/qos/class[id="0"]/packets<a href="#section-5.3-2.3.1" class="pilcrow">¶</a></p>
@@ -2429,10 +2429,10 @@ module: ietf-packet-discard-reporting
 <p id="section-5.3-3">A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:<a href="#section-5.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3-4.1">
-            <p id="section-5.3-4.1.1">interface/ingress/discards/l3/v6/unicast/packets<a href="#section-5.3-4.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-4.1.1">interface/ingress/discards/l3/ipv6/unicast/packets<a href="#section-5.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-4.2">
-            <p id="section-5.3-4.2.1">interface/ingress/discards/l3/v6/unicast/bytes<a href="#section-5.3-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-4.2.1">interface/ingress/discards/l3/ipv6/unicast/bytes<a href="#section-5.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-4.3">
             <p id="section-5.3-4.3.1">interface/ingress/discards/l3/rx/ttl-expired/packets<a href="#section-5.3-4.3.1" class="pilcrow">¶</a></p>
@@ -2441,10 +2441,10 @@ module: ietf-packet-discard-reporting
 <p id="section-5.3-5">An IPv4 packet discarded on egress due to no buffers would increment:<a href="#section-5.3-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3-6.1">
-            <p id="section-5.3-6.1.1">interface/egress/discards/l3/v4/unicast/packets<a href="#section-5.3-6.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-6.1.1">interface/egress/discards/l3/ipv4/unicast/packets<a href="#section-5.3-6.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-6.2">
-            <p id="section-5.3-6.2.1">interface/egress/discards/l3/v4/unicast/bytes<a href="#section-5.3-6.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-6.2.1">interface/egress/discards/l3/ipv4/unicast/bytes<a href="#section-5.3-6.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-6.3">
             <p id="section-5.3-6.3.1">interface/egress/discards/no-buffer/class[id="0"]/packets<a href="#section-5.3-6.3.1" class="pilcrow">¶</a></p>
@@ -2456,20 +2456,30 @@ module: ietf-packet-discard-reporting
 <p id="section-5.3-7">A multicast IPv6 packet dropped due to RPF check failure would increment:<a href="#section-5.3-7" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.3-8.1">
-            <p id="section-5.3-8.1.1">interface/ingress/discards/l3/v6/multicast/packets<a href="#section-5.3-8.1.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-8.1.1">interface/ingress/discards/l3/ipv6/multicast/packets<a href="#section-5.3-8.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-8.2">
-            <p id="section-5.3-8.2.1">interface/ingress/discards/l3/v6/multicast/bytes<a href="#section-5.3-8.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-8.2.1">interface/ingress/discards/l3/ipv6/multicast/bytes<a href="#section-5.3-8.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-8.3">
             <p id="section-5.3-8.3.1">interface/ingress/discards/policy/l3/rpf/packets<a href="#section-5.3-8.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.3-9">A "good" Layer-2 frame received would increment:
-- interface/ingress/traffic/l2/frames
-- interface/ingress/traffic/l2/bytes
-- interface/ingress/traffic/qos/class[id="0"]/packets
-- interface/ingress/traffic/qos/class[id="0"]/bytes<a href="#section-5.3-9" class="pilcrow">¶</a></p>
+<p id="section-5.3-9">A "good" Layer-2 frame received would increment:<a href="#section-5.3-9" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.3-10.1">
+            <p id="section-5.3-10.1.1">interface/ingress/traffic/l2/frames<a href="#section-5.3-10.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.3-10.2">
+            <p id="section-5.3-10.2.1">interface/ingress/traffic/l2/bytes<a href="#section-5.3-10.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.3-10.3">
+            <p id="section-5.3-10.3.1">interface/ingress/traffic/qos/class[id="0"]/packets<a href="#section-5.3-10.3.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.3-10.4">
+            <p id="section-5.3-10.4.1">interface/ingress/traffic/qos/class[id="0"]/bytes<a href="#section-5.3-10.4.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 <div id="datamodel-module">
@@ -2686,7 +2696,7 @@ module ietf-packet-discard-reporting {
 <p id="section-6-1">This section captures practical insights gained from implementing the model across multiple vendors' platforms, as guidance for future implementers and operators:<a href="#section-6-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-6-2">
 <li id="section-6-2.1">
-          <p id="section-6-2.1.1">The number and granularity of discard classes defined in the Information Model represent a compromise. It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.<a href="#section-6-2.1.1" class="pilcrow">¶</a></p>
+          <p id="section-6-2.1.1">The number and granularity of discard classes defined in the IM represent a compromise. It aims to provide sufficient detail to enable appropriate automated actions while avoiding excessive detail, which may hinder quick problem identification.  Additionally, it helps to limit the quantity of data produced per interface, constraining the data volume and device CPU impacts.  While further granularity is possible, the defined schema has generally proven to be sufficient for the task of mitigating unintended packet loss.<a href="#section-6-2.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-6-2.2">
           <p id="section-6-2.2.1">There are many possible ways to define the discard classification tree.  For example, an approach is to use a multi-rooted tree, rooted in each protocol. Instead, a better approach is to define a tree where protocol discards and causal discard classes are accounted for orthogonally.  This decision reduces the number of combinations of classes and has proven sufficient for determining mitigation actions.<a href="#section-6-2.2.1" class="pilcrow">¶</a></p>
@@ -2719,16 +2729,16 @@ module ietf-packet-discard-reporting {
       </h2>
 <div id="security-infomodel">
 <section id="section-7.1">
-        <h3 id="name-information-model-2">
-<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-information-model-2" class="section-name selfRef">Information Model</a>
+        <h3 id="name-information-model">
+<a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-information-model" class="section-name selfRef">Information Model</a>
         </h3>
-<p id="section-7.1-1">The Information Model defined in <a href="#infomodel-module" class="auto internal xref">Section 4.3</a> specifies a YANG module using <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span> data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
+<p id="section-7.1-1">The IM defined in <a href="#infomodel-module" class="auto internal xref">Section 4.3</a> specifies a YANG module using <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span> data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-datamodel">
 <section id="section-7.2">
-        <h3 id="name-data-model-2">
-<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-data-model-2" class="section-name selfRef">Data Model</a>
+        <h3 id="name-data-model">
+<a href="#section-7.2" class="section-number selfRef">7.2. </a><a href="#name-data-model" class="section-name selfRef">Data Model</a>
         </h3>
 <p id="section-7.2-1">This section is modeled after the template described in <span><a href="https://datatracker.ietf.org/doc/html/draft-ietf-netmod-rfc8407bis-28#section-3.7" class="relref">Section 3.7</a> of [<a href="#I-D.ietf-netmod-rfc8407bis" class="cite xref">I-D.ietf-netmod-rfc8407bis</a>]</span>.<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <p id="section-7.2-2">The YANG module specified in <a href="#datamodel-module" class="auto internal xref">Section 5.4</a> defines a data model that is designed to be accessed via YANG-based management protocols, such as NETCONF <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> and RESTCONF <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>. These YANG-based management protocols (1) have to use a secure transport layer (e.g., SSH <span>[<a href="#RFC4252" class="cite xref">RFC4252</a>]</span>, TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, and QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>) and (2) have to use mutual authentication.<a href="#section-7.2-2" class="pilcrow">¶</a></p>
@@ -2933,6 +2943,10 @@ Email: nchachmo@cisco.com
 <dt id="RFC8446">[RFC8446]</dt>
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8969">[RFC8969]</dt>
+        <dd>
+<span class="refAuthor">Wu, Q., Ed.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, <span class="refAuthor">Lopez, D.</span>, <span class="refAuthor">Xie, C.</span>, and <span class="refAuthor">L. Geng</span>, <span class="refTitle">"A Framework for Automating Service and Network Management with YANG"</span>, <span class="seriesInfo">RFC 8969</span>, <span class="seriesInfo">DOI 10.17487/RFC8969</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8969">https://www.rfc-editor.org/rfc/rfc8969</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9000">[RFC9000]</dt>
       <dd>
