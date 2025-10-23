@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-05T00:46:07.148621+00:00",
+  "timestamp": "2025-10-23T00:43:17.446390+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -71,15 +71,15 @@
       "id": "I_kwDOOCO1i86zFrW1",
       "title": "where to graft the data nodes",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/17",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/blob/5e9cc85633fb71f35a4a269fd278a1332a2ed68c/yang/ietf-packet-discard-reporting.yang#L88",
       "createdAt": "2025-04-18T10:01:35Z",
-      "updatedAt": "2025-04-23T09:10:52Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-22T09:41:29Z",
+      "closedAt": "2025-10-22T09:41:29Z",
       "comments": [
         {
           "author": "boucadair",
@@ -94,6 +94,13 @@
           "body": "I still think this one is still pending.",
           "createdAt": "2025-04-23T09:10:51Z",
           "updatedAt": "2025-04-23T09:10:51Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "this one is now fixed in latest revision of the spec.",
+          "createdAt": "2025-10-22T09:41:29Z",
+          "updatedAt": "2025-10-22T09:41:29Z"
         }
       ]
     }
@@ -251,7 +258,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-03-03T19:52:50Z",
-      "updatedAt": "2025-03-03T21:46:19Z",
+      "updatedAt": "2025-10-22T16:22:58Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "699fc5a4ae06a7e128e428d85a92941d1e43a808",
@@ -293,7 +300,7 @@
       "labels": [],
       "body": "Benoit's reference changes",
       "createdAt": "2025-03-21T18:06:16Z",
-      "updatedAt": "2025-04-01T15:55:37Z",
+      "updatedAt": "2025-10-22T16:22:58Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "183add64e9d7c33358cddedcfa84825a612e648b",
@@ -321,7 +328,7 @@
       "labels": [],
       "body": "Given that we have in the modules\r\n\r\n\"yang-version 1.1;\"",
       "createdAt": "2025-04-01T18:54:49Z",
-      "updatedAt": "2025-04-01T20:46:06Z",
+      "updatedAt": "2025-10-22T16:22:57Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "4734e1573d7489ae320da8d2f5dcf80a8bd19c22",
@@ -433,7 +440,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-12T05:05:50Z",
-      "updatedAt": "2025-04-12T05:16:26Z",
+      "updatedAt": "2025-10-22T16:22:55Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "60f750cc97b035e8f8f8de59c3923e31ba3c9ad5",
@@ -557,7 +564,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-17T09:34:50Z",
-      "updatedAt": "2025-04-17T18:34:04Z",
+      "updatedAt": "2025-10-22T16:22:55Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "4ef406d328f8cd7cb7263dc3aade8a9dfa7cfb3e",
@@ -599,7 +606,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-18T09:55:30Z",
-      "updatedAt": "2025-04-18T17:31:52Z",
+      "updatedAt": "2025-10-22T16:22:55Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "5e9cc85633fb71f35a4a269fd278a1332a2ed68c",
@@ -641,7 +648,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-18T09:59:09Z",
-      "updatedAt": "2025-04-18T16:36:33Z",
+      "updatedAt": "2025-10-22T16:23:08Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "5e9cc85633fb71f35a4a269fd278a1332a2ed68c",
@@ -847,7 +854,7 @@
       "labels": [],
       "body": "typo",
       "createdAt": "2025-04-22T21:50:16Z",
-      "updatedAt": "2025-04-23T03:47:10Z",
+      "updatedAt": "2025-10-22T16:22:52Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "b9952738296303e3dab87283d6087025d4aadfd7",
@@ -875,7 +882,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-04-23T03:54:18Z",
-      "updatedAt": "2025-04-23T03:58:33Z",
+      "updatedAt": "2025-10-22T16:23:07Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "2c95cfbec0ba4878627f0c7ca6ebb65f6630cfc5",
@@ -958,7 +965,7 @@
       "labels": [],
       "body": "minor text edit",
       "createdAt": "2025-05-01T11:13:51Z",
-      "updatedAt": "2025-05-01T14:56:09Z",
+      "updatedAt": "2025-10-22T16:22:49Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "1e303fb686a977672ddc373392abc534b9409454",
@@ -1070,7 +1077,7 @@
       "labels": [],
       "body": "Added new requirement 11 related to mirrored traffic",
       "createdAt": "2025-06-23T17:24:22Z",
-      "updatedAt": "2025-06-24T17:04:55Z",
+      "updatedAt": "2025-10-22T16:22:48Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "1e4a4b6beca13b255c4b26f0e1a3fec7fa43bc46",
@@ -1277,7 +1284,7 @@
       "labels": [],
       "body": "Minor edits incorporating Paul Aitken's feedback 1/2",
       "createdAt": "2025-07-22T12:37:57Z",
-      "updatedAt": "2025-07-23T17:01:53Z",
+      "updatedAt": "2025-10-22T16:22:08Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "4eb09100db140956d31d686084571545c23585f5",
@@ -1326,7 +1333,7 @@
       "labels": [],
       "body": "Promoted implementation experience 3 to requirement 12 per Paul Aitken feedback",
       "createdAt": "2025-07-22T12:56:11Z",
-      "updatedAt": "2025-07-22T13:07:00Z",
+      "updatedAt": "2025-10-22T16:22:48Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "eb2420bc5ce0f1a3619a65cfef48f139a28d81cc",
@@ -1352,7 +1359,7 @@
       "labels": [],
       "body": "Promoted implementation experience 3 to requirement 12 per Paul Aitken feedback\r\nPromoted implementation experience 9 to requirement 13 per Paul Aitken feedback",
       "createdAt": "2025-07-22T13:07:28Z",
-      "updatedAt": "2025-07-23T16:52:20Z",
+      "updatedAt": "2025-10-22T16:22:46Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "eb2420bc5ce0f1a3619a65cfef48f139a28d81cc",
@@ -1401,7 +1408,7 @@
       "labels": [],
       "body": "graft the counters to the appropriate anchors",
       "createdAt": "2025-07-24T06:14:46Z",
-      "updatedAt": "2025-07-24T09:43:04Z",
+      "updatedAt": "2025-10-22T16:22:09Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "3146c7f3c8c611084cc3036c1f60fed91fbb6d15",
@@ -1429,7 +1436,7 @@
       "labels": [],
       "body": "Expose discard order capability",
       "createdAt": "2025-07-24T09:54:07Z",
-      "updatedAt": "2025-08-03T18:24:04Z",
+      "updatedAt": "2025-10-22T16:22:09Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "f4d341ff855cdd05d7dae6c074d6962efe7bc33b",
@@ -1491,7 +1498,7 @@
       "labels": [],
       "body": "Added optional per-class statistics to the policer container",
       "createdAt": "2025-09-15T05:46:52Z",
-      "updatedAt": "2025-09-17T17:01:49Z",
+      "updatedAt": "2025-10-22T16:22:10Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "e5cd32e665696d0966c085b4dadc23aceb2fa942",
@@ -1540,7 +1547,7 @@
       "labels": [],
       "body": "Changes from Randy Bush feedback",
       "createdAt": "2025-09-17T16:58:26Z",
-      "updatedAt": "2025-09-17T21:22:56Z",
+      "updatedAt": "2025-10-22T16:22:10Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "8f66eec3622f8286862de6eaadfd533cd6d9cd08",
@@ -1596,7 +1603,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-18T05:09:03Z",
-      "updatedAt": "2025-09-18T12:25:36Z",
+      "updatedAt": "2025-10-22T16:22:10Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "f617087d291469acd9b11d158220a5cfdbab3cfe",
@@ -1632,7 +1639,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-09-18T05:28:17Z",
-      "updatedAt": "2025-09-18T12:07:37Z",
+      "updatedAt": "2025-10-22T16:22:11Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "f617087d291469acd9b11d158220a5cfdbab3cfe",
@@ -1694,7 +1701,7 @@
       "labels": [],
       "body": "typos and corrected references designations",
       "createdAt": "2025-09-19T11:19:37Z",
-      "updatedAt": "2025-09-19T12:30:37Z",
+      "updatedAt": "2025-10-22T16:22:17Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "6fc98a7a3cb1ebddf2e9baa03f2c203f7ab1a4f4",
@@ -1767,7 +1774,7 @@
       "labels": [],
       "body": "fixed informative references",
       "createdAt": "2025-09-19T11:32:37Z",
-      "updatedAt": "2025-09-19T11:35:45Z",
+      "updatedAt": "2025-10-22T16:22:12Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "johnevansuk-patch-10",
       "baseRefOid": "4619f4ff3a88942611b372c8050dfcf3b15fddce",
@@ -1793,7 +1800,7 @@
       "labels": [],
       "body": "fixed references",
       "createdAt": "2025-09-19T11:42:52Z",
-      "updatedAt": "2025-09-19T11:56:01Z",
+      "updatedAt": "2025-10-22T16:22:16Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "johnevansuk-patch-10",
       "baseRefOid": "4619f4ff3a88942611b372c8050dfcf3b15fddce",
@@ -1829,7 +1836,7 @@
       "labels": [],
       "body": "Med's suggestions which clashed",
       "createdAt": "2025-09-19T12:34:45Z",
-      "updatedAt": "2025-10-02T16:25:43Z",
+      "updatedAt": "2025-10-22T16:22:18Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "0b2217797a2889d4e47a54d2274a78d58c2e713e",
@@ -1855,6 +1862,194 @@
           "body": "",
           "createdAt": "2025-09-19T13:19:23Z",
           "updatedAt": "2025-09-19T13:19:23Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 42,
+      "id": "PR_kwDOOCO1i86vA6D5",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/42",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixed nits from Joe Clarke",
+      "createdAt": "2025-10-22T09:00:38Z",
+      "updatedAt": "2025-10-22T16:17:28Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "3fb49a39bf2f04c1a51b657b7156a07e12c3fcc6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-14",
+      "headRefOid": "d1548c95cce62093228f4c71cc876b04be9ea502",
+      "closedAt": "2025-10-22T16:16:12Z",
+      "mergedAt": "2025-10-22T16:16:12Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "d0554529c456c94ca56e97021877d5121f263854"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87IjYt4",
+          "commit": {
+            "abbreviatedOid": "652628b"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-22T09:39:25Z",
+          "updatedAt": "2025-10-22T09:39:25Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\n: The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., pps (packets per second)) or relative (e.g., percent) values.\r\n```",
+              "createdAt": "2025-10-22T09:39:25Z",
+              "updatedAt": "2025-10-22T09:39:25Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 43,
+      "id": "PR_kwDOOCO1i86vBcnQ",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/43",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Consistency nit",
+      "createdAt": "2025-10-22T09:33:34Z",
+      "updatedAt": "2025-10-22T16:17:49Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "3fb49a39bf2f04c1a51b657b7156a07e12c3fcc6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-15",
+      "headRefOid": "8543cc2869d50692da1466751772f400a35789e3",
+      "closedAt": "2025-10-22T16:17:48Z",
+      "mergedAt": "2025-10-22T16:17:48Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "5c8ed144300de15620bccf7324f0119e903e8698"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87IjbAi",
+          "commit": {
+            "abbreviatedOid": "8543cc2"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-22T09:40:41Z",
+          "updatedAt": "2025-10-22T09:40:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i87IqXbx",
+          "commit": {
+            "abbreviatedOid": "8543cc2"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-22T16:16:51Z",
+          "updatedAt": "2025-10-22T16:16:51Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "PR_kwDOOCO1i86vCG32",
+      "title": "consistent use of IM/DM",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/44",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-22T10:16:44Z",
+      "updatedAt": "2025-10-22T16:19:18Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "3fb49a39bf2f04c1a51b657b7156a07e12c3fcc6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-10",
+      "headRefOid": "7f18534e3a0ca4277dadfad4a1aaa74cefbe8fd9",
+      "closedAt": "2025-10-22T16:19:18Z",
+      "mergedAt": "2025-10-22T16:19:18Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "9d11fec4a5e93e5128459840b45f2e6ee473af20"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87IqYmG",
+          "commit": {
+            "abbreviatedOid": "7f18534"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-22T16:18:23Z",
+          "updatedAt": "2025-10-22T16:18:23Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 45,
+      "id": "PR_kwDOOCO1i86vD1dm",
+      "title": "ACK OPSDIR Review + minor edits to the terminology section",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/45",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-22T12:39:37Z",
+      "updatedAt": "2025-10-22T16:21:37Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "3fb49a39bf2f04c1a51b657b7156a07e12c3fcc6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-11",
+      "headRefOid": "35f853b6e8a00b263852e861f62759d00806a3ca",
+      "closedAt": "2025-10-22T16:21:32Z",
+      "mergedAt": "2025-10-22T16:21:32Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "f2340d49dd98d518391258f84b87dd9a0ec50049"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87Iqa6k",
+          "commit": {
+            "abbreviatedOid": "35f853b"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-22T16:21:26Z",
+          "updatedAt": "2025-10-22T16:21:26Z",
           "comments": []
         }
       ]
