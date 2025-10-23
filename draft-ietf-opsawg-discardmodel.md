@@ -443,36 +443,36 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 
 If all of the requirements listed in {{requirements}} are met, a "good" unicast IPv4 packet received would increment:
 
-- interface/ingress/traffic/l3/ipv4/unicast/packets
-- interface/ingress/traffic/l3/ipv4/unicast/bytes
-- interface/ingress/traffic/qos/class[id="0"]/packets
-- interface/ingress/traffic/qos/class[id="0"]/bytes
+- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets
+- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes
+- interface/traffic[direction="ingress"]/qos/class[id="0"]/packets
+- interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes
 
 A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:
 
-- interface/ingress/discards/l3/ipv6/unicast/packets
-- interface/ingress/discards/l3/ipv6/unicast/bytes
-- interface/ingress/discards/l3/rx/ttl-expired/packets
+- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/packets
+- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/bytes
+- interface/discards[direction="ingress"]/l3/rx/ttl-expired/packets
 
 An IPv4 packet discarded on egress due to no buffers would increment:
 
-- interface/egress/discards/l3/ipv4/unicast/packets
-- interface/egress/discards/l3/ipv4/unicast/bytes
-- interface/egress/discards/no-buffer/class[id="0"]/packets
-- interface/egress/discards/no-buffer/class[id="0"]/bytes
+- interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets
+- interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes
+- interface/discards[direction="egress"]/no-buffer/class[id="0"]/packets
+- interface/discards[direction="egress"]/no-buffer/class[id="0"]/bytes
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
-- interface/ingress/discards/l3/ipv6/multicast/packets
-- interface/ingress/discards/l3/ipv6/multicast/bytes
-- interface/ingress/discards/policy/l3/rpf/packets
+- interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/packets
+- interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/bytes
+- interface/discards[direction="ingress"]/policy/l3/rpf/packets
 
 A "good" Layer-2 frame received would increment:
 
-- interface/ingress/traffic/l2/frames
-- interface/ingress/traffic/l2/bytes
-- interface/ingress/traffic/qos/class[id="0"]/packets
-- interface/ingress/traffic/qos/class[id="0"]/bytes
+- interface/traffic[direction="ingress"]/l2/frames
+- interface/traffic[direction="ingress"]/l2/bytes
+- interface/traffic[direction="ingress"]/qos/class[id="0"]/packets
+- interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes
 
 
 ## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
