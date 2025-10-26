@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-23T00:43:17.446390+00:00",
+  "timestamp": "2025-10-26T00:46:43.211219+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2053,6 +2053,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOOCO1i86vRA7y",
+      "title": "Fix examples to be consistent with the IM Structure",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/46",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-23T13:22:24Z",
+      "updatedAt": "2025-10-23T13:22:25Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "f2340d49dd98d518391258f84b87dd9a0ec50049",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-1",
+      "headRefOid": "ec0ec04f14f0077aa3da3f3a4b311a9d36616d42",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
