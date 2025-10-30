@@ -248,7 +248,7 @@ Table of Contents
       Examples may be: error discards may require taking faulty
       components out of service, no-buffer discards may require traffic
       redistribution, or intended policy discards typically require no
-      action.  Refer Table 1 for more examples.
+      action.  Refer to Table 1 for more examples.
 
    While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and
    FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces
