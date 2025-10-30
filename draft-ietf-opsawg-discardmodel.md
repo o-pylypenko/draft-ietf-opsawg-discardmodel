@@ -155,7 +155,7 @@ FEATURE-DISCARD-DURATION:
 : The duration of the discards which helps to distinguish transient from persistent issues.
 
 FEATURE-DISCARD-CLASS:
-: The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no action. Refer {{ex-table}} for more examples.
+: The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no action. Refer to {{ex-table}} for more examples.
 
 While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions.
 
