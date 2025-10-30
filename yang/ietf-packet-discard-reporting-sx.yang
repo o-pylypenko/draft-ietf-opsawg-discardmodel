@@ -336,7 +336,8 @@ module ietf-packet-discard-reporting-sx {
           "The number of received invalid packets discarded due
            to other reasons, not limited to: invalid packet length,
            invalid header fields, invalid options, invalid protocol
-           version, invalid flags or control bits, malformed packets.";
+           version, invalid flags or control bits, malformed
+           packets.";
       }
     }
     leaf ttl-expired {
