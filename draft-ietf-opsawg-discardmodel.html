@@ -1622,8 +1622,6 @@ module: ietf-packet-discard-reporting-sx
 <p id="section-4.3-1">The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4.3-2">
 <pre>&lt;CODE BEGINS&gt;
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-packet-discard-reporting-sx {
   yang-version 1.1;
   namespace
@@ -1962,8 +1960,8 @@ module ietf-packet-discard-reporting-sx {
           "The number of received invalid packets discarded due
            to other reasons, not limited to: invalid packet length,
            invalid header fields, invalid options, invalid protocol
-           version, invalid flags or control bits, malformed packets\
-                                                                  .";
+           version, invalid flags or control bits, malformed
+           packets.";
       }
     }
     leaf ttl-expired {
