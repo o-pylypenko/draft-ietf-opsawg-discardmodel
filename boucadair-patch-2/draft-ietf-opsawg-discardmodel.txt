@@ -490,6 +490,8 @@ Table of Contents
    defined in [RFC8791].
 
    <CODE BEGINS>
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
    module ietf-packet-discard-reporting-sx {
      yang-version 1.1;
      namespace
@@ -772,26 +774,27 @@ Table of Contents
          leaf crc-error {
            type yang:counter64;
            description
-             "The number of frames discarded due to CRC error.";
+             "The number of received frames discarded due to
+              CRC error.";
          }
          leaf invalid-mac {
            type yang:counter64;
            description
-             "The number of frames discarded due to an invalid
-              MAC address.";
+             "The number of received frames discarded due to
+              an invalid MAC address.";
          }
          leaf invalid-vlan {
            type yang:counter64;
            description
-             "The number of frames discarded due to an invalid
-              VLAN tag.";
+             "The number of received frames discarded due to
+              an invalid VLAN tag.";
          }
          leaf invalid-frame {
            type yang:counter64;
            description
-             "The number of invalid frames discarded due to other
-              reasons, not limited to: malformed frames, frame-size
-              violations.";
+             "The number of invalid received frames discarded due to
+              other reasons, not limited to: malformed frames,
+              frame-size violations.";
          }
        }
      }
@@ -824,10 +827,11 @@ Table of Contents
          leaf invalid-packet {
            type yang:counter64;
            description
-             "The number of invalid packets discarded due to other
-              reasons, not limited to: invalid packet length, invalid
-              header fields, invalid options, invalid protocol version,
-              invalid flags or control bits, malformed packets.";
+             "The number of received invalid packets discarded due
+              to other reasons, not limited to: invalid packet length,
+              invalid header fields, invalid options, invalid protocol
+              version, invalid flags or control bits, malformed packets\
+                                                                     .";
          }
        }
        leaf ttl-expired {
@@ -839,20 +843,20 @@ Table of Contents
        leaf no-route {
          type yang:counter64;
          description
-           "The number of packets discarded due to not matching
-            a valid route.";
+           "The number of received packets discarded due to not
+            matching a valid route.";
        }
        leaf invalid-sid {
          type yang:counter64;
          description
-           "The number of packets discarded due to an invalid
-            Segment Routing (SR) SID.";
+           "The number of received packets discarded due to an
+            invalid Segment Routing (SR) SID.";
        }
        leaf invalid-label {
          type yang:counter64;
          description
-           "The number of packets discarded due to an invalid
-            MPLS label.";
+           "The number of received packets discarded due to an
+            invalid MPLS label.";
        }
      }
 
