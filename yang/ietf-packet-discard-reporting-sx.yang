@@ -211,6 +211,16 @@ module ietf-packet-discard-reporting-sx {
           "Multicast traffic counters.";
         uses basic-packets-bytes;
       }
+      container broadcast {
+        when "derived-from-or-self(../address-family, "
+           + "'plr-sx:ipv4')" {
+          description
+            "Only applicable for IPv4.";
+        }
+        description
+          "Broadcast traffic counters.";
+        uses basic-packets-bytes;
+      }
     }
   }
 
