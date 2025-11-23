@@ -30,6 +30,9 @@ module: ietf-packet-discard-reporting
     |  |     |  +--ro packets?   yang:counter64
     |  |     |  +--ro bytes?     yang:counter64
     |  |     +--ro multicast
+    |  |     |  +--ro packets?   yang:counter64
+    |  |     |  +--ro bytes?     yang:counter64
+    |  |     +--ro broadcast
     |  |        +--ro packets?   yang:counter64
     |  |        +--ro bytes?     yang:counter64
     |  +--ro qos!
@@ -51,6 +54,9 @@ module: ietf-packet-discard-reporting
        |     |  +--ro packets?   yang:counter64
        |     |  +--ro bytes?     yang:counter64
        |     +--ro multicast
+       |     |  +--ro packets?   yang:counter64
+       |     |  +--ro bytes?     yang:counter64
+       |     +--ro broadcast
        |        +--ro packets?   yang:counter64
        |        +--ro bytes?     yang:counter64
        +--ro errors
@@ -117,6 +123,9 @@ module: ietf-packet-discard-reporting
     |  |     |  +--rw packets?   yang:counter64
     |  |     |  +--rw bytes?     yang:counter64
     |  |     +--rw multicast
+    |  |     |  +--rw packets?   yang:counter64
+    |  |     |  +--rw bytes?     yang:counter64
+    |  |     +--rw broadcast
     |  |        +--rw packets?   yang:counter64
     |  |        +--rw bytes?     yang:counter64
     |  +--rw qos!
@@ -137,6 +146,9 @@ module: ietf-packet-discard-reporting
        |     |  +--rw packets?   yang:counter64
        |     |  +--rw bytes?     yang:counter64
        |     +--rw multicast
+       |     |  +--rw packets?   yang:counter64
+       |     |  +--rw bytes?     yang:counter64
+       |     +--rw broadcast
        |        +--rw packets?   yang:counter64
        |        +--rw bytes?     yang:counter64
        +--rw errors
