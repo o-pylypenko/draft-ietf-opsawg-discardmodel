@@ -499,6 +499,29 @@ This section captures practical insights gained from implementing the model acro
 7. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
 8. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
 
+# Implementation Status
+
+Note to RFC Editor: This section is to be removed before publication as an RFC.
+
+This section records the status of known implementations of the protocol defined by this specification at the time of posting of this Internet-Draft, and is based on a proposal described in RFC 7942.  The description of implementations in this section is intended to assist the IETF in its decision processes in progressing drafts to RFCs.  Please note that the listing of any individual implementation here does not imply endorsement by the IETF.  Furthermore, no effort has been spent to verify the information presented here that was supplied by IETF contributors.  This is not intended as, and must not be construed to be, a catalog of available implementations or their features.  Readers are advised to note that other implementations may exist.
+
+## Information Model Implementations
+
+The IM defined in {infomodel} has been implemented or mapped on at least nine hardware platforms across four vendors, including:
+
+* Broadcom: Trident, Tomahawk 1, Tomahawk 3, Tomahawk 5
+* Cisco: Q200L
+* Juniper: MX, PTX, QFX
+* Marvell: TL7
+
+## Data Model Implementations
+
+A YANG-compliant open-source SLAX script implements a subset of the DM defined in {datamodel} for Juniper MX routers.  This implementation is available at:
+
+* <https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-sample/>
+
+Operational experience from these implementations is reflected in the deployment considerations in {experience}.
+
 # Security Considerations {#security}
 
 ## Information Model {#security-infomodel}
