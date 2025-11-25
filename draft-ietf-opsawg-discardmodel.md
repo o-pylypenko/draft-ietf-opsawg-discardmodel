@@ -338,7 +338,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 # Data Model (DM)   {#datamodel}
 
-This DM implements the IM defined in {{infomodel}} for the interface, device, and control-plane components. It is a device model per {{Section 2.1 of ?RFC8969}}. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).
+This DM implements the IM defined in {{infomodel}} for the interface, device, and control-plane components. It is a device model per {{Section 2.1 of ?RFC8969}}. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).  The Information Model defines the abstract classification tree using YANG data structure extensions {{?RFC8791}}.  This DM imports that module and reuses the same groupings and hierarchy of components, directions, layers, and discard classes, attaching them via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and are not instantiated in this DM.
 
 ## Structure {#datamodel-structure}
 
