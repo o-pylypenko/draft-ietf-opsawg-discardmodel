@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-02T00:48:07.110004+00:00",
+  "timestamp": "2025-11-25T00:44:10.661175+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -103,6 +103,22 @@
           "updatedAt": "2025-10-22T09:41:29Z"
         }
       ]
+    },
+    {
+      "number": 49,
+      "id": "I_kwDOOCO1i87Z_X3y",
+      "title": "intdir Review",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/49",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "https://datatracker.ietf.org/doc/review-ietf-opsawg-discardmodel-09-intdir-early-matsushima-2025-11-11/:\n\n> Overall this draft was well written and well covered various discard cases,\n> TTL expired, exceed MTU size, uRPF, etc., for example.\n> \n> Nits:\n> - It would be better to clarify which counter type should be used for SR-MPLS\n> cases, either invalid-label, or invalid-sid;\n> \n> - [RFC8704](https://datatracker.ietf.org/doc/rfc8704/) might be considered as an informational reference for uRPF;\n> \n> - In addition to uRPF, \"ingress filtering\" in [RFC2827](https://datatracker.ietf.org/doc/rfc2827/)/3704 would cover more\n> wider discard cases at ingress nodes:\n> \n> - It would be nice if the draft considered that how many ICMP packets were\n> send, or suppressed to the corresponding discard events,\n>   such as TTL expired, exceed MTU size, or rejected by policies.",
+      "createdAt": "2025-11-24T06:32:13Z",
+      "updatedAt": "2025-11-24T06:32:13Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -2137,6 +2153,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 48,
+      "id": "PR_kwDOOCO1i861DYIh",
+      "title": "add broadcast only for IPv4",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/48",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-11-23T14:14:05Z",
+      "updatedAt": "2025-11-23T14:14:40Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "1937ee0e8cfe787e6e3ca665d113c7c0ad491276",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "broadcast-counters",
+      "headRefOid": "1b8e9de5354116367f0a61229f376db3c72826d4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
