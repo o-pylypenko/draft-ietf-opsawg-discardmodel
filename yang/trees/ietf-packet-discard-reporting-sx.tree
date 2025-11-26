@@ -28,6 +28,9 @@ module: ietf-packet-discard-reporting-sx
     |  |  |     |  +-- packets?   yang:counter64
     |  |  |     |  +-- bytes?     yang:counter64
     |  |  |     +-- multicast
+    |  |  |     |  +-- packets?   yang:counter64
+    |  |  |     |  +-- bytes?     yang:counter64
+    |  |  |     +-- broadcast
     |  |  |        +-- packets?   yang:counter64
     |  |  |        +-- bytes?     yang:counter64
     |  |  +-- qos!
@@ -49,6 +52,9 @@ module: ietf-packet-discard-reporting-sx
     |     |     |  +-- packets?   yang:counter64
     |     |     |  +-- bytes?     yang:counter64
     |     |     +-- multicast
+    |     |     |  +-- packets?   yang:counter64
+    |     |     |  +-- bytes?     yang:counter64
+    |     |     +-- broadcast
     |     |        +-- packets?   yang:counter64
     |     |        +-- bytes?     yang:counter64
     |     +-- errors
@@ -115,6 +121,9 @@ module: ietf-packet-discard-reporting-sx
     |  |  |     |  +-- packets?   yang:counter64
     |  |  |     |  +-- bytes?     yang:counter64
     |  |  |     +-- multicast
+    |  |  |     |  +-- packets?   yang:counter64
+    |  |  |     |  +-- bytes?     yang:counter64
+    |  |  |     +-- broadcast
     |  |  |        +-- packets?   yang:counter64
     |  |  |        +-- bytes?     yang:counter64
     |  |  +-- qos!
@@ -135,6 +144,9 @@ module: ietf-packet-discard-reporting-sx
     |     |     |  +-- packets?   yang:counter64
     |     |     |  +-- bytes?     yang:counter64
     |     |     +-- multicast
+    |     |     |  +-- packets?   yang:counter64
+    |     |     |  +-- bytes?     yang:counter64
+    |     |     +-- broadcast
     |     |        +-- packets?   yang:counter64
     |     |        +-- bytes?     yang:counter64
     |     +-- errors
@@ -200,6 +212,9 @@ module: ietf-packet-discard-reporting-sx
        |  |     |  +-- packets?   yang:counter64
        |  |     |  +-- bytes?     yang:counter64
        |  |     +-- multicast
+       |  |     |  +-- packets?   yang:counter64
+       |  |     |  +-- bytes?     yang:counter64
+       |  |     +-- broadcast
        |  |        +-- packets?   yang:counter64
        |  |        +-- bytes?     yang:counter64
        |  +-- qos!
@@ -220,6 +235,9 @@ module: ietf-packet-discard-reporting-sx
           |     |  +-- packets?   yang:counter64
           |     |  +-- bytes?     yang:counter64
           |     +-- multicast
+          |     |  +-- packets?   yang:counter64
+          |     |  +-- bytes?     yang:counter64
+          |     +-- broadcast
           |        +-- packets?   yang:counter64
           |        +-- bytes?     yang:counter64
           +-- errors
