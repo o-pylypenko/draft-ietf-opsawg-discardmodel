@@ -1327,8 +1327,9 @@ Table of Contents
         error, policy, or no-buffer discard subclass.
 
    9.   When there are multiple reasons for discarding a packet, the
-        ordering of discard class reporting MUST be defined in the DM
-        discard-order-policy.
+        ordering of discard class reporting MUST be defined.  Typically,
+        this can be exposed by an implementation by means of discard-
+        order-capability.
 
    10.  If Diffserv [RFC2475] is not used, no-buffer discards SHOULD be
         reported as class[id="0"], which represents the default class.
