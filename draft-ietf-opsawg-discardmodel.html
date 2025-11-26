@@ -2330,6 +2330,7 @@ module ietf-packet-discard-reporting-sx {
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-data-model-dm" class="section-name selfRef">Data Model (DM)</a>
       </h2>
 <p id="section-5-1">This DM implements the IM defined in <a href="#infomodel" class="auto internal xref">Section 4</a> for the interface, device, and control-plane components. It is a device model per <span><a href="https://rfc-editor.org/rfc/rfc8969#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC8969" class="cite xref">RFC8969</a>]</span>. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-2">The IM defines the abstract classification tree using YANG data structure extensions <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>. This DM imports that module and reuses the same groupings and hierarchy of components, directions, layers, and discard classes, attaching them via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and are not instantiated in this DM.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div id="datamodel-structure">
 <section id="section-5.1">
         <h3 id="name-structure-2">

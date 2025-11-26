@@ -1187,6 +1187,14 @@ Table of Contents
    (network element) operational state model: counters are scoped to a
    single device (interfaces and control plane).
 
+   The IM defines the abstract classification tree using YANG data
+   structure extensions [RFC8791].  This DM imports that module and
+   reuses the same groupings and hierarchy of components, directions,
+   layers, and discard classes, attaching them via augment statements to
+   existing YANG modules for routing, interfaces, and logical network
+   elements.  The flow component is defined only in the IM for use by
+   flow-oriented data models and are not instantiated in this DM.
+
 5.1.  Structure
 
    There is a direct mapping between the IM components and their DM
