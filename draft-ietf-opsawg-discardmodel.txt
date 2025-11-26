@@ -706,6 +706,16 @@ Table of Contents
              "Multicast traffic counters.";
            uses basic-packets-bytes;
          }
+         container broadcast {
+           when "derived-from-or-self(../address-family, "
+              + "'plr-sx:ipv4')" {
+             description
+               "Only applicable for IPv4.";
+           }
+           description
+             "Broadcast traffic counters.";
+           uses basic-packets-bytes;
+         }
        }
      }
 
@@ -2072,6 +2082,9 @@ Appendix C.  Full Information Model Tree
        |  |  |     |  +-- packets?   yang:counter64
        |  |  |     |  +-- bytes?     yang:counter64
        |  |  |     +-- multicast
+       |  |  |     |  +-- packets?   yang:counter64
+       |  |  |     |  +-- bytes?     yang:counter64
+       |  |  |     +-- broadcast
        |  |  |        +-- packets?   yang:counter64
        |  |  |        +-- bytes?     yang:counter64
        |  |  +-- qos!
@@ -2093,6 +2106,9 @@ Appendix C.  Full Information Model Tree
        |     |     |  +-- packets?   yang:counter64
        |     |     |  +-- bytes?     yang:counter64
        |     |     +-- multicast
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
+       |     |     +-- broadcast
        |     |        +-- packets?   yang:counter64
        |     |        +-- bytes?     yang:counter64
        |     +-- errors
@@ -2159,6 +2175,9 @@ Appendix C.  Full Information Model Tree
        |  |  |     |  +-- packets?   yang:counter64
        |  |  |     |  +-- bytes?     yang:counter64
        |  |  |     +-- multicast
+       |  |  |     |  +-- packets?   yang:counter64
+       |  |  |     |  +-- bytes?     yang:counter64
+       |  |  |     +-- broadcast
        |  |  |        +-- packets?   yang:counter64
        |  |  |        +-- bytes?     yang:counter64
        |  |  +-- qos!
@@ -2179,6 +2198,9 @@ Appendix C.  Full Information Model Tree
        |     |     |  +-- packets?   yang:counter64
        |     |     |  +-- bytes?     yang:counter64
        |     |     +-- multicast
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
+       |     |     +-- broadcast
        |     |        +-- packets?   yang:counter64
        |     |        +-- bytes?     yang:counter64
        |     +-- errors
@@ -2244,6 +2266,9 @@ Appendix C.  Full Information Model Tree
           |  |     |  +-- packets?   yang:counter64
           |  |     |  +-- bytes?     yang:counter64
           |  |     +-- multicast
+          |  |     |  +-- packets?   yang:counter64
+          |  |     |  +-- bytes?     yang:counter64
+          |  |     +-- broadcast
           |  |        +-- packets?   yang:counter64
           |  |        +-- bytes?     yang:counter64
           |  +-- qos!
@@ -2264,6 +2289,9 @@ Appendix C.  Full Information Model Tree
              |     |  +-- packets?   yang:counter64
              |     |  +-- bytes?     yang:counter64
              |     +-- multicast
+             |     |  +-- packets?   yang:counter64
+             |     |  +-- bytes?     yang:counter64
+             |     +-- broadcast
              |        +-- packets?   yang:counter64
              |        +-- bytes?     yang:counter64
              +-- errors
@@ -2352,6 +2380,9 @@ Appendix D.  Full Data Model Tree
        |  |     |  +--ro packets?   yang:counter64
        |  |     |  +--ro bytes?     yang:counter64
        |  |     +--ro multicast
+       |  |     |  +--ro packets?   yang:counter64
+       |  |     |  +--ro bytes?     yang:counter64
+       |  |     +--ro broadcast
        |  |        +--ro packets?   yang:counter64
        |  |        +--ro bytes?     yang:counter64
        |  +--ro qos!
@@ -2373,6 +2404,9 @@ Appendix D.  Full Data Model Tree
           |     |  +--ro packets?   yang:counter64
           |     |  +--ro bytes?     yang:counter64
           |     +--ro multicast
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     +--ro broadcast
           |        +--ro packets?   yang:counter64
           |        +--ro bytes?     yang:counter64
           +--ro errors
@@ -2439,6 +2473,9 @@ Appendix D.  Full Data Model Tree
        |  |     |  +--rw packets?   yang:counter64
        |  |     |  +--rw bytes?     yang:counter64
        |  |     +--rw multicast
+       |  |     |  +--rw packets?   yang:counter64
+       |  |     |  +--rw bytes?     yang:counter64
+       |  |     +--rw broadcast
        |  |        +--rw packets?   yang:counter64
        |  |        +--rw bytes?     yang:counter64
        |  +--rw qos!
@@ -2459,6 +2496,9 @@ Appendix D.  Full Data Model Tree
           |     |  +--rw packets?   yang:counter64
           |     |  +--rw bytes?     yang:counter64
           |     +--rw multicast
+          |     |  +--rw packets?   yang:counter64
+          |     |  +--rw bytes?     yang:counter64
+          |     +--rw broadcast
           |        +--rw packets?   yang:counter64
           |        +--rw bytes?     yang:counter64
           +--rw errors
