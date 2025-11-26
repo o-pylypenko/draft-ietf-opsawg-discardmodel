@@ -520,7 +520,7 @@ A YANG-compliant open-source SLAX script implements a subset of the DM defined i
 
 * <https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-sample/>
 
-Operational experience from these implementations is reflected in the deployment considerations in {experience}.
+Operational experience from these implementations is reflected in the deployment considerations in {{experience}}.
 
 # Security Considerations {#security}
 
