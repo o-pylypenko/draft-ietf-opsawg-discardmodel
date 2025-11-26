@@ -301,7 +301,7 @@ The corresponding YANG module is defined in {{infomodel-module}}.
 ## Sub-type Definitions
 
 discards/policy/:
-: These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules, and explicit null routes.
+: These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, DDoS protection rules, and explicit null routes.  In practice, ingress DDoS protection policies are often realised using mechanisms such as ingress filtering and uRPF {{?RFC2827}},{{?RFC3704}},{{?RFC8704}}, remotely triggered blackholing {{?RFC3882}},{{?RFC5635}}, or BGP Flow Specification–based filters {{?RFC8955}},{{?RFC8956}},{{?RFC9117}}; all such policy-driven discards are reported under this class.
 
 discards/error/:
 : These are unintended discards due to errors in processing packets or frames.  There are multiple sub-classes.
