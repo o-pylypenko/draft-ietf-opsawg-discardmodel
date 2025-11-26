@@ -366,7 +366,9 @@ module ietf-packet-discard-reporting-sx {
       type yang:counter64;
       description
         "The number of received packets discarded due to an
-         invalid Segment Routing (SR) SID.";
+         invalid Segment Routing over IPv6 (SRv6) SID.
+         For SR-MPLS, invalid SIDs encoded as MPLS labels
+         MUST be accounted under invalid-label.";
     }
     leaf invalid-label {
       type yang:counter64;
