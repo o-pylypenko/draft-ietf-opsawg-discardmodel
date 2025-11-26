@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 29 May 2026                                             J. Haas
+Expires: 30 May 2026                                             J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                        25 November 2025
+                                                        26 November 2025
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 May 2026.
+   This Internet-Draft will expire on 30 May 2026.
 
 Copyright Notice
 
@@ -1673,7 +1673,7 @@ Table of Contents
 
 7.1.  Information Model Implementations
 
-   The IM defined in {infomodel} has been implemented or mapped on at
+   The IM defined in Section 4 has been implemented or mapped on at
    least nine hardware platforms across four vendors, including:
 
    *  Broadcom: Trident, Tomahawk 1, Tomahawk 3, Tomahawk 5
@@ -1687,8 +1687,8 @@ Table of Contents
 7.2.  Data Model Implementations
 
    A YANG-compliant open-source SLAX script implements a subset of the
-   DM defined in {datamodel} for Juniper MX routers.  This
-   implementation is available at:
+   DM defined in Section 5 for Juniper MX routers.  This implementation
+   is available at:
 
    *  https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-
       sample/ (https://github.com/o-pylypenko-aws/draft-ietf-opsawg-
