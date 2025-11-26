@@ -516,7 +516,7 @@ The IM defined in {{infomodel}} has been implemented or mapped on at least nine 
 
 ## Data Model Implementations
 
-A YANG-compliant open-source SLAX script implements a subset of the DM defined in {datamodel} for Juniper MX routers.  This implementation is available at:
+A YANG-compliant open-source SLAX script implements a subset of the DM defined in {{datamodel}} for Juniper MX routers.  This implementation is available at:
 
 * <https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-sample/>
 
