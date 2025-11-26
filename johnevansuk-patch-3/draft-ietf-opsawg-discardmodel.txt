@@ -1687,15 +1687,15 @@ Table of Contents
 7.2.  Data Model Implementations
 
    A YANG-compliant open-source SLAX script implements a subset of the
-   DM defined in {datamodel} for Juniper MX routers.  This
-   implementation is available at:
+   DM defined in Section 5 for Juniper MX routers.  This implementation
+   is available at:
 
    *  https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-
       sample/ (https://github.com/o-pylypenko-aws/draft-ietf-opsawg-
       discardmodel-sample/)
 
    Operational experience from these implementations is reflected in the
-   deployment considerations in {experience}.
+   deployment considerations in Section 6.
 
 8.  Security Considerations
 
