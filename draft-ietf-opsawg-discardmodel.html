@@ -1561,7 +1561,7 @@ module: ietf-packet-discard-reporting-sx
 <span class="break"></span><dl class="dlParallel" id="section-4.2-1">
           <dt id="section-4.2-1.1">discards/policy/:</dt>
           <dd style="margin-left: 1.5em" id="section-4.2-1.2">
-            <p id="section-4.2-1.2.1">These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, Reverse Path Forwarding (RPF) checks, DDoS protection rules, and explicit null routes.<a href="#section-4.2-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-1.2.1">These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, DDoS protection rules, and explicit null routes.  In practice, ingress DDoS protection policies are often realized using mechanisms such as ingress filtering and uRPF (<span>[<a href="#RFC2827" class="cite xref">RFC2827</a>]</span>, <span>[<a href="#RFC3704" class="cite xref">RFC3704</a>]</span>, <span>[<a href="#RFC8704" class="cite xref">RFC8704</a>]</span>), remotely triggered blackholing (<span>[<a href="#RFC3882" class="cite xref">RFC3882</a>]</span>, <span>[<a href="#RFC5635" class="cite xref">RFC5635</a>]</span>), or BGP Flow Specification–based filters (<span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>, <span>[<a href="#RFC8956" class="cite xref">RFC8956</a>]</span>, <span>[<a href="#RFC9117" class="cite xref">RFC9117</a>]</span>); all such policy-driven discards are reported under this class.<a href="#section-4.2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-4.2-1.3">discards/error/:</dt>
@@ -3010,6 +3010,10 @@ Email: nchachmo@cisco.com
         <dd>
 <span class="refAuthor">Blake, S.</span>, <span class="refAuthor">Black, D.</span>, <span class="refAuthor">Carlson, M.</span>, <span class="refAuthor">Davies, E.</span>, <span class="refAuthor">Wang, Z.</span>, and <span class="refAuthor">W. Weiss</span>, <span class="refTitle">"An Architecture for Differentiated Services"</span>, <span class="seriesInfo">RFC 2475</span>, <span class="seriesInfo">DOI 10.17487/RFC2475</span>, <time datetime="1998-12" class="refDate">December 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2475">https://www.rfc-editor.org/rfc/rfc2475</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC2827">[RFC2827]</dt>
+        <dd>
+<span class="refAuthor">Ferguson, P.</span> and <span class="refAuthor">D. Senie</span>, <span class="refTitle">"Network Ingress Filtering: Defeating Denial of Service Attacks which employ IP Source Address Spoofing"</span>, <span class="seriesInfo">BCP 38</span>, <span class="seriesInfo">RFC 2827</span>, <span class="seriesInfo">DOI 10.17487/RFC2827</span>, <time datetime="2000-05" class="refDate">May 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2827">https://www.rfc-editor.org/rfc/rfc2827</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2863">[RFC2863]</dt>
         <dd>
 <span class="refAuthor">McCloghrie, K.</span> and <span class="refAuthor">F. Kastenholz</span>, <span class="refTitle">"The Interfaces Group MIB"</span>, <span class="seriesInfo">RFC 2863</span>, <span class="seriesInfo">DOI 10.17487/RFC2863</span>, <time datetime="2000-06" class="refDate">June 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2863">https://www.rfc-editor.org/rfc/rfc2863</a>&gt;</span>. </dd>
@@ -3018,6 +3022,14 @@ Email: nchachmo@cisco.com
         <dd>
 <span class="refAuthor">Pras, A.</span> and <span class="refAuthor">J. Schoenwaelder</span>, <span class="refTitle">"On the Difference between Information Models and Data Models"</span>, <span class="seriesInfo">RFC 3444</span>, <span class="seriesInfo">DOI 10.17487/RFC3444</span>, <time datetime="2003-01" class="refDate">January 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3444">https://www.rfc-editor.org/rfc/rfc3444</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC3704">[RFC3704]</dt>
+        <dd>
+<span class="refAuthor">Baker, F.</span> and <span class="refAuthor">P. Savola</span>, <span class="refTitle">"Ingress Filtering for Multihomed Networks"</span>, <span class="seriesInfo">BCP 84</span>, <span class="seriesInfo">RFC 3704</span>, <span class="seriesInfo">DOI 10.17487/RFC3704</span>, <time datetime="2004-03" class="refDate">March 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3704">https://www.rfc-editor.org/rfc/rfc3704</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC3882">[RFC3882]</dt>
+        <dd>
+<span class="refAuthor">Turk, D.</span>, <span class="refTitle">"Configuring BGP to Block Denial-of-Service Attacks"</span>, <span class="seriesInfo">RFC 3882</span>, <span class="seriesInfo">DOI 10.17487/RFC3882</span>, <time datetime="2004-09" class="refDate">September 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3882">https://www.rfc-editor.org/rfc/rfc3882</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC4252">[RFC4252]</dt>
         <dd>
 <span class="refAuthor">Ylonen, T.</span> and <span class="refAuthor">C. Lonvick, Ed.</span>, <span class="refTitle">"The Secure Shell (SSH) Authentication Protocol"</span>, <span class="seriesInfo">RFC 4252</span>, <span class="seriesInfo">DOI 10.17487/RFC4252</span>, <time datetime="2006-01" class="refDate">January 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4252">https://www.rfc-editor.org/rfc/rfc4252</a>&gt;</span>. </dd>
@@ -3025,6 +3037,10 @@ Email: nchachmo@cisco.com
 <dt id="RFC4884">[RFC4884]</dt>
         <dd>
 <span class="refAuthor">Bonica, R.</span>, <span class="refAuthor">Gan, D.</span>, <span class="refAuthor">Tappan, D.</span>, and <span class="refAuthor">C. Pignataro</span>, <span class="refTitle">"Extended ICMP to Support Multi-Part Messages"</span>, <span class="seriesInfo">RFC 4884</span>, <span class="seriesInfo">DOI 10.17487/RFC4884</span>, <time datetime="2007-04" class="refDate">April 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4884">https://www.rfc-editor.org/rfc/rfc4884</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5635">[RFC5635]</dt>
+        <dd>
+<span class="refAuthor">Kumari, W.</span> and <span class="refAuthor">D. McPherson</span>, <span class="refTitle">"Remote Triggered Black Hole Filtering with Unicast Reverse Path Forwarding (uRPF)"</span>, <span class="seriesInfo">RFC 5635</span>, <span class="seriesInfo">DOI 10.17487/RFC5635</span>, <time datetime="2009-08" class="refDate">August 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5635">https://www.rfc-editor.org/rfc/rfc5635</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6241">[RFC6241]</dt>
         <dd>
@@ -3054,13 +3070,29 @@ Email: nchachmo@cisco.com
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8704">[RFC8704]</dt>
+        <dd>
+<span class="refAuthor">Sriram, K.</span>, <span class="refAuthor">Montgomery, D.</span>, and <span class="refAuthor">J. Haas</span>, <span class="refTitle">"Enhanced Feasible-Path Unicast Reverse Path Forwarding"</span>, <span class="seriesInfo">BCP 84</span>, <span class="seriesInfo">RFC 8704</span>, <span class="seriesInfo">DOI 10.17487/RFC8704</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8704">https://www.rfc-editor.org/rfc/rfc8704</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8955">[RFC8955]</dt>
+        <dd>
+<span class="refAuthor">Loibl, C.</span>, <span class="refAuthor">Hares, S.</span>, <span class="refAuthor">Raszuk, R.</span>, <span class="refAuthor">McPherson, D.</span>, and <span class="refAuthor">M. Bacher</span>, <span class="refTitle">"Dissemination of Flow Specification Rules"</span>, <span class="seriesInfo">RFC 8955</span>, <span class="seriesInfo">DOI 10.17487/RFC8955</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8955">https://www.rfc-editor.org/rfc/rfc8955</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8956">[RFC8956]</dt>
+        <dd>
+<span class="refAuthor">Loibl, C., Ed.</span>, <span class="refAuthor">Raszuk, R., Ed.</span>, and <span class="refAuthor">S. Hares, Ed.</span>, <span class="refTitle">"Dissemination of Flow Specification Rules for IPv6"</span>, <span class="seriesInfo">RFC 8956</span>, <span class="seriesInfo">DOI 10.17487/RFC8956</span>, <time datetime="2020-12" class="refDate">December 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8956">https://www.rfc-editor.org/rfc/rfc8956</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8969">[RFC8969]</dt>
         <dd>
 <span class="refAuthor">Wu, Q., Ed.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, <span class="refAuthor">Lopez, D.</span>, <span class="refAuthor">Xie, C.</span>, and <span class="refAuthor">L. Geng</span>, <span class="refTitle">"A Framework for Automating Service and Network Management with YANG"</span>, <span class="seriesInfo">RFC 8969</span>, <span class="seriesInfo">DOI 10.17487/RFC8969</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8969">https://www.rfc-editor.org/rfc/rfc8969</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9000">[RFC9000]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Iyengar, J., Ed.</span> and <span class="refAuthor">M. Thomson, Ed.</span>, <span class="refTitle">"QUIC: A UDP-Based Multiplexed and Secure Transport"</span>, <span class="seriesInfo">RFC 9000</span>, <span class="seriesInfo">DOI 10.17487/RFC9000</span>, <time datetime="2021-05" class="refDate">May 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9000">https://www.rfc-editor.org/rfc/rfc9000</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9117">[RFC9117]</dt>
+      <dd>
+<span class="refAuthor">Uttaro, J.</span>, <span class="refAuthor">Alcaide, J.</span>, <span class="refAuthor">Filsfils, C.</span>, <span class="refAuthor">Smith, D.</span>, and <span class="refAuthor">P. Mohapatra</span>, <span class="refTitle">"Revised Validation Procedure for BGP Flow Specifications"</span>, <span class="seriesInfo">RFC 9117</span>, <span class="seriesInfo">DOI 10.17487/RFC9117</span>, <time datetime="2021-08" class="refDate">August 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9117">https://www.rfc-editor.org/rfc/rfc9117</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
