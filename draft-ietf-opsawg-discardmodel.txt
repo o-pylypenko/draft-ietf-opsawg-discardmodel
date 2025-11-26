@@ -1530,7 +1530,7 @@ Table of Contents
 
      identity discard-class {
        description
-         "Base identity to identify the discard calss.";
+         "Base identity to identify the discard class.";
      }
 
      identity layer2 {
