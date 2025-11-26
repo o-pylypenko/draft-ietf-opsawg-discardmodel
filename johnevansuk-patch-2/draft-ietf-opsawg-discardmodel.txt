@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 29 May 2026                                             J. Haas
+Expires: 30 May 2026                                             J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                        25 November 2025
+                                                        26 November 2025
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 May 2026.
+   This Internet-Draft will expire on 30 May 2026.
 
 Copyright Notice
 
@@ -1172,14 +1172,15 @@ Table of Contents
    device, and control-plane components.  It is a device model per
    Section 2.1 of [RFC8969].  Specifically, it is a device-local
    (network element) operational state model: counters are scoped to a
-   single device (interfaces and control plane).  The Information Model
-   defines the abstract classification tree using YANG data structure
-   extensions [RFC8791].  This DM imports that module and reuses the
-   same groupings and hierarchy of components, directions, layers, and
-   discard classes, attaching them via augment statements to existing
-   YANG modules for routing, interfaces, and logical network elements.
-   The flow component is defined only in the IM for use by flow-oriented
-   data models and are not instantiated in this DM.
+   single device (interfaces and control plane).
+
+   The IM defines the abstract classification tree using YANG data
+   structure extensions [RFC8791].  This DM imports that module and
+   reuses the same groupings and hierarchy of components, directions,
+   layers, and discard classes, attaching them via augment statements to
+   existing YANG modules for routing, interfaces, and logical network
+   elements.  The flow component is defined only in the IM for use by
+   flow-oriented data models and are not instantiated in this DM.
 
 5.1.  Structure
 
