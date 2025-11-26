@@ -507,7 +507,7 @@ This section records the status of known implementations of the protocol defined
 
 ## Information Model Implementations
 
-The IM defined in {infomodel} has been implemented or mapped on at least nine hardware platforms across four vendors, including:
+The IM defined in {{infomodel}} has been implemented or mapped on at least nine hardware platforms across four vendors, including:
 
 * Broadcom: Trident, Tomahawk 1, Tomahawk 3, Tomahawk 5
 * Cisco: Q200L
