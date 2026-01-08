@@ -117,19 +117,19 @@ module ietf-packet-discard-reporting-common {
   identity ip {
     base address-family;
     description
-      "Identity for IP.";
+      "Identity for IP address family.";
   }
 
   identity ipv4 {
     base ip;
     description
-      "Identity for an IPv4 address family.";
+      "Identity for IPv4 address family.";
   }
 
   identity ipv6 {
     base ip;
     description
-      "Identity for an IPv6 address family.";
+      "Identity for IPv6 address family.";
   }
 
   /*
