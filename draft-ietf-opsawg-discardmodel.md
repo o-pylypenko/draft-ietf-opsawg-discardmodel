@@ -326,6 +326,16 @@ discards/no-buffer/:
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
+## "ietf-packet-discard-reporting-common" YANG Module {#common-module}
+
+The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}.
+
+~~~~~~~~~~
+<CODE BEGINS>
+{::include-fold ./yang/ietf-packet-discard-reporting-common.yang}
+<CODE ENDS>
+~~~~~~~~~~
+
 ## "ietf-packet-discard-reporting-sx" YANG Module {#infomodel-module}
 
 The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in {{!RFC8791}}.
@@ -479,7 +489,7 @@ A "good" Layer-2 frame received would increment:
 
 ## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
 
-The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx", "ietf-netconf-acm" {{!RFC8341}}, "ietf-interfaces" {{!RFC8343}},
+The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-common", "ietf-netconf-acm" {{!RFC8341}}, "ietf-interfaces" {{!RFC8343}},
 "ietf-routing" {{!RFC8349}}, and "ietf-logical-network-element" {{!RFC8530}}.
 
 ~~~~~~~~~~
@@ -551,6 +561,10 @@ Control-plane, interfaces, and devices:
 IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" {{!RFC3688}}:
 
 ~~~~
+   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Registrant Contact:  The IESG.
+   XML:  N/A; the requested URI is an XML namespace.
+
    URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
@@ -564,15 +578,21 @@ IANA is requested to register the following URI in the "ns" subregistry within t
    Names" subregistry {{!RFC6020}} within the "YANG Parameters" registry:
 
 ~~~~
+   Name:  ietf-packet-discard-reporting-common
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Prefix:  pdr-common
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
+
    Name:  ietf-packet-discard-reporting-sx
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
-   Prefix:  plr-sx
+   Prefix:  pdr-sx
    Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
-   Prefix:  plr
+   Prefix:  pdr
    Maintained by IANA?  N
    Reference:  RFC XXXX
 ~~~~
