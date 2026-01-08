@@ -1,7 +1,7 @@
 module ietf-packet-discard-reporting-common {
   yang-version 1.1;
-  namespace
-    "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common";
+  namespace "urn:ietf:params:xml:ns:yang:"
+          + "ietf-packet-discard-reporting-common";
   prefix pdr-common;
 
   import ietf-yang-types {
