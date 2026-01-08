@@ -274,6 +274,12 @@ Table of Contents
    lossless translation to the corresponding YANG data model, which is
    defined in Section 5.
 
+   In order to ease reuse of the IM structure by DMs but without
+   requiring that these DMs to parse the "sx" structure defined in
+   [RFC8791], main reusable nodes are defined in a common module
+   (Section 4.3) while the corresponding IM YANG module is defined in
+   Section 4.4.
+
 4.1.  Structure
 
    The IM defines a hierarchical classification scheme for packet
@@ -1853,6 +1859,16 @@ Table of Contents
       of its attack by monitoring (the increase of) some discard
       counters (e.g., policy) and adjust its attack strategy
       accordingly.
+
+   The "ietf-packet-discard-reporting-common" YANG module defines a set
+   of identities, types, and groupings.  These nodes are intended to be
+   reused by other YANG modules.  The module by itself does not expose
+   any data nodes that are writable, data nodes that contain read-only
+   state, or RPCs.  As such, there are no additional security issues
+   related to the YANG module that need to be considered.
+
+   Modules that use the groupings that are defined in this document
+   should identify the corresponding security considerations.
 
 9.  IANA Considerations
 
