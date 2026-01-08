@@ -74,13 +74,13 @@ module ietf-packet-discard-reporting-sx {
       "Specifies the abstract structure of packet discard
        reporting data.";
     container control-plane {
-      if-feature "ietf-pdr-common:control-plane-stats";
+      if-feature "pdr-common:control-plane-stats";
       description
         "Control plane packet counters.";
       uses control-plane;
     }
     list interface {
-      if-feature "ietf-pdr-common:interface-stats";
+      if-feature "pdr-common:interface-stats";
       key "name";
       description
         "Indicates a list of interfaces for which packet
@@ -93,7 +93,7 @@ module ietf-packet-discard-reporting-sx {
       uses interface;
     }
     list flow {
-      if-feature "ietf-pdr-common:flow-reporting";
+      if-feature "pdr-common:flow-reporting";
       key "direction";
       leaf direction {
         type identityref {
@@ -107,7 +107,7 @@ module ietf-packet-discard-reporting-sx {
       uses device;
     }
     container device {
-      if-feature "ietf-pdr-common:device-stats";
+      if-feature "pdr-common:device-stats";
       description
         "Device level packet counters.";
       uses device;
