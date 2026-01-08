@@ -97,7 +97,7 @@ module ietf-packet-discard-reporting-sx {
       key "direction";
       leaf direction {
         type identityref {
-          base direction;
+          base pdr-common:direction;
         }
         description
           "Specifies a direction.";
