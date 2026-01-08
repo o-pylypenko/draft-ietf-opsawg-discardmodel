@@ -671,7 +671,7 @@ Table of Contents
        }
      }
 
-     grouping basic-frames-bytes {
+     grouping l2-traffic {
        description
          "Grouping for Layer 2 frame and byte counters.";
        uses basic-frames;
@@ -682,13 +682,7 @@ Table of Contents
        }
      }
 
-     grouping l2-traffic {
-       description
-         "Layer 2 traffic counters.";
-       uses basic-frames-bytes;
-     }
-
-     grouping ip {
+     grouping l3-traffic {
        description
          "Layer 3 traffic counters per address family.";
        list address-family-stat {
@@ -724,12 +718,6 @@ Table of Contents
            uses basic-packets-bytes;
          }
        }
-     }
-
-     grouping l3-traffic {
-       description
-         "Layer 3 traffic counters.";
-       uses ip;
      }
 
      grouping class-list {
