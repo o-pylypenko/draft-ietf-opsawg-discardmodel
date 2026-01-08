@@ -175,12 +175,12 @@ The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full Y
 module: ietf-packet-discard-reporting-sx
 
   structure packet-discard-reporting:
-    +-- control-plane {control-plane-stats}?
+    +-- control-plane {pdr-common:control-plane-stats}?
     |  +-- traffic* [direction]
     |  |  ...
     |  +-- discards* [direction]
     |     ...
-    +-- interface* [name] {interface-stats}?
+    +-- interface* [name] {pdr-common:interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -189,8 +189,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  +-- l3
     |  |  |  ...
     |  |  +-- qos
-    |  |     +-- class* [id]
-    |  |        ...
+    |  |     ...
     |  +-- discards* [direction]
     |     +-- direction    identityref
     |     +-- l2
@@ -210,9 +209,8 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
-    |        +-- class* [id]
     |           ...
-    +-- flow* [direction] {flow-reporting}?
+    +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
     |  |  +-- l2
@@ -220,8 +218,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  +-- l3
     |  |  |  ...
     |  |  +-- qos
-    |  |     +-- class* [id]
-    |  |        ...
+    |  |     ...
     |  +-- discards
     |     +-- l2
     |     |  ...
@@ -240,17 +237,15 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
-    |        +-- class* [id]
     |           ...
-    +-- device {device-stats}?
+    +-- device {pdr-common:device-stats}?
        +-- traffic
        |  +-- l2
        |  |  ...
        |  +-- l3
        |  |  ...
        |  +-- qos
-       |     +-- class* [id]
-       |        ...
+       |     ...
        +-- discards
           +-- l2
           |  ...
@@ -269,7 +264,6 @@ module: ietf-packet-discard-reporting-sx
           |  +-- l3
           |     ...
           +-- no-buffer
-             +-- class* [id]
                 ...
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
