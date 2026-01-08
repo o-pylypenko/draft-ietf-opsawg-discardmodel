@@ -1192,7 +1192,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.4.2.2.1"><a href="#section-4.2" class="auto internal xref">4.2</a>.  <a href="#name-sub-type-definitions" class="internal xref">Sub-type Definitions</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-ietf-packet-discard-reporti" class="internal xref">"ietf-packet-discard-reporting-sx" YANG Module</a></p>
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-ietf-packet-discard-reporti" class="internal xref">"ietf-packet-discard-reporting-common" YANG Module</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.4">
+                <p id="section-toc.1-1.4.2.4.1"><a href="#section-4.4" class="auto internal xref">4.4</a>.  <a href="#name-ietf-packet-discard-reportin" class="internal xref">"ietf-packet-discard-reporting-sx" YANG Module</a></p>
 </li>
             </ul>
 </li>
@@ -1209,7 +1212,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-usage-examples" class="internal xref">Usage Examples</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
-                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-ietf-packet-discard-reportin" class="internal xref">"ietf-packet-discard-reporting" YANG Module</a></p>
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-ietf-packet-discard-reporting" class="internal xref">"ietf-packet-discard-reporting" YANG Module</a></p>
 </li>
             </ul>
 </li>
@@ -1284,7 +1287,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-1-1">The primary function of a network is to transport and deliver packets according to service level objectives. For network operators, understanding both where and why packet loss occurs within a network is essential for effective operation. Device-reported packet loss provides the most direct signal for identifying service impact. While certain types of packet loss, such as policy-based discards, are intentional and part of normal network operation, unintended packet loss can impact customer services.  To automate network operations, operators must be able to detect customer-impacting packet loss, determine its root cause, and apply appropriate mitigation actions. Precise classification of packet loss is thus crucial to ensure that anomalous packet loss is easily detected and that the right action is taken to mitigate the impact. Taking the wrong action can make problems worse; for example, removing a congested device from service can exacerbate congestion by redirecting traffic to other already congested links or devices.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in "The Interfaces Group MIB" <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and "A YANG Data Model for Interface Management" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, are insufficient for automating network operations. First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, <span>[<a href="#RFC7270" class="cite xref">RFC7270</a>]</span> provides support for reporting discards per flow in IP Flow Information Export (IPFIX) <span>[<a href="#RFC7011" class="cite xref">RFC7011</a>]</span> using the forwardingStatus IPFIX Information Element, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation (e.g., the "For us" reason code).<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting which address these issues.  The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-3">This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting which address these issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><a href="#problem" class="auto internal xref">Section 3</a> describes the problem space and requirements. <a href="#infomodel" class="auto internal xref">Section 4</a> defines the IM and classification scheme. <a href="#datamodel" class="auto internal xref">Section 5</a> specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.<a href="#section-1-5" class="pilcrow">¶</a></p>
 </section>
@@ -1379,6 +1382,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-information-model-im" class="section-name selfRef">Information Model (IM)</a>
       </h2>
 <p id="section-4-1">The IM is defined using YANG <span>[<a href="#RFC7950" class="cite xref">RFC7950</a>]</span>, with Data Structure Extensions <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>, allowing the model to remain abstract and decoupled from specific implementations in accordance with <span>[<a href="#RFC3444" class="cite xref">RFC3444</a>]</span>. This abstraction supports different DM implementations, such as YANG or IPFIX <span>[<a href="#RFC7011" class="cite xref">RFC7011</a>]</span>, while ensuring consistency across implementations. Using YANG for the IM enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in <a href="#datamodel" class="auto internal xref">Section 5</a>.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-2">In order to ease reuse of the IM structure by DMs but without requiring that these DMs to parse the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>, main reusable nodes are defined in a common module (<a href="#common-module" class="auto internal xref">Section 4.3</a>) while the corresponding IM YANG module is defined in <a href="#infomodel-module" class="auto internal xref">Section 4.4</a>.<a href="#section-4-2" class="pilcrow">¶</a></p>
 <div id="infomodel-structure">
 <section id="section-4.1">
         <h3 id="name-structure">
@@ -1393,12 +1397,12 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 module: ietf-packet-discard-reporting-sx
 
   structure packet-discard-reporting:
-    +-- control-plane {control-plane-stats}?
+    +-- control-plane {pdr-common:control-plane-stats}?
     |  +-- traffic* [direction]
     |  |  ...
     |  +-- discards* [direction]
     |     ...
-    +-- interface* [name] {interface-stats}?
+    +-- interface* [name] {pdr-common:interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -1407,8 +1411,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  +-- l3
     |  |  |  ...
     |  |  +-- qos
-    |  |     +-- class* [id]
-    |  |        ...
+    |  |     ...
     |  +-- discards* [direction]
     |     +-- direction    identityref
     |     +-- l2
@@ -1428,9 +1431,8 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
-    |        +-- class* [id]
     |           ...
-    +-- flow* [direction] {flow-reporting}?
+    +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
     |  |  +-- l2
@@ -1438,8 +1440,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  +-- l3
     |  |  |  ...
     |  |  +-- qos
-    |  |     +-- class* [id]
-    |  |        ...
+    |  |     ...
     |  +-- discards
     |     +-- l2
     |     |  ...
@@ -1458,17 +1459,15 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
-    |        +-- class* [id]
     |           ...
-    +-- device {device-stats}?
+    +-- device {pdr-common:device-stats}?
        +-- traffic
        |  +-- l2
        |  |  ...
        |  +-- l3
        |  |  ...
        |  +-- qos
-       |     +-- class* [id]
-       |        ...
+       |     ...
        +-- discards
           +-- l2
           |  ...
@@ -1487,7 +1486,6 @@ module: ietf-packet-discard-reporting-sx
           |  +-- l3
           |     ...
           +-- no-buffer
-             +-- class* [id]
                 ...
 </pre>
 </div>
@@ -1550,7 +1548,7 @@ module: ietf-packet-discard-reporting-sx
 </li>
         </ul>
 <p id="section-4.1-7">The hierarchical structure allows for future extension while maintaining backward compatibility. New discard types can be added as new branches without affecting existing implementations.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
-<p id="section-4.1-8">The corresponding YANG module is defined in <a href="#infomodel-module" class="auto internal xref">Section 4.3</a>.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
+<p id="section-4.1-8">The corresponding YANG module is defined in <a href="#infomodel-module" class="auto internal xref">Section 4.4</a>.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sub-type-definitions">
@@ -1625,29 +1623,24 @@ module: ietf-packet-discard-reporting-sx
 <p id="section-4.2-2">An example of possible signal-to-mitigation action mapping is provided in <a href="#mapping" class="auto internal xref">Appendix B</a>.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="infomodel-module">
+<div id="common-module">
 <section id="section-4.3">
         <h3 id="name-ietf-packet-discard-reporti">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-ietf-packet-discard-reporti" class="section-name selfRef">"ietf-packet-discard-reporting-sx" YANG Module</a>
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-ietf-packet-discard-reporti" class="section-name selfRef">"ietf-packet-discard-reporting-common" YANG Module</a>
         </h3>
-<p id="section-4.3-1">The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in <span>[<a href="#RFC9911" class="cite xref">RFC9911</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4.3-2">
 <pre>&lt;CODE BEGINS&gt;
-module ietf-packet-discard-reporting-sx {
+module ietf-packet-discard-reporting-common {
   yang-version 1.1;
-  namespace
-    "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx";
-  prefix plr-sx;
+  namespace "urn:ietf:params:xml:ns:yang:"
+          + "ietf-packet-discard-reporting-common";
+  prefix pdr-common;
 
   import ietf-yang-types {
     prefix yang;
     reference
-      "RFC 6991: Common YANG Data Types";
-  }
-  import ietf-yang-structure-ext {
-    prefix sx;
-    reference
-      "RFC 8791: YANG Data Structure Extensions";
+      "RFC 9911: Common YANG Data Types";
   }
 
   organization
@@ -1671,10 +1664,10 @@ module ietf-packet-discard-reporting-sx {
      Author:   Mohamed Boucadair
                &lt;mailto:mohamed.boucadair@orange.com&gt;";
   description
-    "This module defines an information model for packet discard
+    "This module defines a common YANG module for packet discard
      reporting.
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -1684,8 +1677,12 @@ module ietf-packet-discard-reporting-sx {
      Relating to IETF Documents
      (https://trustee.ietf.org/license-info).
 
-     This version of this YANG module is part of RFC XXXX; see the
-     RFC itself for full legal notices.";
+     All revisions of IETF and IANA published modules can be found
+     at the YANG Parameters registry group
+     (https://www.iana.org/assignments/yang-parameters).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
 
   revision 2024-06-04 {
     description
@@ -1698,7 +1695,6 @@ module ietf-packet-discard-reporting-sx {
   /*
    * Features
    */
-
 
   feature control-plane-stats {
     description
@@ -1751,22 +1747,22 @@ module ietf-packet-discard-reporting-sx {
       "Defines a type for the address family.";
   }
 
-  identity ipv4 {
+  identity ip {
     base address-family;
     description
-      "Identity for an IPv4 address family.";
+      "Identity for IP address family.";
+  }
+
+  identity ipv4 {
+    base ip;
+    description
+      "Identity for IPv4 address family.";
   }
 
   identity ipv6 {
-    base address-family;
+    base ip;
     description
-      "Identity for an IPv6 address family.";
-  }
-
-  identity all {
-    base address-family;
-    description
-      "Identity for all address families.";
+      "Identity for IPv6 address family.";
   }
 
   /*
@@ -1804,7 +1800,7 @@ module ietf-packet-discard-reporting-sx {
     }
   }
 
-  grouping basic-frames-bytes {
+  grouping l2-traffic {
     description
       "Grouping for Layer 2 frame and byte counters.";
     uses basic-frames;
@@ -1815,13 +1811,7 @@ module ietf-packet-discard-reporting-sx {
     }
   }
 
-  grouping l2-traffic {
-    description
-      "Layer 2 traffic counters.";
-    uses basic-frames-bytes;
-  }
-
-  grouping ip {
+  grouping l3-traffic {
     description
       "Layer 3 traffic counters per address family.";
     list address-family-stat {
@@ -1848,7 +1838,7 @@ module ietf-packet-discard-reporting-sx {
       }
       container broadcast {
         when "derived-from-or-self(../address-family, "
-           + "'plr-sx:ipv4')" {
+           + "'pdr-common:ipv4')" {
           description
             "Only applicable for IPv4.";
         }
@@ -1857,12 +1847,6 @@ module ietf-packet-discard-reporting-sx {
         uses basic-packets-bytes;
       }
     }
-  }
-
-  grouping l3-traffic {
-    description
-      "Layer 3 traffic counters.";
-    uses ip;
   }
 
   grouping class-list {
@@ -2269,6 +2253,86 @@ module ietf-packet-discard-reporting-sx {
       }
     }
   }
+}
+
+&lt;CODE ENDS&gt;</pre><a href="#section-4.3-2" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+<div id="infomodel-module">
+<section id="section-4.4">
+        <h3 id="name-ietf-packet-discard-reportin">
+<a href="#section-4.4" class="section-number selfRef">4.4. </a><a href="#name-ietf-packet-discard-reportin" class="section-name selfRef">"ietf-packet-discard-reporting-sx" YANG Module</a>
+        </h3>
+<p id="section-4.4-1">The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
+<div class="breakable sourcecode" id="section-4.4-2">
+<pre>&lt;CODE BEGINS&gt;
+module ietf-packet-discard-reporting-sx {
+  yang-version 1.1;
+  namespace
+    "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx";
+  prefix pdr-sx;
+
+  import ietf-packet-discard-reporting-common {
+    prefix pdr-common;
+    reference
+      "RFC XXXX: Information and Data Models for Packet Discard
+                 Reporting";
+  }
+  import ietf-yang-structure-ext {
+    prefix sx;
+    reference
+      "RFC 8791: YANG Data Structure Extensions";
+  }
+
+  organization
+    "IETF OPSAWG (Operations and Management Area Working Group)";
+  contact
+    "WG Web:   https://datatracker.ietf.org/wg/opsawg/
+     WG List:  mailto:opsawg@ietf.org
+
+     Author:   John Evans
+               &lt;mailto:jevanamz@amazon.co.uk&gt;
+
+     Author:   Oleksandr Pylypenko
+               &lt;mailto:opyl@amazon.com&gt;
+
+     Author:   Jeffrey Haas
+               &lt;mailto:jhaas@juniper.net&gt;
+
+     Author:   Aviran Kadosh
+               &lt;mailto:akadosh@cisco.com&gt;
+
+     Author:   Mohamed Boucadair
+               &lt;mailto:mohamed.boucadair@orange.com&gt;";
+  description
+    "This module defines an information model for packet discard
+     reporting.
+
+     Copyright (c) 2026 IETF Trust and the persons identified as
+     authors of the code.  All rights reserved.
+
+     Redistribution and use in source and binary forms, with or
+     without modification, is permitted pursuant to, and subject
+     to the license terms contained in, the Revised BSD License
+     set forth in Section 4.c of the IETF Trust's Legal Provisions
+     Relating to IETF Documents
+     (https://trustee.ietf.org/license-info).
+
+     All revisions of IETF and IANA published modules can be found
+     at the YANG Parameters registry group
+     (https://www.iana.org/assignments/yang-parameters).
+
+     This version of this YANG module is part of RFC XXXX; see
+     the RFC itself for full legal notices.";
+
+  revision 2024-06-04 {
+    description
+      "Initial revision.";
+    reference
+      "RFC XXXX: Information and Data Models for Packet Discard
+                 Reporting";
+  }
 
   /*
    * Main structure definition
@@ -2279,13 +2343,13 @@ module ietf-packet-discard-reporting-sx {
       "Specifies the abstract structure of packet discard
        reporting data.";
     container control-plane {
-      if-feature "control-plane-stats";
+      if-feature "pdr-common:control-plane-stats";
       description
         "Control plane packet counters.";
-      uses control-plane;
+      uses pdr-common:control-plane;
     }
     list interface {
-      if-feature "interface-stats";
+      if-feature "pdr-common:interface-stats";
       key "name";
       description
         "Indicates a list of interfaces for which packet
@@ -2295,32 +2359,32 @@ module ietf-packet-discard-reporting-sx {
         description
           "Indicates the name of the interface.";
       }
-      uses interface;
+      uses pdr-common:interface;
     }
     list flow {
-      if-feature "flow-reporting";
+      if-feature "pdr-common:flow-reporting";
       key "direction";
       leaf direction {
         type identityref {
-          base direction;
+          base pdr-common:direction;
         }
         description
           "Specifies a direction.";
       }
       description
         "Flow packet counters.";
-      uses device;
+      uses pdr-common:device;
     }
     container device {
-      if-feature "device-stats";
+      if-feature "pdr-common:device-stats";
       description
         "Device level packet counters.";
-      uses device;
+      uses pdr-common:device;
     }
   }
 }
 
-&lt;CODE ENDS&gt;</pre><a href="#section-4.3-2" class="pilcrow">¶</a>
+&lt;CODE ENDS&gt;</pre><a href="#section-4.4-2" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
@@ -2558,10 +2622,10 @@ module: ietf-packet-discard-reporting
 </div>
 <div id="datamodel-module">
 <section id="section-5.4">
-        <h3 id="name-ietf-packet-discard-reportin">
-<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-ietf-packet-discard-reportin" class="section-name selfRef">"ietf-packet-discard-reporting" YANG Module</a>
+        <h3 id="name-ietf-packet-discard-reporting">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-ietf-packet-discard-reporting" class="section-name selfRef">"ietf-packet-discard-reporting" YANG Module</a>
         </h3>
-<p id="section-5.4-1">The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx", "ietf-netconf-acm" <span>[<a href="#RFC8341" class="cite xref">RFC8341</a>]</span>, "ietf-interfaces" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>,
+<p id="section-5.4-1">The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-common", "ietf-netconf-acm" <span>[<a href="#RFC8341" class="cite xref">RFC8341</a>]</span>, "ietf-interfaces" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>,
 "ietf-routing" <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>, and "ietf-logical-network-element" <span>[<a href="#RFC8530" class="cite xref">RFC8530</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-5.4-2">
 <pre>&lt;CODE BEGINS&gt;
@@ -2569,10 +2633,10 @@ module ietf-packet-discard-reporting {
   yang-version 1.1;
   namespace
     "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting";
-  prefix plr;
+  prefix pdr;
 
-  import ietf-packet-discard-reporting-sx {
-    prefix plr-sx;
+  import ietf-packet-discard-reporting-common {
+    prefix pdr-common;
     reference
       "RFC XXXX: Information and Data Models for Packet Discard
                  Reporting";
@@ -2622,7 +2686,7 @@ module ietf-packet-discard-reporting {
   description
     "This module defines a data model for packet discard reporting.
 
-     Copyright (c) 2025 IETF Trust and the persons identified as
+     Copyright (c) 2026 IETF Trust and the persons identified as
      authors of the code.  All rights reserved.
 
      Redistribution and use in source and binary forms, with or
@@ -2731,11 +2795,16 @@ module ietf-packet-discard-reporting {
   augment "/rt:routing/rt:control-plane-protocols"
         + "/rt:control-plane-protocol" {
     if-feature "control-plane-stats";
-    nacm:default-deny-all;
     description
       "Adds control plane discard counters.";
-    uses discard-order-policy;
-    uses plr-sx:control-plane;
+    container discard-stats {
+      nacm:default-deny-all;
+      config false;
+      description
+        "List of control plane discard counters.";
+      uses discard-order-policy;
+      uses pdr-common:control-plane;
+    }
   }
   augment "/if:interfaces-state/if:interface/if:statistics" {
     if-feature "interface-stats";
@@ -2743,16 +2812,22 @@ module ietf-packet-discard-reporting {
     description
       "Adds packet discard reporting to the interface statistics.";
     uses discard-order-policy;
-    uses plr-sx:interface;
+    uses pdr-common:interface;
   }
   augment "/lne:logical-network-elements"
         + "/lne:logical-network-element" {
     if-feature "device-stats";
-    nacm:default-deny-all;
     description
       "Adds device level packet counters.";
-    uses discard-order-policy;
-    uses plr-sx:device;
+
+    container discard-stats {
+      nacm:default-deny-all;
+      config false;
+      description
+        "List of device level discard counters.";
+      uses discard-order-policy;
+      uses pdr-common:device;
+    }
   }
 }
 
@@ -2851,7 +2926,7 @@ module ietf-packet-discard-reporting {
         <h3 id="name-information-model">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-information-model" class="section-name selfRef">Information Model</a>
         </h3>
-<p id="section-8.1-1">The IM defined in <a href="#infomodel-module" class="auto internal xref">Section 4.3</a> specifies a YANG module using <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span> data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">The IM defined in <a href="#infomodel-module" class="auto internal xref">Section 4.4</a> specifies a YANG module using <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span> data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="security-datamodel">
@@ -2876,6 +2951,14 @@ module ietf-packet-discard-reporting {
 </dd>
         <dd class="break"></dd>
 </dl>
+<p id="section-8.2-7">The "ietf-packet-discard-reporting-common" YANG module defines a set of identities, types, and
+   groupings. These nodes are intended to be reused by other YANG
+   modules. The module by itself does not expose any data nodes that
+   are writable, data nodes that contain read-only state, or RPCs.
+   As such, there are no additional security issues related to
+   the YANG module that need to be considered.<a href="#section-8.2-7" class="pilcrow">¶</a></p>
+<p id="section-8.2-8">Modules that use the groupings that are defined in this document
+   should identify the corresponding security considerations.<a href="#section-8.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2888,6 +2971,10 @@ module ietf-packet-discard-reporting {
 <p id="section-9-1">IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" <span>[<a href="#RFC3688" class="cite xref">RFC3688</a>]</span>:<a href="#section-9-1" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9-2">
 <pre>
+   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Registrant Contact:  The IESG.
+   XML:  N/A; the requested URI is an XML namespace.
+
    URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
@@ -2901,15 +2988,21 @@ module ietf-packet-discard-reporting {
    Names" subregistry <span>[<a href="#RFC6020" class="cite xref">RFC6020</a>]</span> within the "YANG Parameters" registry:<a href="#section-9-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-9-4">
 <pre>
+   Name:  ietf-packet-discard-reporting-common
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Prefix:  pdr-common
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
+
    Name:  ietf-packet-discard-reporting-sx
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
-   Prefix:  plr-sx
+   Prefix:  pdr-sx
    Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
-   Prefix:  plr
+   Prefix:  pdr
    Maintained by IANA?  N
    Reference:  RFC XXXX
 </pre><a href="#section-9-4" class="pilcrow">¶</a>
@@ -2991,8 +3084,12 @@ Email: nchachmo@cisco.com
 <span class="refAuthor">Berger, L.</span>, <span class="refAuthor">Hopps, C.</span>, <span class="refAuthor">Lindem, A.</span>, <span class="refAuthor">Bogdanovic, D.</span>, and <span class="refAuthor">X. Liu</span>, <span class="refTitle">"YANG Model for Logical Network Elements"</span>, <span class="seriesInfo">RFC 8530</span>, <span class="seriesInfo">DOI 10.17487/RFC8530</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8530">https://www.rfc-editor.org/rfc/rfc8530</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8791">[RFC8791]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Björklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"YANG Data Structure Extensions"</span>, <span class="seriesInfo">RFC 8791</span>, <span class="seriesInfo">DOI 10.17487/RFC8791</span>, <time datetime="2020-06" class="refDate">June 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8791">https://www.rfc-editor.org/rfc/rfc8791</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9911">[RFC9911]</dt>
+      <dd>
+<span class="refAuthor">Schönwälder, J., Ed.</span>, <span class="refTitle">"Common YANG Data Types"</span>, <span class="seriesInfo">RFC 9911</span>, <span class="seriesInfo">DOI 10.17487/RFC9911</span>, <time datetime="2025-12" class="refDate">December 2025</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9911">https://www.rfc-editor.org/rfc/rfc9911</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -3338,7 +3435,7 @@ Email: nchachmo@cisco.com
 module: ietf-packet-discard-reporting-sx
 
   structure packet-discard-reporting:
-    +-- control-plane {control-plane-stats}?
+    +-- control-plane {pdr-common:control-plane-stats}?
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
     |  |  +-- packets?     yang:counter64
@@ -3349,7 +3446,7 @@ module: ietf-packet-discard-reporting-sx
     |     +-- bytes?       yang:counter64
     |     +-- policy
     |        +-- packets?   yang:counter64
-    +-- interface* [name] {interface-stats}?
+    +-- interface* [name] {pdr-common:interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -3443,7 +3540,7 @@ module: ietf-packet-discard-reporting-sx
     |              +-- id         string
     |              +-- packets?   yang:counter64
     |              +-- bytes?     yang:counter64
-    +-- flow* [direction] {flow-reporting}?
+    +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
     |  |  +-- l2
@@ -3535,7 +3632,7 @@ module: ietf-packet-discard-reporting-sx
     |              +-- id         string
     |              +-- packets?   yang:counter64
     |              +-- bytes?     yang:counter64
-    +-- device {device-stats}?
+    +-- device {pdr-common:device-stats}?
        +-- traffic
        |  +-- l2
        |  |  +-- frames?   yang:counter64
@@ -3642,18 +3739,18 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro discard-order-capability*   identityref
-    |       {control-plane-stats}?
-    +--rw traffic* [direction] {control-plane-stats}?
-    |  +--rw direction    identityref
-    |  +--rw packets?     yang:counter64
-    |  +--rw bytes?       yang:counter64
-    +--rw discards* [direction] {control-plane-stats}?
-       +--rw direction    identityref
-       +--rw packets?     yang:counter64
-       +--rw bytes?       yang:counter64
-       +--rw policy
-          +--rw packets?   yang:counter64
+    +--ro discard-stats {control-plane-stats}?
+       +--ro discard-order-capability*   identityref
+       +--ro traffic* [direction]
+       |  +--ro direction    identityref
+       |  +--ro packets?     yang:counter64
+       |  +--ro bytes?       yang:counter64
+       +--ro discards* [direction]
+          +--ro direction    identityref
+          +--ro packets?     yang:counter64
+          +--ro bytes?       yang:counter64
+          +--ro policy
+             +--ro packets?   yang:counter64
   augment /if:interfaces-state/if:interface/if:statistics:
     +--ro discard-order-capability*   identityref {interface-stats}?
     +--ro traffic* [direction] {interface-stats}?
@@ -3749,97 +3846,98 @@ module: ietf-packet-discard-reporting
                 +--ro packets?   yang:counter64
                 +--ro bytes?     yang:counter64
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro discard-order-capability*   identityref {device-stats}?
-    +--rw traffic {device-stats}?
-    |  +--rw l2
-    |  |  +--rw frames?   yang:counter64
-    |  |  +--rw bytes?    yang:counter64
-    |  +--rw l3
-    |  |  +--rw address-family-stat* [address-family]
-    |  |     +--rw address-family    identityref
-    |  |     +--rw packets?          yang:counter64
-    |  |     +--rw bytes?            yang:counter64
-    |  |     +--rw unicast
-    |  |     |  +--rw packets?   yang:counter64
-    |  |     |  +--rw bytes?     yang:counter64
-    |  |     +--rw multicast
-    |  |     |  +--rw packets?   yang:counter64
-    |  |     |  +--rw bytes?     yang:counter64
-    |  |     +--rw broadcast
-    |  |        +--rw packets?   yang:counter64
-    |  |        +--rw bytes?     yang:counter64
-    |  +--rw qos!
-    |     +--rw class* [id]
-    |        +--rw id         string
-    |        +--rw packets?   yang:counter64
-    |        +--rw bytes?     yang:counter64
-    +--rw discards {device-stats}?
-       +--rw l2
-       |  +--rw frames?   yang:counter64
-       |  +--rw bytes?    yang:counter64
-       +--rw l3
-       |  +--rw address-family-stat* [address-family]
-       |     +--rw address-family    identityref
-       |     +--rw packets?          yang:counter64
-       |     +--rw bytes?            yang:counter64
-       |     +--rw unicast
-       |     |  +--rw packets?   yang:counter64
-       |     |  +--rw bytes?     yang:counter64
-       |     +--rw multicast
-       |     |  +--rw packets?   yang:counter64
-       |     |  +--rw bytes?     yang:counter64
-       |     +--rw broadcast
-       |        +--rw packets?   yang:counter64
-       |        +--rw bytes?     yang:counter64
-       +--rw errors
-       |  +--rw l2
-       |  |  +--rw rx
-       |  |  |  +--rw frames?          yang:counter64
-       |  |  |  +--rw crc-error?       yang:counter64
-       |  |  |  +--rw invalid-mac?     yang:counter64
-       |  |  |  +--rw invalid-vlan?    yang:counter64
-       |  |  |  +--rw invalid-frame?   yang:counter64
-       |  |  +--rw tx
-       |  |     +--rw frames?   yang:counter64
-       |  +--rw l3
-       |  |  +--rw rx
-       |  |  |  +--rw packets?          yang:counter64
-       |  |  |  +--rw checksum-error?   yang:counter64
-       |  |  |  +--rw mtu-exceeded?     yang:counter64
-       |  |  |  +--rw invalid-packet?   yang:counter64
-       |  |  +--rw ttl-expired?     yang:counter64
-       |  |  +--rw no-route?        yang:counter64
-       |  |  +--rw invalid-sid?     yang:counter64
-       |  |  +--rw invalid-label?   yang:counter64
-       |  |  +--rw tx
-       |  |     +--rw packets?   yang:counter64
-       |  +--rw internal
-       |     +--rw packets?        yang:counter64
-       |     +--rw parity-error?   yang:counter64
-       +--rw policy
-       |  +--rw l2
-       |  |  +--rw frames?   yang:counter64
-       |  |  +--rw acl?      yang:counter64
-       |  +--rw l3
-       |     +--rw packets?      yang:counter64
-       |     +--rw acl?          yang:counter64
-       |     +--rw policer
-       |     |  +--rw packets?   yang:counter64
-       |     |  +--rw bytes?     yang:counter64
-       |     |  +--rw classes!
-       |     |     +--rw class* [id]
-       |     |        +--rw id         string
-       |     |        +--rw packets?   yang:counter64
-       |     |        +--rw bytes?     yang:counter64
-       |     +--rw null-route?   yang:counter64
-       |     +--rw rpf?          yang:counter64
-       |     +--rw ddos?         yang:counter64
-       +--rw no-buffer
-          +--rw qos!
-             +--rw class* [id]
-                +--rw id         string
-                +--rw packets?   yang:counter64
-                +--rw bytes?     yang:counter64
+    +--ro discard-stats {device-stats}?
+       +--ro discard-order-capability*   identityref
+       +--ro traffic
+       |  +--ro l2
+       |  |  +--ro frames?   yang:counter64
+       |  |  +--ro bytes?    yang:counter64
+       |  +--ro l3
+       |  |  +--ro address-family-stat* [address-family]
+       |  |     +--ro address-family    identityref
+       |  |     +--ro packets?          yang:counter64
+       |  |     +--ro bytes?            yang:counter64
+       |  |     +--ro unicast
+       |  |     |  +--ro packets?   yang:counter64
+       |  |     |  +--ro bytes?     yang:counter64
+       |  |     +--ro multicast
+       |  |     |  +--ro packets?   yang:counter64
+       |  |     |  +--ro bytes?     yang:counter64
+       |  |     +--ro broadcast
+       |  |        +--ro packets?   yang:counter64
+       |  |        +--ro bytes?     yang:counter64
+       |  +--ro qos!
+       |     +--ro class* [id]
+       |        +--ro id         string
+       |        +--ro packets?   yang:counter64
+       |        +--ro bytes?     yang:counter64
+       +--ro discards
+          +--ro l2
+          |  +--ro frames?   yang:counter64
+          |  +--ro bytes?    yang:counter64
+          +--ro l3
+          |  +--ro address-family-stat* [address-family]
+          |     +--ro address-family    identityref
+          |     +--ro packets?          yang:counter64
+          |     +--ro bytes?            yang:counter64
+          |     +--ro unicast
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     +--ro multicast
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     +--ro broadcast
+          |        +--ro packets?   yang:counter64
+          |        +--ro bytes?     yang:counter64
+          +--ro errors
+          |  +--ro l2
+          |  |  +--ro rx
+          |  |  |  +--ro frames?          yang:counter64
+          |  |  |  +--ro crc-error?       yang:counter64
+          |  |  |  +--ro invalid-mac?     yang:counter64
+          |  |  |  +--ro invalid-vlan?    yang:counter64
+          |  |  |  +--ro invalid-frame?   yang:counter64
+          |  |  +--ro tx
+          |  |     +--ro frames?   yang:counter64
+          |  +--ro l3
+          |  |  +--ro rx
+          |  |  |  +--ro packets?          yang:counter64
+          |  |  |  +--ro checksum-error?   yang:counter64
+          |  |  |  +--ro mtu-exceeded?     yang:counter64
+          |  |  |  +--ro invalid-packet?   yang:counter64
+          |  |  +--ro ttl-expired?     yang:counter64
+          |  |  +--ro no-route?        yang:counter64
+          |  |  +--ro invalid-sid?     yang:counter64
+          |  |  +--ro invalid-label?   yang:counter64
+          |  |  +--ro tx
+          |  |     +--ro packets?   yang:counter64
+          |  +--ro internal
+          |     +--ro packets?        yang:counter64
+          |     +--ro parity-error?   yang:counter64
+          +--ro policy
+          |  +--ro l2
+          |  |  +--ro frames?   yang:counter64
+          |  |  +--ro acl?      yang:counter64
+          |  +--ro l3
+          |     +--ro packets?      yang:counter64
+          |     +--ro acl?          yang:counter64
+          |     +--ro policer
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     |  +--ro classes!
+          |     |     +--ro class* [id]
+          |     |        +--ro id         string
+          |     |        +--ro packets?   yang:counter64
+          |     |        +--ro bytes?     yang:counter64
+          |     +--ro null-route?   yang:counter64
+          |     +--ro rpf?          yang:counter64
+          |     +--ro ddos?         yang:counter64
+          +--ro no-buffer
+             +--ro qos!
+                +--ro class* [id]
+                   +--ro id         string
+                   +--ro packets?   yang:counter64
+                   +--ro bytes?     yang:counter64
 </pre><a href="#appendix-D-2" class="pilcrow">¶</a>
 </div>
 </section>
