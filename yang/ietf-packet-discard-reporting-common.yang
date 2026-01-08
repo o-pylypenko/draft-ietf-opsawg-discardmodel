@@ -167,7 +167,7 @@ module ietf-packet-discard-reporting-common {
     }
   }
 
-  grouping basic-frames-bytes {
+  grouping l2-traffic {
     description
       "Grouping for Layer 2 frame and byte counters.";
     uses basic-frames;
@@ -178,13 +178,7 @@ module ietf-packet-discard-reporting-common {
     }
   }
 
-  grouping l2-traffic {
-    description
-      "Layer 2 traffic counters.";
-    uses basic-frames-bytes;
-  }
-
-  grouping ip {
+  grouping l3-traffic {
     description
       "Layer 3 traffic counters per address family.";
     list address-family-stat {
@@ -220,12 +214,6 @@ module ietf-packet-discard-reporting-common {
         uses basic-packets-bytes;
       }
     }
-  }
-
-  grouping l3-traffic {
-    description
-      "Layer 3 traffic counters.";
-    uses ip;
   }
 
   grouping class-list {
