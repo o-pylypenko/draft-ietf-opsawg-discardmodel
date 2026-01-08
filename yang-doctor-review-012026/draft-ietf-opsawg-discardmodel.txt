@@ -297,12 +297,12 @@ Table of Contents
    module: ietf-packet-discard-reporting-sx
 
      structure packet-discard-reporting:
-       +-- control-plane {control-plane-stats}?
+       +-- control-plane {pdr-common:control-plane-stats}?
        |  +-- traffic* [direction]
        |  |  ...
        |  +-- discards* [direction]
        |     ...
-       +-- interface* [name] {interface-stats}?
+       +-- interface* [name] {pdr-common:interface-stats}?
        |  +-- name        string
        |  +-- traffic* [direction]
        |  |  +-- direction    identityref
@@ -311,8 +311,7 @@ Table of Contents
        |  |  +-- l3
        |  |  |  ...
        |  |  +-- qos
-       |  |     +-- class* [id]
-       |  |        ...
+       |  |     ...
        |  +-- discards* [direction]
        |     +-- direction    identityref
        |     +-- l2
@@ -332,9 +331,8 @@ Table of Contents
        |     |  +-- l3
        |     |     ...
        |     +-- no-buffer
-       |        +-- class* [id]
        |           ...
-       +-- flow* [direction] {flow-reporting}?
+       +-- flow* [direction] {pdr-common:flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
        |  |  +-- l2
@@ -342,8 +340,7 @@ Table of Contents
        |  |  +-- l3
        |  |  |  ...
        |  |  +-- qos
-       |  |     +-- class* [id]
-       |  |        ...
+       |  |     ...
        |  +-- discards
        |     +-- l2
        |     |  ...
@@ -362,17 +359,15 @@ Table of Contents
        |     |  +-- l3
        |     |     ...
        |     +-- no-buffer
-       |        +-- class* [id]
        |           ...
-       +-- device {device-stats}?
+       +-- device {pdr-common:device-stats}?
           +-- traffic
           |  +-- l2
           |  |  ...
           |  +-- l3
           |  |  ...
           |  +-- qos
-          |     +-- class* [id]
-          |        ...
+          |     ...
           +-- discards
              +-- l2
              |  ...
@@ -391,7 +386,6 @@ Table of Contents
              |  +-- l3
              |     ...
              +-- no-buffer
-                +-- class* [id]
                    ...
 
                     Figure 1: Abstract IM Tree Structure
