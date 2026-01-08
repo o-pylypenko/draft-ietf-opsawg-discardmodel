@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 30 May 2026                                             J. Haas
+Expires: 12 July 2026                                            J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                        26 November 2025
+                                                          8 January 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,11 +60,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 May 2026.
+   This Internet-Draft will expire on 12 July 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -91,15 +91,18 @@ Table of Contents
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Deployment Considerations Experience
-   7.  Security Considerations
-     7.1.  Information Model
-     7.2.  Data Model
-   8.  IANA Considerations
-   9.  Contributors
-   10. Acknowledgments
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   7.  Implementation Status
+     7.1.  Information Model Implementations
+     7.2.  Data Model Implementations
+   8.  Security Considerations
+     8.1.  Information Model
+     8.2.  Data Model
+   9.  IANA Considerations
+   10. Contributors
+   11. Acknowledgments
+   12. References
+     12.1.  Normative References
+     12.2.  Informative References
    Appendix A.  Where Do Packets Get Dropped?
    Appendix B.  Example Signal-to-mitigation Action Mapping
    Appendix C.  Full Information Model Tree
@@ -440,8 +443,13 @@ Table of Contents
 
    discards/policy/:  These are intended discards, meaning packets
       dropped due to a configured policy, including: ACLs, traffic
-      policers, Reverse Path Forwarding (RPF) checks, DDoS protection
-      rules, and explicit null routes.
+      policers, unicast Reverse Path Forwarding (uRPF) checks, DDoS
+      protection rules, and explicit null routes.  In practice, ingress
+      DDoS protection policies are often realized using mechanisms such
+      as ingress filtering and uRPF ([RFC2827], [RFC3704], [RFC8704]),
+      remotely triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
+      Specification–based filters ([RFC8955], [RFC8956], [RFC9117]); all
+      such policy-driven discards are reported under this class.
 
    discards/error/:  These are unintended discards due to errors in
       processing packets or frames.  There are multiple sub-classes.
@@ -703,6 +711,16 @@ Table of Contents
              "Multicast traffic counters.";
            uses basic-packets-bytes;
          }
+         container broadcast {
+           when "derived-from-or-self(../address-family, "
+              + "'plr-sx:ipv4')" {
+             description
+               "Only applicable for IPv4.";
+           }
+           description
+             "Broadcast traffic counters.";
+           uses basic-packets-bytes;
+         }
        }
      }
 
@@ -848,7 +866,9 @@ Table of Contents
          type yang:counter64;
          description
            "The number of received packets discarded due to an
-            invalid Segment Routing (SR) SID.";
+            invalid Segment Routing over IPv6 (SRv6) SID.
+            For SR-MPLS, invalid SIDs have to be accounted
+            under invalid-label.";
        }
        leaf invalid-label {
          type yang:counter64;
@@ -1314,7 +1334,9 @@ Table of Contents
         error, policy, or no-buffer discard subclass.
 
    9.   When there are multiple reasons for discarding a packet, the
-        ordering of discard class reporting MUST be defined.
+        ordering of discard class reporting MUST be defined.  Typically,
+        this can be exposed by an implementation by means of discard-
+        order-capability.
 
    10.  If Diffserv [RFC2475] is not used, no-buffer discards SHOULD be
         reported as class[id="0"], which represents the default class.
@@ -1517,7 +1539,7 @@ Table of Contents
 
      identity discard-class {
        description
-         "Base identity to identify the discard calss.";
+         "Base identity to identify the discard class.";
      }
 
      identity layer2 {
@@ -1658,9 +1680,53 @@ Table of Contents
    8.  While the classification tree is seven layers deep, a minimal
        implementation may only implement the top six layers.
 
-7.  Security Considerations
+7.  Implementation Status
 
-7.1.  Information Model
+   Note to RFC Editor: This section is to be removed before publication
+   as an RFC.
+
+   This section records the status of known implementations of the
+   protocol defined by this specification at the time of posting of this
+   Internet-Draft, and is based on a proposal described in RFC 7942.
+   The description of implementations in this section is intended to
+   assist the IETF in its decision processes in progressing drafts to
+   RFCs.  Please note that the listing of any individual implementation
+   here does not imply endorsement by the IETF.  Furthermore, no effort
+   has been spent to verify the information presented here that was
+   supplied by IETF contributors.  This is not intended as, and must not
+   be construed to be, a catalog of available implementations or their
+   features.  Readers are advised to note that other implementations may
+   exist.
+
+7.1.  Information Model Implementations
+
+   The IM defined in Section 4 has been implemented or mapped on at
+   least nine hardware platforms across four vendors, including:
+
+   *  Broadcom: Trident, Tomahawk 1, Tomahawk 3, Tomahawk 5
+
+   *  Cisco: Q200L
+
+   *  Juniper: MX, PTX, QFX
+
+   *  Marvell: TL7
+
+7.2.  Data Model Implementations
+
+   A YANG-compliant open-source SLAX script implements a subset of the
+   DM defined in Section 5 for Juniper MX routers.  This implementation
+   is available at:
+
+   *  https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-
+      sample/ (https://github.com/o-pylypenko-aws/draft-ietf-opsawg-
+      discardmodel-sample/)
+
+   Operational experience from these implementations is reflected in the
+   deployment considerations in Section 6.
+
+8.  Security Considerations
+
+8.1.  Information Model
 
    The IM defined in Section 4.3 specifies a YANG module using [RFC8791]
    data extensions.  It defines a set of identities, types, and
@@ -1670,7 +1736,7 @@ Table of Contents
    such, there are no additional security issues related to the YANG
    module that need to be considered.
 
-7.2.  Data Model
+8.2.  Data Model
 
    This section is modeled after the template described in Section 3.7
    of [I-D.ietf-netmod-rfc8407bis].
@@ -1705,7 +1771,7 @@ Table of Contents
       counters (e.g., policy) and adjust its attack strategy
       accordingly.
 
-8.  IANA Considerations
+9.  IANA Considerations
 
    IANA is requested to register the following URI in the "ns"
    subregistry within the "IETF XML Registry" [RFC3688]:
@@ -1734,7 +1800,7 @@ Table of Contents
      Maintained by IANA?  N
      Reference:  RFC XXXX
 
-9.  Contributors
+10.  Contributors
 
    Nadav Chachmon
    Cisco Systems, Inc.
@@ -1743,7 +1809,7 @@ Table of Contents
    United States of America
    Email: nchachmo@cisco.com
 
-10.  Acknowledgments
+11.  Acknowledgments
 
    The content of this document has benefitted from feedback from JR
    Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.
@@ -1751,12 +1817,12 @@ Table of Contents
    Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani,
    Paul Aitken, and Randy Bush for the review and comments.
 
-   Thanks to Ladislav Lhotka for the YANGDOCTORS review and Sergio
-   Belotti for the OPSDIR review.
+   Thanks to Ladislav Lhotka for the YANGDOCTORS review, Sergio Belotti
+   for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
 
-11.  References
+12.  References
 
-11.1.  Normative References
+12.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1803,7 +1869,7 @@ Table of Contents
               Structure Extensions", RFC 8791, DOI 10.17487/RFC8791,
               June 2020, <https://www.rfc-editor.org/rfc/rfc8791>.
 
-11.2.  Informative References
+12.2.  Informative References
 
    [gMNI]     "gRPC Network Management Interface, IETF 98, March 2017,
               <https://datatracker.ietf.org/meeting/98/materials/slides-
@@ -1826,6 +1892,11 @@ Table of Contents
               Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
               <https://www.rfc-editor.org/rfc/rfc2475>.
 
+   [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
+              Defeating Denial of Service Attacks which employ IP Source
+              Address Spoofing", BCP 38, RFC 2827, DOI 10.17487/RFC2827,
+              May 2000, <https://www.rfc-editor.org/rfc/rfc2827>.
+
    [RFC2863]  McCloghrie, K. and F. Kastenholz, "The Interfaces Group
               MIB", RFC 2863, DOI 10.17487/RFC2863, June 2000,
               <https://www.rfc-editor.org/rfc/rfc2863>.
@@ -1835,6 +1906,14 @@ Table of Contents
               DOI 10.17487/RFC3444, January 2003,
               <https://www.rfc-editor.org/rfc/rfc3444>.
 
+   [RFC3704]  Baker, F. and P. Savola, "Ingress Filtering for Multihomed
+              Networks", BCP 84, RFC 3704, DOI 10.17487/RFC3704, March
+              2004, <https://www.rfc-editor.org/rfc/rfc3704>.
+
+   [RFC3882]  Turk, D., "Configuring BGP to Block Denial-of-Service
+              Attacks", RFC 3882, DOI 10.17487/RFC3882, September 2004,
+              <https://www.rfc-editor.org/rfc/rfc3882>.
+
    [RFC4252]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
               Authentication Protocol", RFC 4252, DOI 10.17487/RFC4252,
               January 2006, <https://www.rfc-editor.org/rfc/rfc4252>.
@@ -1843,6 +1922,11 @@ Table of Contents
               "Extended ICMP to Support Multi-Part Messages", RFC 4884,
               DOI 10.17487/RFC4884, April 2007,
               <https://www.rfc-editor.org/rfc/rfc4884>.
+
+   [RFC5635]  Kumari, W. and D. McPherson, "Remote Triggered Black Hole
+              Filtering with Unicast Reverse Path Forwarding (uRPF)",
+              RFC 5635, DOI 10.17487/RFC5635, August 2009,
+              <https://www.rfc-editor.org/rfc/rfc5635>.
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
@@ -1878,6 +1962,21 @@ Table of Contents
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
 
+   [RFC8704]  Sriram, K., Montgomery, D., and J. Haas, "Enhanced
+              Feasible-Path Unicast Reverse Path Forwarding", BCP 84,
+              RFC 8704, DOI 10.17487/RFC8704, February 2020,
+              <https://www.rfc-editor.org/rfc/rfc8704>.
+
+   [RFC8955]  Loibl, C., Hares, S., Raszuk, R., McPherson, D., and M.
+              Bacher, "Dissemination of Flow Specification Rules",
+              RFC 8955, DOI 10.17487/RFC8955, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8955>.
+
+   [RFC8956]  Loibl, C., Ed., Raszuk, R., Ed., and S. Hares, Ed.,
+              "Dissemination of Flow Specification Rules for IPv6",
+              RFC 8956, DOI 10.17487/RFC8956, December 2020,
+              <https://www.rfc-editor.org/rfc/rfc8956>.
+
    [RFC8969]  Wu, Q., Ed., Boucadair, M., Ed., Lopez, D., Xie, C., and
               L. Geng, "A Framework for Automating Service and Network
               Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
@@ -1887,6 +1986,11 @@ Table of Contents
               Multiplexed and Secure Transport", RFC 9000,
               DOI 10.17487/RFC9000, May 2021,
               <https://www.rfc-editor.org/rfc/rfc9000>.
+
+   [RFC9117]  Uttaro, J., Alcaide, J., Filsfils, C., Smith, D., and P.
+              Mohapatra, "Revised Validation Procedure for BGP Flow
+              Specifications", RFC 9117, DOI 10.17487/RFC9117, August
+              2021, <https://www.rfc-editor.org/rfc/rfc9117>.
 
 Appendix A.  Where Do Packets Get Dropped?
 
@@ -2033,6 +2137,9 @@ Appendix C.  Full Information Model Tree
        |  |  |     |  +-- packets?   yang:counter64
        |  |  |     |  +-- bytes?     yang:counter64
        |  |  |     +-- multicast
+       |  |  |     |  +-- packets?   yang:counter64
+       |  |  |     |  +-- bytes?     yang:counter64
+       |  |  |     +-- broadcast
        |  |  |        +-- packets?   yang:counter64
        |  |  |        +-- bytes?     yang:counter64
        |  |  +-- qos!
@@ -2054,6 +2161,9 @@ Appendix C.  Full Information Model Tree
        |     |     |  +-- packets?   yang:counter64
        |     |     |  +-- bytes?     yang:counter64
        |     |     +-- multicast
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
+       |     |     +-- broadcast
        |     |        +-- packets?   yang:counter64
        |     |        +-- bytes?     yang:counter64
        |     +-- errors
@@ -2120,6 +2230,9 @@ Appendix C.  Full Information Model Tree
        |  |  |     |  +-- packets?   yang:counter64
        |  |  |     |  +-- bytes?     yang:counter64
        |  |  |     +-- multicast
+       |  |  |     |  +-- packets?   yang:counter64
+       |  |  |     |  +-- bytes?     yang:counter64
+       |  |  |     +-- broadcast
        |  |  |        +-- packets?   yang:counter64
        |  |  |        +-- bytes?     yang:counter64
        |  |  +-- qos!
@@ -2140,6 +2253,9 @@ Appendix C.  Full Information Model Tree
        |     |     |  +-- packets?   yang:counter64
        |     |     |  +-- bytes?     yang:counter64
        |     |     +-- multicast
+       |     |     |  +-- packets?   yang:counter64
+       |     |     |  +-- bytes?     yang:counter64
+       |     |     +-- broadcast
        |     |        +-- packets?   yang:counter64
        |     |        +-- bytes?     yang:counter64
        |     +-- errors
@@ -2205,6 +2321,9 @@ Appendix C.  Full Information Model Tree
           |  |     |  +-- packets?   yang:counter64
           |  |     |  +-- bytes?     yang:counter64
           |  |     +-- multicast
+          |  |     |  +-- packets?   yang:counter64
+          |  |     |  +-- bytes?     yang:counter64
+          |  |     +-- broadcast
           |  |        +-- packets?   yang:counter64
           |  |        +-- bytes?     yang:counter64
           |  +-- qos!
@@ -2225,6 +2344,9 @@ Appendix C.  Full Information Model Tree
              |     |  +-- packets?   yang:counter64
              |     |  +-- bytes?     yang:counter64
              |     +-- multicast
+             |     |  +-- packets?   yang:counter64
+             |     |  +-- bytes?     yang:counter64
+             |     +-- broadcast
              |        +-- packets?   yang:counter64
              |        +-- bytes?     yang:counter64
              +-- errors
@@ -2313,6 +2435,9 @@ Appendix D.  Full Data Model Tree
        |  |     |  +--ro packets?   yang:counter64
        |  |     |  +--ro bytes?     yang:counter64
        |  |     +--ro multicast
+       |  |     |  +--ro packets?   yang:counter64
+       |  |     |  +--ro bytes?     yang:counter64
+       |  |     +--ro broadcast
        |  |        +--ro packets?   yang:counter64
        |  |        +--ro bytes?     yang:counter64
        |  +--ro qos!
@@ -2334,6 +2459,9 @@ Appendix D.  Full Data Model Tree
           |     |  +--ro packets?   yang:counter64
           |     |  +--ro bytes?     yang:counter64
           |     +--ro multicast
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     +--ro broadcast
           |        +--ro packets?   yang:counter64
           |        +--ro bytes?     yang:counter64
           +--ro errors
@@ -2400,6 +2528,9 @@ Appendix D.  Full Data Model Tree
        |  |     |  +--rw packets?   yang:counter64
        |  |     |  +--rw bytes?     yang:counter64
        |  |     +--rw multicast
+       |  |     |  +--rw packets?   yang:counter64
+       |  |     |  +--rw bytes?     yang:counter64
+       |  |     +--rw broadcast
        |  |        +--rw packets?   yang:counter64
        |  |        +--rw bytes?     yang:counter64
        |  +--rw qos!
@@ -2420,6 +2551,9 @@ Appendix D.  Full Data Model Tree
           |     |  +--rw packets?   yang:counter64
           |     |  +--rw bytes?     yang:counter64
           |     +--rw multicast
+          |     |  +--rw packets?   yang:counter64
+          |     |  +--rw bytes?     yang:counter64
+          |     +--rw broadcast
           |        +--rw packets?   yang:counter64
           |        +--rw bytes?     yang:counter64
           +--rw errors
