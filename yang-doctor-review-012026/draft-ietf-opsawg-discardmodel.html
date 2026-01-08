@@ -1637,13 +1637,10 @@ module: ietf-packet-discard-reporting-sx
 <p id="section-4.3-1">The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in <span>[<a href="#RFC9911" class="cite xref">RFC9911</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4.3-2">
 <pre>&lt;CODE BEGINS&gt;
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-packet-discard-reporting-common {
   yang-version 1.1;
-  namespace
-    "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-\
-                                                             common";
+  namespace "urn:ietf:params:xml:ns:yang:"
+          + "ietf-packet-discard-reporting-common";
   prefix pdr-common;
 
   import ietf-yang-types {
