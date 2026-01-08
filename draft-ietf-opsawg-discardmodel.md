@@ -109,7 +109,7 @@ The primary function of a network is to transport and deliver packets according 
 
 Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in "The Interfaces Group MIB" {{?RFC2863}} and "A YANG Data Model for Interface Management" {{?RFC8343}}, are insufficient for automating network operations. First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, {{?RFC7270}} provides support for reporting discards per flow in IP Flow Information Export (IPFIX) {{?RFC7011}} using the forwardingStatus IPFIX Information Element, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation (e.g., the "For us" reason code).
 
-This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting which address these issues.  The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
+This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting which address these issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this framework for network elements, while maintaining consistency through clear semantics.
 
 The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.
 
@@ -163,6 +163,8 @@ While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-D
 
 The IM is defined using YANG {{!RFC7950}}, with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different DM implementations, such as YANG or IPFIX {{?RFC7011}}, while ensuring consistency across implementations. Using YANG for the IM enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
+In order to ease reuse of the IM structure by DMs but without requiring that these DMs to parse the "sx" structure defined in {{!RFC8791}}, main reusable nodes are defined in a common module ({{common-module}}) while the corresponding IM YANG module is defined in {{infomodel-module}}.
+
 ## Structure {#infomodel-structure}
 
 The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
@@ -173,12 +175,12 @@ The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full Y
 module: ietf-packet-discard-reporting-sx
 
   structure packet-discard-reporting:
-    +-- control-plane {control-plane-stats}?
+    +-- control-plane {pdr-common:control-plane-stats}?
     |  +-- traffic* [direction]
     |  |  ...
     |  +-- discards* [direction]
     |     ...
-    +-- interface* [name] {interface-stats}?
+    +-- interface* [name] {pdr-common:interface-stats}?
     |  +-- name        string
     |  +-- traffic* [direction]
     |  |  +-- direction    identityref
@@ -187,8 +189,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  +-- l3
     |  |  |  ...
     |  |  +-- qos
-    |  |     +-- class* [id]
-    |  |        ...
+    |  |     ...
     |  +-- discards* [direction]
     |     +-- direction    identityref
     |     +-- l2
@@ -208,9 +209,8 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
-    |        +-- class* [id]
     |           ...
-    +-- flow* [direction] {flow-reporting}?
+    +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
     |  |  +-- l2
@@ -218,8 +218,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  +-- l3
     |  |  |  ...
     |  |  +-- qos
-    |  |     +-- class* [id]
-    |  |        ...
+    |  |     ...
     |  +-- discards
     |     +-- l2
     |     |  ...
@@ -238,17 +237,15 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
-    |        +-- class* [id]
     |           ...
-    +-- device {device-stats}?
+    +-- device {pdr-common:device-stats}?
        +-- traffic
        |  +-- l2
        |  |  ...
        |  +-- l3
        |  |  ...
        |  +-- qos
-       |     +-- class* [id]
-       |        ...
+       |     ...
        +-- discards
           +-- l2
           |  ...
@@ -267,7 +264,6 @@ module: ietf-packet-discard-reporting-sx
           |  +-- l3
           |     ...
           +-- no-buffer
-             +-- class* [id]
                 ...
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
@@ -325,6 +321,16 @@ discards/no-buffer/:
 :  These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an active queue management algorithm, such as Random Early Detection (RED) {{RED93}} or Controlled Delay (CoDel) {{?RFC8289}}.
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
+
+## "ietf-packet-discard-reporting-common" YANG Module {#common-module}
+
+The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}.
+
+~~~~~~~~~~
+<CODE BEGINS>
+{::include-fold ./yang/ietf-packet-discard-reporting-common.yang}
+<CODE ENDS>
+~~~~~~~~~~
 
 ## "ietf-packet-discard-reporting-sx" YANG Module {#infomodel-module}
 
@@ -486,7 +492,7 @@ A "good" Layer-2 frame received would increment:
 
 ## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
 
-The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-sx", "ietf-netconf-acm" {{!RFC8341}}, "ietf-interfaces" {{!RFC8343}},
+The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-common", "ietf-netconf-acm" {{!RFC8341}}, "ietf-interfaces" {{!RFC8343}},
 "ietf-routing" {{!RFC8349}}, and "ietf-logical-network-element" {{!RFC8530}}.
 
 ~~~~~~~~~~
@@ -553,11 +559,26 @@ Control-plane, interfaces, and devices:
 : Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.
 : Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.
 
+The "ietf-packet-discard-reporting-common" YANG module defines a set of identities, types, and
+   groupings. These nodes are intended to be reused by other YANG
+   modules. The module by itself does not expose any data nodes that
+   are writable, data nodes that contain read-only state, or RPCs.
+   As such, there are no additional security issues related to
+   the YANG module that need to be considered.
+
+
+   Modules that use the groupings that are defined in this document
+   should identify the corresponding security considerations.
+
 # IANA Considerations {#iana}
 
 IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" {{!RFC3688}}:
 
 ~~~~
+   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Registrant Contact:  The IESG.
+   XML:  N/A; the requested URI is an XML namespace.
+
    URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
@@ -571,15 +592,21 @@ IANA is requested to register the following URI in the "ns" subregistry within t
    Names" subregistry {{!RFC6020}} within the "YANG Parameters" registry:
 
 ~~~~
+   Name:  ietf-packet-discard-reporting-common
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Prefix:  pdr-common
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
+
    Name:  ietf-packet-discard-reporting-sx
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
-   Prefix:  plr-sx
+   Prefix:  pdr-sx
    Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting
    Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
-   Prefix:  plr
+   Prefix:  pdr
    Maintained by IANA?  N
    Reference:  RFC XXXX
 ~~~~
