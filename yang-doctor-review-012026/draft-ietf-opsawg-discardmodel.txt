@@ -84,7 +84,8 @@ Table of Contents
    4.  Information Model (IM)
      4.1.  Structure
      4.2.  Sub-type Definitions
-     4.3.  "ietf-packet-discard-reporting-sx" YANG Module
+     4.3.  "ietf-packet-discard-reporting-common" YANG Module
+     4.4.  "ietf-packet-discard-reporting-sx" YANG Module
    5.  Data Model (DM)
      5.1.  Structure
      5.2.  Implementation Requirements
@@ -437,7 +438,7 @@ Table of Contents
    maintaining backward compatibility.  New discard types can be added
    as new branches without affecting existing implementations.
 
-   The corresponding YANG module is defined in Section 4.3.
+   The corresponding YANG module is defined in Section 4.4.
 
 4.2.  Sub-type Definitions
 
@@ -492,27 +493,25 @@ Table of Contents
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
 
-4.3.  "ietf-packet-discard-reporting-sx" YANG Module
+4.3.  "ietf-packet-discard-reporting-common" YANG Module
 
-   The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
-   defined in [RFC8791].
+   The "ietf-packet-discard-reporting-common" module imports "ietf-yang-
+   types" defined in [RFC9911].
 
    <CODE BEGINS>
-   module ietf-packet-discard-reporting-sx {
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
+   module ietf-packet-discard-reporting-common {
      yang-version 1.1;
      namespace
-       "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx";
-     prefix plr-sx;
+       "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-\
+                                                                common";
+     prefix pdr-common;
 
      import ietf-yang-types {
        prefix yang;
        reference
-         "RFC 6991: Common YANG Data Types";
-     }
-     import ietf-yang-structure-ext {
-       prefix sx;
-       reference
-         "RFC 8791: YANG Data Structure Extensions";
+         "RFC 9911: Common YANG Data Types";
      }
 
      organization
@@ -536,10 +535,10 @@ Table of Contents
         Author:   Mohamed Boucadair
                   <mailto:mohamed.boucadair@orange.com>";
      description
-       "This module defines an information model for packet discard
+       "This module defines a common YANG module for packet discard
         reporting.
 
-        Copyright (c) 2025 IETF Trust and the persons identified as
+        Copyright (c) 2026 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -549,8 +548,12 @@ Table of Contents
         Relating to IETF Documents
         (https://trustee.ietf.org/license-info).
 
-        This version of this YANG module is part of RFC XXXX; see the
-        RFC itself for full legal notices.";
+        All revisions of IETF and IANA published modules can be found
+        at the YANG Parameters registry group
+        (https://www.iana.org/assignments/yang-parameters).
+
+        This version of this YANG module is part of RFC XXXX; see
+        the RFC itself for full legal notices.";
 
      revision 2024-06-04 {
        description
@@ -563,7 +566,6 @@ Table of Contents
      /*
       * Features
       */
-
 
      feature control-plane-stats {
        description
@@ -616,22 +618,22 @@ Table of Contents
          "Defines a type for the address family.";
      }
 
-     identity ipv4 {
+     identity ip {
        base address-family;
+       description
+         "Identity for IP.";
+     }
+
+     identity ipv4 {
+       base ip;
        description
          "Identity for an IPv4 address family.";
      }
 
      identity ipv6 {
-       base address-family;
+       base ip;
        description
          "Identity for an IPv6 address family.";
-     }
-
-     identity all {
-       base address-family;
-       description
-         "Identity for all address families.";
      }
 
      /*
@@ -713,7 +715,7 @@ Table of Contents
          }
          container broadcast {
            when "derived-from-or-self(../address-family, "
-              + "'plr-sx:ipv4')" {
+              + "'pdr-common:ipv4')" {
              description
                "Only applicable for IPv4.";
            }
@@ -1134,6 +1136,81 @@ Table of Contents
          }
        }
      }
+   }
+   <CODE ENDS>
+
+4.4.  "ietf-packet-discard-reporting-sx" YANG Module
+
+   The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
+   defined in [RFC8791].
+
+   <CODE BEGINS>
+   module ietf-packet-discard-reporting-sx {
+     yang-version 1.1;
+     namespace
+       "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx";
+     prefix pdr-sx;
+
+     import ietf-packet-discard-reporting-common {
+       prefix pdr-common;
+       reference
+         "RFC XXXX: Information and Data Models for Packet Discard
+                    Reporting";
+     }
+     import ietf-yang-structure-ext {
+       prefix sx;
+       reference
+         "RFC 8791: YANG Data Structure Extensions";
+     }
+
+     organization
+       "IETF OPSAWG (Operations and Management Area Working Group)";
+     contact
+       "WG Web:   https://datatracker.ietf.org/wg/opsawg/
+        WG List:  mailto:opsawg@ietf.org
+
+        Author:   John Evans
+                  <mailto:jevanamz@amazon.co.uk>
+
+        Author:   Oleksandr Pylypenko
+                  <mailto:opyl@amazon.com>
+
+        Author:   Jeffrey Haas
+                  <mailto:jhaas@juniper.net>
+
+        Author:   Aviran Kadosh
+                  <mailto:akadosh@cisco.com>
+
+        Author:   Mohamed Boucadair
+                  <mailto:mohamed.boucadair@orange.com>";
+     description
+       "This module defines an information model for packet discard
+        reporting.
+
+        Copyright (c) 2026 IETF Trust and the persons identified as
+        authors of the code.  All rights reserved.
+
+        Redistribution and use in source and binary forms, with or
+        without modification, is permitted pursuant to, and subject
+        to the license terms contained in, the Revised BSD License
+        set forth in Section 4.c of the IETF Trust's Legal Provisions
+        Relating to IETF Documents
+        (https://trustee.ietf.org/license-info).
+
+        All revisions of IETF and IANA published modules can be found
+        at the YANG Parameters registry group
+        (https://www.iana.org/assignments/yang-parameters).
+
+        This version of this YANG module is part of RFC XXXX; see
+        the RFC itself for full legal notices.";
+
+     revision 2024-06-04 {
+       description
+         "Initial revision.";
+       reference
+         "RFC XXXX: Information and Data Models for Packet Discard
+                    Reporting";
+     }
 
      /*
       * Main structure definition
@@ -1144,13 +1221,13 @@ Table of Contents
          "Specifies the abstract structure of packet discard
           reporting data.";
        container control-plane {
-         if-feature "control-plane-stats";
+         if-feature "pdr-common:control-plane-stats";
          description
            "Control plane packet counters.";
-         uses control-plane;
+         uses pdr-common:control-plane;
        }
        list interface {
-         if-feature "interface-stats";
+         if-feature "pdr-common:interface-stats";
          key "name";
          description
            "Indicates a list of interfaces for which packet
@@ -1160,27 +1237,27 @@ Table of Contents
            description
              "Indicates the name of the interface.";
          }
-         uses interface;
+         uses pdr-common:interface;
        }
        list flow {
-         if-feature "flow-reporting";
+         if-feature "pdr-common:flow-reporting";
          key "direction";
          leaf direction {
            type identityref {
-             base direction;
+             base pdr-common:direction;
            }
            description
              "Specifies a direction.";
          }
          description
            "Flow packet counters.";
-         uses device;
+         uses pdr-common:device;
        }
        container device {
-         if-feature "device-stats";
+         if-feature "pdr-common:device-stats";
          description
            "Device level packet counters.";
-         uses device;
+         uses pdr-common:device;
        }
      }
    }
@@ -1424,7 +1501,7 @@ Table of Contents
 5.4.  "ietf-packet-discard-reporting" YANG Module
 
    The "ietf-packet-discard-reporting" module imports "ietf-packet-
-   discard-reporting-sx", "ietf-netconf-acm" [RFC8341], "ietf-
+   discard-reporting-common", "ietf-netconf-acm" [RFC8341], "ietf-
    interfaces" [RFC8343], "ietf-routing" [RFC8349], and "ietf-logical-
    network-element" [RFC8530].
 
@@ -1433,10 +1510,10 @@ Table of Contents
      yang-version 1.1;
      namespace
        "urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting";
-     prefix plr;
+     prefix pdr;
 
-     import ietf-packet-discard-reporting-sx {
-       prefix plr-sx;
+     import ietf-packet-discard-reporting-common {
+       prefix pdr-common;
        reference
          "RFC XXXX: Information and Data Models for Packet Discard
                     Reporting";
@@ -1486,7 +1563,7 @@ Table of Contents
      description
        "This module defines a data model for packet discard reporting.
 
-        Copyright (c) 2025 IETF Trust and the persons identified as
+        Copyright (c) 2026 IETF Trust and the persons identified as
         authors of the code.  All rights reserved.
 
         Redistribution and use in source and binary forms, with or
@@ -1599,7 +1676,7 @@ Table of Contents
        description
          "Adds control plane discard counters.";
        uses discard-order-policy;
-       uses plr-sx:control-plane;
+       uses pdr-common:control-plane;
      }
      augment "/if:interfaces-state/if:interface/if:statistics" {
        if-feature "interface-stats";
@@ -1607,7 +1684,7 @@ Table of Contents
        description
          "Adds packet discard reporting to the interface statistics.";
        uses discard-order-policy;
-       uses plr-sx:interface;
+       uses pdr-common:interface;
      }
      augment "/lne:logical-network-elements"
            + "/lne:logical-network-element" {
@@ -1616,7 +1693,7 @@ Table of Contents
        description
          "Adds device level packet counters.";
        uses discard-order-policy;
-       uses plr-sx:device;
+       uses pdr-common:device;
      }
    }
    <CODE ENDS>
@@ -1728,7 +1805,7 @@ Table of Contents
 
 8.1.  Information Model
 
-   The IM defined in Section 4.3 specifies a YANG module using [RFC8791]
+   The IM defined in Section 4.4 specifies a YANG module using [RFC8791]
    data extensions.  It defines a set of identities, types, and
    groupings.  These nodes are intended to be reused by other YANG
    modules.  The module by itself does not expose any data nodes that
@@ -1776,6 +1853,10 @@ Table of Contents
    IANA is requested to register the following URI in the "ns"
    subregistry within the "IETF XML Registry" [RFC3688]:
 
+      URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+      Registrant Contact:  The IESG.
+      XML:  N/A; the requested URI is an XML namespace.
+
       URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
       Registrant Contact:  The IESG.
       XML:  N/A; the requested URI is an XML namespace.
@@ -1788,17 +1869,23 @@ Table of Contents
    Module Names" subregistry [RFC6020] within the "YANG Parameters"
    registry:
 
-     Name:  ietf-packet-discard-reporting-sx
-     Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
-     Prefix:  plr-sx
-     Maintained by IANA?  N
-     Reference:  RFC XXXX
+   Name:  ietf-packet-discard-reporting-common
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Prefix:  pdr-common
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
 
-     Name:  ietf-packet-discard-reporting
-     Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
-     Prefix:  plr
-     Maintained by IANA?  N
-     Reference:  RFC XXXX
+   Name:  ietf-packet-discard-reporting-sx
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
+   Prefix:  pdr-sx
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
+
+   Name:  ietf-packet-discard-reporting
+   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
+   Prefix:  pdr
+   Maintained by IANA?  N
+   Reference:  RFC XXXX
 
 10.  Contributors
 
@@ -1868,6 +1955,10 @@ Table of Contents
    [RFC8791]  Bierman, A., Björklund, M., and K. Watsen, "YANG Data
               Structure Extensions", RFC 8791, DOI 10.17487/RFC8791,
               June 2020, <https://www.rfc-editor.org/rfc/rfc8791>.
+
+   [RFC9911]  Schönwälder, J., Ed., "Common YANG Data Types", RFC 9911,
+              DOI 10.17487/RFC9911, December 2025,
+              <https://www.rfc-editor.org/rfc/rfc9911>.
 
 12.2.  Informative References
 
@@ -2110,7 +2201,7 @@ Appendix C.  Full Information Model Tree
    module: ietf-packet-discard-reporting-sx
 
      structure packet-discard-reporting:
-       +-- control-plane {control-plane-stats}?
+       +-- control-plane {pdr-common:control-plane-stats}?
        |  +-- traffic* [direction]
        |  |  +-- direction    identityref
        |  |  +-- packets?     yang:counter64
@@ -2121,7 +2212,7 @@ Appendix C.  Full Information Model Tree
        |     +-- bytes?       yang:counter64
        |     +-- policy
        |        +-- packets?   yang:counter64
-       +-- interface* [name] {interface-stats}?
+       +-- interface* [name] {pdr-common:interface-stats}?
        |  +-- name        string
        |  +-- traffic* [direction]
        |  |  +-- direction    identityref
@@ -2215,7 +2306,7 @@ Appendix C.  Full Information Model Tree
        |              +-- id         string
        |              +-- packets?   yang:counter64
        |              +-- bytes?     yang:counter64
-       +-- flow* [direction] {flow-reporting}?
+       +-- flow* [direction] {pdr-common:flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
        |  |  +-- l2
@@ -2307,7 +2398,7 @@ Appendix C.  Full Information Model Tree
        |              +-- id         string
        |              +-- packets?   yang:counter64
        |              +-- bytes?     yang:counter64
-       +-- device {device-stats}?
+       +-- device {pdr-common:device-stats}?
           +-- traffic
           |  +-- l2
           |  |  +-- frames?   yang:counter64
