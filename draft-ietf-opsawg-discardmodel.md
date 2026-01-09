@@ -541,7 +541,18 @@ Operational experience from these implementations is reflected in the deployment
 
 ## Information Model {#security-infomodel}
 
-The IM defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions.  It defines a set of identities, types, and groupings. These nodes are intended to be reused by other YANG modules. The module by itself does not expose any data nodes that are writable, data nodes that contain read-only state, or RPCs. As such, there are no additional security issues related to the YANG module that need to be considered.
+The IM defined in {{infomodel-module}} specifies a YANG module using {{!RFC8791}} data extensions. As such, there are no additional security issues related to the YANG module that need to be considered.
+
+The "ietf-packet-discard-reporting-common" YANG module defines a set of identities, types, and
+   groupings. These nodes are intended to be reused by other YANG
+   modules. The module by itself does not expose any data nodes that
+   are writable, data nodes that contain read-only state, or RPCs.
+   As such, there are no additional security issues related to
+   the YANG module that need to be considered.
+
+
+   Modules that use the groupings that are defined in this document
+   should identify the corresponding security considerations.
 
 ## Data Model {#security-datamodel}
 
@@ -558,17 +569,6 @@ Some of the readable data nodes in this YANG module may be considered sensitive 
 Control-plane, interfaces, and devices:
 : Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.
 : Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.
-
-The "ietf-packet-discard-reporting-common" YANG module defines a set of identities, types, and
-   groupings. These nodes are intended to be reused by other YANG
-   modules. The module by itself does not expose any data nodes that
-   are writable, data nodes that contain read-only state, or RPCs.
-   As such, there are no additional security issues related to
-   the YANG module that need to be considered.
-
-
-   Modules that use the groupings that are defined in this document
-   should identify the corresponding security considerations.
 
 # IANA Considerations {#iana}
 
