@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 12 July 2026                                            J. Haas
+Expires: 13 July 2026                                            J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                          8 January 2026
+                                                          9 January 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 July 2026.
+   This Internet-Draft will expire on 13 July 2026.
 
 Copyright Notice
 
@@ -1809,12 +1809,18 @@ Table of Contents
 8.1.  Information Model
 
    The IM defined in Section 4.4 specifies a YANG module using [RFC8791]
-   data extensions.  It defines a set of identities, types, and
-   groupings.  These nodes are intended to be reused by other YANG
-   modules.  The module by itself does not expose any data nodes that
-   are writable, data nodes that contain read-only state, or RPCs.  As
-   such, there are no additional security issues related to the YANG
-   module that need to be considered.
+   data extensions.  As such, there are no additional security issues
+   related to the YANG module that need to be considered.
+
+   The "ietf-packet-discard-reporting-common" YANG module defines a set
+   of identities, types, and groupings.  These nodes are intended to be
+   reused by other YANG modules.  The module by itself does not expose
+   any data nodes that are writable, data nodes that contain read-only
+   state, or RPCs.  As such, there are no additional security issues
+   related to the YANG module that need to be considered.
+
+   Modules that use the groupings that are defined in this document
+   should identify the corresponding security considerations.
 
 8.2.  Data Model
 
@@ -1850,16 +1856,6 @@ Table of Contents
       of its attack by monitoring (the increase of) some discard
       counters (e.g., policy) and adjust its attack strategy
       accordingly.
-
-   The "ietf-packet-discard-reporting-common" YANG module defines a set
-   of identities, types, and groupings.  These nodes are intended to be
-   reused by other YANG modules.  The module by itself does not expose
-   any data nodes that are writable, data nodes that contain read-only
-   state, or RPCs.  As such, there are no additional security issues
-   related to the YANG module that need to be considered.
-
-   Modules that use the groupings that are defined in this document
-   should identify the corresponding security considerations.
 
 9.  IANA Considerations
 
