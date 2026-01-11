@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-27T00:44:30.933854+00:00",
+  "timestamp": "2026-01-11T00:55:56.342371+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2609,6 +2609,76 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 58,
+      "id": "PR_kwDOOCO1i868Gc-c",
+      "title": "YANGDOCTOR review (01/2026)",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/58",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-08T11:27:54Z",
+      "updatedAt": "2026-01-08T17:31:14Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "516ec2ac66c4606ed370d3e67b0ecc90f7bf7ee3",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "yang-doctor-review-012026",
+      "headRefOid": "801c32c2db5531819dc8a76bb6c8ea3c2cae5932",
+      "closedAt": "2026-01-08T17:31:14Z",
+      "mergedAt": "2026-01-08T17:31:14Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "b683f0205f9f92679884ad0ba7803f694cbef132"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87Y_Tr6",
+          "commit": {
+            "abbreviatedOid": "801c32c"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-01-08T17:29:52Z",
+          "updatedAt": "2026-01-08T17:29:52Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 59,
+      "id": "PR_kwDOOCO1i868IL-S",
+      "title": "align abstract DM structure with the DM",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/59",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-08T14:01:15Z",
+      "updatedAt": "2026-01-08T14:01:35Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "yang-doctor-review-012026",
+      "baseRefOid": "e0cbd7df8dcb2ee64d40eaea064a02656e9b4253",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "main",
+      "headRefOid": "516ec2ac66c4606ed370d3e67b0ecc90f7bf7ee3",
+      "closedAt": "2026-01-08T14:01:34Z",
+      "mergedAt": "2026-01-08T14:01:34Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "7995b50edb6a754dbaf54e80149907503cc78e9b"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
