@@ -22,8 +22,8 @@ Abstract
    This document defines an Information Model and specifies a
    corresponding YANG data model for packet discard reporting.  The
    Information Model provides an implementation-independent framework
-   for classifying packet loss — both intended (e.g., due to policy) and
-   unintended (e.g., due to congestion or errors) — to enable automated
+   for classifying packet loss - both intended (e.g., due to policy) and
+   unintended (e.g., due to congestion or errors) - to enable automated
    network mitigation of unintended packet loss.  The YANG data model
    specifies an implementation of this Information Model for network
    elements.
@@ -1438,9 +1438,9 @@ Table of Contents
         congestion (e.g., due to exceeding the device forwarding rate)
         MUST be reportable on ingress.
 
-   13.  When the ingress and egress headers differ—for example, at a
-        tunnel endpoint—the discard class attribution MUST relate to the
-        outer header at the point of discard.
+   13.  When the ingress and egress headers differ, for example, at a
+        tunnel endpoint, the discard class attribution MUST relate to
+        the outer header at the point of discard.
 
    14.  Traffic to the device control plane has its own class.  However,
         traffic from the device control plane MUST be accounted for in
@@ -1895,23 +1895,24 @@ Table of Contents
    Module Names" subregistry [RFC6020] within the "YANG Parameters"
    registry:
 
-   Name:  ietf-packet-discard-reporting-common
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
-   Prefix:  pdr-common
-   Maintained by IANA?  N
-   Reference:  RFC XXXX
+     Name:  ietf-packet-discard-reporting-common
+     Namespace:
+       urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+     Prefix:  pdr-common
+     Maintained by IANA?  N
+     Reference:  RFC XXXX
 
-   Name:  ietf-packet-discard-reporting-sx
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
-   Prefix:  pdr-sx
-   Maintained by IANA?  N
-   Reference:  RFC XXXX
+     Name:  ietf-packet-discard-reporting-sx
+     Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
+     Prefix:  pdr-sx
+     Maintained by IANA?  N
+     Reference:  RFC XXXX
 
-   Name:  ietf-packet-discard-reporting
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
-   Prefix:  pdr
-   Maintained by IANA?  N
-   Reference:  RFC XXXX
+     Name:  ietf-packet-discard-reporting
+     Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
+     Prefix:  pdr
+     Maintained by IANA?  N
+     Reference:  RFC XXXX
 
 10.  Contributors
 

@@ -11,7 +11,7 @@
 <meta content="Aviran Kadosh" name="author">
 <meta content="Mohamed Boucadair" name="author">
 <meta content="
-       This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss — both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) — to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements. 
+       This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="Troubleshooting" name="keyword">
@@ -1107,7 +1107,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">Information and Data Models for Packet Discard Reporting</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss — both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) — to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -2564,7 +2564,7 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.12.1">No-buffer discards can be realized differently with different memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion <span class="bcp14">MUST</span> be reportable on <code>egress</code>, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) <span class="bcp14">MUST</span> be reportable on <code>ingress</code>.<a href="#section-5.2-3.12.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.13">
-            <p id="section-5.2-3.13.1">When the ingress and egress headers differ—for example, at a tunnel endpoint—the discard class attribution <span class="bcp14">MUST</span> relate to the outer header at the point of discard.<a href="#section-5.2-3.13.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.13.1">When the ingress and egress headers differ, for example, at a tunnel endpoint, the discard class attribution <span class="bcp14">MUST</span> relate to the outer header at the point of discard.<a href="#section-5.2-3.13.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.14">
             <p id="section-5.2-3.14.1">Traffic to the device control plane has its own class. However, traffic from the device control plane <span class="bcp14">MUST</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.14.1" class="pilcrow">¶</a></p>
@@ -3018,7 +3018,8 @@ module ietf-packet-discard-reporting {
 <div class="alignLeft art-text artwork" id="section-9-4">
 <pre>
    Name:  ietf-packet-discard-reporting-common
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Namespace:
+     urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
    Prefix:  pdr-common
    Maintained by IANA?  N
    Reference:  RFC XXXX
