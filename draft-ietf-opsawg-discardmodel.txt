@@ -616,15 +616,15 @@ Table of Contents
      identity ingress {
        base direction;
        description
-         "Reports statistics for the received from the network
-          packets.";
+         "Reports statistics for the received packets from
+          the network.";
      }
 
      identity egress {
        base direction;
        description
-         "Reports statistics for the sent to the network
-          packets.";
+         "Reports statistics for the sent packets to
+          to the network.";
      }
 
      identity address-family {
