@@ -115,6 +115,20 @@ The scope of this document is limited to reporting packet loss at Layer 3 and fr
 
 {{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. The appendices provide additional context and implementation guidance.
 
+## Editorial Note (To be removed by the RFC Editor)
+
+   Note to the RFC Editor: This section is to be removed prior to
+   publication.
+
+   This document contains placeholder values that need to be replaced
+   with finalized values at the time of publication.  This note
+   summarizes all of the substitutions that are needed.
+
+   Please apply the following replacements:
+
+   *  XXXX --> the assigned RFC number for this I-D
+   *  2024-06-04 --> the actual date of the publication of this document
+
 # Terminology {#terminology}
 
 {::boilerplate bcp14-tagged}
@@ -327,7 +341,7 @@ An example of possible signal-to-mitigation action mapping is provided in {{mapp
 The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}.
 
 ~~~~~~~~~~
-<CODE BEGINS>
+<CODE BEGINS> file "ietf-packet-discard-reporting-common@2024-06-04.yang"
 {::include-fold ./yang/ietf-packet-discard-reporting-common.yang}
 <CODE ENDS>
 ~~~~~~~~~~
@@ -337,7 +351,7 @@ The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defi
 The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in {{!RFC8791}}.
 
 ~~~~~~~~~~
-<CODE BEGINS>
+<CODE BEGINS>  file "ietf-packet-discard-reporting-sx@2024-06-04.yang"
 {::include-fold ./yang/ietf-packet-discard-reporting-sx.yang}
 <CODE ENDS>
 ~~~~~~~~~~
@@ -496,7 +510,7 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 "ietf-routing" {{!RFC8349}}, and "ietf-logical-network-element" {{!RFC8530}}.
 
 ~~~~~~~~~~
-<CODE BEGINS>
+<CODE BEGINS> file "ietf-packet-discard-reporting@2024-06-04.yang"
 {::include-fold ./yang/ietf-packet-discard-reporting.yang}
 <CODE ENDS>
 ~~~~~~~~~~
