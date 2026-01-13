@@ -2125,33 +2125,33 @@ Appendix A.  Where Do Packets Get Dropped?
 
    Packets ingress on the left and egress on the right:
 
-                              +-----------+
-                              |           |
-                              |  Control  |
-                              |  Plane    |
-                              +---+---^---+
-                         from_cpu |   | to_cpu
-                                  |   |
-         +------------------------v---+------------------------+
-         |                                                     |
-    +----+----+  +----------+  +---------+  +----------+  +----+----+
-    |         |  |          |  |         |  |          |  |         |
-Rx--> PHY/MAC +--> Ingress  +--> Buffers +--> Egress   +--> PHY/MAC +-> Tx
-    |         |  | Pipeline |  |         |  | Pipeline |  |         |
-    +---------+  +----------+  +---------+  +----------+  +---------+
+                                +-----------+
+                                |           |
+                                |  Control  |
+                                |  Plane    |
+                                +---+---^---+
+                           from_cpu |   | to_cpu
+                                    |   |
+          +-------------------------v---+---------------------+
+          |                                                   |
+      +---+---+  +----------+  +---------+  +----------+  +---+---+
+      |       |  |          |  |         |  |          |  |       |
+  Rx-->PHY/MAC+--> Ingress  +--> Buffers +--> Egress   +-->PHY/MAC+-> Tx
+      |       |  | Pipeline |  |         |  | Pipeline |  |       |
+      +-------+  +----------+  +---------+  +----------+  +-------+
 
-Unintended:
-    error/rx/l2  error/l3/rx   no-buffer    error/l3/tx
-                 error/l3/no-route
-                 error/l3/rx/ttl-expired
-                 error/internal
-Intended:
-                 policy/acl                 policy/acl
-                 policy/policer             policy/policer
-                 policy/urpf
-                 policy/null-route
+  Unintended:
+      error/rx/l2  error/l3/rx   no-buffer    error/l3/tx
+                   error/l3/no-route
+                   error/l3/rx/ttl-expired
+                   error/internal
+  Intended:
+                   policy/acl                 policy/acl
+                   policy/policer             policy/policer
+                   policy/urpf
+                   policy/null-route
 
-            Figure 3: Example of where packets get dropped
+              Figure 3: Example of where packets get dropped
 
    See Appendix B for examples of how these discard signals map to root
    causes and mitigation actions.
@@ -2160,62 +2160,85 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
 
    The effectiveness of automated mitigation depends on correctly
    mapping discard signals to root causes and appropriate actions.
-   Table 1 gives example discard signal-to-mitigation action mappings
-   based on the features described in section 3.
+   Tables 1 and 2 give example discard signal-to-mitigation action
+   mappings based on the features described in Section 3.
 
-   +==============================+===========+==========+========+===========+========+
-   |DISCARD-CLASS                 |Discard    |DISCARD-  |DISCARD-|Unintended?|Possible|
-   |                              |cause      |RATE      |DURATION|           |actions |
-   +==============================+===========+==========+========+===========+========+
-   |ingress/discards/errors/l2/rx |Upstream   |>Baseline |O(1min) |     Y     |Take    |
-   |                              |device or  |          |        |           |upstream|
-   |                              |link error |          |        |           |link or |
-   |                              |           |          |        |           |device  |
-   |                              |           |          |        |           |out-of- |
-   |                              |           |          |        |           |service |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/l3/rx/|Tracert    |<=Baseline|        |     N     |no      |
-   |ttl-expired                   |           |          |        |           |action  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/l3/rx/|Convergence|>Baseline | O(1s)  |     Y     |No      |
-   |ttl-expired                   |           |          |        |           |action  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/l3/rx/|Routing    |>Baseline |O(1min) |     Y     |Roll-   |
-   |ttl-expired                   |loop       |          |        |           |back    |
-   |                              |           |          |        |           |change  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |.*/policy/.*                  |Policy     |          |        |     N     |No      |
-   |                              |           |          |        |           |action  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/l3/no-|Convergence|>Baseline | O(1s)  |     Y     |No      |
-   |route                         |           |          |        |           |action  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/l3/no-|Config     |>Baseline |O(1min) |     Y     |Roll-   |
-   |route                         |error      |          |        |           |back    |
-   |                              |           |          |        |           |change  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/l3/no-|Invalid    |>Baseline |O(10min)|     N     |Escalate|
-   |route                         |destination|          |        |           |to      |
-   |                              |           |          |        |           |operator|
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |ingress/discards/errors/      |Device     |>Baseline |O(1min) |     Y     |Take    |
-   |internal                      |errors     |          |        |           |device  |
-   |                              |           |          |        |           |out-of- |
-   |                              |           |          |        |           |service |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |egress/discards/no-buffer     |Congestion |<=Baseline|        |     N     |No      |
-   |                              |           |          |        |           |action  |
-   +------------------------------+-----------+----------+--------+-----------+--------+
-   |egress/discards/no-buffer     |Congestion |>Baseline |O(1min) |     Y     |Bring   |
-   |                              |           |          |        |           |capacity|
-   |                              |           |          |        |           |back    |
-   |                              |           |          |        |           |into    |
-   |                              |           |          |        |           |service |
-   |                              |           |          |        |           |or move |
-   |                              |           |          |        |           |traffic |
-   +------------------------------+-----------+----------+--------+-----------+--------+
+   +================================+=============+==========+========+
+   | DISCARD-CLASS                  | Discard     |DISCARD-  |DISCARD-|
+   |                                | cause       |RATE      |DURATION|
+   +================================+=============+==========+========+
+   | ingress/discards/errors/l2/rx  | Upstream    |>Baseline |O(1min) |
+   |                                | device or   |          |        |
+   |                                | link error  |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/l3/rx/ | Tracert     |<=Baseline|        |
+   | ttl-expired                    |             |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/l3/rx/ | Convergence |>Baseline | O(1s)  |
+   | ttl-expired                    |             |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/l3/rx/ | Routing     |>Baseline |O(1min) |
+   | ttl-expired                    | loop        |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | .*/policy/.*                   | Policy      |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/l3/no- | Convergence |>Baseline | O(1s)  |
+   | route                          |             |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/l3/no- | Config      |>Baseline |O(1min) |
+   | route                          | error       |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/l3/no- | Invalid     |>Baseline |O(10min)|
+   | route                          | destination |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | ingress/discards/errors/       | Device      |>Baseline |O(1min) |
+   | internal                       | errors      |          |        |
+   +--------------------------------+-------------+----------+--------+
+   | egress/discards/no-buffer      | Congestion  |<=Baseline|        |
+   +--------------------------------+-------------+----------+--------+
+   | egress/discards/no-buffer      | Congestion  |>Baseline |O(1min) |
+   +--------------------------------+-------------+----------+--------+
 
-              Table 1: Example Signal-Cause-Mitigation Mapping
+           Table 1: Example Signal-Cause-Mitigation Mapping (1)
+
+   +================================+=============+===================+
+   | DISCARD-CLASS                  | Unintended? | Possible actions  |
+   +================================+=============+===================+
+   | ingress/discards/errors/l2/rx  |      Y      | Take upstream     |
+   |                                |             | link or device    |
+   |                                |             | out-of-service    |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/l3/rx/ |      N      | no action         |
+   | ttl-expired                    |             |                   |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/l3/rx/ |      Y      | No action         |
+   | ttl-expired                    |             |                   |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/l3/rx/ |      Y      | Roll-back change  |
+   | ttl-expired                    |             |                   |
+   +--------------------------------+-------------+-------------------+
+   | .*/policy/.*                   |      N      | No action         |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/l3/no- |      Y      | No action         |
+   | route                          |             |                   |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/l3/no- |      Y      | Roll-back change  |
+   | route                          |             |                   |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/l3/no- |      N      | Escalate to       |
+   | route                          |             | operator          |
+   +--------------------------------+-------------+-------------------+
+   | ingress/discards/errors/       |      Y      | Take device out-  |
+   | internal                       |             | of-service        |
+   +--------------------------------+-------------+-------------------+
+   | egress/discards/no-buffer      |      N      | No action         |
+   +--------------------------------+-------------+-------------------+
+   | egress/discards/no-buffer      |      Y      | Bring capacity    |
+   |                                |             | back into service |
+   |                                |             | or move traffic   |
+   +--------------------------------+-------------+-------------------+
+
+           Table 2: Example Signal-Cause-Mitigation Mapping (2)
 
    The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and
    network dependent.
