@@ -99,7 +99,7 @@ informative:
 
 --- abstract
 
-This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss — both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) — to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements.
+This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements.
 
 --- middle
 
@@ -465,7 +465,7 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 10. If Diffserv {{?RFC2475}} is not used, no-buffer discards SHOULD be reported as class[id="0"], which represents the default class.
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
 12. No-buffer discards can be realized differently with different memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly.  For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
-13. When the ingress and egress headers differ—for example, at a tunnel endpoint—the discard class attribution MUST relate to the outer header at the point of discard.
+13. When the ingress and egress headers differ, for example, at a tunnel endpoint, the discard class attribution MUST relate to the outer header at the point of discard.
 14. Traffic to the device control plane has its own class. However, traffic from the device control plane MUST be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
@@ -607,7 +607,8 @@ IANA is requested to register the following URI in the "ns" subregistry within t
 
 ~~~~
    Name:  ietf-packet-discard-reporting-common
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   Namespace:
+     urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
    Prefix:  pdr-common
    Maintained by IANA?  N
    Reference:  RFC XXXX
