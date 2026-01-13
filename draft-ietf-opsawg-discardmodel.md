@@ -686,7 +686,7 @@ See Appendix B for examples of how these discard signals map to root causes and 
 
 # Example Signal-to-mitigation Action Mapping {#mapping}
 
-The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  Tables {{>ex-table}} and {{>ex-table2}} give example discard signal-to-mitigation action mappings based on the features described in Section 3.
+The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  Tables {{<ex-table}} and {{<ex-table2}} give example discard signal-to-mitigation action mappings based on the features described in Section 3.
 
 
 | DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
