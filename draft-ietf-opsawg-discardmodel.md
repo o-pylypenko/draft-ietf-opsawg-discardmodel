@@ -710,7 +710,7 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 | ingress/discards/errors/l3/rx/ttl-expired | N | no action |
 | ingress/discards/errors/l3/rx/ttl-expired | Y | No action |
 | ingress/discards/errors/l3/rx/ttl-expired | Y | Roll-back change |
-| .\*/policy/.\* | Policy | N | No action |
+| .\*/policy/.\* |  N | No action |
 | ingress/discards/errors/l3/no-route | Y | No action |
 | ingress/discards/errors/l3/no-route | Y | Roll-back change |
 | ingress/discards/errors/l3/no-route | N | Escalate to operator |
