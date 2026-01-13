@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 13 July 2026                                            J. Haas
+Expires: 17 July 2026                                            J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                          9 January 2026
+                                                         13 January 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 July 2026.
+   This Internet-Draft will expire on 17 July 2026.
 
 Copyright Notice
 
@@ -79,6 +79,7 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
+     1.1.  Editorial Note (To be removed by the RFC Editor)
    2.  Terminology
    3.  Problem Statement
    4.  Information Model (IM)
@@ -168,6 +169,21 @@ Table of Contents
    together with a set of usage examples, and the complete YANG module
    definition.  The appendices provide additional context and
    implementation guidance.
+
+1.1.  Editorial Note (To be removed by the RFC Editor)
+
+   Note to the RFC Editor: This section is to be removed prior to
+   publication.
+
+   This document contains placeholder values that need to be replaced
+   with finalized values at the time of publication.  This note
+   summarizes all of the substitutions that are needed.
+
+   Please apply the following replacements:
+
+   *  XXXX --> the assigned RFC number for this I-D
+
+   *  2024-06-04 --> the actual date of the publication of this document
 
 2.  Terminology
 
@@ -499,6 +515,7 @@ Table of Contents
    types" defined in [RFC9911].
 
    <CODE BEGINS>
+     file "ietf-packet-discard-reporting-common@2024-06-04.yang"
    module ietf-packet-discard-reporting-common {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:"
@@ -1129,7 +1146,7 @@ Table of Contents
    The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
    defined in [RFC8791].
 
-   <CODE BEGINS>
+   <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2024-06-04.yang"
    module ietf-packet-discard-reporting-sx {
      yang-version 1.1;
      namespace
@@ -1497,7 +1514,7 @@ Table of Contents
    interfaces" [RFC8343], "ietf-routing" [RFC8349], and "ietf-logical-
    network-element" [RFC8530].
 
-   <CODE BEGINS>
+   <CODE BEGINS> file "ietf-packet-discard-reporting@2024-06-04.yang"
    module ietf-packet-discard-reporting {
      yang-version 1.1;
      namespace
