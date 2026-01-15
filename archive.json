@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-11T00:55:56.342371+00:00",
+  "timestamp": "2026-01-15T00:48:15.976318+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2676,6 +2676,62 @@
       "mergedBy": "boucadair",
       "mergeCommit": {
         "oid": "7995b50edb6a754dbaf54e80149907503cc78e9b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 60,
+      "id": "PR_kwDOOCO1i8688QCU",
+      "title": "Add note to the RFC Editor",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/60",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-13T14:15:36Z",
+      "updatedAt": "2026-01-13T14:17:34Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "4c3c10be7944d7121dcfa68a5ab53951f4cf2ee7",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-4",
+      "headRefOid": "d903a28f3bc4dcfd0375aa647020540ea3849568",
+      "closedAt": "2026-01-13T14:17:34Z",
+      "mergedAt": "2026-01-13T14:17:34Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "35be8a25529032477d39739f2172301a4b4df662"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 61,
+      "id": "PR_kwDOOCO1i86890U1",
+      "title": "fix long table",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/61",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-13T16:02:43Z",
+      "updatedAt": "2026-01-13T16:07:03Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "4b6a1f45068c54b216bb733b4964eb8f5c7b80f3",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-5",
+      "headRefOid": "e172f6be5543c100e15942a155e7515c4ff3da6c",
+      "closedAt": "2026-01-13T16:07:03Z",
+      "mergedAt": "2026-01-13T16:07:03Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "403a5c840a26f1b2484e8350cff9d599c1bf44ea"
       },
       "comments": [],
       "reviews": []
