@@ -515,7 +515,7 @@ Table of Contents
    types" defined in [RFC9911].
 
    <CODE BEGINS>
-     file "ietf-packet-discard-reporting-common@2024-06-04.yang"
+     file "ietf-packet-discard-reporting-common@2026-03-03.yang"
    module ietf-packet-discard-reporting-common {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:"
@@ -1146,7 +1146,7 @@ Table of Contents
    The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
    defined in [RFC8791].
 
-   <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2024-06-04.yang"
+   <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
    module ietf-packet-discard-reporting-sx {
      yang-version 1.1;
      namespace
@@ -1514,7 +1514,7 @@ Table of Contents
    interfaces" [RFC8343], "ietf-routing" [RFC8349], and "ietf-logical-
    network-element" [RFC8530].
 
-   <CODE BEGINS> file "ietf-packet-discard-reporting@2024-06-04.yang"
+   <CODE BEGINS> file "ietf-packet-discard-reporting@2026-03-03.yang"
    module ietf-packet-discard-reporting {
      yang-version 1.1;
      namespace
