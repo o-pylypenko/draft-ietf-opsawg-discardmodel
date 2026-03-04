@@ -83,10 +83,12 @@ normative:
 
 informative:
      RED93:
-          title: Random Early Detection gateways for Congestion Avoidance
+          title: Random early detection gateways for congestion avoidance
           authors:
                ins: S. Floyd
                ins: V. Jacobson
+          target: https://ieeexplore.ieee.org/document/251892
+          date: 31 August 1993
      gMNI:
           title: gRPC Network Management Interface, IETF 98, March 2017, <https://datatracker.ietf.org/meeting/98/materials/slides-98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>
           authors:
@@ -643,6 +645,8 @@ The content of this document has benefitted from feedback from JR Rivers, Ronan 
 Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.
 
 Thanks to Ladislav Lhotka for the YANGDOCTORS review, Sergio Belotti for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
+
+Thanks to Diego Lopez for shepherding the document.
 
 --- back
 
