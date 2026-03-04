@@ -343,7 +343,7 @@ An example of possible signal-to-mitigation action mapping is provided in {{mapp
 The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}.
 
 ~~~~~~~~~~
-<CODE BEGINS> file "ietf-packet-discard-reporting-common@2024-06-04.yang"
+<CODE BEGINS> file "ietf-packet-discard-reporting-common@2026-03-03.yang"
 {::include-fold ./yang/ietf-packet-discard-reporting-common.yang}
 <CODE ENDS>
 ~~~~~~~~~~
@@ -353,7 +353,7 @@ The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defi
 The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in {{!RFC8791}}.
 
 ~~~~~~~~~~
-<CODE BEGINS>  file "ietf-packet-discard-reporting-sx@2024-06-04.yang"
+<CODE BEGINS>  file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
 {::include-fold ./yang/ietf-packet-discard-reporting-sx.yang}
 <CODE ENDS>
 ~~~~~~~~~~
@@ -512,7 +512,7 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 "ietf-routing" {{!RFC8349}}, and "ietf-logical-network-element" {{!RFC8530}}.
 
 ~~~~~~~~~~
-<CODE BEGINS> file "ietf-packet-discard-reporting@2024-06-04.yang"
+<CODE BEGINS> file "ietf-packet-discard-reporting@2026-03-03.yang"
 {::include-fold ./yang/ietf-packet-discard-reporting.yang}
 <CODE ENDS>
 ~~~~~~~~~~
