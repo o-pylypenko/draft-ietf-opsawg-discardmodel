@@ -2447,7 +2447,7 @@ module: ietf-packet-discard-reporting
        |  ...
        +--ro discards* [direction]
           ...
-  augment /if:interfaces-state/if:interface/if:statistics:
+  augment /if:interfaces/if:interface/if:statistics:
     +--ro discard-order-capability*   identityref {interface-stats}?
     +--ro traffic* [direction] {interface-stats}?
     |  +--ro direction    identityref
