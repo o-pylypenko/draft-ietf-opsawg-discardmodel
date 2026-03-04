@@ -2734,7 +2734,7 @@ module ietf-packet-discard-reporting {
      This version of this YANG module is part of RFC XXXX; see the
      RFC itself for full legal notices.";
 
-  revision 2025-03-03 {
+  revision 2026-03-03 {
     description
       "Initial revision.";
     reference
@@ -2837,9 +2837,8 @@ module ietf-packet-discard-reporting {
       uses pdr-common:control-plane;
     }
   }
-  augment "/if:interfaces-state/if:interface/if:statistics" {
+  augment "/if:interfaces/if:interface/if:statistics" {
     if-feature "interface-stats";
-    nacm:default-deny-all;
     description
       "Adds packet discard reporting to the interface statistics.";
     uses discard-order-policy;
@@ -3832,7 +3831,7 @@ module: ietf-packet-discard-reporting
           +--ro bytes?       yang:counter64
           +--ro policy
              +--ro packets?   yang:counter64
-  augment /if:interfaces-state/if:interface/if:statistics:
+  augment /if:interfaces/if:interface/if:statistics:
     +--ro discard-order-capability*   identityref {interface-stats}?
     +--ro traffic* [direction] {interface-stats}?
     |  +--ro direction    identityref
