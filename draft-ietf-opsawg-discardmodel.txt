@@ -5,13 +5,13 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                              O. Pylypenko
 Intended status: Standards Track                                  Amazon
-Expires: 17 July 2026                                            J. Haas
+Expires: 6 September 2026                                        J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                         13 January 2026
+                                                            5 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 July 2026.
+   This Internet-Draft will expire on 6 September 2026.
 
 Copyright Notice
 
@@ -515,7 +515,7 @@ Table of Contents
    types" defined in [RFC9911].
 
    <CODE BEGINS>
-     file "ietf-packet-discard-reporting-common@2024-06-04.yang"
+     file "ietf-packet-discard-reporting-common@2026-03-03.yang"
    module ietf-packet-discard-reporting-common {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:"
@@ -569,7 +569,7 @@ Table of Contents
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2024-06-04 {
+     revision 2023-03-03 {
        description
          "Initial revision.";
        reference
@@ -1146,7 +1146,7 @@ Table of Contents
    The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
    defined in [RFC8791].
 
-   <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2024-06-04.yang"
+   <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
    module ietf-packet-discard-reporting-sx {
      yang-version 1.1;
      namespace
@@ -1206,7 +1206,7 @@ Table of Contents
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2024-06-04 {
+     revision 2026-03-03 {
        description
          "Initial revision.";
        reference
@@ -1298,7 +1298,7 @@ Table of Contents
           |  ...
           +--ro discards* [direction]
              ...
-     augment /if:interfaces-state/if:interface/if:statistics:
+     augment /if:interfaces/if:interface/if:statistics:
        +--ro discard-order-capability*   identityref {interface-stats}?
        +--ro traffic* [direction] {interface-stats}?
        |  +--ro direction    identityref
@@ -1514,7 +1514,7 @@ Table of Contents
    interfaces" [RFC8343], "ietf-routing" [RFC8349], and "ietf-logical-
    network-element" [RFC8530].
 
-   <CODE BEGINS> file "ietf-packet-discard-reporting@2024-06-04.yang"
+   <CODE BEGINS> file "ietf-packet-discard-reporting@2026-03-03.yang"
    module ietf-packet-discard-reporting {
      yang-version 1.1;
      namespace
@@ -1589,7 +1589,7 @@ Table of Contents
         This version of this YANG module is part of RFC XXXX; see the
         RFC itself for full legal notices.";
 
-     revision 2025-03-03 {
+     revision 2026-03-03 {
        description
          "Initial revision.";
        reference
@@ -1692,9 +1692,8 @@ Table of Contents
          uses pdr-common:control-plane;
        }
      }
-     augment "/if:interfaces-state/if:interface/if:statistics" {
+     augment "/if:interfaces/if:interface/if:statistics" {
        if-feature "interface-stats";
-       nacm:default-deny-all;
        description
          "Adds packet discard reporting to the interface statistics.";
        uses discard-order-policy;
@@ -1934,6 +1933,8 @@ Table of Contents
    Thanks to Ladislav Lhotka for the YANGDOCTORS review, Sergio Belotti
    for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
 
+   Thanks to Diego Lopez for shepherding the document.
+
 12.  References
 
 12.1.  Normative References
@@ -2002,8 +2003,9 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               rfc8407bis-28>.
 
-   [RED93]    "Random Early Detection gateways for Congestion
-              Avoidance", n.d..
+   [RED93]    "Random early detection gateways for congestion
+              avoidance", August 1993,
+              <https://ieeexplore.ieee.org/document/251892>.
 
    [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
               and W. Weiss, "An Architecture for Differentiated
@@ -2560,7 +2562,7 @@ Appendix D.  Full Data Model Tree
              +--ro bytes?       yang:counter64
              +--ro policy
                 +--ro packets?   yang:counter64
-     augment /if:interfaces-state/if:interface/if:statistics:
+     augment /if:interfaces/if:interface/if:statistics:
        +--ro discard-order-capability*   identityref {interface-stats}?
        +--ro traffic* [direction] {interface-stats}?
        |  +--ro direction    identityref

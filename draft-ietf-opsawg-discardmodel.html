@@ -37,7 +37,7 @@
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.2.14
+    wcwidth 0.3.0
 -->
 <link href="draft-ietf-opsawg-discardmodel.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -178,7 +178,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -186,7 +186,8 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -578,6 +579,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -648,7 +650,7 @@ a.pilcrow {
   }
 }
 @media not print {
-  :hover > a.pilcrow {
+  :hover > a.pilcrow, a.pilcrow:focus {
     opacity: 1;
   }
   a.pilcrow[href]:hover {
@@ -1056,11 +1058,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">IM and DM for Packet Discard Reporting</td>
-<td class="right">January 2026</td>
+<td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Evans, et al.</td>
-<td class="center">Expires 17 July 2026</td>
+<td class="center">Expires 6 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1073,12 +1075,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-ietf-opsawg-discardmodel-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-01-13" class="published">13 January 2026</time>
+<time datetime="2026-03-05" class="published">5 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-07-17">17 July 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-06">6 September 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1144,7 +1146,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1656,7 +1658,7 @@ module: ietf-packet-discard-reporting-sx
         </h3>
 <p id="section-4.3-1">The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in <span>[<a href="#RFC9911" class="cite xref">RFC9911</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4.3-2">
-<pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting-common@2024-06-04.yang"
+<pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting-common@2026-03-03.yang"
 
 module ietf-packet-discard-reporting-common {
   yang-version 1.1;
@@ -1711,7 +1713,7 @@ module ietf-packet-discard-reporting-common {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2024-06-04 {
+  revision 2023-03-03 {
     description
       "Initial revision.";
     reference
@@ -2293,7 +2295,7 @@ module ietf-packet-discard-reporting-common {
         </h3>
 <p id="section-4.4-1">The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>.<a href="#section-4.4-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4.4-2">
-<pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting-sx@2024-06-04.yang"
+<pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
 
 module ietf-packet-discard-reporting-sx {
   yang-version 1.1;
@@ -2354,7 +2356,7 @@ module ietf-packet-discard-reporting-sx {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2024-06-04 {
+  revision 2026-03-03 {
     description
       "Initial revision.";
     reference
@@ -2445,7 +2447,7 @@ module: ietf-packet-discard-reporting
        |  ...
        +--ro discards* [direction]
           ...
-  augment /if:interfaces-state/if:interface/if:statistics:
+  augment /if:interfaces/if:interface/if:statistics:
     +--ro discard-order-capability*   identityref {interface-stats}?
     +--ro traffic* [direction] {interface-stats}?
     |  +--ro direction    identityref
@@ -2656,7 +2658,7 @@ module: ietf-packet-discard-reporting
 <p id="section-5.4-1">The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reporting-common", "ietf-netconf-acm" <span>[<a href="#RFC8341" class="cite xref">RFC8341</a>]</span>, "ietf-interfaces" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>,
 "ietf-routing" <span>[<a href="#RFC8349" class="cite xref">RFC8349</a>]</span>, and "ietf-logical-network-element" <span>[<a href="#RFC8530" class="cite xref">RFC8530</a>]</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-5.4-2">
-<pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting@2024-06-04.yang"
+<pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting@2026-03-03.yang"
 
 module ietf-packet-discard-reporting {
   yang-version 1.1;
@@ -2732,7 +2734,7 @@ module ietf-packet-discard-reporting {
      This version of this YANG module is part of RFC XXXX; see the
      RFC itself for full legal notices.";
 
-  revision 2025-03-03 {
+  revision 2026-03-03 {
     description
       "Initial revision.";
     reference
@@ -2835,9 +2837,8 @@ module ietf-packet-discard-reporting {
       uses pdr-common:control-plane;
     }
   }
-  augment "/if:interfaces-state/if:interface/if:statistics" {
+  augment "/if:interfaces/if:interface/if:statistics" {
     if-feature "interface-stats";
-    nacm:default-deny-all;
     description
       "Adds packet discard reporting to the interface statistics.";
     uses discard-order-policy;
@@ -3064,6 +3065,7 @@ Email: nchachmo@cisco.com
 <p id="section-11-1">The content of this document has benefitted from feedback from JR Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.<a href="#section-11-1" class="pilcrow">¶</a></p>
 <p id="section-11-2">Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.<a href="#section-11-2" class="pilcrow">¶</a></p>
 <p id="section-11-3">Thanks to Ladislav Lhotka for the YANGDOCTORS review, Sergio Belotti for the OPSDIR review, and Satoru Matsushima for the INTDIR review.<a href="#section-11-3" class="pilcrow">¶</a></p>
+<p id="section-11-4">Thanks to Diego Lopez for shepherding the document.<a href="#section-11-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -3140,7 +3142,7 @@ Email: nchachmo@cisco.com
 <dd class="break"></dd>
 <dt id="RED93">[RED93]</dt>
         <dd>
-<span class="refTitle">"Random Early Detection gateways for Congestion Avoidance"</span>, <span>n.d.</span>. </dd>
+<span class="refTitle">"Random early detection gateways for congestion avoidance"</span>, <time datetime="1993-08" class="refDate">August 1993</time>, <span>&lt;<a href="https://ieeexplore.ieee.org/document/251892">https://ieeexplore.ieee.org/document/251892</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2475">[RFC2475]</dt>
         <dd>
@@ -3829,7 +3831,7 @@ module: ietf-packet-discard-reporting
           +--ro bytes?       yang:counter64
           +--ro policy
              +--ro packets?   yang:counter64
-  augment /if:interfaces-state/if:interface/if:statistics:
+  augment /if:interfaces/if:interface/if:statistics:
     +--ro discard-order-capability*   identityref {interface-stats}?
     +--ro traffic* [direction] {interface-stats}?
     |  +--ro direction    identityref
