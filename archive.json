@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-15T00:48:15.976318+00:00",
+  "timestamp": "2026-03-05T01:02:01.518169+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2733,6 +2733,32 @@
       "mergeCommit": {
         "oid": "403a5c840a26f1b2484e8350cff9d599c1bf44ea"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 62,
+      "id": "PR_kwDOOCO1i87H79Ll",
+      "title": "Shephred review",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/62",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-04T17:16:54Z",
+      "updatedAt": "2026-03-04T17:29:57Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "8f6259e535c1853cdf6b99bd5f272d16d20aa277",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "shephred-review",
+      "headRefOid": "027c0b559f5840dec96aa85b52636b534926dbff",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
