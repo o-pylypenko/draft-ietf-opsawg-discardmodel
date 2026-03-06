@@ -3,15 +3,16 @@
 
 
 Operations and Management Area Working Group                    J. Evans
-Internet-Draft                                              O. Pylypenko
-Intended status: Standards Track                                  Amazon
-Expires: 6 September 2026                                        J. Haas
+Internet-Draft                                                    Amazon
+Intended status: Standards Track                            O. Pylypenko
+Expires: 7 September 2026                                         Nvidia
+                                                                 J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                            5 March 2026
+                                                            6 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -60,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 September 2026.
+   This Internet-Draft will expire on 7 September 2026.
 
 Copyright Notice
 
@@ -2762,11 +2763,11 @@ Authors' Addresses
 
 
    Oleksandr Pylypenko
-   Amazon
-   410 Terry Ave N
-   Seattle, WA 98109
+   Nvidia
+   2788 San Tomas Expy
+   Santa Clara, CA 95051
    United States of America
-   Email: opyl@amazon.com
+   Email: opylypenko@nvidia.com
 
 
    Jeffrey Haas
