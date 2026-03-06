@@ -104,13 +104,13 @@ module ietf-packet-discard-reporting-sx {
       }
       description
         "Flow packet counters.";
-      uses pdr-common:device;
+      uses pdr-common:traffic-and-discards;
     }
     container device {
       if-feature "pdr-common:device-stats";
       description
         "Device level packet counters.";
-      uses pdr-common:device;
+      uses pdr-common:traffic-and-discards;
     }
   }
 }

@@ -539,9 +539,9 @@ module ietf-packet-discard-reporting-common {
     }
   }
 
-  grouping device {
+  grouping traffic-and-discards {
     description
-      "Device-level traffic and discard counters.";
+      "Specifies overall traffic and discard counters.";
     container traffic {
       description
         "Traffic counters.";
