@@ -2201,9 +2201,9 @@ module ietf-packet-discard-reporting-common {
     }
   }
 
-  grouping device {
+  grouping traffic-and-discards {
     description
-      "Device-level traffic and discard counters.";
+      "Specifies overall traffic and discard counters.";
     container traffic {
       description
         "Traffic counters.";
@@ -2403,13 +2403,13 @@ module ietf-packet-discard-reporting-sx {
       }
       description
         "Flow packet counters.";
-      uses pdr-common:device;
+      uses pdr-common:traffic-and-discards;
     }
     container device {
       if-feature "pdr-common:device-stats";
       description
         "Device level packet counters.";
-      uses pdr-common:device;
+      uses pdr-common:traffic-and-discards;
     }
   }
 }
@@ -2856,7 +2856,7 @@ module ietf-packet-discard-reporting {
       description
         "List of device level discard counters.";
       uses discard-order-policy;
-      uses pdr-common:device;
+      uses pdr-common:traffic-and-discards;
     }
   }
 }
