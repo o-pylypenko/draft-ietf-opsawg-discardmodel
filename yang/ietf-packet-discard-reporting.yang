@@ -141,7 +141,7 @@ module ietf-packet-discard-reporting {
 
   augment "/rt:routing/rt:control-plane-protocols"
         + "/rt:control-plane-protocol" {
-    if-feature "pdr:control-plane-stats";
+    if-feature "pdr-common:control-plane-stats";
     description
       "Adds control plane discard counters.";
     container discard-stats {
