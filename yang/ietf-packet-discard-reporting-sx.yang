@@ -22,10 +22,10 @@ module ietf-packet-discard-reporting-sx {
     "WG Web:   https://datatracker.ietf.org/wg/opsawg/
      WG List:  mailto:opsawg@ietf.org
 
-     Author:   John Evans
+     Editor:   John Evans
                <mailto:jevanamz@amazon.co.uk>
 
-     Author:   Oleksandr Pylypenko
+     Editor:   Oleksandr Pylypenko
                <mailto:opyl@amazon.com>
 
      Author:   Jeffrey Haas
@@ -34,7 +34,7 @@ module ietf-packet-discard-reporting-sx {
      Author:   Aviran Kadosh
                <mailto:akadosh@cisco.com>
 
-     Author:   Mohamed Boucadair
+     Editor:   Mohamed Boucadair
                <mailto:mohamed.boucadair@orange.com>";
   description
     "This module defines an information model for packet discard
