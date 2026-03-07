@@ -95,6 +95,7 @@ Table of Contents
      5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Operationnal Considerations
      6.1.  Deployment Considerations Experience
+     6.2.  Anchroing Flow Structure
    7.  Implementation Status
      7.1.  Information Model Implementations
      7.2.  Data Model Implementations
@@ -1782,6 +1783,14 @@ Table of Contents
 
    8.  While the classification tree is seven layers deep, a minimal
        implementation may only implement the top six layers.
+
+6.2.  Anchroing Flow Structure
+
+   The characterization of a flow depends on underlying data model.
+   From that standpoint, the IM does not make an assumption about flow
+   characterization and identification.  Future flow-oriented data
+   models MUST ensure that the flow structure is anchored so that the
+   discards are unambiguously associated with a flow.
 
 7.  Implementation Status
 
