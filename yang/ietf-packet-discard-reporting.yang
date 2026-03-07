@@ -81,28 +81,6 @@ module ietf-packet-discard-reporting {
   }
 
   /*
-   * Features
-   */
-
-  feature control-plane-stats {
-    description
-      "Indicates support of control plane statistics on this
-       device.";
-  }
-
-  feature interface-stats {
-    description
-      "Indicates support of interface statistics on this
-       device.";
-  }
-
-  feature device-stats {
-    description
-      "Indicates support of global device statistics on this
-       device.";
-  }
-
-  /*
    * Identities
    */
 
@@ -163,7 +141,7 @@ module ietf-packet-discard-reporting {
 
   augment "/rt:routing/rt:control-plane-protocols"
         + "/rt:control-plane-protocol" {
-    if-feature "control-plane-stats";
+    if-feature "pdr:control-plane-stats";
     description
       "Adds control plane discard counters.";
     container discard-stats {
@@ -176,7 +154,7 @@ module ietf-packet-discard-reporting {
     }
   }
   augment "/if:interfaces/if:interface/if:statistics" {
-    if-feature "interface-stats";
+    if-feature "pdr-common:interface-stats";
     description
       "Adds packet discard reporting to the interface statistics.";
     uses discard-order-policy;
@@ -184,7 +162,7 @@ module ietf-packet-discard-reporting {
   }
   augment "/lne:logical-network-elements"
         + "/lne:logical-network-element" {
-    if-feature "device-stats";
+    if-feature "pdr-common:device-stats";
     description
       "Adds device level packet counters.";
 
