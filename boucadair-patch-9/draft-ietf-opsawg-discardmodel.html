@@ -2748,28 +2748,6 @@ module ietf-packet-discard-reporting {
   }
 
   /*
-   * Features
-   */
-
-  feature control-plane-stats {
-    description
-      "Indicates support of control plane statistics on this
-       device.";
-  }
-
-  feature interface-stats {
-    description
-      "Indicates support of interface statistics on this
-       device.";
-  }
-
-  feature device-stats {
-    description
-      "Indicates support of global device statistics on this
-       device.";
-  }
-
-  /*
    * Identities
    */
 
@@ -2830,7 +2808,7 @@ module ietf-packet-discard-reporting {
 
   augment "/rt:routing/rt:control-plane-protocols"
         + "/rt:control-plane-protocol" {
-    if-feature "control-plane-stats";
+    if-feature "pdr:control-plane-stats";
     description
       "Adds control plane discard counters.";
     container discard-stats {
@@ -2843,7 +2821,7 @@ module ietf-packet-discard-reporting {
     }
   }
   augment "/if:interfaces/if:interface/if:statistics" {
-    if-feature "interface-stats";
+    if-feature "pdr-common:interface-stats";
     description
       "Adds packet discard reporting to the interface statistics.";
     uses discard-order-policy;
@@ -2851,7 +2829,7 @@ module ietf-packet-discard-reporting {
   }
   augment "/lne:logical-network-elements"
         + "/lne:logical-network-element" {
-    if-feature "device-stats";
+    if-feature "pdr-common:device-stats";
     description
       "Adds device level packet counters.";
 
@@ -3824,7 +3802,7 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro discard-stats {control-plane-stats}?
+    +--ro discard-stats {pdr:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  +--ro direction    identityref
@@ -3837,8 +3815,9 @@ module: ietf-packet-discard-reporting
           +--ro policy
              +--ro packets?   yang:counter64
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro discard-order-capability*   identityref {interface-stats}?
-    +--ro traffic* [direction] {interface-stats}?
+    +--ro discard-order-capability*   identityref
+    |       {pdr-common:interface-stats}?
+    +--ro traffic* [direction] {pdr-common:interface-stats}?
     |  +--ro direction    identityref
     |  +--ro l2
     |  |  +--ro frames?   yang:counter64
@@ -3862,7 +3841,7 @@ module: ietf-packet-discard-reporting
     |        +--ro id         string
     |        +--ro packets?   yang:counter64
     |        +--ro bytes?     yang:counter64
-    +--ro discards* [direction] {interface-stats}?
+    +--ro discards* [direction] {pdr-common:interface-stats}?
        +--ro direction    identityref
        +--ro l2
        |  +--ro frames?   yang:counter64
@@ -3931,7 +3910,7 @@ module: ietf-packet-discard-reporting
                 +--ro packets?   yang:counter64
                 +--ro bytes?     yang:counter64
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro discard-stats {device-stats}?
+    +--ro discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
