@@ -796,13 +796,13 @@ Table of Contents
            type yang:counter64;
            description
              "The number of received frames discarded due to
-              CRC error.";
+               Cyclic Redundancy Check (CRC) error.";
          }
          leaf invalid-mac {
            type yang:counter64;
            description
              "The number of received frames discarded due to
-              an invalid MAC address.";
+              an invalid Media Access Control (MAC) address.";
          }
          leaf invalid-vlan {
            type yang:counter64;
@@ -871,7 +871,8 @@ Table of Contents
          type yang:counter64;
          description
            "The number of received packets discarded due to an
-            invalid Segment Routing over IPv6 (SRv6) SID.
+            invalid Segment Routing over IPv6 (SRv6) segment
+            identifier (SID).
             For SR-MPLS, invalid SIDs have to be accounted
             under invalid-label.";
        }
@@ -964,7 +965,8 @@ Table of Contents
        leaf acl {
          type yang:counter64;
          description
-           "The number of frames discarded due to Layer 2 ACLs.";
+           "The number of frames discarded due to Layer 2
+            Access Control Lists (ACLs).";
        }
      }
 
@@ -1008,8 +1010,8 @@ Table of Contents
        leaf ddos {
          type yang:counter64;
          description
-           "The number of packets discarded due to DDoS
-            protection policies.";
+           "The number of packets discarded due to Distributed
+            Denial-of-Service (DDoS) protection policies.";
        }
      }
 
