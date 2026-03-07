@@ -51,7 +51,7 @@ module ietf-packet-discard-reporting-common {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2023-03-03 {
+  revision 2026-03-03 {
     description
       "Initial revision.";
     reference
@@ -65,25 +65,22 @@ module ietf-packet-discard-reporting-common {
 
   feature control-plane-stats {
     description
-      "Indicates support of control plane statistics on this
-       device.";
+      "Indicates support of control plane statistics.";
   }
 
   feature interface-stats {
     description
-      "Indicates support of interface statistics on this
-       device.";
+      "Indicates support of interface statistics.";
   }
 
   feature flow-reporting {
     description
-      "Indicates support of flow reporting on this device.";
+      "Indicates support of flow reporting.";
   }
 
   feature device-stats {
     description
-      "Indicates support of global device statistics on this
-       device.";
+      "Indicates support of global device statistics.";
   }
 
   /*
@@ -111,7 +108,11 @@ module ietf-packet-discard-reporting-common {
 
   identity address-family {
     description
-      "Defines a type for the address family.";
+      "Defines a type for the address family.
+
+       This identity is defined here rather than importing
+       it from other YANG modules to simplify implementations
+       and avoid inheriting dependencies of those modules.";
   }
 
   identity ip {
@@ -227,7 +228,8 @@ module ietf-packet-discard-reporting-common {
       leaf id {
         type string;
         description
-          "Class identifier.";
+          "Indicates a Quality of Service (QoS) class
+           identifier.";
       }
       uses basic-packets-bytes;
     }
@@ -235,7 +237,7 @@ module ietf-packet-discard-reporting-common {
 
   grouping qos {
     description
-      "Quality of Service (QoS) traffic counters.";
+      "QoS traffic counters.";
     container qos {
       presence "QoS statistics are available.";
       description
@@ -340,7 +342,7 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to
-         expired TTL.";
+         expired TTL or Hop Limit exceeded.";
     }
     leaf no-route {
       type yang:counter64;
