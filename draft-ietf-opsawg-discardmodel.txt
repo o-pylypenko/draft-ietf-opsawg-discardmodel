@@ -1408,14 +1408,14 @@ Table of Contents
         single direction or context, i.e., ingress or egress or device.
         This is to avoid double counting.
 
-   5.   A frame accounted for at Layer 2 SHOULD NOT be accounted for at
-        Layer 3 and vice versa.  An implementation MUST indicate which
-        layers traffic and discards are counted against.  This is to
-        avoid double counting.
+   5.   A frame accounted for at Layer 2 MUST NOT be accounted for at
+        Layer 3 and vice versa.  This is to avoid double counting.
 
    6.   The aggregate Layer 2 and Layer 3 traffic and discard classes
         SHOULD account for all underlying frames or packets received,
-        transmitted, and discarded across all other classes.
+        transmitted, and discarded across all other classes.  There
+        might be exceptions when distinct discontinuity times are
+        observed for more granular discards.
 
    7.   The aggregate QoS traffic and no-buffer discard classes MUST
         account for all underlying packets received, transmitted, and
@@ -1430,7 +1430,7 @@ Table of Contents
         this can be exposed by an implementation by means of discard-
         order-capability.
 
-   10.  If Diffserv [RFC2475] is not used, no-buffer discards SHOULD be
+   10.  If Diffserv [RFC2475] is not used, no-buffer discards MUST be
         reported as class[id="0"], which represents the default class.
 
    11.  When traffic is mirrored, the discard metrics MUST account for
@@ -1938,11 +1938,6 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
-              and W. Weiss, "An Architecture for Differentiated
-              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
-              <https://www.rfc-editor.org/rfc/rfc2475>.
-
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
@@ -2005,6 +2000,11 @@ Table of Contents
    [RED93]    "Random early detection gateways for congestion
               avoidance", August 1993,
               <https://ieeexplore.ieee.org/document/251892>.
+
+   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
+              and W. Weiss, "An Architecture for Differentiated
+              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
+              <https://www.rfc-editor.org/rfc/rfc2475>.
 
    [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
               Defeating Denial of Service Attacks which employ IP Source

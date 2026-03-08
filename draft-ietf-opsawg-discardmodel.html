@@ -2550,10 +2550,10 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.4.1">An individual packet <span class="bcp14">MUST</span> only be accounted for by either the Layer 3 traffic class or the Layer 3 discard classes within a single direction or context, i.e., ingress or egress or device.  This is to avoid double counting.<a href="#section-5.2-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.5">
-            <p id="section-5.2-3.5.1">A frame accounted for at Layer 2 <span class="bcp14">SHOULD NOT</span> be accounted for at Layer 3 and vice versa.  An implementation <span class="bcp14">MUST</span> indicate which layers traffic and discards are counted against.  This is to avoid double counting.<a href="#section-5.2-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.5.1">A frame accounted for at Layer 2 <span class="bcp14">MUST NOT</span> be accounted for at Layer 3 and vice versa. This is to avoid double counting.<a href="#section-5.2-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.6">
-            <p id="section-5.2-3.6.1">The aggregate Layer 2 and Layer 3 traffic and discard classes <span class="bcp14">SHOULD</span> account for all underlying frames or packets received, transmitted, and discarded across all other classes.<a href="#section-5.2-3.6.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.6.1">The aggregate Layer 2 and Layer 3 traffic and discard classes <span class="bcp14">SHOULD</span> account for all underlying frames or packets received, transmitted, and discarded across all other classes. There might be exceptions when distinct discontinuity times are observed for more granular discards.<a href="#section-5.2-3.6.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.7">
             <p id="section-5.2-3.7.1">The aggregate QoS traffic and no-buffer discard classes <span class="bcp14">MUST</span> account for all underlying packets received, transmitted, and discarded across all other classes.<a href="#section-5.2-3.7.1" class="pilcrow">¶</a></p>
@@ -2565,7 +2565,7 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be defined. Typically, this can be exposed by an implementation by means of <code>discard-order-capability</code>.<a href="#section-5.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.10">
-            <p id="section-5.2-3.10.1">If Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span> is not used, no-buffer discards <span class="bcp14">SHOULD</span> be reported as class[id="0"], which represents the default class.<a href="#section-5.2-3.10.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.10.1">If Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span> is not used, no-buffer discards <span class="bcp14">MUST</span> be reported as class[id="0"], which represents the default class.<a href="#section-5.2-3.10.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.11">
             <p id="section-5.2-3.11.1">When traffic is mirrored, the discard metrics <span class="bcp14">MUST</span> account for the original traffic rather than the reflected traffic.<a href="#section-5.2-3.11.1" class="pilcrow">¶</a></p>
@@ -3077,10 +3077,6 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC2475">[RFC2475]</dt>
-        <dd>
-<span class="refAuthor">Blake, S.</span>, <span class="refAuthor">Black, D.</span>, <span class="refAuthor">Carlson, M.</span>, <span class="refAuthor">Davies, E.</span>, <span class="refAuthor">Wang, Z.</span>, and <span class="refAuthor">W. Weiss</span>, <span class="refTitle">"An Architecture for Differentiated Services"</span>, <span class="seriesInfo">RFC 2475</span>, <span class="seriesInfo">DOI 10.17487/RFC2475</span>, <time datetime="1998-12" class="refDate">December 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2475">https://www.rfc-editor.org/rfc/rfc2475</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC3688">[RFC3688]</dt>
         <dd>
 <span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
@@ -3141,6 +3137,10 @@ module ietf-packet-discard-reporting {
 <dt id="RED93">[RED93]</dt>
         <dd>
 <span class="refTitle">"Random early detection gateways for congestion avoidance"</span>, <time datetime="1993-08" class="refDate">August 1993</time>, <span>&lt;<a href="https://ieeexplore.ieee.org/document/251892">https://ieeexplore.ieee.org/document/251892</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC2475">[RFC2475]</dt>
+        <dd>
+<span class="refAuthor">Blake, S.</span>, <span class="refAuthor">Black, D.</span>, <span class="refAuthor">Carlson, M.</span>, <span class="refAuthor">Davies, E.</span>, <span class="refAuthor">Wang, Z.</span>, and <span class="refAuthor">W. Weiss</span>, <span class="refTitle">"An Architecture for Differentiated Services"</span>, <span class="seriesInfo">RFC 2475</span>, <span class="seriesInfo">DOI 10.17487/RFC2475</span>, <time datetime="1998-12" class="refDate">December 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2475">https://www.rfc-editor.org/rfc/rfc2475</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2827">[RFC2827]</dt>
         <dd>
