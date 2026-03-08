@@ -5,14 +5,14 @@
 Operations and Management Area Working Group                    J. Evans
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                            O. Pylypenko
-Expires: 7 September 2026                                         Nvidia
+Expires: 9 September 2026                                         Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                             M. Boucadair
                                                                   Orange
-                                                            6 March 2026
+                                                            8 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 September 2026.
+   This Internet-Draft will expire on 9 September 2026.
 
 Copyright Notice
 
@@ -93,7 +93,9 @@ Table of Contents
      5.2.  Implementation Requirements
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
-   6.  Deployment Considerations Experience
+   6.  Operationnal Considerations
+     6.1.  Deployment Considerations Experience
+     6.2.  Anchroing Flow Structure
    7.  Implementation Status
      7.1.  Information Model Implementations
      7.2.  Data Model Implementations
@@ -101,15 +103,15 @@ Table of Contents
      8.1.  Information Model
      8.2.  Data Model
    9.  IANA Considerations
-   10. Contributors
-   11. Acknowledgments
-   12. References
-     12.1.  Normative References
-     12.2.  Informative References
+   10. References
+     10.1.  Normative References
+     10.2.  Informative References
    Appendix A.  Where Do Packets Get Dropped?
    Appendix B.  Example Signal-to-mitigation Action Mapping
    Appendix C.  Full Information Model Tree
    Appendix D.  Full Data Model Tree
+   Acknowledgements
+   Contributors
    Authors' Addresses
 
 1.  Introduction
@@ -153,11 +155,11 @@ Table of Contents
    (e.g., the "For us" reason code).
 
    This document defines an Information Model (IM) and specifies a
-   corresponding YANG Data Model (DM) for packet loss reporting which
-   address these issues.  The IM provides precise classification of
+   corresponding YANG Data Model (DM) for packet loss reporting to
+   address the above issues.  The IM provides precise classification of
    packet loss to enable accurate automated mitigation.  The DM
-   specifies a YANG implementation of this framework for network
-   elements, while maintaining consistency through clear semantics.
+   specifies a YANG implementation of this IM for network elements,
+   while maintaining consistency through clear semantics.
 
    The scope of this document is limited to reporting packet loss at
    Layer 3 and frames discarded at Layer 2.  This document considers
@@ -168,7 +170,7 @@ Table of Contents
    defines the IM and classification scheme.  Section 5 specifies the
    corresponding YANG data model and implementation requirements
    together with a set of usage examples, and the complete YANG module
-   definition.  The appendices provide additional context and
+   definition.  Appendices A and B provide additional context and
    implementation guidance.
 
 1.1.  Editorial Note (To be removed by the RFC Editor)
@@ -184,7 +186,7 @@ Table of Contents
 
    *  XXXX --> the assigned RFC number for this I-D
 
-   *  2024-06-04 --> the actual date of the publication of this document
+   *  2026-03-03 --> the actual date of the publication of this document
 
 2.  Terminology
 
@@ -211,7 +213,7 @@ Table of Contents
 
    Unintended packet discards (Unintended discards, for short):  Are
       packets that were dropped, which the network operator otherwise
-      intended to deliver, i.e. which indicates an error state.  There
+      intended to deliver, i.e., which indicates an error state.  There
       are many possible reasons for unintended packet loss, including:
       erroring links may corrupt packets in transit; incorrect routing
       tables may result in packets being dropped because they do not
@@ -258,7 +260,7 @@ Table of Contents
 
    FEATURE-DISCARD-RATE:  The rate and/or magnitude of the discards,
       indicating the severity and urgency of the problem.  Rate may be
-      expressed using absolute (e.g., pps (packets per second)) or
+      expressed using absolute (e.g., packets per second (pps)) or
       relative (e.g., percent) values.
 
    FEATURE-DISCARD-DURATION:  The duration of the discards which helps
@@ -277,7 +279,8 @@ Table of Contents
    [RFC8343], FEATURE-DISCARD-CLASS requires a more detailed
    classification scheme than they define.  The IM provided in Section 4
    defines such a classification scheme to enable automated mapping from
-   loss signals to appropriate mitigation actions.
+   loss signals to appropriate mitigation actions (refer to Appendix B
+   for examples).
 
 4.  Information Model (IM)
 
@@ -294,19 +297,18 @@ Table of Contents
    In order to ease reuse of the IM structure by DMs but without
    requiring that these DMs to parse the "sx" structure defined in
    [RFC8791], main reusable nodes are defined in a common module
-   (Section 4.3) while the corresponding IM YANG module is defined in
-   Section 4.4.
+   (Section 4.3) while the main IM structure is defined in Section 4.4.
 
 4.1.  Structure
 
    The IM defines a hierarchical classification scheme for packet
    discards, which captures where in a device the discards are accounted
-   (component), in which direction they were flowing (direction),
-   whether they were successfully processed or discarded (type), what
-   protocol layer they belong to (layer), and the specific reason for
-   any discards (sub-types).  This structure enables both high-level
-   monitoring of total discards and more detailed triage to map to
-   mitigation actions.
+   (component), in which direction of traffic they were flowing
+   (direction), whether they were successfully processed or discarded
+   (type), what protocol layer they belong to (layer), and the specific
+   reason for any discards (sub-types).  This structure enables both
+   high-level monitoring of total discards and more detailed triage to
+   map to mitigation actions.
 
    The abstract structure of the IM is depicted in Figure 1.  The full
    YANG tree diagram of the IM is provided in Appendix C.
@@ -451,7 +453,7 @@ Table of Contents
       -  l3: Layer 3 traffic and discards.  This covers both packet and
          byte counts.
 
-   The hierarchical structure allows for future extension while
+   The hierarchical structure allows for future extensions while
    maintaining backward compatibility.  New discard types can be added
    as new branches without affecting existing implementations.
 
@@ -461,34 +463,36 @@ Table of Contents
 
    discards/policy/:  These are intended discards, meaning packets
       dropped due to a configured policy, including: ACLs, traffic
-      policers, unicast Reverse Path Forwarding (uRPF) checks, DDoS
-      protection rules, and explicit null routes.  In practice, ingress
-      DDoS protection policies are often realized using mechanisms such
-      as ingress filtering and uRPF ([RFC2827], [RFC3704], [RFC8704]),
-      remotely triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
-      Specification–based filters ([RFC8955], [RFC8956], [RFC9117]); all
-      such policy-driven discards are reported under this class.
+      policers, unicast Reverse Path Forwarding (uRPF) checks,
+      Distributed Denial-of-Service (DDoS) protection rules, and
+      explicit null routes.  In practice, ingress DDoS protection
+      policies are often realized using mechanisms such as ingress
+      filtering and uRPF ([RFC2827], [RFC3704], and [RFC8704]), remotely
+      triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
+      Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
+      all such policy-driven discards are reported under this class.
 
    discards/error/:  These are unintended discards due to errors in
-      processing packets or frames.  There are multiple sub-classes.
+      processing packets or frames.  There are multiple sub-classes:
 
       *  discards/error/l2/rx/:  These are frames discarded due to
-            errors in the received Layer 2 frame, including: CRC errors,
-            invalid MAC addresses, invalid VLAN tags, frame size
-            violations and other malformed frame conditions.
+            errors in the received Layer 2 frame, including: Cyclic
+            Redundancy Check (CRC) errors, invalid Media Access Control
+            (MAC) addresses, invalid VLAN tags, frame size violations
+            and other malformed frame conditions.
 
       *  discards/error/l3/rx/:  These are discards which occur due to
             errors in the received packet, indicating an upstream
             problem rather than an issue with the device dropping the
             errored packets, including: header checksum errors, MTU
-            exceeded, invalid packet errors, i.e., incorrect version,
-            incorrect header length, invalid options and other malformed
-            packet conditions.
+            exceeded, invalid packet errors (i.e., incorrect version,
+            incorrect header length, invalid options, and other
+            malformed packet conditions).
 
       *  discards/error/l3/rx/ttl-expired:  These are discards due to
-            TTL (or Hop limit) expiry, which can occur for the following
-            reasons: normal trace-route operations, end-system TTL/Hop
-            limit set too low, routing loops in the network.
+            TTL (or Hop limit) expiry.  These can occur, e.g., for the
+            following reasons: normal trace-route operations, end-system
+            TTL/Hop limit set too low, or routing loops in the network.
 
       *  discards/error/l3/no-route/:  These are discards which occur
             due to a packet not matching any route in the routing table,
@@ -1145,7 +1149,8 @@ Table of Contents
 4.4.  "ietf-packet-discard-reporting-sx" YANG Module
 
    The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
-   defined in [RFC8791].
+   defined in [RFC8791] and also imports the "ietf-packet-discard-
+   reporting-common" module (Section 4.3.
 
    <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
    module ietf-packet-discard-reporting-sx {
@@ -1374,9 +1379,9 @@ Table of Contents
    The following requirements apply to the implementation of the DM and
    are intended to ensure consistent implementation across different
    vendors and platforms while allowing for platform-specific
-   optimisations where needed.  While the model defines a comprehensive
-   set of counters and statistics, implementations MAY support a subset
-   of the defined features based on device capabilities and operational
+   optimisations where needed.  While the DM defines a comprehensive set
+   of counters and statistics, implementations MAY support a subset of
+   the defined features based on device capabilities and operational
    requirements.  However, implementations MUST clearly document which
    features are supported and how they map to the DM.
 
@@ -1439,8 +1444,8 @@ Table of Contents
         congestion (e.g., due to exceeding the device forwarding rate)
         MUST be reportable on ingress.
 
-   13.  When the ingress and egress headers differ, for example, at a
-        tunnel endpoint, the discard class attribution MUST relate to
+   13.  When the ingress and egress headers differ (for example, at a
+        tunnel endpoint), the discard class attribution MUST relate to
         the outer header at the point of discard.
 
    14.  Traffic to the device control plane has its own class.  However,
@@ -1511,9 +1516,9 @@ Table of Contents
 5.4.  "ietf-packet-discard-reporting" YANG Module
 
    The "ietf-packet-discard-reporting" module imports "ietf-packet-
-   discard-reporting-common", "ietf-netconf-acm" [RFC8341], "ietf-
-   interfaces" [RFC8343], "ietf-routing" [RFC8349], and "ietf-logical-
-   network-element" [RFC8530].
+   discard-reporting-common" (Section 4.3), "ietf-netconf-acm"
+   [RFC8341], "ietf-interfaces" [RFC8343], "ietf-routing" [RFC8349], and
+   "ietf-logical-network-element" [RFC8530].
 
    <CODE BEGINS> file "ietf-packet-discard-reporting@2026-03-03.yang"
    module ietf-packet-discard-reporting {
@@ -1718,7 +1723,9 @@ Table of Contents
    }
    <CODE ENDS>
 
-6.  Deployment Considerations Experience
+6.  Operationnal Considerations
+
+6.1.  Deployment Considerations Experience
 
    This section captures practical insights gained from implementing the
    model across multiple vendors' platforms, as guidance for future
@@ -1777,6 +1784,14 @@ Table of Contents
    8.  While the classification tree is seven layers deep, a minimal
        implementation may only implement the top six layers.
 
+6.2.  Anchroing Flow Structure
+
+   The characterization of a flow depends on underlying data model.
+   From that standpoint, the IM does not make an assumption about flow
+   characterization and identification.  Future flow-oriented data
+   models MUST ensure that the flow structure is anchored so that the
+   discards are unambiguously associated with a flow.
+
 7.  Implementation Status
 
    Note to RFC Editor: This section is to be removed before publication
@@ -1819,7 +1834,7 @@ Table of Contents
       discardmodel-sample/)
 
    Operational experience from these implementations is reflected in the
-   deployment considerations in Section 6.
+   deployment considerations in Section 6.1.
 
 8.  Security Considerations
 
@@ -1914,36 +1929,19 @@ Table of Contents
      Maintained by IANA?  N
      Reference:  RFC XXXX
 
-10.  Contributors
+10.  References
 
-   Nadav Chachmon
-   Cisco Systems, Inc.
-   170 West Tasman Dr.
-   San Jose, CA 95134
-   United States of America
-   Email: nchachmo@cisco.com
-
-11.  Acknowledgments
-
-   The content of this document has benefitted from feedback from JR
-   Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.
-
-   Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani,
-   Paul Aitken, and Randy Bush for the review and comments.
-
-   Thanks to Ladislav Lhotka for the YANGDOCTORS review, Sergio Belotti
-   for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
-
-   Thanks to Diego Lopez for shepherding the document.
-
-12.  References
-
-12.1.  Normative References
+10.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
+              and W. Weiss, "An Architecture for Differentiated
+              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
+              <https://www.rfc-editor.org/rfc/rfc2475>.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
@@ -1989,7 +1987,7 @@ Table of Contents
               DOI 10.17487/RFC9911, December 2025,
               <https://www.rfc-editor.org/rfc/rfc9911>.
 
-12.2.  Informative References
+10.2.  Informative References
 
    [gMNI]     "gRPC Network Management Interface, IETF 98, March 2017,
               <https://datatracker.ietf.org/meeting/98/materials/slides-
@@ -2007,11 +2005,6 @@ Table of Contents
    [RED93]    "Random early detection gateways for congestion
               avoidance", August 1993,
               <https://ieeexplore.ieee.org/document/251892>.
-
-   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
-              and W. Weiss, "An Architecture for Differentiated
-              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
-              <https://www.rfc-editor.org/rfc/rfc2475>.
 
    [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
               Defeating Denial of Service Attacks which employ IP Source
@@ -2750,6 +2743,29 @@ Appendix D.  Full Data Model Tree
                       +--ro id         string
                       +--ro packets?   yang:counter64
                       +--ro bytes?     yang:counter64
+
+Acknowledgements
+
+   The content of this document has benefitted from feedback from JR
+   Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.
+
+   Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani,
+   Paul Aitken, and Randy Bush for the review and comments.
+
+   Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti
+   for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
+
+   Thanks to Diego Lopez for shepherding the document.
+
+Contributors
+
+   Nadav Chachmon
+   Cisco Systems, Inc.
+   170 West Tasman Dr.
+   San Jose, CA 95134
+   United States of America
+   Email: nchachmo@cisco.com
+
 
 Authors' Addresses
 
