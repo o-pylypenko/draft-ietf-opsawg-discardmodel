@@ -2,15 +2,15 @@
 
 
 
-Operations and Management Area Working Group                    J. Evans
+Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
-Intended status: Standards Track                            O. Pylypenko
+Intended status: Standards Track                       O. Pylypenko, Ed.
 Expires: 9 September 2026                                         Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
-                                                            M. Boucadair
+                                                       M. Boucadair, Ed.
                                                                   Orange
                                                             8 March 2026
 
@@ -539,10 +539,10 @@ Table of Contents
        "WG Web:   https://datatracker.ietf.org/wg/opsawg/
         WG List:  mailto:opsawg@ietf.org
 
-        Author:   John Evans
+        Editor:   John Evans
                   <mailto:jevanamz@amazon.co.uk>
 
-        Author:   Oleksandr Pylypenko
+        Editor:   Oleksandr Pylypenko
                   <mailto:opyl@amazon.com>
 
         Author:   Jeffrey Haas
@@ -551,7 +551,7 @@ Table of Contents
         Author:   Aviran Kadosh
                   <mailto:akadosh@cisco.com>
 
-        Author:   Mohamed Boucadair
+        Editor:   Mohamed Boucadair
                   <mailto:mohamed.boucadair@orange.com>";
      description
        "This module defines a common YANG module for packet discard
@@ -574,7 +574,7 @@ Table of Contents
         This version of this YANG module is part of RFC XXXX; see
         the RFC itself for full legal notices.";
 
-     revision 2023-03-03 {
+     revision 2026-03-03 {
        description
          "Initial revision.";
        reference
@@ -588,25 +588,22 @@ Table of Contents
 
      feature control-plane-stats {
        description
-         "Indicates support of control plane statistics on this
-          device.";
+         "Indicates support of control plane statistics.";
      }
 
      feature interface-stats {
        description
-         "Indicates support of interface statistics on this
-          device.";
+         "Indicates support of interface statistics.";
      }
 
      feature flow-reporting {
        description
-         "Indicates support of flow reporting on this device.";
+         "Indicates support of flow reporting.";
      }
 
      feature device-stats {
        description
-         "Indicates support of global device statistics on this
-          device.";
+         "Indicates support of global device statistics.";
      }
 
      /*
@@ -634,7 +631,11 @@ Table of Contents
 
      identity address-family {
        description
-         "Defines a type for the address family.";
+         "Defines a type for the address family.
+
+          This identity is defined here rather than importing
+          it from other YANG modules to simplify implementations
+          and avoid inheriting dependencies of those modules.";
      }
 
      identity ip {
@@ -750,7 +751,8 @@ Table of Contents
          leaf id {
            type string;
            description
-             "Class identifier.";
+             "Indicates a Quality of Service (QoS) class
+              identifier.";
          }
          uses basic-packets-bytes;
        }
@@ -758,7 +760,7 @@ Table of Contents
 
      grouping qos {
        description
-         "Quality of Service (QoS) traffic counters.";
+         "QoS traffic counters.";
        container qos {
          presence "QoS statistics are available.";
          description
@@ -800,13 +802,13 @@ Table of Contents
            type yang:counter64;
            description
              "The number of received frames discarded due to
-              CRC error.";
+               Cyclic Redundancy Check (CRC) error.";
          }
          leaf invalid-mac {
            type yang:counter64;
            description
              "The number of received frames discarded due to
-              an invalid MAC address.";
+              an invalid Media Access Control (MAC) address.";
          }
          leaf invalid-vlan {
            type yang:counter64;
@@ -863,7 +865,7 @@ Table of Contents
          type yang:counter64;
          description
            "The number of received packets discarded due to
-            expired TTL.";
+            expired TTL or Hop Limit exceeded.";
        }
        leaf no-route {
          type yang:counter64;
@@ -875,7 +877,8 @@ Table of Contents
          type yang:counter64;
          description
            "The number of received packets discarded due to an
-            invalid Segment Routing over IPv6 (SRv6) SID.
+            invalid Segment Routing over IPv6 (SRv6) segment
+            identifier (SID).
             For SR-MPLS, invalid SIDs have to be accounted
             under invalid-label.";
        }
@@ -968,7 +971,8 @@ Table of Contents
        leaf acl {
          type yang:counter64;
          description
-           "The number of frames discarded due to Layer 2 ACLs.";
+           "The number of frames discarded due to Layer 2
+            Access Control Lists (ACLs).";
        }
      }
 
@@ -1012,8 +1016,8 @@ Table of Contents
        leaf ddos {
          type yang:counter64;
          description
-           "The number of packets discarded due to DDoS
-            protection policies.";
+           "The number of packets discarded due to Distributed
+            Denial-of-Service (DDoS) protection policies.";
        }
      }
 
@@ -1177,10 +1181,10 @@ Table of Contents
        "WG Web:   https://datatracker.ietf.org/wg/opsawg/
         WG List:  mailto:opsawg@ietf.org
 
-        Author:   John Evans
+        Editor:   John Evans
                   <mailto:jevanamz@amazon.co.uk>
 
-        Author:   Oleksandr Pylypenko
+        Editor:   Oleksandr Pylypenko
                   <mailto:opyl@amazon.com>
 
         Author:   Jeffrey Haas
@@ -1189,7 +1193,7 @@ Table of Contents
         Author:   Aviran Kadosh
                   <mailto:akadosh@cisco.com>
 
-        Author:   Mohamed Boucadair
+        Editor:   Mohamed Boucadair
                   <mailto:mohamed.boucadair@orange.com>";
      description
        "This module defines an information model for packet discard
@@ -1561,10 +1565,10 @@ Table of Contents
        "WG Web:   https://datatracker.ietf.org/wg/opsawg/
         WG List:  mailto:opsawg@ietf.org
 
-        Author:   John Evans
+        Editor:   John Evans
                   <mailto:jevanamz@amazon.co.uk>
 
-        Author:   Oleksandr Pylypenko
+        Editor:   Oleksandr Pylypenko
                   <mailto:opyl@amazon.com>
 
         Author:   Jeffrey Haas
@@ -1573,7 +1577,7 @@ Table of Contents
         Author:   Aviran Kadosh
                   <mailto:akadosh@cisco.com>
 
-        Author:   Mohamed Boucadair
+        Editor:   Mohamed Boucadair
                   <mailto:mohamed.boucadair@orange.com>";
      description
        "This module defines a data model for packet discard reporting.
@@ -1601,28 +1605,6 @@ Table of Contents
        reference
          "RFC XXXX: Information and Data Models for Packet Discard
                     Reporting";
-     }
-
-     /*
-      * Features
-      */
-
-     feature control-plane-stats {
-       description
-         "Indicates support of control plane statistics on this
-          device.";
-     }
-
-     feature interface-stats {
-       description
-         "Indicates support of interface statistics on this
-          device.";
-     }
-
-     feature device-stats {
-       description
-         "Indicates support of global device statistics on this
-          device.";
      }
 
      /*
@@ -1686,7 +1668,7 @@ Table of Contents
 
      augment "/rt:routing/rt:control-plane-protocols"
            + "/rt:control-plane-protocol" {
-       if-feature "control-plane-stats";
+       if-feature "pdr-common:control-plane-stats";
        description
          "Adds control plane discard counters.";
        container discard-stats {
@@ -1699,7 +1681,7 @@ Table of Contents
        }
      }
      augment "/if:interfaces/if:interface/if:statistics" {
-       if-feature "interface-stats";
+       if-feature "pdr-common:interface-stats";
        description
          "Adds packet discard reporting to the interface statistics.";
        uses discard-order-policy;
@@ -1707,7 +1689,7 @@ Table of Contents
      }
      augment "/lne:logical-network-elements"
            + "/lne:logical-network-element" {
-       if-feature "device-stats";
+       if-feature "pdr-common:device-stats";
        description
          "Adds device level packet counters.";
 
@@ -2544,7 +2526,7 @@ Appendix D.  Full Data Model Tree
 
      augment /rt:routing/rt:control-plane-protocols
                /rt:control-plane-protocol:
-       +--ro discard-stats {control-plane-stats}?
+       +--ro discard-stats {pdr-common:control-plane-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic* [direction]
           |  +--ro direction    identityref
@@ -2557,8 +2539,9 @@ Appendix D.  Full Data Model Tree
              +--ro policy
                 +--ro packets?   yang:counter64
      augment /if:interfaces/if:interface/if:statistics:
-       +--ro discard-order-capability*   identityref {interface-stats}?
-       +--ro traffic* [direction] {interface-stats}?
+       +--ro discard-order-capability*   identityref
+       |       {pdr-common:interface-stats}?
+       +--ro traffic* [direction] {pdr-common:interface-stats}?
        |  +--ro direction    identityref
        |  +--ro l2
        |  |  +--ro frames?   yang:counter64
@@ -2582,7 +2565,7 @@ Appendix D.  Full Data Model Tree
        |        +--ro id         string
        |        +--ro packets?   yang:counter64
        |        +--ro bytes?     yang:counter64
-       +--ro discards* [direction] {interface-stats}?
+       +--ro discards* [direction] {pdr-common:interface-stats}?
           +--ro direction    identityref
           +--ro l2
           |  +--ro frames?   yang:counter64
@@ -2651,7 +2634,7 @@ Appendix D.  Full Data Model Tree
                    +--ro packets?   yang:counter64
                    +--ro bytes?     yang:counter64
      augment /lne:logical-network-elements/lne:logical-network-element:
-       +--ro discard-stats {device-stats}?
+       +--ro discard-stats {pdr-common:device-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic
           |  +--ro l2
@@ -2769,7 +2752,7 @@ Contributors
 
 Authors' Addresses
 
-   John Evans
+   John Evans (editor)
    Amazon
    1 Principal Place, Worship Street
    London
@@ -2778,7 +2761,7 @@ Authors' Addresses
    Email: jevanamz@amazon.co.uk
 
 
-   Oleksandr Pylypenko
+   Oleksandr Pylypenko (editor)
    Nvidia
    2788 San Tomas Expy
    Santa Clara, CA 95051
@@ -2802,7 +2785,7 @@ Authors' Addresses
    Email: akadosh@cisco.com
 
 
-   Mohamed Boucadair
+   Mohamed Boucadair (editor)
    Orange
    France
    Email: mohamed.boucadair@orange.com

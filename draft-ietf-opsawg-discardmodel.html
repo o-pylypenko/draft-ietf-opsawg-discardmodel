@@ -1084,11 +1084,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
-      <div class="author-name">J. Evans</div>
+      <div class="author-name">J. Evans, <span class="editor">Ed.</span>
+</div>
 <div class="org">Amazon</div>
 </div>
 <div class="author">
-      <div class="author-name">O. Pylypenko</div>
+      <div class="author-name">O. Pylypenko, <span class="editor">Ed.</span>
+</div>
 <div class="org">Nvidia</div>
 </div>
 <div class="author">
@@ -1100,7 +1102,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <div class="org">Cisco Systems, Inc.</div>
 </div>
 <div class="author">
-      <div class="author-name">M. Boucadair</div>
+      <div class="author-name">M. Boucadair, <span class="editor">Ed.</span>
+</div>
 <div class="org">Orange</div>
 </div>
 </dd>
@@ -1686,10 +1689,10 @@ module ietf-packet-discard-reporting-common {
     "WG Web:   https://datatracker.ietf.org/wg/opsawg/
      WG List:  mailto:opsawg@ietf.org
 
-     Author:   John Evans
+     Editor:   John Evans
                &lt;mailto:jevanamz@amazon.co.uk&gt;
 
-     Author:   Oleksandr Pylypenko
+     Editor:   Oleksandr Pylypenko
                &lt;mailto:opyl@amazon.com&gt;
 
      Author:   Jeffrey Haas
@@ -1698,7 +1701,7 @@ module ietf-packet-discard-reporting-common {
      Author:   Aviran Kadosh
                &lt;mailto:akadosh@cisco.com&gt;
 
-     Author:   Mohamed Boucadair
+     Editor:   Mohamed Boucadair
                &lt;mailto:mohamed.boucadair@orange.com&gt;";
   description
     "This module defines a common YANG module for packet discard
@@ -1721,7 +1724,7 @@ module ietf-packet-discard-reporting-common {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2023-03-03 {
+  revision 2026-03-03 {
     description
       "Initial revision.";
     reference
@@ -1735,25 +1738,22 @@ module ietf-packet-discard-reporting-common {
 
   feature control-plane-stats {
     description
-      "Indicates support of control plane statistics on this
-       device.";
+      "Indicates support of control plane statistics.";
   }
 
   feature interface-stats {
     description
-      "Indicates support of interface statistics on this
-       device.";
+      "Indicates support of interface statistics.";
   }
 
   feature flow-reporting {
     description
-      "Indicates support of flow reporting on this device.";
+      "Indicates support of flow reporting.";
   }
 
   feature device-stats {
     description
-      "Indicates support of global device statistics on this
-       device.";
+      "Indicates support of global device statistics.";
   }
 
   /*
@@ -1781,7 +1781,11 @@ module ietf-packet-discard-reporting-common {
 
   identity address-family {
     description
-      "Defines a type for the address family.";
+      "Defines a type for the address family.
+
+       This identity is defined here rather than importing
+       it from other YANG modules to simplify implementations
+       and avoid inheriting dependencies of those modules.";
   }
 
   identity ip {
@@ -1897,7 +1901,8 @@ module ietf-packet-discard-reporting-common {
       leaf id {
         type string;
         description
-          "Class identifier.";
+          "Indicates a Quality of Service (QoS) class
+           identifier.";
       }
       uses basic-packets-bytes;
     }
@@ -1905,7 +1910,7 @@ module ietf-packet-discard-reporting-common {
 
   grouping qos {
     description
-      "Quality of Service (QoS) traffic counters.";
+      "QoS traffic counters.";
     container qos {
       presence "QoS statistics are available.";
       description
@@ -1947,13 +1952,13 @@ module ietf-packet-discard-reporting-common {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           CRC error.";
+            Cyclic Redundancy Check (CRC) error.";
       }
       leaf invalid-mac {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid MAC address.";
+           an invalid Media Access Control (MAC) address.";
       }
       leaf invalid-vlan {
         type yang:counter64;
@@ -2010,7 +2015,7 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to
-         expired TTL.";
+         expired TTL or Hop Limit exceeded.";
     }
     leaf no-route {
       type yang:counter64;
@@ -2022,7 +2027,8 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to an
-         invalid Segment Routing over IPv6 (SRv6) SID.
+         invalid Segment Routing over IPv6 (SRv6) segment
+         identifier (SID).
          For SR-MPLS, invalid SIDs have to be accounted
          under invalid-label.";
     }
@@ -2115,7 +2121,8 @@ module ietf-packet-discard-reporting-common {
     leaf acl {
       type yang:counter64;
       description
-        "The number of frames discarded due to Layer 2 ACLs.";
+        "The number of frames discarded due to Layer 2
+         Access Control Lists (ACLs).";
     }
   }
 
@@ -2159,8 +2166,8 @@ module ietf-packet-discard-reporting-common {
     leaf ddos {
       type yang:counter64;
       description
-        "The number of packets discarded due to DDoS
-         protection policies.";
+        "The number of packets discarded due to Distributed
+         Denial-of-Service (DDoS) protection policies.";
     }
   }
 
@@ -2329,10 +2336,10 @@ module ietf-packet-discard-reporting-sx {
     "WG Web:   https://datatracker.ietf.org/wg/opsawg/
      WG List:  mailto:opsawg@ietf.org
 
-     Author:   John Evans
+     Editor:   John Evans
                &lt;mailto:jevanamz@amazon.co.uk&gt;
 
-     Author:   Oleksandr Pylypenko
+     Editor:   Oleksandr Pylypenko
                &lt;mailto:opyl@amazon.com&gt;
 
      Author:   Jeffrey Haas
@@ -2341,7 +2348,7 @@ module ietf-packet-discard-reporting-sx {
      Author:   Aviran Kadosh
                &lt;mailto:akadosh@cisco.com&gt;
 
-     Author:   Mohamed Boucadair
+     Editor:   Mohamed Boucadair
                &lt;mailto:mohamed.boucadair@orange.com&gt;";
   description
     "This module defines an information model for packet discard
@@ -2707,10 +2714,10 @@ module ietf-packet-discard-reporting {
     "WG Web:   https://datatracker.ietf.org/wg/opsawg/
      WG List:  mailto:opsawg@ietf.org
 
-     Author:   John Evans
+     Editor:   John Evans
                &lt;mailto:jevanamz@amazon.co.uk&gt;
 
-     Author:   Oleksandr Pylypenko
+     Editor:   Oleksandr Pylypenko
                &lt;mailto:opyl@amazon.com&gt;
 
      Author:   Jeffrey Haas
@@ -2719,7 +2726,7 @@ module ietf-packet-discard-reporting {
      Author:   Aviran Kadosh
                &lt;mailto:akadosh@cisco.com&gt;
 
-     Author:   Mohamed Boucadair
+     Editor:   Mohamed Boucadair
                &lt;mailto:mohamed.boucadair@orange.com&gt;";
   description
     "This module defines a data model for packet discard reporting.
@@ -2747,28 +2754,6 @@ module ietf-packet-discard-reporting {
     reference
       "RFC XXXX: Information and Data Models for Packet Discard
                  Reporting";
-  }
-
-  /*
-   * Features
-   */
-
-  feature control-plane-stats {
-    description
-      "Indicates support of control plane statistics on this
-       device.";
-  }
-
-  feature interface-stats {
-    description
-      "Indicates support of interface statistics on this
-       device.";
-  }
-
-  feature device-stats {
-    description
-      "Indicates support of global device statistics on this
-       device.";
   }
 
   /*
@@ -2832,7 +2817,7 @@ module ietf-packet-discard-reporting {
 
   augment "/rt:routing/rt:control-plane-protocols"
         + "/rt:control-plane-protocol" {
-    if-feature "control-plane-stats";
+    if-feature "pdr-common:control-plane-stats";
     description
       "Adds control plane discard counters.";
     container discard-stats {
@@ -2845,7 +2830,7 @@ module ietf-packet-discard-reporting {
     }
   }
   augment "/if:interfaces/if:interface/if:statistics" {
-    if-feature "interface-stats";
+    if-feature "pdr-common:interface-stats";
     description
       "Adds packet discard reporting to the interface statistics.";
     uses discard-order-policy;
@@ -2853,7 +2838,7 @@ module ietf-packet-discard-reporting {
   }
   augment "/lne:logical-network-elements"
         + "/lne:logical-network-element" {
-    if-feature "device-stats";
+    if-feature "pdr-common:device-stats";
     description
       "Adds device level packet counters.";
 
@@ -3813,7 +3798,7 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro discard-stats {control-plane-stats}?
+    +--ro discard-stats {pdr-common:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  +--ro direction    identityref
@@ -3826,8 +3811,9 @@ module: ietf-packet-discard-reporting
           +--ro policy
              +--ro packets?   yang:counter64
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro discard-order-capability*   identityref {interface-stats}?
-    +--ro traffic* [direction] {interface-stats}?
+    +--ro discard-order-capability*   identityref
+    |       {pdr-common:interface-stats}?
+    +--ro traffic* [direction] {pdr-common:interface-stats}?
     |  +--ro direction    identityref
     |  +--ro l2
     |  |  +--ro frames?   yang:counter64
@@ -3851,7 +3837,7 @@ module: ietf-packet-discard-reporting
     |        +--ro id         string
     |        +--ro packets?   yang:counter64
     |        +--ro bytes?     yang:counter64
-    +--ro discards* [direction] {interface-stats}?
+    +--ro discards* [direction] {pdr-common:interface-stats}?
        +--ro direction    identityref
        +--ro l2
        |  +--ro frames?   yang:counter64
@@ -3920,7 +3906,7 @@ module: ietf-packet-discard-reporting
                 +--ro packets?   yang:counter64
                 +--ro bytes?     yang:counter64
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro discard-stats {device-stats}?
+    +--ro discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -4053,7 +4039,7 @@ module: ietf-packet-discard-reporting
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">John Evans</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">John Evans (<span class="role">editor</span>)</span></div>
 <div dir="auto" class="left"><span class="org">Amazon</span></div>
 <div dir="auto" class="left"><span class="street-address">1 Principal Place, Worship Street</span></div>
 <div dir="auto" class="left"><span class="locality">London</span></div>
@@ -4065,7 +4051,7 @@ module: ietf-packet-discard-reporting
 </div>
 </address>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Oleksandr Pylypenko</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Oleksandr Pylypenko (<span class="role">editor</span>)</span></div>
 <div dir="auto" class="left"><span class="org">Nvidia</span></div>
 <div dir="auto" class="left"><span class="street-address">2788 San Tomas Expy</span></div>
 <div dir="auto" class="left">
@@ -4104,7 +4090,7 @@ module: ietf-packet-discard-reporting
 </div>
 </address>
 <address class="vcard">
-        <div dir="auto" class="left"><span class="fn nameRole">Mohamed Boucadair</span></div>
+        <div dir="auto" class="left"><span class="fn nameRole">Mohamed Boucadair (<span class="role">editor</span>)</span></div>
 <div dir="auto" class="left"><span class="org">Orange</span></div>
 <div dir="auto" class="left"><span class="country-name">France</span></div>
 <div class="email">
