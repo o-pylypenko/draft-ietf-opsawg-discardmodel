@@ -34,6 +34,7 @@ author:
  -
     ins: J. Evans
     name: John Evans
+    role: editor
     org: Amazon
     street: 1 Principal Place, Worship Street
     city: London
@@ -43,6 +44,7 @@ author:
  -
     ins: O. Pylypenko
     name: Oleksandr Pylypenko
+    role: editor
     org: Nvidia
     street: 2788 San Tomas Expy
     city: Santa Clara
@@ -73,6 +75,7 @@ author:
  -
     ins: M. Boucadair
     name: Mohamed Boucadair
+    role: editor
     org: Orange
     country: France
     email: mohamed.boucadair@orange.com

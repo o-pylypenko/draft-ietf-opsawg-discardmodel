@@ -16,10 +16,10 @@ module ietf-packet-discard-reporting-common {
     "WG Web:   https://datatracker.ietf.org/wg/opsawg/
      WG List:  mailto:opsawg@ietf.org
 
-     Author:   John Evans
+     Editor:   John Evans
                <mailto:jevanamz@amazon.co.uk>
 
-     Author:   Oleksandr Pylypenko
+     Editor:   Oleksandr Pylypenko
                <mailto:opyl@amazon.com>
 
      Author:   Jeffrey Haas
@@ -28,7 +28,7 @@ module ietf-packet-discard-reporting-common {
      Author:   Aviran Kadosh
                <mailto:akadosh@cisco.com>
 
-     Author:   Mohamed Boucadair
+     Editor:   Mohamed Boucadair
                <mailto:mohamed.boucadair@orange.com>";
   description
     "This module defines a common YANG module for packet discard
@@ -51,7 +51,7 @@ module ietf-packet-discard-reporting-common {
      This version of this YANG module is part of RFC XXXX; see
      the RFC itself for full legal notices.";
 
-  revision 2023-03-03 {
+  revision 2026-03-03 {
     description
       "Initial revision.";
     reference
@@ -65,25 +65,22 @@ module ietf-packet-discard-reporting-common {
 
   feature control-plane-stats {
     description
-      "Indicates support of control plane statistics on this
-       device.";
+      "Indicates support of control plane statistics.";
   }
 
   feature interface-stats {
     description
-      "Indicates support of interface statistics on this
-       device.";
+      "Indicates support of interface statistics.";
   }
 
   feature flow-reporting {
     description
-      "Indicates support of flow reporting on this device.";
+      "Indicates support of flow reporting.";
   }
 
   feature device-stats {
     description
-      "Indicates support of global device statistics on this
-       device.";
+      "Indicates support of global device statistics.";
   }
 
   /*
@@ -111,7 +108,11 @@ module ietf-packet-discard-reporting-common {
 
   identity address-family {
     description
-      "Defines a type for the address family.";
+      "Defines a type for the address family.
+
+       This identity is defined here rather than importing
+       it from other YANG modules to simplify implementations
+       and avoid inheriting dependencies of those modules.";
   }
 
   identity ip {
@@ -227,7 +228,8 @@ module ietf-packet-discard-reporting-common {
       leaf id {
         type string;
         description
-          "Class identifier.";
+          "Indicates a Quality of Service (QoS) class
+           identifier.";
       }
       uses basic-packets-bytes;
     }
@@ -235,7 +237,7 @@ module ietf-packet-discard-reporting-common {
 
   grouping qos {
     description
-      "Quality of Service (QoS) traffic counters.";
+      "QoS traffic counters.";
     container qos {
       presence "QoS statistics are available.";
       description
@@ -277,13 +279,13 @@ module ietf-packet-discard-reporting-common {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           CRC error.";
+            Cyclic Redundancy Check (CRC) error.";
       }
       leaf invalid-mac {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid MAC address.";
+           an invalid Media Access Control (MAC) address.";
       }
       leaf invalid-vlan {
         type yang:counter64;
@@ -340,7 +342,7 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to
-         expired TTL.";
+         expired TTL or Hop Limit exceeded.";
     }
     leaf no-route {
       type yang:counter64;
@@ -352,7 +354,8 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to an
-         invalid Segment Routing over IPv6 (SRv6) SID.
+         invalid Segment Routing over IPv6 (SRv6) segment 
+         identifier (SID).
          For SR-MPLS, invalid SIDs have to be accounted
          under invalid-label.";
     }
@@ -445,7 +448,8 @@ module ietf-packet-discard-reporting-common {
     leaf acl {
       type yang:counter64;
       description
-        "The number of frames discarded due to Layer 2 ACLs.";
+        "The number of frames discarded due to Layer 2 
+         Access Control Lists (ACLs).";
     }
   }
 
@@ -489,8 +493,8 @@ module ietf-packet-discard-reporting-common {
     leaf ddos {
       type yang:counter64;
       description
-        "The number of packets discarded due to DDoS
-         protection policies.";
+        "The number of packets discarded due to Distributed
+         Denial-of-Service (DDoS) protection policies.";
     }
   }
 
