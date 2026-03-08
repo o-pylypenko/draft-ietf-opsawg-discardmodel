@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-05T01:02:01.518169+00:00",
+  "timestamp": "2026-03-08T01:02:19.818508+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2741,26 +2741,232 @@
       "id": "PR_kwDOOCO1i87H79Ll",
       "title": "Shephred review",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/62",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-03-04T17:16:54Z",
-      "updatedAt": "2026-03-04T17:29:57Z",
+      "updatedAt": "2026-03-05T15:58:07Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "8f6259e535c1853cdf6b99bd5f272d16d20aa277",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "shephred-review",
       "headRefOid": "027c0b559f5840dec96aa85b52636b534926dbff",
+      "closedAt": "2026-03-05T15:58:07Z",
+      "mergedAt": "2026-03-05T15:58:07Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "0268c8b6b7732ee385ff2dbdb47ff745a0855aa4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87oUrmx",
+          "commit": {
+            "abbreviatedOid": "027c0b5"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-05T15:58:00Z",
+          "updatedAt": "2026-03-05T15:58:00Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 63,
+      "id": "PR_kwDOOCO1i87IgIdN",
+      "title": "rename device grouping",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/63",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-06T13:22:10Z",
+      "updatedAt": "2026-03-06T18:52:50Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0268c8b6b7732ee385ff2dbdb47ff745a0855aa4",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-6",
+      "headRefOid": "4907bcfe2eced8002455797e940837ad55ab0f2f",
+      "closedAt": "2026-03-06T18:52:50Z",
+      "mergedAt": "2026-03-06T18:52:50Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 64,
+      "id": "PR_kwDOOCO1i87IinDU",
+      "title": "Update author affiliation",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/64",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-06T16:05:06Z",
+      "updatedAt": "2026-03-06T18:52:33Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0268c8b6b7732ee385ff2dbdb47ff745a0855aa4",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "update-affiliation",
+      "headRefOid": "8b6c5eafb2ad5cdc05f804a89bd5690e5c2c60e3",
+      "closedAt": "2026-03-06T18:52:33Z",
+      "mergedAt": "2026-03-06T18:52:33Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "4d65b90fca7252d0eecc9f4c1b49964f26d203cf"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87ovNvt",
+          "commit": {
+            "abbreviatedOid": "8b6c5ea"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-06T16:22:21Z",
+          "updatedAt": "2026-03-06T16:22:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 65,
+      "id": "PR_kwDOOCO1i87Ir2BI",
+      "title": "text cleanup & flow anchoring",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/65",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "text cleanup + clarify the intent about the use of the flow part of the IM when defining flow data models. \r\n\r\nthis is to take into account a discussion I had offline with Beno\u00eet Claise.",
+      "createdAt": "2026-03-07T07:50:08Z",
+      "updatedAt": "2026-03-07T23:40:40Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-7",
+      "headRefOid": "2db3032bcb9401a1ee441ddfb0a964dc8c88f94c",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87pD4zK",
+          "commit": {
+            "abbreviatedOid": "2db3032"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks Med",
+          "createdAt": "2026-03-07T23:40:40Z",
+          "updatedAt": "2026-03-07T23:40:40Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 66,
+      "id": "PR_kwDOOCO1i87Ir4ms",
+      "title": "Requirements checks",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/66",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I lost the context why whe have some SHOULDs out there. We need to fix this before for the next version.",
+      "createdAt": "2026-03-07T07:57:14Z",
+      "updatedAt": "2026-03-07T23:42:27Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-8",
+      "headRefOid": "bf153bc2cf4bbc170c82b5be0f91789488c23a74",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87pD5MU",
+          "commit": {
+            "abbreviatedOid": "bf153bc"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Agree with the MUSTs vs. SHOULDs",
+          "createdAt": "2026-03-07T23:42:27Z",
+          "updatedAt": "2026-03-07T23:42:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 67,
+      "id": "PR_kwDOOCO1i87Ir5XL",
+      "title": "redundant features and motivate why we define AF identity",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/67",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Beno\u00eet raised a comment in the past about AF. Added text to record the reasoning in the text.\r\n\r\nAlso removed redundant features\r\n",
+      "createdAt": "2026-03-07T07:59:19Z",
+      "updatedAt": "2026-03-07T23:49:50Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-9",
+      "headRefOid": "82e4bf56115d749be26fa76abf1916f856a643b3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87pD6so",
+          "commit": {
+            "abbreviatedOid": "82e4bf5"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks Med - looks good to me",
+          "createdAt": "2026-03-07T23:49:50Z",
+          "updatedAt": "2026-03-07T23:49:50Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
