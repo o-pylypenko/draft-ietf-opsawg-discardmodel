@@ -334,16 +334,16 @@ discards/error/:
    : These are frames discarded due to errors in the received Layer 2 frame, including: Cyclic Redundancy Check (CRC) errors, invalid Media Access Control (MAC) addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.
 
    * discards/error/l3/rx/:
-   : These are discards which occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
+   : These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
 
    * discards/error/l3/rx/ttl-expired:
-   : These are discards due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.
+   : These discards occur due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.
 
    * discards/error/l3/no-route/:
-   : These are discards which occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
+   : These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
 
    * discards/error/internal/:
-   : These are discards due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
+   : These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
 :  These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an active queue management algorithm, such as Random Early Detection (RED) {{RED93}} or Controlled Delay (CoDel) {{?RFC8289}}.
@@ -484,6 +484,8 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 
 ## Usage Examples {#examples}
 
+This section assumes that no class of service is implemented.
+
 If all of the requirements listed in {{requirements}} are met, a "good" unicast IPv4 packet received would increment:
 
 - interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets
@@ -589,9 +591,9 @@ The "ietf-packet-discard-reporting-common" YANG module defines a set of identiti
 
 ## Data Model {#security-datamodel}
 
-This section is modeled after the template described in {{Section 3.7 of ?I-D.ietf-netmod-rfc8407bis}}.
+This section is modeled after the template described in {{Section 3.7.1 of ?I-D.ietf-netmod-rfc8407bis}}.
 
-The YANG module specified in {{datamodel-module}} defines a data model that is designed to be accessed via YANG-based management protocols, such as NETCONF {{?RFC6241}} and RESTCONF {{?RFC8040}}. These YANG-based management protocols (1) have to use a secure transport layer (e.g., SSH {{?RFC4252}}, TLS {{?RFC8446}}, and QUIC {{?RFC9000}}) and (2) have to use mutual authentication.
+The YANG module specified in {{datamodel-module}} defines a data model that is designed to be accessed via YANG-based management protocols, such as Network Configuration Protocol (NETCONF) {{?RFC6241}} and RESTCONF {{?RFC8040}}. These YANG-based management protocols (1) have to use a secure transport layer (e.g., Secure Shell (SSH) {{?RFC4252}}, TLS {{?RFC8446}}, and QUIC {{?RFC9000}}) and (2) have to use mutual authentication.
 
 The Network Configuration Access Control Model (NACM) {{!RFC8341}} provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.
 
@@ -599,7 +601,7 @@ There are no particularly sensitive writable data nodes.
 
 Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:
 
-Control-plane, interfaces, and devices:
+rt:control-plane-protocol/pdr:discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:discards, and lne:logical-network-element/pdr:discard-stats:
 : Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.
 : Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.
 
