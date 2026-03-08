@@ -1154,7 +1154,7 @@ Table of Contents
 
    The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
    defined in [RFC8791] and also imports the "ietf-packet-discard-
-   reporting-common" module (Section 4.3.
+   reporting-common" module (Section 4.3).
 
    <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
    module ietf-packet-discard-reporting-sx {
@@ -1768,11 +1768,12 @@ Table of Contents
 
 6.2.  Anchroing Flow Structure
 
-   The characterization of a flow depends on underlying data model.
-   From that standpoint, the IM does not make an assumption about flow
-   characterization and identification.  Future flow-oriented data
-   models MUST ensure that the flow structure is anchored so that the
-   discards are unambiguously associated with a flow.
+   The characterization of a flow depends on the underlying data model
+   that adheres to the IM.  From that standpoint, the IM does not make
+   an assumption about flow characterization and identification.  Future
+   flow-oriented data models MUST ensure that the flow structure is
+   anchored so that the discards are unambiguously associated with a
+   flow.
 
 7.  Implementation Status
 
@@ -1920,6 +1921,11 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
+              and W. Weiss, "An Architecture for Differentiated
+              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
+              <https://www.rfc-editor.org/rfc/rfc2475>.
+
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
@@ -1982,11 +1988,6 @@ Table of Contents
    [RED93]    "Random early detection gateways for congestion
               avoidance", August 1993,
               <https://ieeexplore.ieee.org/document/251892>.
-
-   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
-              and W. Weiss, "An Architecture for Differentiated
-              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
-              <https://www.rfc-editor.org/rfc/rfc2475>.
 
    [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
               Defeating Denial of Service Attacks which employ IP Source
