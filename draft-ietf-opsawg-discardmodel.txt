@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 9 September 2026                                         Nvidia
+Expires: 11 September 2026                                        Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            8 March 2026
+                                                           10 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 September 2026.
+   This Internet-Draft will expire on 11 September 2026.
 
 Copyright Notice
 
@@ -543,7 +543,7 @@ Table of Contents
                   <mailto:jevanamz@amazon.co.uk>
 
         Editor:   Oleksandr Pylypenko
-                  <mailto:opyl@amazon.com>
+                  <mailto:opylypenko@nvidia.com>
 
         Author:   Jeffrey Haas
                   <mailto:jhaas@juniper.net>
@@ -1185,7 +1185,7 @@ Table of Contents
                   <mailto:jevanamz@amazon.co.uk>
 
         Editor:   Oleksandr Pylypenko
-                  <mailto:opyl@amazon.com>
+                  <mailto:opylypenko@nvidia.com>
 
         Author:   Jeffrey Haas
                   <mailto:jhaas@juniper.net>
@@ -1571,7 +1571,7 @@ Table of Contents
                   <mailto:jevanamz@amazon.co.uk>
 
         Editor:   Oleksandr Pylypenko
-                  <mailto:opyl@amazon.com>
+                  <mailto:opylypenko@nvidia.com>
 
         Author:   Jeffrey Haas
                   <mailto:jhaas@juniper.net>
