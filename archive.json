@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-08T01:02:19.818508+00:00",
+  "timestamp": "2026-03-10T00:57:33.930462+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2853,24 +2853,26 @@
       "id": "PR_kwDOOCO1i87Ir2BI",
       "title": "text cleanup & flow anchoring",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/65",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "text cleanup + clarify the intent about the use of the flow part of the IM when defining flow data models. \r\n\r\nthis is to take into account a discussion I had offline with Beno\u00eet Claise.",
       "createdAt": "2026-03-07T07:50:08Z",
-      "updatedAt": "2026-03-07T23:40:40Z",
+      "updatedAt": "2026-03-08T06:48:09Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "boucadair-patch-7",
       "headRefOid": "2db3032bcb9401a1ee441ddfb0a964dc8c88f94c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-03-08T06:48:09Z",
+      "mergedAt": "2026-03-08T06:48:09Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "a4b2d0322aad0373dda7f4be17eecd6b90f234b8"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2893,24 +2895,26 @@
       "id": "PR_kwDOOCO1i87Ir4ms",
       "title": "Requirements checks",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/66",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "I lost the context why whe have some SHOULDs out there. We need to fix this before for the next version.",
       "createdAt": "2026-03-07T07:57:14Z",
-      "updatedAt": "2026-03-07T23:42:27Z",
+      "updatedAt": "2026-03-08T06:49:20Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
-      "baseRefOid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6",
+      "baseRefOid": "a4b2d0322aad0373dda7f4be17eecd6b90f234b8",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "boucadair-patch-8",
-      "headRefOid": "bf153bc2cf4bbc170c82b5be0f91789488c23a74",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "caf5a3f5ffb824fe4d76b79e88d5ca7d3712b042",
+      "closedAt": "2026-03-08T06:49:20Z",
+      "mergedAt": "2026-03-08T06:49:20Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "fe54305c3e32a3cb4a3d48676ce23628bc3fbdc3"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2933,24 +2937,26 @@
       "id": "PR_kwDOOCO1i87Ir5XL",
       "title": "redundant features and motivate why we define AF identity",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/67",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Beno\u00eet raised a comment in the past about AF. Added text to record the reasoning in the text.\r\n\r\nAlso removed redundant features\r\n",
       "createdAt": "2026-03-07T07:59:19Z",
-      "updatedAt": "2026-03-07T23:49:50Z",
+      "updatedAt": "2026-03-08T06:49:42Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "60b940dddd99c1a63f1cde91f5ef63f02048c8d6",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "boucadair-patch-9",
       "headRefOid": "82e4bf56115d749be26fa76abf1916f856a643b3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-03-08T06:49:42Z",
+      "mergedAt": "2026-03-08T06:49:42Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "4046993cf8011b3126601a3afbb56c1209a0054f"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2967,6 +2973,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 68,
+      "id": "PR_kwDOOCO1i87JA-nF",
+      "title": "udpate Oleks email@",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/68",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-09T09:35:00Z",
+      "updatedAt": "2026-03-09T09:35:42Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b214738b5b273b1e91bfa0919261d1a048e9d9bd",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-11",
+      "headRefOid": "523be0df976e38efa61c04039031ed782778d02e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
