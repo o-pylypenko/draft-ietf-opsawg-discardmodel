@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 11 September 2026                                        Nvidia
+Expires: 13 September 2026                                        Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                           10 March 2026
+                                                           12 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 September 2026.
+   This Internet-Draft will expire on 13 September 2026.
 
 Copyright Notice
 
@@ -95,7 +95,7 @@ Table of Contents
      5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Operationnal Considerations
      6.1.  Deployment Considerations Experience
-     6.2.  Anchroing Flow Structure
+     6.2.  Anchoring Flow Structure
    7.  Implementation Status
      7.1.  Information Model Implementations
      7.2.  Data Model Implementations
@@ -1768,7 +1768,7 @@ Table of Contents
    8.  While the classification tree is seven layers deep, a minimal
        implementation may only implement the top six layers.
 
-6.2.  Anchroing Flow Structure
+6.2.  Anchoring Flow Structure
 
    The characterization of a flow depends on the underlying data model
    that adheres to the IM.  From that standpoint, the IM does not make
