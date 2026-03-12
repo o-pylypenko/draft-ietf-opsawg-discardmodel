@@ -212,7 +212,7 @@ Table of Contents
       (ACL) denying certain traffic types.
 
    Unintended packet discards (Unintended discards, for short):  Are
-      packet that were dropped, which the network operator otherwise
+      packets that were dropped, which the network operator otherwise
       intended to deliver, i.e., which indicates an error state.  There
       are many possible reasons for unintended packet loss, including:
       erroring links may corrupt packets in transit; incorrect routing
