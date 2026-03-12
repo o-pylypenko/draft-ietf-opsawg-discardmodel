@@ -545,7 +545,7 @@ This section captures practical insights gained from implementing the model acro
 7. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
 8. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
 
-## Anchroing Flow Structure
+## Anchoring Flow Structure
 
 The characterization of a flow depends on the underlying data model that adheres to the IM. From that standpoint, the IM does not make an assumption about flow characterization and identification. Future flow-oriented data models MUST ensure that the flow structure is anchored so that the discards are unambiguously associated with a flow.
 
