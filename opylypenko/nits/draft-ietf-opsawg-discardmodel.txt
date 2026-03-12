@@ -2127,7 +2127,7 @@ Appendix A.  Where Do Packets Get Dropped?
       +-------+  +----------+  +---------+  +----------+  +-------+
 
   Unintended:
-      errors/rx/l2  errors/l3/rx   no-buffer    error/l3/tx
+      errors/rx/l2  errors/l3/rx   no-buffer    errors/l3/tx
                     errors/l3/no-route
                     errors/l3/rx/ttl-expired
                     errors/internal
