@@ -1818,7 +1818,7 @@ Table of Contents
       sample/ (https://github.com/o-pylypenko-aws/draft-ietf-opsawg-
       discardmodel-sample/)
 
-   Practical observations from these implementations are discussed in
+   Practical observations from these implementations are reflected in
    Section 6.1.
 
 8.  Security Considerations
