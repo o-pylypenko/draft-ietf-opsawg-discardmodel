@@ -117,7 +117,7 @@ informative:
 
 --- abstract
 
-This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements.
+This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on the interface, device, and control-plane discards.
 
 --- middle
 
@@ -129,9 +129,9 @@ Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards,
 
 This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting to address the above issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this IM for network elements, while maintaining consistency through clear semantics.
 
-The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed.
+The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed. Such considerations are deplyment-specific.
 
-{{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. Appendices {{<wheredropped}} and {{<mapping}} provide additional context and implementation guidance.
+{{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and its classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. Appendices {{<wheredropped}} and {{<mapping}} provide additional context and implementation guidance.
 
 ## Editorial Note (To be removed by the RFC Editor)
 
@@ -178,7 +178,7 @@ The fundamental problem for network operators is how to automatically detect whe
 The ability to select the appropriate mitigation action depends on four key features of packet loss:
 
 FEATURE-DISCARD-SCOPE:
-: Determines which devices, interfaces, and/or flows are impacted.
+: Determines which devices, interfaces, and/or flows are impacted. This also needs to cover control plane discards.
 
 FEATURE-DISCARD-RATE:
 : The rate and/or magnitude of the discards, indicating the severity and urgency of the problem.  Rate may be expressed using absolute (e.g., packets per second (pps)) or relative (e.g., percent) values.
@@ -195,11 +195,11 @@ While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-D
 
 The IM is defined using YANG {{!RFC7950}}, with Data Structure Extensions {{!RFC8791}}, allowing the model to remain abstract and decoupled from specific implementations in accordance with {{?RFC3444}}. This abstraction supports different DM implementations, such as YANG or IPFIX {{?RFC7011}}, while ensuring consistency across implementations. Using YANG for the IM enables this abstraction, leverages the community's familiarity with its syntax, and ensures lossless translation to the corresponding YANG data model, which is defined in {{datamodel}}.
 
-In order to ease reuse of the IM structure by DMs but without requiring that these DMs to parse the "sx" structure defined in {{!RFC8791}}, main reusable nodes are defined in a common module ({{common-module}}) while the main IM structure is defined in {{infomodel-module}}.
+> Design note: In order to ease reuse of the IM structure by DMs but without requiring that these DMs to parse the "sx" structure defined in {{!RFC8791}}, main reusable nodes are defined in a common module ({{common-module}}) while the main IM structure is defined in {{infomodel-module}}.
 
 ## Structure {#infomodel-structure}
 
-The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction of traffic they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards and more detailed triage to map to mitigation actions.
+The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction of traffic they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards (i.e., aggregates) and more detailed triage to map to mitigation actions.
 
 The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full YANG tree diagram of the IM is provided in {{sec-im-full-tree}}.
 
@@ -589,8 +589,7 @@ The "ietf-packet-discard-reporting-common" YANG module defines a set of identiti
    As such, there are no additional security issues related to
    the YANG module that need to be considered.
 
-
-   Modules that use the groupings that are defined in this document
+   Modules that use the groupings that are defined in the "ietf-packet-discard-reporting-common" module
    should identify the corresponding security considerations.
 
 ## Data Model {#security-datamodel}
@@ -661,20 +660,20 @@ Understanding where packets are discarded in a network device is essential for i
 Packets ingress on the left and egress on the right:
 
 ~~~~~~~~~~ aasvg
-                              +-----------+
-                              |           |
-                              |  Control  |
-                              |  Plane    |
-                              +---+---^---+
-                         from_cpu |   | to_cpu
-                                  |   |
-        +-------------------------v---+---------------------+
+                            .-----------.
+                            |  Control  |
+                            |   Plane   |
+                            |           |
+                            '---+---^---'
+                       from_cpu |   | to_cpu
+                                |   |
+        .-----------------------v---+-----------------------.
         |                                                   |
-    +---+---+  +----------+  +---------+  +----------+  +---+---+
+    .---+---.  .----------.  .---------.  .----------.  .---+---.
     |       |  |          |  |         |  |          |  |       |
 Rx-->PHY/MAC+--> Ingress  +--> Buffers +--> Egress   +-->PHY/MAC+-> Tx
     |       |  | Pipeline |  |         |  | Pipeline |  |       |
-    +-------+  +----------+  +---------+  +----------+  +-------+
+    '-------'  '----------'  '---------'  '----------'  '-------'
 
 Unintended:
    errors/rx/l2  errors/l3/rx  no-buffer    errors/l3/tx
@@ -688,9 +687,9 @@ Intended:
                  policy/null-route
 
 ~~~~~~~~~~
-{: #ex-drop title="Example of where packets get dropped"}
+{: #ex-drop title="Example of Where Packets Get Dropped"}
 
-See Appendix B for examples of how these discard signals map to root causes and mitigation actions.
+See {{mapping}} for examples of how these discard signals map to root causes and mitigation actions.
 
 # Example Signal-to-mitigation Action Mapping {#mapping}
 
