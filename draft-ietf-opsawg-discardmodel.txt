@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 13 September 2026                                        Nvidia
+Expires: 14 September 2026                                        Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                           12 March 2026
+                                                           13 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 September 2026.
+   This Internet-Draft will expire on 14 September 2026.
 
 Copyright Notice
 
@@ -93,8 +93,8 @@ Table of Contents
      5.2.  Implementation Requirements
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
-   6.  Operationnal Considerations
-     6.1.  Deployment Considerations Experience
+   6.  Operational Considerations
+     6.1.  Deployment Experience
      6.2.  Anchoring Flow Structure
    7.  Implementation Status
      7.1.  Information Model Implementations
@@ -279,8 +279,8 @@ Table of Contents
    [RFC8343], FEATURE-DISCARD-CLASS requires a more detailed
    classification scheme than they define.  The IM provided in Section 4
    defines such a classification scheme to enable automated mapping from
-   loss signals to appropriate mitigation actions (refer to Appendix B
-   for examples).
+   discard signals to appropriate mitigation actions (refer to
+   Appendix B for examples).
 
 4.  Information Model (IM)
 
@@ -472,16 +472,16 @@ Table of Contents
       Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
       all such policy-driven discards are reported under this class.
 
-   discards/error/:  These are unintended discards due to errors in
+   discards/errors/:  These are unintended discards due to errors in
       processing packets or frames.  There are multiple sub-classes:
 
-      *  discards/error/l2/rx/:  These are frames discarded due to
+      *  discards/errors/l2/rx/:  These are frames discarded due to
             errors in the received Layer 2 frame, including: Cyclic
             Redundancy Check (CRC) errors, invalid Media Access Control
             (MAC) addresses, invalid VLAN tags, frame size violations
             and other malformed frame conditions.
 
-      *  discards/error/l3/rx/:  These discards occur due to errors in
+      *  discards/errors/l3/rx/:  These discards occur due to errors in
             the received packet, indicating an upstream problem rather
             than an issue with the device dropping the errored packets,
             including: header checksum errors, MTU exceeded, invalid
@@ -489,21 +489,21 @@ Table of Contents
             length, invalid options, and other malformed packet
             conditions).
 
-      *  discards/error/l3/rx/ttl-expired:  These discards occur due to
+      *  discards/errors/l3/rx/ttl-expired:  These discards occur due to
             TTL (or Hop limit) expiry.  These can occur, e.g., for the
             following reasons: normal trace-route operations, end-system
             TTL/Hop limit set too low, or routing loops in the network.
 
-      *  discards/error/l3/no-route/:  These discards occur due to a
+      *  discards/errors/l3/no-route/:  These discards occur due to a
             packet not matching any route in the routing table, e.g.,
             which may be due to routing configuration errors or may be
             transient discards during convergence.
 
-      *  discards/error/internal/:  These discards occur due to internal
-            device issues, including: parity errors in device memory or
-            other internal hardware errors.  Any errored discards not
-            explicitly assigned to other classes are also accounted for
-            here.
+      *  discards/errors/internal/:  These discards occur due to
+            internal device issues, including: parity errors in device
+            memory or other internal hardware errors.  Any errored
+            discards not explicitly assigned to other classes are also
+            accounted for here.
 
    discards/no-buffer/:  These are discards due to buffer exhaustion
       (that is congestion related discards).  These can be tail-drop
@@ -1707,9 +1707,9 @@ Table of Contents
    }
    <CODE ENDS>
 
-6.  Operationnal Considerations
+6.  Operational Considerations
 
-6.1.  Deployment Considerations Experience
+6.1.  Deployment Experience
 
    This section captures practical insights gained from implementing the
    model across multiple vendors' platforms, as guidance for future
@@ -1765,8 +1765,8 @@ Table of Contents
    7.  Aggregate counters need to be able to deal with the possibility
        of discontinuities in the underlying counters.
 
-   8.  While the classification tree is seven layers deep, a minimal
-       implementation may only implement the top six layers.
+   8.  While the classification tree is seven levels deep, a minimal
+       implementation may only implement the top six.
 
 6.2.  Anchoring Flow Structure
 
@@ -1818,8 +1818,8 @@ Table of Contents
       sample/ (https://github.com/o-pylypenko-aws/draft-ietf-opsawg-
       discardmodel-sample/)
 
-   Operational experience from these implementations is reflected in the
-   deployment considerations in Section 6.1.
+   Practical observations from these implementations are reflected in
+   Section 6.1.
 
 8.  Security Considerations
 
@@ -1977,10 +1977,11 @@ Table of Contents
 
 10.2.  Informative References
 
-   [gMNI]     "gRPC Network Management Interface, IETF 98, March 2017,
+   [gNMI]     Shakir, R., Shaikh, A., Borman, P., Hines, M., Lebsack,
+              C., and C. Morrow, "gRPC Network Management Interface",
+              IETF 98, March 2017,
               <https://datatracker.ietf.org/meeting/98/materials/slides-
-              98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>",
-              n.d..
+              98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>.
 
    [I-D.ietf-netmod-rfc8407bis]
               Bierman, A., Boucadair, M., and Q. Wu, "Guidelines for
@@ -1990,8 +1991,8 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-ietf-netmod-
               rfc8407bis-28>.
 
-   [RED93]    "Random early detection gateways for congestion
-              avoidance", August 1993,
+   [RED93]    Floyd, S. and V. Jacobson, "Random early detection
+              gateways for congestion avoidance", August 1993,
               <https://ieeexplore.ieee.org/document/251892>.
 
    [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
@@ -2126,10 +2127,10 @@ Appendix A.  Where Do Packets Get Dropped?
       +-------+  +----------+  +---------+  +----------+  +-------+
 
   Unintended:
-      error/rx/l2  error/l3/rx   no-buffer    error/l3/tx
-                   error/l3/no-route
-                   error/l3/rx/ttl-expired
-                   error/internal
+     errors/rx/l2  errors/l3/rx  no-buffer    errors/l3/tx
+                   errors/l3/no-route
+                   errors/l3/rx/ttl-expired
+                   errors/internal
   Intended:
                    policy/acl                 policy/acl
                    policy/policer             policy/policer
