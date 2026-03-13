@@ -96,20 +96,24 @@ normative:
 informative:
      RED93:
           title: Random early detection gateways for congestion avoidance
-          authors:
-               ins: S. Floyd
-               ins: V. Jacobson
+          author:
+               - ins: S. Floyd
+               - ins: V. Jacobson
           target: https://ieeexplore.ieee.org/document/251892
           date: 31 August 1993
-     gMNI:
-          title: gRPC Network Management Interface, IETF 98, March 2017, <https://datatracker.ietf.org/meeting/98/materials/slides-98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00>
-          authors:
-               ins: Shakir, R.
-               ins: Shaikh, A.
-               ins: Borman, P.
-               ins: Hines, M.
-               ins: Lebsack, C.
-               ins: C. Marrow
+
+     gNMI:
+          title: gRPC Network Management Interface
+          author:
+            - ins: R. Shakir
+            - ins: A. Shaikh
+            - ins: P. Borman
+            - ins: M. Hines
+            - ins: C. Lebsack
+            - ins: C. Morrow
+          target: https://datatracker.ietf.org/meeting/98/materials/slides-98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00
+          date: March 2017
+          refcontent: IETF 98
 
 --- abstract
 
@@ -185,7 +189,7 @@ FEATURE-DISCARD-DURATION:
 FEATURE-DISCARD-CLASS:
 : The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no action. Refer to {{ex-table}} for more examples.
 
-While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from loss signals to appropriate mitigation actions (refer to {{mapping}} for examples).
+While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions (refer to {{mapping}} for examples).
 
 # Information Model (IM)   {#infomodel}
 
@@ -327,22 +331,22 @@ The corresponding YANG module is defined in {{infomodel-module}}.
 discards/policy/:
 : These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Distributed Denial-of-Service (DDoS) protection rules, and explicit null routes.  In practice, ingress DDoS protection policies are often realized using mechanisms such as ingress filtering and uRPF ({{?RFC2827}}, {{?RFC3704}}, and {{?RFC8704}}), remotely triggered blackholing ({{?RFC3882}}, {{?RFC5635}}), or BGP Flow Specification–based filters ({{?RFC8955}}, {{?RFC8956}}, and {{?RFC9117}}); all such policy-driven discards are reported under this class.
 
-discards/error/:
+discards/errors/:
 : These are unintended discards due to errors in processing packets or frames.  There are multiple sub-classes:
 
-   * discards/error/l2/rx/:
+   * discards/errors/l2/rx/:
    : These are frames discarded due to errors in the received Layer 2 frame, including: Cyclic Redundancy Check (CRC) errors, invalid Media Access Control (MAC) addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.
 
-   * discards/error/l3/rx/:
+   * discards/errors/l3/rx/:
    : These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
 
-   * discards/error/l3/rx/ttl-expired:
+   * discards/errors/l3/rx/ttl-expired:
    : These discards occur due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.
 
-   * discards/error/l3/no-route/:
+   * discards/errors/l3/no-route/:
    : These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
 
-   * discards/error/internal/:
+   * discards/errors/internal/:
    : These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
@@ -476,7 +480,7 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 7. The aggregate QoS traffic and no-buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
 8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined. Typically, this can be exposed by an implementation by means of `discard-order-capability`.
-10. If Diffserv {{!RFC2475}} is not used, no-buffer discards MUST be reported as class[id="0"], which represents the default class.
+10. If Diffserv {{!RFC2475}} is not used, no-buffer discards MUST be reported as `class[id="0"]`, which represents the default class.
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
 12. No-buffer discards can be realized differently with different memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
 13. When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution MUST relate to the outer header at the point of discard.
@@ -488,36 +492,36 @@ This section assumes that no class of service is implemented.
 
 If all of the requirements listed in {{requirements}} are met, a "good" unicast IPv4 packet received would increment:
 
-- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets
-- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes
-- interface/traffic[direction="ingress"]/qos/class[id="0"]/packets
-- interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes
+- `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets`
+- `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes`
+- `interface/traffic[direction="ingress"]/qos/class[id="0"]/packets`
+- `interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes`
 
 A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:
 
-- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/packets
-- interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/bytes
-- interface/discards[direction="ingress"]/l3/rx/ttl-expired/packets
+- `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/packets`
+- `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/bytes`
+- `interface/discards[direction="ingress"]/l3/rx/ttl-expired/packets`
 
 An IPv4 packet discarded on egress due to no buffers would increment:
 
-- interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets
-- interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes
-- interface/discards[direction="egress"]/no-buffer/class[id="0"]/packets
-- interface/discards[direction="egress"]/no-buffer/class[id="0"]/bytes
+- `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets`
+- `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes`
+- `interface/discards[direction="egress"]/no-buffer/class[id="0"]/packets`
+- `interface/discards[direction="egress"]/no-buffer/class[id="0"]/bytes`
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
-- interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/packets
-- interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/bytes
-- interface/discards[direction="ingress"]/policy/l3/rpf/packets
+- `interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/packets`
+- `interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/bytes`
+- `interface/discards[direction="ingress"]/policy/l3/rpf/packets`
 
 A "good" Layer-2 frame received would increment:
 
-- interface/traffic[direction="ingress"]/l2/frames
-- interface/traffic[direction="ingress"]/l2/bytes
-- interface/traffic[direction="ingress"]/qos/class[id="0"]/packets
-- interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes
+- `interface/traffic[direction="ingress"]/l2/frames`
+- `interface/traffic[direction="ingress"]/l2/bytes`
+- `interface/traffic[direction="ingress"]/qos/class[id="0"]/packets`
+- `interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes`
 
 
 ## "ietf-packet-discard-reporting" YANG Module {#datamodel-module}
@@ -530,9 +534,9 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 <CODE ENDS>
 ~~~~~~~~~~
 
-# Operationnal Considerations
+# Operational Considerations
 
-## Deployment Considerations Experience {#experience}
+## Deployment Experience {#experience}
 
 This section captures practical insights gained from implementing the model across multiple vendors' platforms, as guidance for future implementers and operators:
 
@@ -543,7 +547,7 @@ This section captures practical insights gained from implementing the model acro
 5. It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.
 6. It is not possible to identify a configuration error (e.g., when intended discards are unintended) with device discard metrics alone. For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL (i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before).
 7. Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.
-8. While the classification tree is seven layers deep, a minimal implementation may only implement the top six layers.
+8. While the classification tree is seven levels deep, a minimal implementation may only implement the top six.
 
 ## Anchoring Flow Structure
 
@@ -570,7 +574,7 @@ A YANG-compliant open-source SLAX script implements a subset of the DM defined i
 
 * <https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-sample/>
 
-Operational experience from these implementations is reflected in the deployment considerations in {{experience}}.
+Practical observations from these implementations are reflected in {{experience}}.
 
 # Security Considerations {#security}
 
@@ -673,10 +677,10 @@ Rx-->PHY/MAC+--> Ingress  +--> Buffers +--> Egress   +-->PHY/MAC+-> Tx
     +-------+  +----------+  +---------+  +----------+  +-------+
 
 Unintended:
-    error/rx/l2  error/l3/rx   no-buffer    error/l3/tx
-                 error/l3/no-route
-                 error/l3/rx/ttl-expired
-                 error/internal
+   errors/rx/l2  errors/l3/rx  no-buffer    errors/l3/tx
+                 errors/l3/no-route
+                 errors/l3/rx/ttl-expired
+                 errors/internal
 Intended:
                  policy/acl                 policy/acl
                  policy/policer             policy/policer
