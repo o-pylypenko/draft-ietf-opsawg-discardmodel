@@ -27,7 +27,8 @@ Abstract
    unintended (e.g., due to congestion or errors) - to enable automated
    network mitigation of unintended packet loss.  The YANG data model
    specifies an implementation of this Information Model for network
-   elements.
+   elements with a focus on the interface, device, and control-plane
+   discards.
 
 About This Document
 
@@ -164,11 +165,12 @@ Table of Contents
    The scope of this document is limited to reporting packet loss at
    Layer 3 and frames discarded at Layer 2.  This document considers
    only the signals that may trigger automated mitigation actions and
-   not how the actions are defined or executed.
+   not how the actions are defined or executed.  Such considerations are
+   deplyment-specific.
 
    Section 3 describes the problem space and requirements.  Section 4
-   defines the IM and classification scheme.  Section 5 specifies the
-   corresponding YANG data model and implementation requirements
+   defines the IM and its classification scheme.  Section 5 specifies
+   the corresponding YANG data model and implementation requirements
    together with a set of usage examples, and the complete YANG module
    definition.  Appendices A and B provide additional context and
    implementation guidance.
@@ -256,7 +258,8 @@ Table of Contents
    four key features of packet loss:
 
    FEATURE-DISCARD-SCOPE:  Determines which devices, interfaces, and/or
-      flows are impacted.
+      flows are impacted.  This also needs to cover control plane
+      discards.
 
    FEATURE-DISCARD-RATE:  The rate and/or magnitude of the discards,
       indicating the severity and urgency of the problem.  Rate may be
@@ -294,10 +297,11 @@ Table of Contents
    lossless translation to the corresponding YANG data model, which is
    defined in Section 5.
 
-   In order to ease reuse of the IM structure by DMs but without
-   requiring that these DMs to parse the "sx" structure defined in
-   [RFC8791], main reusable nodes are defined in a common module
-   (Section 4.3) while the main IM structure is defined in Section 4.4.
+      Design note: In order to ease reuse of the IM structure by DMs but
+      without requiring that these DMs to parse the "sx" structure
+      defined in [RFC8791], main reusable nodes are defined in a common
+      module (Section 4.3) while the main IM structure is defined in
+      Section 4.4.
 
 4.1.  Structure
 
@@ -307,8 +311,8 @@ Table of Contents
    (direction), whether they were successfully processed or discarded
    (type), what protocol layer they belong to (layer), and the specific
    reason for any discards (sub-types).  This structure enables both
-   high-level monitoring of total discards and more detailed triage to
-   map to mitigation actions.
+   high-level monitoring of total discards (i.e., aggregates) and more
+   detailed triage to map to mitigation actions.
 
    The abstract structure of the IM is depicted in Figure 1.  The full
    YANG tree diagram of the IM is provided in Appendix C.
@@ -1836,8 +1840,9 @@ Table of Contents
    state, or RPCs.  As such, there are no additional security issues
    related to the YANG module that need to be considered.
 
-   Modules that use the groupings that are defined in this document
-   should identify the corresponding security considerations.
+   Modules that use the groupings that are defined in the "ietf-packet-
+   discard-reporting-common" module should identify the corresponding
+   security considerations.
 
 8.2.  Data Model
 
@@ -2111,20 +2116,20 @@ Appendix A.  Where Do Packets Get Dropped?
 
    Packets ingress on the left and egress on the right:
 
-                                +-----------+
-                                |           |
-                                |  Control  |
-                                |  Plane    |
-                                +---+---^---+
-                           from_cpu |   | to_cpu
-                                    |   |
-          +-------------------------v---+---------------------+
+                              .-----------.
+                              |  Control  |
+                              |   Plane   |
+                              |           |
+                              '---+---^---'
+                         from_cpu |   | to_cpu
+                                  |   |
+          .-----------------------v---+-----------------------.
           |                                                   |
-      +---+---+  +----------+  +---------+  +----------+  +---+---+
+      .---+---.  .----------.  .---------.  .----------.  .---+---.
       |       |  |          |  |         |  |          |  |       |
   Rx-->PHY/MAC+--> Ingress  +--> Buffers +--> Egress   +-->PHY/MAC+-> Tx
       |       |  | Pipeline |  |         |  | Pipeline |  |       |
-      +-------+  +----------+  +---------+  +----------+  +-------+
+      '-------'  '----------'  '---------'  '----------'  '-------'
 
   Unintended:
      errors/rx/l2  errors/l3/rx  no-buffer    errors/l3/tx
@@ -2137,7 +2142,7 @@ Appendix A.  Where Do Packets Get Dropped?
                    policy/urpf
                    policy/null-route
 
-              Figure 3: Example of where packets get dropped
+              Figure 3: Example of Where Packets Get Dropped
 
    See Appendix B for examples of how these discard signals map to root
    causes and mitigation actions.
