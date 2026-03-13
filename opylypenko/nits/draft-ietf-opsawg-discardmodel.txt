@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 13 September 2026                                        Nvidia
+Expires: 14 September 2026                                        Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                           12 March 2026
+                                                           13 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -61,7 +61,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 September 2026.
+   This Internet-Draft will expire on 14 September 2026.
 
 Copyright Notice
 
@@ -2127,15 +2127,15 @@ Appendix A.  Where Do Packets Get Dropped?
       +-------+  +----------+  +---------+  +----------+  +-------+
 
   Unintended:
-      errors/rx/l2  errors/l3/rx   no-buffer    errors/l3/tx
-                    errors/l3/no-route
-                    errors/l3/rx/ttl-expired
-                    errors/internal
+     errors/rx/l2  errors/l3/rx  no-buffer    errors/l3/tx
+                   errors/l3/no-route
+                   errors/l3/rx/ttl-expired
+                   errors/internal
   Intended:
-                    policy/acl                  policy/acl
-                    policy/policer              policy/policer
-                    policy/urpf
-                    policy/null-route
+                   policy/acl                 policy/acl
+                   policy/policer             policy/policer
+                   policy/urpf
+                   policy/null-route
 
               Figure 3: Example of where packets get dropped
 
