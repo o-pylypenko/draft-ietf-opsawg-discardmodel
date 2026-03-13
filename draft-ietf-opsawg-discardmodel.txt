@@ -1183,7 +1183,7 @@ Table of Contents
        "IETF OPSAWG (Operations and Management Area Working Group)";
      contact
        "WG Web:   https://datatracker.ietf.org/wg/opsawg/
-        WG List:  mailto:opsawg@ietf.org
+        WG List:  OPSAWG <mailto:opsawg@ietf.org>
 
         Editor:   John Evans
                   <mailto:jevanamz@amazon.co.uk>
