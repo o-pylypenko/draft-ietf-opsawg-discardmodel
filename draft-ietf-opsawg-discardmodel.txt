@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 14 September 2026                                        Nvidia
+Expires: 15 September 2026                                        Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                           13 March 2026
+                                                           14 March 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 September 2026.
+   This Internet-Draft will expire on 15 September 2026.
 
 Copyright Notice
 
@@ -1931,11 +1931,6 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
-              and W. Weiss, "An Architecture for Differentiated
-              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
-              <https://www.rfc-editor.org/rfc/rfc2475>.
-
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
@@ -1999,6 +1994,11 @@ Table of Contents
    [RED93]    Floyd, S. and V. Jacobson, "Random early detection
               gateways for congestion avoidance", August 1993,
               <https://ieeexplore.ieee.org/document/251892>.
+
+   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
+              and W. Weiss, "An Architecture for Differentiated
+              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
+              <https://www.rfc-editor.org/rfc/rfc2475>.
 
    [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
               Defeating Denial of Service Attacks which employ IP Source
