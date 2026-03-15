@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-12T00:55:13.112387+00:00",
+  "timestamp": "2026-03-15T01:10:33.284319+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -2818,7 +2818,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-03-06T16:05:06Z",
-      "updatedAt": "2026-03-06T18:52:33Z",
+      "updatedAt": "2026-03-13T06:52:04Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "0268c8b6b7732ee385ff2dbdb47ff745a0855aa4",
@@ -3012,6 +3012,48 @@
           "body": "",
           "createdAt": "2026-03-10T07:05:42Z",
           "updatedAt": "2026-03-10T07:05:42Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 69,
+      "id": "PR_kwDOOCO1i87KLwdg",
+      "title": "Nits: minor fixes, typos, and formatting",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/69",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "- Consistent with the yang model usage of plural \"errors\"\r\n- loss -> discard\r\n- making kramdown happy about `[]`\r\n- author format",
+      "createdAt": "2026-03-12T22:06:07Z",
+      "updatedAt": "2026-03-13T06:51:45Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "cbc904bd2530b0a43f75a74f5244de78a39030ac",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "opylypenko/nits",
+      "headRefOid": "5c6f0e242b48bcfeab4db10f5cb3b8c20e1a10b9",
+      "closedAt": "2026-03-13T06:28:05Z",
+      "mergedAt": "2026-03-13T06:28:05Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "46bd994ff42d1f81e64b07aab8163a29ccacd45e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i87q9WWw",
+          "commit": {
+            "abbreviatedOid": "5c6f0e2"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Good catches @o-pylypenko. Thanks. ",
+          "createdAt": "2026-03-13T06:27:48Z",
+          "updatedAt": "2026-03-13T06:27:48Z",
           "comments": []
         }
       ]
