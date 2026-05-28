@@ -739,4 +739,4 @@ Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitke
 
 Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
 
-Thanks to Diego Lopez for shepherding the document.
+Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.
