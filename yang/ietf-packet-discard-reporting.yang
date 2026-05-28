@@ -113,6 +113,12 @@ module ietf-packet-discard-reporting {
       "Indicates a discard due to a policy.";
   }
 
+  identity no-buffer {
+    base discard-class;
+    description
+      "Indicates a discard due to buffer unavailability.";
+  }
+
   /*
    * Groupings
    */
