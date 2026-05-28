@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 15 September 2026                                        Nvidia
+Expires: 29 November 2026                                         Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                           14 March 2026
+                                                             28 May 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 15 September 2026.
+   This Internet-Draft will expire on 29 November 2026.
 
 Copyright Notice
 
@@ -2019,7 +2019,7 @@ Table of Contents
               2004, <https://www.rfc-editor.org/rfc/rfc3704>.
 
    [RFC3882]  Turk, D., "Configuring BGP to Block Denial-of-Service
-              Attacks", RFC 3882, DOI 10.17487/RFC3882, September 2004,
+              Attacks", RFC 3882, DOI 10.17487/RFC3882, October 2004,
               <https://www.rfc-editor.org/rfc/rfc3882>.
 
    [RFC4252]  Ylonen, T. and C. Lonvick, Ed., "The Secure Shell (SSH)
