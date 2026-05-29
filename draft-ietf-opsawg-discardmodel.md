@@ -102,19 +102,6 @@ informative:
           target: https://ieeexplore.ieee.org/document/251892
           date: 31 August 1993
 
-     gNMI:
-          title: gRPC Network Management Interface
-          author:
-            - ins: R. Shakir
-            - ins: A. Shaikh
-            - ins: P. Borman
-            - ins: M. Hines
-            - ins: C. Lebsack
-            - ins: C. Morrow
-          target: https://datatracker.ietf.org/meeting/98/materials/slides-98-rtgwg-gnmi-intro-draft-openconfig-rtgwg-gnmi-spec-00
-          date: March 2017
-          refcontent: IETF 98
-
 --- abstract
 
 This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on the interface, device, and control-plane discards.
@@ -129,7 +116,7 @@ Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards,
 
 This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting to address the above issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this IM for network elements, while maintaining consistency through clear semantics.
 
-The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed. Such considerations are deplyment-specific.
+The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed. Such considerations are deployment-specific.
 
 {{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and its classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. Appendices {{<wheredropped}} and {{<mapping}} provide additional context and implementation guidance.
 
@@ -199,7 +186,7 @@ The IM is defined using YANG {{!RFC7950}}, with Data Structure Extensions {{!RFC
 
 ## Structure {#infomodel-structure}
 
-The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction of traffic they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (sub-types). This structure enables both high-level monitoring of total discards (i.e., aggregates) and more detailed triage to map to mitigation actions.
+The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction of traffic they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (subtypes). This structure enables both high-level monitoring of total discards (i.e., aggregates) and more detailed triage to map to mitigation actions.
 
 The abstract structure of the IM is depicted in {{tree-im-abstract}}. The full YANG tree diagram of the IM is provided in {{sec-im-full-tree}}.
 
@@ -302,7 +289,7 @@ module: ietf-packet-discard-reporting-sx
 
 The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying DMs, the IM supports a set of "features" to control the supported type.
 
-A complete classification path follows the pattern: component/direction/type/layer/sub-type/sub-sub-type/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
+A complete classification path follows the pattern: component/direction/type/layer/subtype/sub-subtype/.../metric. {{wheredropped}} illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:
 
 - Component:
   - control-plane: discards of traffic to or from a device's control plane.
@@ -326,7 +313,7 @@ The hierarchical structure allows for future extensions while maintaining backwa
 
 The corresponding YANG module is defined in {{infomodel-module}}.
 
-## Sub-type Definitions
+## Subtype Definitions
 
 discards/policy/:
 : These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Distributed Denial-of-Service (DDoS) protection rules, and explicit null routes.  In practice, ingress DDoS protection policies are often realized using mechanisms such as ingress filtering and uRPF ({{?RFC2827}}, {{?RFC3704}}, and {{?RFC8704}}), remotely triggered blackholing ({{?RFC3882}}, {{?RFC5635}}), or BGP Flow Specification–based filters ({{?RFC8955}}, {{?RFC8956}}, and {{?RFC9117}}); all such policy-driven discards are reported under this class.
@@ -340,7 +327,7 @@ discards/errors/:
    * discards/errors/l3/rx/:
    : These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
 
-   * discards/errors/l3/rx/ttl-expired:
+   * discards/errors/l3/ttl-expired:
    : These discards occur due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.
 
    * discards/errors/l3/no-route/:
@@ -484,7 +471,7 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
 12. No-buffer discards can be realized differently with different memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
 13. When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution MUST relate to the outer header at the point of discard.
-14. Traffic to the device control plane has its own class. However, traffic from the device control plane MUST be accounted for in the same way as other egress traffic.
+14. Traffic to the device control plane (to-CPU) has its own class. Traffic from the device control plane (from-CPU) is accounted for by origin, independent of the forwarding mechanism (e.g., any egress policer it traverses), and MUST also be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
 
@@ -501,7 +488,7 @@ A received unicast IPv6 packet discarded due to Hop Limit expiry would increment
 
 - `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/packets`
 - `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/bytes`
-- `interface/discards[direction="ingress"]/l3/rx/ttl-expired/packets`
+- `interface/discards[direction="ingress"]/errors/l3/ttl-expired`
 
 An IPv4 packet discarded on egress due to no buffers would increment:
 
@@ -514,7 +501,7 @@ A multicast IPv6 packet dropped due to RPF check failure would increment:
 
 - `interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/packets`
 - `interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/multicast/bytes`
-- `interface/discards[direction="ingress"]/policy/l3/rpf/packets`
+- `interface/discards[direction="ingress"]/policy/l3/rpf`
 
 A "good" Layer-2 frame received would increment:
 
@@ -594,7 +581,7 @@ The "ietf-packet-discard-reporting-common" YANG module defines a set of identiti
 
 ## Data Model {#security-datamodel}
 
-This section is modeled after the template described in {{Section 3.7.1 of ?I-D.ietf-netmod-rfc8407bis}}.
+This section is modeled after the template described in {{Section 3.7.1 of ?RFC9907}}.
 
 The YANG module specified in {{datamodel-module}} defines a data model that is designed to be accessed via YANG-based management protocols, such as Network Configuration Protocol (NETCONF) {{?RFC6241}} and RESTCONF {{?RFC8040}}. These YANG-based management protocols (1) have to use a secure transport layer (e.g., Secure Shell (SSH) {{?RFC4252}}, TLS {{?RFC8446}}, and QUIC {{?RFC9000}}) and (2) have to use mutual authentication.
 
@@ -613,15 +600,14 @@ rt:control-plane-protocol/pdr:discard-stats, if:statistics/pdr:traffic, if:stati
 IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" {{!RFC3688}}:
 
 ~~~~
-   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+   URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
 
-   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
+   URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
-
-   URI:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
+   URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
 ~~~~
@@ -632,19 +618,19 @@ IANA is requested to register the following URI in the "ns" subregistry within t
 ~~~~
    Name:  ietf-packet-discard-reporting-common
    Namespace:
-     urn:ietf:params:xml:ns:ietf-packet-discard-reporting-common
+     urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
    Prefix:  pdr-common
    Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting-sx
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting-sx
+   Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Prefix:  pdr-sx
    Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting
-   Namespace:  urn:ietf:params:xml:ns:ietf-packet-discard-reporting
+   Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting
    Prefix:  pdr
    Maintained by IANA?  N
    Reference:  RFC XXXX
@@ -676,14 +662,14 @@ Rx-->PHY/MAC+--> Ingress  +--> Buffers +--> Egress   +-->PHY/MAC+-> Tx
     '-------'  '----------'  '---------'  '----------'  '-------'
 
 Unintended:
-   errors/rx/l2  errors/l3/rx  no-buffer    errors/l3/tx
+   errors/l2/rx  errors/l3/rx  no-buffer    errors/l3/tx
                  errors/l3/no-route
-                 errors/l3/rx/ttl-expired
+                 errors/l3/ttl-expired
                  errors/internal
 Intended:
                  policy/acl                 policy/acl
                  policy/policer             policy/policer
-                 policy/urpf
+                 policy/rpf
                  policy/null-route
 
 ~~~~~~~~~~
@@ -699,9 +685,9 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 | DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
 |:--------------|:--------------|:-------------|:----------------:|
 | ingress/discards/errors/l2/rx | Upstream device or link error | >Baseline| O(1min) |
-| ingress/discards/errors/l3/rx/ttl-expired | Tracert | <=Baseline | |
-| ingress/discards/errors/l3/rx/ttl-expired | Convergence | >Baseline | O(1s) |
-| ingress/discards/errors/l3/rx/ttl-expired | Routing loop | >Baseline | O(1min) |
+| ingress/discards/errors/l3/ttl-expired | Tracert | <=Baseline | |
+| ingress/discards/errors/l3/ttl-expired | Convergence | >Baseline | O(1s) |
+| ingress/discards/errors/l3/ttl-expired | Routing loop | >Baseline | O(1min) |
 | .\*/policy/.\* | Policy | | |
 | ingress/discards/errors/l3/no-route | Convergence | >Baseline | O(1s) |
 | ingress/discards/errors/l3/no-route | Config error | >Baseline | O(1min) |
@@ -714,9 +700,9 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 | DISCARD-CLASS |  Unintended? | Possible actions |
 |:--------------|:-----------:|:-----------------|
 | ingress/discards/errors/l2/rx | Y | Take upstream link or device out-of-service |
-| ingress/discards/errors/l3/rx/ttl-expired | N | no action |
-| ingress/discards/errors/l3/rx/ttl-expired | Y | No action |
-| ingress/discards/errors/l3/rx/ttl-expired | Y | Roll-back change |
+| ingress/discards/errors/l3/ttl-expired | N | no action |
+| ingress/discards/errors/l3/ttl-expired | Y | No action |
+| ingress/discards/errors/l3/ttl-expired | Y | Roll-back change |
 | .\*/policy/.\* |  N | No action |
 | ingress/discards/errors/l3/no-route | Y | No action |
 | ingress/discards/errors/l3/no-route | Y | Roll-back change |
@@ -753,4 +739,4 @@ Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitke
 
 Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
 
-Thanks to Diego Lopez for shepherding the document.
+Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.

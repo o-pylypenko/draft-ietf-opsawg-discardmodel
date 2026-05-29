@@ -112,7 +112,11 @@ module ietf-packet-discard-reporting-common {
 
        This identity is defined here rather than importing
        it from other YANG modules to simplify implementations
-       and avoid inheriting dependencies of those modules.";
+       and avoid inheriting dependencies of those modules.
+
+       Additional address families can be added by defining
+       identities derived from this base identity, without
+       affecting existing implementations.";
   }
 
   identity ip {
@@ -139,22 +143,22 @@ module ietf-packet-discard-reporting-common {
 
   grouping basic-packets {
     description
-      "Grouping for Layer 3 packet counters.";
+      "Grouping for packet counters.";
     leaf packets {
       type yang:counter64;
       description
-        "Number of Layer 3 packets.";
+        "Number of packets.";
     }
   }
 
   grouping basic-packets-bytes {
     description
-      "Grouping for Layer 3 packet and byte counters.";
+      "Grouping for packet and byte counters.";
     uses basic-packets;
     leaf bytes {
       type yang:counter64;
       description
-        "Number of Layer 3 bytes.";
+        "Number of bytes.";
     }
   }
 
