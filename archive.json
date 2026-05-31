@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-15T01:10:33.284319+00:00",
+  "timestamp": "2026-05-31T02:02:01.250967+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -3054,6 +3054,63 @@
           "body": "Good catches @o-pylypenko. Thanks. ",
           "createdAt": "2026-03-13T06:27:48Z",
           "updatedAt": "2026-03-13T06:27:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 70,
+      "id": "PR_kwDOOCO1i87gGooO",
+      "title": "Addressing AD feedback",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/70",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Addressed comments:\r\n\r\n* fixed TTL/RPF everywhere I could find\r\n* fixed IANA namespaces\r\n* added no-buffer to identities.\r\n* clarified (hopefully!) control-plane direction semantics\r\n* dropped gNMI reference -- it doesn't look to be referenced at all\r\n* added a note wrt af extension\r\n* minor diagram correction\r\n* other nits like typos, L3 packets, RFC9907, and sub-types -> subtypes\r\n\r\nrest:\r\n* RFC 2475 is not a downref -- it is referenced informatively\r\n* on zero-based-counter64: 1) Normally those counters are consumed as deltas over a polling interval, so initial value has no operational meaning, 2) zero on creation hence impose a constraint that is not needed and 3) ietf-interfaces does not [seem to use zero-based-counter64](https://www.rfc-editor.org/rfc/rfc8343.html#section-3), and we're augmenting that.\r\n\r\n\r\n\r\n",
+      "createdAt": "2026-05-28T05:16:13Z",
+      "updatedAt": "2026-05-29T15:56:34Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d6117bab4043fb36eaedcffe13734d3111407866",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "ad-review",
+      "headRefOid": "b308405151dbfba4dd36fc647660748eb685d880",
+      "closedAt": "2026-05-29T15:56:33Z",
+      "mergedAt": "2026-05-29T15:56:33Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "26dcffb6485eb49ab1b41633c83dee8dcc566ee3"
+      },
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> * RFC 2475 is not a downref -- it is referenced informatively\r\n\r\nThis is needed normatively:\r\n\r\n\"If Diffserv [[RFC2475](https://o-pylypenko.github.io/draft-ietf-opsawg-discardmodel/draft-ietf-opsawg-discardmodel.html#RFC2475)] is not used, no-buffer discards MUST be reported as class[id=\"0\"], which represents the default class.\"\r\n\r\nI suggest to leave this as it is. No change needed.",
+          "createdAt": "2026-05-28T05:58:43Z",
+          "updatedAt": "2026-05-28T05:58:43Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> * on zero-based-counter64: 1) Normally those counters are consumed as deltas over a polling interval, so initial value has no operational meaning, 2) zero on creation hence impose a constraint that is not needed and 3) ietf-interfaces does not [seem to use zero-based-counter64](https://www.rfc-editor.org/rfc/rfc8343.html#section-3), and we're augmenting that.\r\n\r\nAgree.\r\n",
+          "createdAt": "2026-05-28T06:02:18Z",
+          "updatedAt": "2026-05-28T06:02:18Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABBPen0g",
+          "commit": {
+            "abbreviatedOid": "b308405"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-28T06:06:19Z",
+          "updatedAt": "2026-05-28T06:06:19Z",
           "comments": []
         }
       ]
