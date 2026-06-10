@@ -1060,7 +1060,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Evans, et al.</td>
-<td class="center">Expires 6 December 2026</td>
+<td class="center">Expires 12 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1073,12 +1073,12 @@ svg {
 <dd class="internet-draft">draft-ietf-opsawg-discardmodel-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-04" class="published">4 June 2026</time>
+<time datetime="2026-06-10" class="published">10 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-06">6 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-12">12 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1147,7 +1147,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 6 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2462,47 +2462,48 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro discard-stats {control-plane-stats}?
+    +--ro traffic-discard-stats {control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  ...
        +--ro discards* [direction]
           ...
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro discard-order-capability*   identityref {interface-stats}?
-    +--ro traffic* [direction] {interface-stats}?
-    |  +--ro direction    identityref
-    |  +--ro l2
-    |  |  ...
-    |  +--ro l3
-    |  |  ...
-    |  +--ro qos!
-    |     +--ro class* [id]
-    |        ...
-    +--ro discards* [direction] {interface-stats}?
-       +--ro direction    identityref
-       +--ro l2
-       |  ...
-       +--ro l3
-       |  ...
-       +--ro errors
+    +--ro traffic-discard-stats {interface-stats}?
+       +--ro discard-order-capability*   identityref?
+       +--ro traffic* [direction] {interface-stats}?
+       |  +--ro direction    identityref
        |  +--ro l2
        |  |  ...
        |  +--ro l3
        |  |  ...
-       |  +--ro internal
-       |     ...
-       +--ro policy
-       |  +--ro l2
-       |  |  ...
-       |  +--ro l3
-       |     ...
-       +--ro no-buffer
-          +--ro qos!
-             +--ro class* [id]
-                ...
+       |  +--ro qos!
+       |     +--ro class* [id]
+       |        ...
+       +--ro discards* [direction]?
+          +--ro direction    identityref
+          +--ro l2
+          |  ...
+          +--ro l3
+          |  ...
+          +--ro errors
+          |  +--ro l2
+          |  |  ...
+          |  +--ro l3
+          |  |  ...
+          |  +--ro internal
+          |     ...
+          +--ro policy
+          |  +--ro l2
+          |  |  ...
+          |  +--ro l3
+          |     ...
+          +--ro no-buffer
+             +--ro qos!
+                +--ro class* [id]
+                   ...
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro discard-stats {device-stats}?
+    +--ro traffic-discard-stats {device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -2681,6 +2682,8 @@ module: ietf-packet-discard-reporting
 <div class="breakable sourcecode" id="section-5.4-2">
 <pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting@2026-03-03.yang"
 
+=============== NOTE: '\' line wrapping per RFC 8792 ================
+
 module ietf-packet-discard-reporting {
   yang-version 1.1;
   namespace
@@ -2833,11 +2836,11 @@ module ietf-packet-discard-reporting {
     if-feature "pdr-common:control-plane-stats";
     description
       "Adds control plane discard counters.";
-    container discard-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
-        "List of control plane discard counters.";
+        "List of traffic and control plane discard counters.";
       uses discard-order-policy;
       uses pdr-common:control-plane;
     }
@@ -2845,21 +2848,29 @@ module ietf-packet-discard-reporting {
   augment "/if:interfaces/if:interface/if:statistics" {
     if-feature "pdr-common:interface-stats";
     description
-      "Adds packet discard reporting to the interface statistics.";
-    uses discard-order-policy;
-    uses pdr-common:interface;
+      "Adds traffic and discard reporting to the interface \
+                                                        statistics.";
+
+    container traffic-discard-stats {
+      nacm:default-deny-all;
+      config false;
+      description
+        "List of traffic and interface discard counters.";
+      uses discard-order-policy;
+      uses pdr-common:interface;
+    }
   }
   augment "/lne:logical-network-elements"
         + "/lne:logical-network-element" {
     if-feature "pdr-common:device-stats";
     description
-      "Adds device level packet counters.";
+      "Adds device level traffic and discard counters.";
 
-    container discard-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
-        "List of device level discard counters.";
+        "List of traffic and device level discard counters.";
       uses discard-order-policy;
       uses pdr-common:traffic-and-discards;
     }
@@ -2998,7 +3009,7 @@ module ietf-packet-discard-reporting {
 <p id="section-8.2-4">There are no particularly sensitive writable data nodes.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 <p id="section-8.2-5">Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:<a href="#section-8.2-5" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-8.2-6">
-          <dt id="section-8.2-6.1">rt:control-plane-protocol/pdr:discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:discards, and lne:logical-network-element/pdr:discard-stats:</dt>
+          <dt id="section-8.2-6.1">rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:</dt>
           <dd style="margin-left: 1.5em" id="section-8.2-6.2">
             <p id="section-8.2-6.2.1">Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.<a href="#section-8.2-6.2.1" class="pilcrow">¶</a></p>
 </dd>
@@ -3806,7 +3817,7 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro discard-stats {pdr-common:control-plane-stats}?
+    +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  +--ro direction    identityref
@@ -3819,102 +3830,102 @@ module: ietf-packet-discard-reporting
           +--ro policy
              +--ro packets?   yang:counter64
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro discard-order-capability*   identityref
-    |       {pdr-common:interface-stats}?
-    +--ro traffic* [direction] {pdr-common:interface-stats}?
-    |  +--ro direction    identityref
-    |  +--ro l2
-    |  |  +--ro frames?   yang:counter64
-    |  |  +--ro bytes?    yang:counter64
-    |  +--ro l3
-    |  |  +--ro address-family-stat* [address-family]
-    |  |     +--ro address-family    identityref
-    |  |     +--ro packets?          yang:counter64
-    |  |     +--ro bytes?            yang:counter64
-    |  |     +--ro unicast
-    |  |     |  +--ro packets?   yang:counter64
-    |  |     |  +--ro bytes?     yang:counter64
-    |  |     +--ro multicast
-    |  |     |  +--ro packets?   yang:counter64
-    |  |     |  +--ro bytes?     yang:counter64
-    |  |     +--ro broadcast
-    |  |        +--ro packets?   yang:counter64
-    |  |        +--ro bytes?     yang:counter64
-    |  +--ro qos!
-    |     +--ro class* [id]
-    |        +--ro id         string
-    |        +--ro packets?   yang:counter64
-    |        +--ro bytes?     yang:counter64
-    +--ro discards* [direction] {pdr-common:interface-stats}?
-       +--ro direction    identityref
-       +--ro l2
-       |  +--ro frames?   yang:counter64
-       |  +--ro bytes?    yang:counter64
-       +--ro l3
-       |  +--ro address-family-stat* [address-family]
-       |     +--ro address-family    identityref
-       |     +--ro packets?          yang:counter64
-       |     +--ro bytes?            yang:counter64
-       |     +--ro unicast
-       |     |  +--ro packets?   yang:counter64
-       |     |  +--ro bytes?     yang:counter64
-       |     +--ro multicast
-       |     |  +--ro packets?   yang:counter64
-       |     |  +--ro bytes?     yang:counter64
-       |     +--ro broadcast
-       |        +--ro packets?   yang:counter64
-       |        +--ro bytes?     yang:counter64
-       +--ro errors
-       |  +--ro l2
-       |  |  +--ro rx
-       |  |  |  +--ro frames?          yang:counter64
-       |  |  |  +--ro crc-error?       yang:counter64
-       |  |  |  +--ro invalid-mac?     yang:counter64
-       |  |  |  +--ro invalid-vlan?    yang:counter64
-       |  |  |  +--ro invalid-frame?   yang:counter64
-       |  |  +--ro tx
-       |  |     +--ro frames?   yang:counter64
-       |  +--ro l3
-       |  |  +--ro rx
-       |  |  |  +--ro packets?          yang:counter64
-       |  |  |  +--ro checksum-error?   yang:counter64
-       |  |  |  +--ro mtu-exceeded?     yang:counter64
-       |  |  |  +--ro invalid-packet?   yang:counter64
-       |  |  +--ro ttl-expired?     yang:counter64
-       |  |  +--ro no-route?        yang:counter64
-       |  |  +--ro invalid-sid?     yang:counter64
-       |  |  +--ro invalid-label?   yang:counter64
-       |  |  +--ro tx
-       |  |     +--ro packets?   yang:counter64
-       |  +--ro internal
-       |     +--ro packets?        yang:counter64
-       |     +--ro parity-error?   yang:counter64
-       +--ro policy
+    +--ro traffic-discard-stats {pdr-common:interface-stats}?
+       +--ro discard-order-capability*   identityref
+       +--ro traffic* [direction]
+       |  +--ro direction    identityref
        |  +--ro l2
        |  |  +--ro frames?   yang:counter64
-       |  |  +--ro acl?      yang:counter64
+       |  |  +--ro bytes?    yang:counter64
        |  +--ro l3
-       |     +--ro packets?      yang:counter64
-       |     +--ro acl?          yang:counter64
-       |     +--ro policer
-       |     |  +--ro packets?   yang:counter64
-       |     |  +--ro bytes?     yang:counter64
-       |     |  +--ro classes!
-       |     |     +--ro class* [id]
-       |     |        +--ro id         string
-       |     |        +--ro packets?   yang:counter64
-       |     |        +--ro bytes?     yang:counter64
-       |     +--ro null-route?   yang:counter64
-       |     +--ro rpf?          yang:counter64
-       |     +--ro ddos?         yang:counter64
-       +--ro no-buffer
-          +--ro qos!
-             +--ro class* [id]
-                +--ro id         string
-                +--ro packets?   yang:counter64
-                +--ro bytes?     yang:counter64
+       |  |  +--ro address-family-stat* [address-family]
+       |  |     +--ro address-family    identityref
+       |  |     +--ro packets?          yang:counter64
+       |  |     +--ro bytes?            yang:counter64
+       |  |     +--ro unicast
+       |  |     |  +--ro packets?   yang:counter64
+       |  |     |  +--ro bytes?     yang:counter64
+       |  |     +--ro multicast
+       |  |     |  +--ro packets?   yang:counter64
+       |  |     |  +--ro bytes?     yang:counter64
+       |  |     +--ro broadcast
+       |  |        +--ro packets?   yang:counter64
+       |  |        +--ro bytes?     yang:counter64
+       |  +--ro qos!
+       |     +--ro class* [id]
+       |        +--ro id         string
+       |        +--ro packets?   yang:counter64
+       |        +--ro bytes?     yang:counter64
+       +--ro discards* [direction]
+          +--ro direction    identityref
+          +--ro l2
+          |  +--ro frames?   yang:counter64
+          |  +--ro bytes?    yang:counter64
+          +--ro l3
+          |  +--ro address-family-stat* [address-family]
+          |     +--ro address-family    identityref
+          |     +--ro packets?          yang:counter64
+          |     +--ro bytes?            yang:counter64
+          |     +--ro unicast
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     +--ro multicast
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     +--ro broadcast
+          |        +--ro packets?   yang:counter64
+          |        +--ro bytes?     yang:counter64
+          +--ro errors
+          |  +--ro l2
+          |  |  +--ro rx
+          |  |  |  +--ro frames?          yang:counter64
+          |  |  |  +--ro crc-error?       yang:counter64
+          |  |  |  +--ro invalid-mac?     yang:counter64
+          |  |  |  +--ro invalid-vlan?    yang:counter64
+          |  |  |  +--ro invalid-frame?   yang:counter64
+          |  |  +--ro tx
+          |  |     +--ro frames?   yang:counter64
+          |  +--ro l3
+          |  |  +--ro rx
+          |  |  |  +--ro packets?          yang:counter64
+          |  |  |  +--ro checksum-error?   yang:counter64
+          |  |  |  +--ro mtu-exceeded?     yang:counter64
+          |  |  |  +--ro invalid-packet?   yang:counter64
+          |  |  +--ro ttl-expired?     yang:counter64
+          |  |  +--ro no-route?        yang:counter64
+          |  |  +--ro invalid-sid?     yang:counter64
+          |  |  +--ro invalid-label?   yang:counter64
+          |  |  +--ro tx
+          |  |     +--ro packets?   yang:counter64
+          |  +--ro internal
+          |     +--ro packets?        yang:counter64
+          |     +--ro parity-error?   yang:counter64
+          +--ro policy
+          |  +--ro l2
+          |  |  +--ro frames?   yang:counter64
+          |  |  +--ro acl?      yang:counter64
+          |  +--ro l3
+          |     +--ro packets?      yang:counter64
+          |     +--ro acl?          yang:counter64
+          |     +--ro policer
+          |     |  +--ro packets?   yang:counter64
+          |     |  +--ro bytes?     yang:counter64
+          |     |  +--ro classes!
+          |     |     +--ro class* [id]
+          |     |        +--ro id         string
+          |     |        +--ro packets?   yang:counter64
+          |     |        +--ro bytes?     yang:counter64
+          |     +--ro null-route?   yang:counter64
+          |     +--ro rpf?          yang:counter64
+          |     +--ro ddos?         yang:counter64
+          +--ro no-buffer
+             +--ro qos!
+                +--ro class* [id]
+                   +--ro id         string
+                   +--ro packets?   yang:counter64
+                   +--ro bytes?     yang:counter64
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro discard-stats {pdr-common:device-stats}?
+    +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -4017,7 +4028,8 @@ module: ietf-packet-discard-reporting
       </h2>
 <p id="appendix-E-1">The content of this document has benefitted from feedback from JR Rivers, Ronan Waide, Chris DeBruin, and Marcos Sanz.<a href="#appendix-E-1" class="pilcrow">¶</a></p>
 <p id="appendix-E-2">Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.<a href="#appendix-E-2" class="pilcrow">¶</a></p>
-<p id="appendix-E-3">Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, and Satoru Matsushima for the INTDIR review.<a href="#appendix-E-3" class="pilcrow">¶</a></p>
+<p id="appendix-E-3">Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, Satoru Matsushima for the INTDIR review
+and Derrell Piper for the SECDIR review.<a href="#appendix-E-3" class="pilcrow">¶</a></p>
 <p id="appendix-E-4">Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.<a href="#appendix-E-4" class="pilcrow">¶</a></p>
 </section>
 </div>
