@@ -738,6 +738,7 @@ The content of this document has benefitted from feedback from JR Rivers, Ronan 
 
 Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.
 
-Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
+Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, Satoru Matsushima for the INTDIR review
+and Derrell Piper for the SECDIR review.
 
 Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.
