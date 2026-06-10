@@ -150,11 +150,11 @@ module ietf-packet-discard-reporting {
     if-feature "pdr-common:control-plane-stats";
     description
       "Adds control plane discard counters.";
-    container discard-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
-        "List of control plane discard counters.";
+        "List of traffic and control plane discard counters.";
       uses discard-order-policy;
       uses pdr-common:control-plane;
     }
@@ -162,21 +162,28 @@ module ietf-packet-discard-reporting {
   augment "/if:interfaces/if:interface/if:statistics" {
     if-feature "pdr-common:interface-stats";
     description
-      "Adds packet discard reporting to the interface statistics.";
-    uses discard-order-policy;
-    uses pdr-common:interface;
+      "Adds traffic and discard reporting to the interface statistics.";
+
+    container traffic-discard-stats {
+      nacm:default-deny-all;
+      config false;
+      description
+        "List of traffic and interface discard counters.";
+      uses discard-order-policy;
+      uses pdr-common:interface;
+    }
   }
   augment "/lne:logical-network-elements"
         + "/lne:logical-network-element" {
     if-feature "pdr-common:device-stats";
     description
-      "Adds device level packet counters.";
+      "Adds device level traffic and discard counters.";
 
-    container discard-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
-        "List of device level discard counters.";
+        "List of traffic and device level discard counters.";
       uses discard-order-policy;
       uses pdr-common:traffic-and-discards;
     }
