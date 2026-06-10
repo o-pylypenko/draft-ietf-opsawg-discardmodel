@@ -2462,47 +2462,48 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro discard-stats {control-plane-stats}?
+    +--ro traffic-discard-stats {control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  ...
        +--ro discards* [direction]
           ...
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro discard-order-capability*   identityref {interface-stats}?
-    +--ro traffic* [direction] {interface-stats}?
-    |  +--ro direction    identityref
-    |  +--ro l2
-    |  |  ...
-    |  +--ro l3
-    |  |  ...
-    |  +--ro qos!
-    |     +--ro class* [id]
-    |        ...
-    +--ro discards* [direction] {interface-stats}?
-       +--ro direction    identityref
-       +--ro l2
-       |  ...
-       +--ro l3
-       |  ...
-       +--ro errors
+    +--ro traffic-discard-stats {interface-stats}?
+       +--ro discard-order-capability*   identityref?
+       +--ro traffic* [direction] {interface-stats}?
+       |  +--ro direction    identityref
        |  +--ro l2
        |  |  ...
        |  +--ro l3
        |  |  ...
-       |  +--ro internal
-       |     ...
-       +--ro policy
-       |  +--ro l2
-       |  |  ...
-       |  +--ro l3
-       |     ...
-       +--ro no-buffer
-          +--ro qos!
-             +--ro class* [id]
-                ...
+       |  +--ro qos!
+       |     +--ro class* [id]
+       |        ...
+       +--ro discards* [direction]?
+          +--ro direction    identityref
+          +--ro l2
+          |  ...
+          +--ro l3
+          |  ...
+          +--ro errors
+          |  +--ro l2
+          |  |  ...
+          |  +--ro l3
+          |  |  ...
+          |  +--ro internal
+          |     ...
+          +--ro policy
+          |  +--ro l2
+          |  |  ...
+          |  +--ro l3
+          |     ...
+          +--ro no-buffer
+             +--ro qos!
+                +--ro class* [id]
+                   ...
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro discard-stats {device-stats}?
+    +--ro traffic-discard-stats {device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -3008,7 +3009,7 @@ module ietf-packet-discard-reporting {
 <p id="section-8.2-4">There are no particularly sensitive writable data nodes.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 <p id="section-8.2-5">Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:<a href="#section-8.2-5" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-8.2-6">
-          <dt id="section-8.2-6.1">rt:control-plane-protocol/pdr:discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:discards, and lne:logical-network-element/pdr:discard-stats:</dt>
+          <dt id="section-8.2-6.1">rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:</dt>
           <dd style="margin-left: 1.5em" id="section-8.2-6.2">
             <p id="section-8.2-6.2.1">Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.<a href="#section-8.2-6.2.1" class="pilcrow">¶</a></p>
 </dd>
