@@ -150,7 +150,7 @@ module ietf-packet-discard-reporting {
     if-feature "pdr-common:control-plane-stats";
     description
       "Adds control plane discard counters.";
-    container traffic-discards-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
@@ -164,7 +164,7 @@ module ietf-packet-discard-reporting {
     description
       "Adds traffic and discard reporting to the interface statistics.";
 
-    container traffic-discards-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
@@ -179,7 +179,7 @@ module ietf-packet-discard-reporting {
     description
       "Adds device level traffic and discard counters.";
 
-    container traffic-discards-stats {
+    container traffic-discard-stats {
       nacm:default-deny-all;
       config false;
       description
