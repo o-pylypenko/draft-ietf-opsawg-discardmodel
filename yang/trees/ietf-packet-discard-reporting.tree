@@ -2,7 +2,7 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro traffic-discards-stats {pdr-common:control-plane-stats}?
+    +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  +--ro direction    identityref
@@ -15,7 +15,7 @@ module: ietf-packet-discard-reporting
           +--ro policy
              +--ro packets?   yang:counter64
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro traffic-discards-stats {pdr-common:interface-stats}?
+    +--ro traffic-discard-stats {pdr-common:interface-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  +--ro direction    identityref
@@ -110,7 +110,7 @@ module: ietf-packet-discard-reporting
                    +--ro packets?   yang:counter64
                    +--ro bytes?     yang:counter64
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro traffic-discards-stats {pdr-common:device-stats}?
+    +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
