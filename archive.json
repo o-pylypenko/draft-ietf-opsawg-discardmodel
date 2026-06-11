@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-31T02:02:01.250967+00:00",
+  "timestamp": "2026-06-11T02:11:21.134088+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -127,6 +127,24 @@
           "updatedAt": "2025-11-26T13:17:10Z"
         }
       ]
+    },
+    {
+      "number": 72,
+      "id": "I_kwDOOCO1i88AAAABE_U6yg",
+      "title": "SECDIR Review (Derrell Piper)",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/72",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "boucadair"
+      ],
+      "labels": [],
+      "body": "Document: draft-ietf-opsawg-discardmodel\nTitle: Information and Data Models for Packet Discard Reporting\nReviewer: Derrell Piper\nReview result: Ready\n\nI reviewed draft-ietf-opsawg-discardmodel-13. It defines an information model and YANG data model for packet discard reporting.\n\nI found no blocking security issues. The Security Considerations adequately cover the relevant management-plane concerns, including secure transport, mutual authentication, NACM-based access control, and the sensitivity of readable discard counters.\n\nOne non-blocking comment: Section 8.2 identifies the per-interface pdr:traffic and pdr:discards subtrees under if:statistics as sensitive readable data. However, nacm:default-deny-all is applied only to the new control-plane and device discard-stats containers, not to the interface augment into if:statistics. The authors should either reconcile that access-control posture or note why the per-interface breakdown is intentionally left to deployment-specific NACM policy rather than being marked by the module for default-deny-all protection.\n\nReady.\n",
+      "createdAt": "2026-06-10T09:23:11Z",
+      "updatedAt": "2026-06-10T22:05:38Z",
+      "closedAt": "2026-06-10T22:05:38Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -3114,6 +3132,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 71,
+      "id": "PR_kwDOOCO1i87kxcfm",
+      "title": "consistent naming + nacm guard for if stats",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/71",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-06-10T09:15:52Z",
+      "updatedAt": "2026-06-10T22:05:37Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "04cf8b4ae122dd7047b979f0a20f10c327639d8f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-12",
+      "headRefOid": "a388bd6a24e3999bdfaa3413b7d73c2e64c34fb6",
+      "closedAt": "2026-06-10T22:05:37Z",
+      "mergedAt": "2026-06-10T22:05:37Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "1c4381694ab10d54239c92e71869e9bd85eda888"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
