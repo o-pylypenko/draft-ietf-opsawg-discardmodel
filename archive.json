@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-11T02:11:21.134088+00:00",
+  "timestamp": "2026-06-18T02:11:40.134389+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -3158,6 +3158,32 @@
       "mergeCommit": {
         "oid": "1c4381694ab10d54239c92e71869e9bd85eda888"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 73,
+      "id": "PR_kwDOOCO1i87nDrEF",
+      "title": "ACK Roni",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/73",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-06-16T14:40:36Z",
+      "updatedAt": "2026-06-16T14:40:37Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "1c4381694ab10d54239c92e71869e9bd85eda888",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-13",
+      "headRefOid": "1a56757554958b7eab922cb0e423a87b17a813a4",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
