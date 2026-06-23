@@ -2683,8 +2683,6 @@ module: ietf-packet-discard-reporting
 <div class="breakable sourcecode" id="section-5.4-2">
 <pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting@2026-03-03.yang"
 
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-packet-discard-reporting {
   yang-version 1.1;
   namespace
@@ -2849,8 +2847,8 @@ module ietf-packet-discard-reporting {
   augment "/if:interfaces/if:interface/if:statistics" {
     if-feature "pdr-common:interface-stats";
     description
-      "Adds traffic and discard reporting to the interface \
-                                                        statistics.";
+      "Adds traffic and discard reporting to the interface
+       statistics.";
 
     container traffic-discard-stats {
       nacm:default-deny-all;
