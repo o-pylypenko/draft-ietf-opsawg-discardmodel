@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 12 December 2026                                         Nvidia
+Expires: 25 December 2026                                         Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            10 June 2026
+                                                            23 June 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 December 2026.
+   This Internet-Draft will expire on 25 December 2026.
 
 Copyright Notice
 
@@ -2761,8 +2761,9 @@ Acknowledgements
    Paul Aitken, and Randy Bush for the review and comments.
 
    Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti
-   for the OPSDIR review, Satoru Matsushima for the INTDIR review and
-   Derrell Piper for the SECDIR review.
+   for the OPSDIR review, Satoru Matsushima for the INTDIR review,
+   Derrell Piper for the SECDIR review, and Roni Even for the GENART
+   review.
 
    Thanks to Diego Lopez for shepherding the document and Mahesh
    Jethanandani for the AD review.
