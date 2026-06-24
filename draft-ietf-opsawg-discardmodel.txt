@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 25 December 2026                                         Nvidia
+Expires: 26 December 2026                                         Nvidia
                                                                  J. Haas
                                                         Juniper Networks
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            23 June 2026
+                                                            24 June 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 December 2026.
+   This Internet-Draft will expire on 26 December 2026.
 
 Copyright Notice
 
@@ -95,8 +95,9 @@ Table of Contents
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Operational Considerations
-     6.1.  Deployment Experience
-     6.2.  Anchoring Flow Structure
+     6.1.  Determining Intent for Policy
+     6.2.  Deployment Experience
+     6.3.  Anchoring Flow Structure
    7.  Implementation Status
      7.1.  Information Model Implementations
      7.2.  Data Model Implementations
@@ -221,14 +222,6 @@ Table of Contents
       tables may result in packets being dropped because they do not
       match a valid route; configuration errors may result in a valid
       packet incorrectly matching an ACL and being dropped.
-
-      Device discard counters do not by themselves establish operator
-      intent.  Discards reported under policy (e.g., ACL/policer)
-      indicate only that traffic matched a configured rule; such
-      discards may still be unintended if the configuration is in error.
-      Determining intent for policy discards requires external context
-      (e.g., configuration validation and change history) which is out
-      of scope for this specification.
 
 3.  Problem Statement
 
@@ -1487,12 +1480,6 @@ Table of Contents
    A received unicast IPv6 packet discarded due to Hop Limit expiry
    would increment:
 
-   *  interface/traffic[direction="ingress"]/l3/address-family-
-      stat[address-family="ipv6"]/unicast/packets
-
-   *  interface/traffic[direction="ingress"]/l3/address-family-
-      stat[address-family="ipv6"]/unicast/bytes
-
    *  interface/discards[direction="ingress"]/errors/l3/ttl-expired
 
    An IPv4 packet discarded on egress due to no buffers would increment:
@@ -1734,7 +1721,17 @@ Table of Contents
 
 6.  Operational Considerations
 
-6.1.  Deployment Experience
+6.1.  Determining Intent for Policy
+
+   Device discard counters do not by themselves establish operator
+   intent.  Discards reported under policy (e.g., ACL/policer) indicate
+   only that traffic matched a configured rule; such discards may still
+   be unintended if the configuration is in error.  Determining intent
+   for policy discards requires external context (e.g., configuration
+   validation and change history).  Such contexts are local to each
+   operator.
+
+6.2.  Deployment Experience
 
    This section captures practical insights gained from implementing the
    model across multiple vendors' platforms, as guidance for future
@@ -1793,7 +1790,7 @@ Table of Contents
    8.  While the classification tree is seven levels deep, a minimal
        implementation may only implement the top six.
 
-6.2.  Anchoring Flow Structure
+6.3.  Anchoring Flow Structure
 
    The characterization of a flow depends on the underlying data model
    that adheres to the IM.  From that standpoint, the IM does not make
@@ -1844,7 +1841,7 @@ Table of Contents
       discardmodel-sample/)
 
    Practical observations from these implementations are reflected in
-   Section 6.1.
+   Section 6.2.
 
 8.  Security Considerations
 
@@ -2760,8 +2757,8 @@ Acknowledgements
 
    Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti
    for the OPSDIR review, Satoru Matsushima for the INTDIR review,
-   Derrell Piper for the SECDIR review, and Roni Even for the GENART
-   review.
+   Derrell Piper for the SECDIR review, Roni Even for the GENART review,
+   and Michael Tüxen for the TSVART review.
 
    Thanks to Diego Lopez for shepherding the document and Mahesh
    Jethanandani for the AD review.
