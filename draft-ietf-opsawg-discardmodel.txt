@@ -7,7 +7,7 @@ Internet-Draft                                                    Amazon
 Intended status: Standards Track                       O. Pylypenko, Ed.
 Expires: 26 December 2026                                         Nvidia
                                                                  J. Haas
-                                                        Juniper Networks
+                                                                     HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
@@ -2793,11 +2793,9 @@ Authors' Addresses
 
 
    Jeffrey Haas
-   Juniper Networks
-   1133 Innovation Way
-   Sunnyvale, CA 94089
+   HPE
    United States of America
-   Email: jhaas@juniper.net
+   Email: jeffrey.haas@hpe.com
 
 
    Aviran Kadosh
