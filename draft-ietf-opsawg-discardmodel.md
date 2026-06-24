@@ -150,7 +150,6 @@ Intended packet discards (Intended discards, for short):
 
 Unintended packet discards (Unintended discards, for short):
 : Are packets that were dropped, which the network operator otherwise intended to deliver, i.e., which indicates an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.
-: Device discard counters do not by themselves establish operator intent. Discards reported under policy (e.g., ACL/policer) indicate only that traffic matched a configured rule; such discards may still be unintended if the configuration is in error. Determining intent for policy discards requires external context (e.g., configuration validation and change history) which is out of scope for this specification.
 
 # Problem Statement   {#problem}
 
@@ -487,8 +486,6 @@ If all of the requirements listed in {{requirements}} are met, a "good" unicast 
 
 A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:
 
-- `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/packets`
-- `interface/traffic[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/bytes`
 - `interface/discards[direction="ingress"]/errors/l3/ttl-expired`
 
 An IPv4 packet discarded on egress due to no buffers would increment:
@@ -523,6 +520,10 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 ~~~~~~~~~~
 
 # Operational Considerations
+
+##  Determining Intent for Policy
+
+Device discard counters do not by themselves establish operator intent. Discards reported under policy (e.g., ACL/policer) indicate only that traffic matched a configured rule; such discards may still be unintended if the configuration is in error. Determining intent for policy discards requires external context (e.g., configuration validation and change history). Such contexts are local to each operator.
 
 ## Deployment Experience {#experience}
 
@@ -739,6 +740,6 @@ The content of this document has benefitted from feedback from JR Rivers, Ronan 
 Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.
 
 Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, Satoru Matsushima for the INTDIR review,
-Derrell Piper for the SECDIR review, and Roni Even for the GENART review.
+Derrell Piper for the SECDIR review, Roni Even for the GENART review, and Michael Tüxen for the TSVART review.
 
 Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.
