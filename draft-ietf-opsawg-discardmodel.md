@@ -55,13 +55,9 @@ author:
  -
     ins: J. Haas
     name: Jeffrey Haas
-    org: Juniper Networks
-    street: 1133 Innovation Way
-    city: Sunnyvale
-    region: CA
-    code: 94089
+    org: HPE
     country: US
-    email: jhaas@juniper.net
+    email: jeffrey.haas@hpe.com
  -
     ins: A. Kadosh
     name: Aviran Kadosh
