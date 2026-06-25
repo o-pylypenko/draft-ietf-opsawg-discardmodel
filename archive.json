@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-18T02:11:40.134389+00:00",
+  "timestamp": "2026-06-25T01:57:32.709033+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -3166,24 +3166,96 @@
       "id": "PR_kwDOOCO1i87nDrEF",
       "title": "ACK Roni",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/73",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-06-16T14:40:36Z",
-      "updatedAt": "2026-06-16T14:40:37Z",
+      "updatedAt": "2026-06-23T07:33:34Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "1c4381694ab10d54239c92e71869e9bd85eda888",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "boucadair-patch-13",
       "headRefOid": "1a56757554958b7eab922cb0e423a87b17a813a4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-23T07:33:34Z",
+      "mergedAt": "2026-06-23T07:33:34Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "1ca65f1feca63be0264e6baab8ae8c0bc8a3bb25"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 74,
+      "id": "PR_kwDOOCO1i87p88U3",
+      "title": "TSVART Review",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/74",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Move a text to OPS cons section\r\n* fix an example to avoid double counting",
+      "createdAt": "2026-06-24T05:02:01Z",
+      "updatedAt": "2026-06-24T15:42:29Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "1f74b13009fa78f310e1fefc6bb77f1ef806444f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-14",
+      "headRefOid": "cdd5a8ec3245967ac547fc74374f681855aaf3e9",
+      "closedAt": "2026-06-24T15:42:29Z",
+      "mergedAt": "2026-06-24T15:42:29Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "28847a8d13f7c22ddaa68557a68a42b08d000665"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABD8Km9A",
+          "commit": {
+            "abbreviatedOid": "cdd5a8e"
+          },
+          "author": "tuexen",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-24T05:33:54Z",
+          "updatedAt": "2026-06-24T05:33:54Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 75,
+      "id": "PR_kwDOOCO1i87qNL2B",
+      "title": "Update Jeff's affiliation and contact details",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/75",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-06-24T16:51:58Z",
+      "updatedAt": "2026-06-24T17:06:31Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "28847a8d13f7c22ddaa68557a68a42b08d000665",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-15",
+      "headRefOid": "112189042fa67d2e793fcea93ea7d07c57bef420",
+      "closedAt": "2026-06-24T17:06:30Z",
+      "mergedAt": "2026-06-24T17:06:30Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "02dfe1bae53331144e281a8ae82544ad4a141a65"
+      },
       "comments": [],
       "reviews": []
     }
