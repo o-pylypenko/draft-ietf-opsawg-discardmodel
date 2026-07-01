@@ -3,16 +3,16 @@
 
 
 Operations and Management Area Working Group               J. Evans, Ed.
-Internet-Draft                                                    Amazon
+Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 29 November 2026                                         Nvidia
+Expires: 2 January 2027                                           Nvidia
                                                                  J. Haas
-                                                        Juniper Networks
+                                                                     HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             28 May 2026
+                                                             1 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 November 2026.
+   This Internet-Draft will expire on 2 January 2027.
 
 Copyright Notice
 
@@ -95,8 +95,9 @@ Table of Contents
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Operational Considerations
-     6.1.  Deployment Experience
-     6.2.  Anchoring Flow Structure
+     6.1.  Determining Intent for Policy
+     6.2.  Deployment Experience
+     6.3.  Anchoring Flow Structure
    7.  Implementation Status
      7.1.  Information Model Implementations
      7.2.  Data Model Implementations
@@ -221,14 +222,6 @@ Table of Contents
       tables may result in packets being dropped because they do not
       match a valid route; configuration errors may result in a valid
       packet incorrectly matching an ACL and being dropped.
-
-      Device discard counters do not by themselves establish operator
-      intent.  Discards reported under policy (e.g., ACL/policer)
-      indicate only that traffic matched a configured rule; such
-      discards may still be unintended if the configuration is in error.
-      Determining intent for policy discards requires external context
-      (e.g., configuration validation and change history) which is out
-      of scope for this specification.
 
 3.  Problem Statement
 
@@ -1310,47 +1303,48 @@ Table of Contents
 
      augment /rt:routing/rt:control-plane-protocols
                /rt:control-plane-protocol:
-       +--ro discard-stats {control-plane-stats}?
+       +--ro traffic-discard-stats {control-plane-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic* [direction]
           |  ...
           +--ro discards* [direction]
              ...
      augment /if:interfaces/if:interface/if:statistics:
-       +--ro discard-order-capability*   identityref {interface-stats}?
-       +--ro traffic* [direction] {interface-stats}?
-       |  +--ro direction    identityref
-       |  +--ro l2
-       |  |  ...
-       |  +--ro l3
-       |  |  ...
-       |  +--ro qos!
-       |     +--ro class* [id]
-       |        ...
-       +--ro discards* [direction] {interface-stats}?
-          +--ro direction    identityref
-          +--ro l2
-          |  ...
-          +--ro l3
-          |  ...
-          +--ro errors
+       +--ro traffic-discard-stats {interface-stats}?
+          +--ro discard-order-capability*   identityref?
+          +--ro traffic* [direction] {interface-stats}?
+          |  +--ro direction    identityref
           |  +--ro l2
           |  |  ...
           |  +--ro l3
           |  |  ...
-          |  +--ro internal
-          |     ...
-          +--ro policy
-          |  +--ro l2
-          |  |  ...
-          |  +--ro l3
-          |     ...
-          +--ro no-buffer
-             +--ro qos!
-                +--ro class* [id]
-                   ...
+          |  +--ro qos!
+          |     +--ro class* [id]
+          |        ...
+          +--ro discards* [direction]?
+             +--ro direction    identityref
+             +--ro l2
+             |  ...
+             +--ro l3
+             |  ...
+             +--ro errors
+             |  +--ro l2
+             |  |  ...
+             |  +--ro l3
+             |  |  ...
+             |  +--ro internal
+             |     ...
+             +--ro policy
+             |  +--ro l2
+             |  |  ...
+             |  +--ro l3
+             |     ...
+             +--ro no-buffer
+                +--ro qos!
+                   +--ro class* [id]
+                      ...
      augment /lne:logical-network-elements/lne:logical-network-element:
-       +--ro discard-stats {device-stats}?
+       +--ro traffic-discard-stats {device-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic
           |  +--ro l2
@@ -1485,12 +1479,6 @@ Table of Contents
 
    A received unicast IPv6 packet discarded due to Hop Limit expiry
    would increment:
-
-   *  interface/traffic[direction="ingress"]/l3/address-family-
-      stat[address-family="ipv6"]/unicast/packets
-
-   *  interface/traffic[direction="ingress"]/l3/address-family-
-      stat[address-family="ipv6"]/unicast/bytes
 
    *  interface/discards[direction="ingress"]/errors/l3/ttl-expired
 
@@ -1689,11 +1677,11 @@ Table of Contents
        if-feature "pdr-common:control-plane-stats";
        description
          "Adds control plane discard counters.";
-       container discard-stats {
+       container traffic-discard-stats {
          nacm:default-deny-all;
          config false;
          description
-           "List of control plane discard counters.";
+           "List of traffic and control plane discard counters.";
          uses discard-order-policy;
          uses pdr-common:control-plane;
        }
@@ -1701,21 +1689,29 @@ Table of Contents
      augment "/if:interfaces/if:interface/if:statistics" {
        if-feature "pdr-common:interface-stats";
        description
-         "Adds packet discard reporting to the interface statistics.";
-       uses discard-order-policy;
-       uses pdr-common:interface;
+         "Adds traffic and discard reporting to the interface
+          statistics.";
+
+       container traffic-discard-stats {
+         nacm:default-deny-all;
+         config false;
+         description
+           "List of traffic and interface discard counters.";
+         uses discard-order-policy;
+         uses pdr-common:interface;
+       }
      }
      augment "/lne:logical-network-elements"
            + "/lne:logical-network-element" {
        if-feature "pdr-common:device-stats";
        description
-         "Adds device level packet counters.";
+         "Adds device level traffic and discard counters.";
 
-       container discard-stats {
+       container traffic-discard-stats {
          nacm:default-deny-all;
          config false;
          description
-           "List of device level discard counters.";
+           "List of traffic and device level discard counters.";
          uses discard-order-policy;
          uses pdr-common:traffic-and-discards;
        }
@@ -1725,7 +1721,17 @@ Table of Contents
 
 6.  Operational Considerations
 
-6.1.  Deployment Experience
+6.1.  Determining Intent for Policy
+
+   Device discard counters do not by themselves establish operator
+   intent.  Discards reported under policy (e.g., ACL/policer) indicate
+   only that traffic matched a configured rule; such discards may still
+   be unintended if the configuration is in error.  Determining intent
+   for policy discards requires external context (e.g., configuration
+   validation and change history).  Such contexts are local to each
+   operator.
+
+6.2.  Deployment Experience
 
    This section captures practical insights gained from implementing the
    model across multiple vendors' platforms, as guidance for future
@@ -1784,7 +1790,7 @@ Table of Contents
    8.  While the classification tree is seven levels deep, a minimal
        implementation may only implement the top six.
 
-6.2.  Anchoring Flow Structure
+6.3.  Anchoring Flow Structure
 
    The characterization of a flow depends on the underlying data model
    that adheres to the IM.  From that standpoint, the IM does not make
@@ -1835,7 +1841,7 @@ Table of Contents
       discardmodel-sample/)
 
    Practical observations from these implementations are reflected in
-   Section 6.1.
+   Section 6.2.
 
 8.  Security Considerations
 
@@ -1883,11 +1889,11 @@ Table of Contents
    subtrees and data nodes have particular sensitivities/
    vulnerabilities:
 
-   rt:control-plane-protocol/pdr:discard-stats, if:statistics/
-   pdr:traffic, if:statistics/pdr:discards, and lne:logical-network-
-   element/pdr:discard-stats:  Access to these data nodes would reveal
-      information about the attacks to which an element is subject,
-      misconfigurations, etc.
+   rt:control-plane-protocol/pdr:traffic-discard-stats,
+   if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-
+   stats, and lne:logical-network-element/pdr:traffic-discard-stats:  Access
+      to these data nodes would reveal information about the attacks to
+      which an element is subject, misconfigurations, etc.
 
       Also, an attacker who can inject packets can infer the efficiency
       of its attack by monitoring (the increase of) some discard
@@ -1942,6 +1948,11 @@ Table of Contents
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
+              and W. Weiss, "An Architecture for Differentiated
+              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
+              <https://www.rfc-editor.org/rfc/rfc2475>.
+
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
@@ -1991,11 +2002,6 @@ Table of Contents
    [RED93]    Floyd, S. and V. Jacobson, "Random early detection
               gateways for congestion avoidance", August 1993,
               <https://ieeexplore.ieee.org/document/251892>.
-
-   [RFC2475]  Blake, S., Black, D., Carlson, M., Davies, E., Wang, Z.,
-              and W. Weiss, "An Architecture for Differentiated
-              Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
-              <https://www.rfc-editor.org/rfc/rfc2475>.
 
    [RFC2827]  Ferguson, P. and D. Senie, "Network Ingress Filtering:
               Defeating Denial of Service Attacks which employ IP Source
@@ -2540,7 +2546,7 @@ Appendix D.  Full Data Model Tree
 
      augment /rt:routing/rt:control-plane-protocols
                /rt:control-plane-protocol:
-       +--ro discard-stats {pdr-common:control-plane-stats}?
+       +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic* [direction]
           |  +--ro direction    identityref
@@ -2553,102 +2559,102 @@ Appendix D.  Full Data Model Tree
              +--ro policy
                 +--ro packets?   yang:counter64
      augment /if:interfaces/if:interface/if:statistics:
-       +--ro discard-order-capability*   identityref
-       |       {pdr-common:interface-stats}?
-       +--ro traffic* [direction] {pdr-common:interface-stats}?
-       |  +--ro direction    identityref
-       |  +--ro l2
-       |  |  +--ro frames?   yang:counter64
-       |  |  +--ro bytes?    yang:counter64
-       |  +--ro l3
-       |  |  +--ro address-family-stat* [address-family]
-       |  |     +--ro address-family    identityref
-       |  |     +--ro packets?          yang:counter64
-       |  |     +--ro bytes?            yang:counter64
-       |  |     +--ro unicast
-       |  |     |  +--ro packets?   yang:counter64
-       |  |     |  +--ro bytes?     yang:counter64
-       |  |     +--ro multicast
-       |  |     |  +--ro packets?   yang:counter64
-       |  |     |  +--ro bytes?     yang:counter64
-       |  |     +--ro broadcast
-       |  |        +--ro packets?   yang:counter64
-       |  |        +--ro bytes?     yang:counter64
-       |  +--ro qos!
-       |     +--ro class* [id]
-       |        +--ro id         string
-       |        +--ro packets?   yang:counter64
-       |        +--ro bytes?     yang:counter64
-       +--ro discards* [direction] {pdr-common:interface-stats}?
-          +--ro direction    identityref
-          +--ro l2
-          |  +--ro frames?   yang:counter64
-          |  +--ro bytes?    yang:counter64
-          +--ro l3
-          |  +--ro address-family-stat* [address-family]
-          |     +--ro address-family    identityref
-          |     +--ro packets?          yang:counter64
-          |     +--ro bytes?            yang:counter64
-          |     +--ro unicast
-          |     |  +--ro packets?   yang:counter64
-          |     |  +--ro bytes?     yang:counter64
-          |     +--ro multicast
-          |     |  +--ro packets?   yang:counter64
-          |     |  +--ro bytes?     yang:counter64
-          |     +--ro broadcast
-          |        +--ro packets?   yang:counter64
-          |        +--ro bytes?     yang:counter64
-          +--ro errors
-          |  +--ro l2
-          |  |  +--ro rx
-          |  |  |  +--ro frames?          yang:counter64
-          |  |  |  +--ro crc-error?       yang:counter64
-          |  |  |  +--ro invalid-mac?     yang:counter64
-          |  |  |  +--ro invalid-vlan?    yang:counter64
-          |  |  |  +--ro invalid-frame?   yang:counter64
-          |  |  +--ro tx
-          |  |     +--ro frames?   yang:counter64
-          |  +--ro l3
-          |  |  +--ro rx
-          |  |  |  +--ro packets?          yang:counter64
-          |  |  |  +--ro checksum-error?   yang:counter64
-          |  |  |  +--ro mtu-exceeded?     yang:counter64
-          |  |  |  +--ro invalid-packet?   yang:counter64
-          |  |  +--ro ttl-expired?     yang:counter64
-          |  |  +--ro no-route?        yang:counter64
-          |  |  +--ro invalid-sid?     yang:counter64
-          |  |  +--ro invalid-label?   yang:counter64
-          |  |  +--ro tx
-          |  |     +--ro packets?   yang:counter64
-          |  +--ro internal
-          |     +--ro packets?        yang:counter64
-          |     +--ro parity-error?   yang:counter64
-          +--ro policy
+       +--ro traffic-discard-stats {pdr-common:interface-stats}?
+          +--ro discard-order-capability*   identityref
+          +--ro traffic* [direction]
+          |  +--ro direction    identityref
           |  +--ro l2
           |  |  +--ro frames?   yang:counter64
-          |  |  +--ro acl?      yang:counter64
+          |  |  +--ro bytes?    yang:counter64
           |  +--ro l3
-          |     +--ro packets?      yang:counter64
-          |     +--ro acl?          yang:counter64
-          |     +--ro policer
-          |     |  +--ro packets?   yang:counter64
-          |     |  +--ro bytes?     yang:counter64
-          |     |  +--ro classes!
-          |     |     +--ro class* [id]
-          |     |        +--ro id         string
-          |     |        +--ro packets?   yang:counter64
-          |     |        +--ro bytes?     yang:counter64
-          |     +--ro null-route?   yang:counter64
-          |     +--ro rpf?          yang:counter64
-          |     +--ro ddos?         yang:counter64
-          +--ro no-buffer
-             +--ro qos!
-                +--ro class* [id]
-                   +--ro id         string
-                   +--ro packets?   yang:counter64
-                   +--ro bytes?     yang:counter64
+          |  |  +--ro address-family-stat* [address-family]
+          |  |     +--ro address-family    identityref
+          |  |     +--ro packets?          yang:counter64
+          |  |     +--ro bytes?            yang:counter64
+          |  |     +--ro unicast
+          |  |     |  +--ro packets?   yang:counter64
+          |  |     |  +--ro bytes?     yang:counter64
+          |  |     +--ro multicast
+          |  |     |  +--ro packets?   yang:counter64
+          |  |     |  +--ro bytes?     yang:counter64
+          |  |     +--ro broadcast
+          |  |        +--ro packets?   yang:counter64
+          |  |        +--ro bytes?     yang:counter64
+          |  +--ro qos!
+          |     +--ro class* [id]
+          |        +--ro id         string
+          |        +--ro packets?   yang:counter64
+          |        +--ro bytes?     yang:counter64
+          +--ro discards* [direction]
+             +--ro direction    identityref
+             +--ro l2
+             |  +--ro frames?   yang:counter64
+             |  +--ro bytes?    yang:counter64
+             +--ro l3
+             |  +--ro address-family-stat* [address-family]
+             |     +--ro address-family    identityref
+             |     +--ro packets?          yang:counter64
+             |     +--ro bytes?            yang:counter64
+             |     +--ro unicast
+             |     |  +--ro packets?   yang:counter64
+             |     |  +--ro bytes?     yang:counter64
+             |     +--ro multicast
+             |     |  +--ro packets?   yang:counter64
+             |     |  +--ro bytes?     yang:counter64
+             |     +--ro broadcast
+             |        +--ro packets?   yang:counter64
+             |        +--ro bytes?     yang:counter64
+             +--ro errors
+             |  +--ro l2
+             |  |  +--ro rx
+             |  |  |  +--ro frames?          yang:counter64
+             |  |  |  +--ro crc-error?       yang:counter64
+             |  |  |  +--ro invalid-mac?     yang:counter64
+             |  |  |  +--ro invalid-vlan?    yang:counter64
+             |  |  |  +--ro invalid-frame?   yang:counter64
+             |  |  +--ro tx
+             |  |     +--ro frames?   yang:counter64
+             |  +--ro l3
+             |  |  +--ro rx
+             |  |  |  +--ro packets?          yang:counter64
+             |  |  |  +--ro checksum-error?   yang:counter64
+             |  |  |  +--ro mtu-exceeded?     yang:counter64
+             |  |  |  +--ro invalid-packet?   yang:counter64
+             |  |  +--ro ttl-expired?     yang:counter64
+             |  |  +--ro no-route?        yang:counter64
+             |  |  +--ro invalid-sid?     yang:counter64
+             |  |  +--ro invalid-label?   yang:counter64
+             |  |  +--ro tx
+             |  |     +--ro packets?   yang:counter64
+             |  +--ro internal
+             |     +--ro packets?        yang:counter64
+             |     +--ro parity-error?   yang:counter64
+             +--ro policy
+             |  +--ro l2
+             |  |  +--ro frames?   yang:counter64
+             |  |  +--ro acl?      yang:counter64
+             |  +--ro l3
+             |     +--ro packets?      yang:counter64
+             |     +--ro acl?          yang:counter64
+             |     +--ro policer
+             |     |  +--ro packets?   yang:counter64
+             |     |  +--ro bytes?     yang:counter64
+             |     |  +--ro classes!
+             |     |     +--ro class* [id]
+             |     |        +--ro id         string
+             |     |        +--ro packets?   yang:counter64
+             |     |        +--ro bytes?     yang:counter64
+             |     +--ro null-route?   yang:counter64
+             |     +--ro rpf?          yang:counter64
+             |     +--ro ddos?         yang:counter64
+             +--ro no-buffer
+                +--ro qos!
+                   +--ro class* [id]
+                      +--ro id         string
+                      +--ro packets?   yang:counter64
+                      +--ro bytes?     yang:counter64
      augment /lne:logical-network-elements/lne:logical-network-element:
-       +--ro discard-stats {pdr-common:device-stats}?
+       +--ro traffic-discard-stats {pdr-common:device-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic
           |  +--ro l2
@@ -2750,7 +2756,9 @@ Acknowledgements
    Paul Aitken, and Randy Bush for the review and comments.
 
    Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti
-   for the OPSDIR review, and Satoru Matsushima for the INTDIR review.
+   for the OPSDIR review, Satoru Matsushima for the INTDIR review,
+   Derrell Piper for the SECDIR review, Roni Even for the GENART review,
+   and Michael Tüxen for the TSVART review.
 
    Thanks to Diego Lopez for shepherding the document and Mahesh
    Jethanandani for the AD review.
@@ -2768,12 +2776,8 @@ Contributors
 Authors' Addresses
 
    John Evans (editor)
-   Amazon
-   1 Principal Place, Worship Street
-   London
-   EC2A 2FA
-   United Kingdom
-   Email: jevanamz@amazon.co.uk
+   Individual
+   Email: john@nopacketleftbehind.net
 
 
    Oleksandr Pylypenko (editor)
@@ -2785,11 +2789,9 @@ Authors' Addresses
 
 
    Jeffrey Haas
-   Juniper Networks
-   1133 Innovation Way
-   Sunnyvale, CA 94089
+   HPE
    United States of America
-   Email: jhaas@juniper.net
+   Email: jeffrey.haas@hpe.com
 
 
    Aviran Kadosh
