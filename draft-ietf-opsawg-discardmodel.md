@@ -35,12 +35,8 @@ author:
     ins: J. Evans
     name: John Evans
     role: editor
-    org: Amazon
-    street: 1 Principal Place, Worship Street
-    city: London
-    code: EC2A 2FA
-    country: UK
-    email: jevanamz@amazon.co.uk
+    org: Individual
+    email: john@nopacketleftbehind.net
  -
     ins: O. Pylypenko
     name: Oleksandr Pylypenko
