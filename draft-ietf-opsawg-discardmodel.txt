@@ -3,16 +3,16 @@
 
 
 Operations and Management Area Working Group               J. Evans, Ed.
-Internet-Draft                                                    Amazon
+Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 26 December 2026                                         Nvidia
+Expires: 3 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            24 June 2026
+                                                             2 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2026.
+   This Internet-Draft will expire on 3 January 2027.
 
 Copyright Notice
 
@@ -2776,12 +2776,8 @@ Contributors
 Authors' Addresses
 
    John Evans (editor)
-   Amazon
-   1 Principal Place, Worship Street
-   London
-   EC2A 2FA
-   United Kingdom
-   Email: jevanamz@amazon.co.uk
+   Individual
+   Email: john@nopacketleftbehind.net
 
 
    Oleksandr Pylypenko (editor)
