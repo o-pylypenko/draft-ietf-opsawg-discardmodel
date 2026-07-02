@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-28T02:02:58.309871+00:00",
+  "timestamp": "2026-07-02T01:57:07.305836+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -3272,6 +3272,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 76,
+      "id": "PR_kwDOOCO1i87svmq2",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/76",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated John Evans affiliation and email",
+      "createdAt": "2026-07-01T15:26:52Z",
+      "updatedAt": "2026-07-01T15:28:21Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "02dfe1bae53331144e281a8ae82544ad4a141a65",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-8",
+      "headRefOid": "5435fdd2dea1d43693a894ef9035c0e7c003650e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
