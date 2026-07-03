@@ -591,7 +591,7 @@ rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic, 
 
 # IANA Considerations {#iana}
 
-IANA is requested to register the following URI in the "ns" subregistry within the "IETF XML Registry" {{!RFC3688}}:
+IANA is requested to register the following URIs in the "ns" registry within the "IETF XML Registry" group {{!RFC3688}}:
 
 ~~~~
    URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
@@ -601,32 +601,33 @@ IANA is requested to register the following URI in the "ns" subregistry within t
    URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
+
    URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
 ~~~~
 
-   IANA is requested to register the following YANG module in the "YANG Module
-   Names" subregistry {{!RFC6020}} within the "YANG Parameters" registry:
+   IANA is requested to register the following YANG modules in the "YANG
+   Module Names" registry {{!RFC6020}} within the "YANG Parameters" registry group:
 
 ~~~~
    Name:  ietf-packet-discard-reporting-common
+   Maintained by IANA?  N
    Namespace:
      urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
    Prefix:  pdr-common
-   Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting-sx
+   Maintained by IANA?  N
    Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Prefix:  pdr-sx
-   Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting
+   Maintained by IANA?  N
    Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting
    Prefix:  pdr
-   Maintained by IANA?  N
    Reference:  RFC XXXX
 ~~~~
 
