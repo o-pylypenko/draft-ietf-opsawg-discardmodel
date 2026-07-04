@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 3 January 2027                                           Nvidia
+Expires: 5 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             2 July 2026
+                                                             4 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 January 2027.
+   This Internet-Draft will expire on 5 January 2027.
 
 Copyright Notice
 
@@ -1902,8 +1902,8 @@ Table of Contents
 
 9.  IANA Considerations
 
-   IANA is requested to register the following URI in the "ns"
-   subregistry within the "IETF XML Registry" [RFC3688]:
+   IANA is requested to register the following URIs in the "ns" registry
+   within the "IETF XML Registry" group [RFC3688]:
 
    URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
    Registrant Contact:  The IESG.
@@ -1912,31 +1912,32 @@ Table of Contents
    URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
+
    URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
 
-   IANA is requested to register the following YANG module in the "YANG
-   Module Names" subregistry [RFC6020] within the "YANG Parameters"
-   registry:
+   IANA is requested to register the following YANG modules in the "YANG
+   Module Names" registry [RFC6020] within the "YANG Parameters"
+   registry group:
 
    Name:  ietf-packet-discard-reporting-common
+   Maintained by IANA?  N
    Namespace:
      urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
    Prefix:  pdr-common
-   Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting-sx
+   Maintained by IANA?  N
    Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Prefix:  pdr-sx
-   Maintained by IANA?  N
    Reference:  RFC XXXX
 
    Name:  ietf-packet-discard-reporting
+   Maintained by IANA?  N
    Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting
    Prefix:  pdr
-   Maintained by IANA?  N
    Reference:  RFC XXXX
 
 10.  References
