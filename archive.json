@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-02T01:57:07.305836+00:00",
+  "timestamp": "2026-07-05T01:42:53.195693+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -3278,24 +3278,54 @@
       "id": "PR_kwDOOCO1i87svmq2",
       "title": "Update draft-ietf-opsawg-discardmodel.md",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/76",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Updated John Evans affiliation and email",
       "createdAt": "2026-07-01T15:26:52Z",
-      "updatedAt": "2026-07-01T15:28:21Z",
+      "updatedAt": "2026-07-02T09:42:07Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "02dfe1bae53331144e281a8ae82544ad4a141a65",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-8",
       "headRefOid": "5435fdd2dea1d43693a894ef9035c0e7c003650e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-02T09:42:07Z",
+      "mergedAt": "2026-07-02T09:42:07Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "dcbf3c6099bdc930b7f7575047a06fc22a72f0c3"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 77,
+      "id": "PR_kwDOOCO1i87tcxYn",
+      "title": "(IANA Review): minor tweak to follow registration template",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/77",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-03T06:09:19Z",
+      "updatedAt": "2026-07-04T00:46:01Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "dcbf3c6099bdc930b7f7575047a06fc22a72f0c3",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-16",
+      "headRefOid": "162bfece9cc82123cbb3f68351569cd3f93c998c",
+      "closedAt": "2026-07-04T00:45:48Z",
+      "mergedAt": "2026-07-04T00:45:48Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "84e215451d0d30b4cd9858577b12bba565642e44"
+      },
       "comments": [],
       "reviews": []
     }
