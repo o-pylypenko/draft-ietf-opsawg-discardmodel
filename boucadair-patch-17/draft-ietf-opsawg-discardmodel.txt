@@ -514,7 +514,8 @@ Table of Contents
 4.3.  "ietf-packet-discard-reporting-common" YANG Module
 
    The "ietf-packet-discard-reporting-common" module imports "ietf-yang-
-   types" defined in [RFC9911].
+   types" defined in [RFC9911].  The modules references [RFC3031],
+   [RFC8402], [RFC8660], and [RFC8754].
 
    <CODE BEGINS>
      file "ietf-packet-discard-reporting-common@2026-03-03.yang"
@@ -2020,6 +2021,11 @@ Table of Contents
               MIB", RFC 2863, DOI 10.17487/RFC2863, June 2000,
               <https://www.rfc-editor.org/rfc/rfc2863>.
 
+   [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
+              Label Switching Architecture", RFC 3031,
+              DOI 10.17487/RFC3031, January 2001,
+              <https://www.rfc-editor.org/rfc/rfc3031>.
+
    [RFC3444]  Pras, A. and J. Schoenwaelder, "On the Difference between
               Information Models and Data Models", RFC 3444,
               DOI 10.17487/RFC3444, January 2003,
@@ -2077,14 +2083,30 @@ Table of Contents
               BCP 215, RFC 8340, DOI 10.17487/RFC8340, March 2018,
               <https://www.rfc-editor.org/rfc/rfc8340>.
 
+   [RFC8402]  Filsfils, C., Ed., Previdi, S., Ed., Ginsberg, L.,
+              Decraene, B., Litkowski, S., and R. Shakir, "Segment
+              Routing Architecture", RFC 8402, DOI 10.17487/RFC8402,
+              July 2018, <https://www.rfc-editor.org/rfc/rfc8402>.
+
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
+
+   [RFC8660]  Bashandy, A., Ed., Filsfils, C., Ed., Previdi, S.,
+              Decraene, B., Litkowski, S., and R. Shakir, "Segment
+              Routing with the MPLS Data Plane", RFC 8660,
+              DOI 10.17487/RFC8660, December 2019,
+              <https://www.rfc-editor.org/rfc/rfc8660>.
 
    [RFC8704]  Sriram, K., Montgomery, D., and J. Haas, "Enhanced
               Feasible-Path Unicast Reverse Path Forwarding", BCP 84,
               RFC 8704, DOI 10.17487/RFC8704, February 2020,
               <https://www.rfc-editor.org/rfc/rfc8704>.
+
+   [RFC8754]  Filsfils, C., Ed., Dukes, D., Ed., Previdi, S., Leddy, J.,
+              Matsushima, S., and D. Voyer, "IPv6 Segment Routing Header
+              (SRH)", RFC 8754, DOI 10.17487/RFC8754, March 2020,
+              <https://www.rfc-editor.org/rfc/rfc8754>.
 
    [RFC8955]  Loibl, C., Hares, S., Raszuk, R., McPherson, D., and M.
               Bacher, "Dissemination of Flow Specification Rules",
