@@ -3346,6 +3346,8 @@ module ietf-packet-discard-reporting {
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-example-signal-to-mitigatio" class="section-name selfRef">Example Signal-to-mitigation Action Mapping</a>
       </h2>
 <p id="appendix-B-1">The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  Tables <a href="#ex-table" class="auto internal xref">1</a> and <a href="#ex-table2" class="auto internal xref">2</a> give example discard signal-to-mitigation action mappings based on the features described in <a href="#problem" class="auto internal xref">Section 3</a>.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">Tables <a href="#ex-table" class="auto internal xref">1</a> and <a href="#ex-table2" class="auto internal xref">2</a> are a single logical example split into two physical tables for readability. Rows with the same Case value correspond. Table <a href="#ex-table" class="auto internal xref">1</a> shows the observed discard signal, inferred cause, rate, duration, and example operator determination of whether the discard is unintended. Table <a href="#ex-table2" class="auto internal xref">2</a> shows the corresponding example mitigation action.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-3">The Unintended? column is illustrative. It is not a normative property of the discard class. In practice, the same discard class can be intended or unintended depending on the operator's policy, expected baseline for that class, persistence of the signal, affected scope, and other operational context.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
 <span id="name-example-signal-cause-mitiga"></span><div id="ex-table">
 <table class="center" id="table-1">
         <caption>
@@ -3354,6 +3356,7 @@ module ietf-packet-discard-reporting {
         </caption>
 <thead>
           <tr>
+            <th class="text-left" rowspan="1" colspan="1">CASE</th>
             <th class="text-left" rowspan="1" colspan="1">DISCARD-CLASS</th>
             <th class="text-left" rowspan="1" colspan="1">Discard cause</th>
             <th class="text-left" rowspan="1" colspan="1">DISCARD-RATE</th>
@@ -3362,66 +3365,77 @@ module ietf-packet-discard-reporting {
         </thead>
         <tbody>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">E1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l2/rx</td>
             <td class="text-left" rowspan="1" colspan="1">Upstream device or link error</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(1min)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">T1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-left" rowspan="1" colspan="1">Tracert</td>
             <td class="text-left" rowspan="1" colspan="1">&lt;=Baseline</td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">T2</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-left" rowspan="1" colspan="1">Convergence</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(1s)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">T3</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-left" rowspan="1" colspan="1">Routing loop</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(1min)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">P1</td>
             <td class="text-left" rowspan="1" colspan="1">.*/policy/.*</td>
             <td class="text-left" rowspan="1" colspan="1">Policy</td>
             <td class="text-left" rowspan="1" colspan="1"> </td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">R1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-left" rowspan="1" colspan="1">Convergence</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(1s)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">R2</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-left" rowspan="1" colspan="1">Config error</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(1min)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">R3</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-left" rowspan="1" colspan="1">Invalid destination</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(10min)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">I1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/internal</td>
             <td class="text-left" rowspan="1" colspan="1">Device errors</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
             <td class="text-center" rowspan="1" colspan="1">O(1min)</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">B1</td>
             <td class="text-left" rowspan="1" colspan="1">egress/discards/no-buffer</td>
             <td class="text-left" rowspan="1" colspan="1">Congestion</td>
             <td class="text-left" rowspan="1" colspan="1">&lt;=Baseline</td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">B2</td>
             <td class="text-left" rowspan="1" colspan="1">egress/discards/no-buffer</td>
             <td class="text-left" rowspan="1" colspan="1">Congestion</td>
             <td class="text-left" rowspan="1" colspan="1">&gt;Baseline</td>
@@ -3438,6 +3452,7 @@ module ietf-packet-discard-reporting {
         </caption>
 <thead>
           <tr>
+            <th class="text-left" rowspan="1" colspan="1">CASE</th>
             <th class="text-left" rowspan="1" colspan="1">DISCARD-CLASS</th>
             <th class="text-center" rowspan="1" colspan="1">Unintended?</th>
             <th class="text-left" rowspan="1" colspan="1">Possible actions</th>
@@ -3445,56 +3460,67 @@ module ietf-packet-discard-reporting {
         </thead>
         <tbody>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">E1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l2/rx</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">Take upstream link or device out-of-service</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">T1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-center" rowspan="1" colspan="1">N</td>
             <td class="text-left" rowspan="1" colspan="1">no action</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">T2</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">No action</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">T3</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">Roll-back change</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">P1</td>
             <td class="text-left" rowspan="1" colspan="1">.*/policy/.*</td>
             <td class="text-center" rowspan="1" colspan="1">N</td>
             <td class="text-left" rowspan="1" colspan="1">No action</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">R1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">No action</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">R2</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">Roll-back change</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">R3</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-center" rowspan="1" colspan="1">N</td>
             <td class="text-left" rowspan="1" colspan="1">Escalate to operator</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">I1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/internal</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">Take device out-of-service</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">B1</td>
             <td class="text-left" rowspan="1" colspan="1">egress/discards/no-buffer</td>
             <td class="text-center" rowspan="1" colspan="1">N</td>
             <td class="text-left" rowspan="1" colspan="1">No action</td>
           </tr>
           <tr>
+            <td class="text-left" rowspan="1" colspan="1">B2</td>
             <td class="text-left" rowspan="1" colspan="1">egress/discards/no-buffer</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
             <td class="text-left" rowspan="1" colspan="1">Bring capacity back into service or move traffic</td>
@@ -3502,7 +3528,7 @@ module ietf-packet-discard-reporting {
         </tbody>
       </table>
 </div>
-<p id="appendix-B-4">The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent.<a href="#appendix-B-4" class="pilcrow">¶</a></p>
+<p id="appendix-B-6">The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent. A rate less than or equal to baseline generally represents expected behaviour for that operator and network context. A rate greater than baseline indicates an anomaly candidate.<a href="#appendix-B-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-im-full-tree">
