@@ -163,15 +163,15 @@ Table of Contents
    specifies a YANG implementation of this IM for network elements,
    while maintaining consistency through clear semantics.
 
-   The scope of this document is limited to reporting packet loss at
-   Layer 3 and frames discarded at Layer 2.  This document considers
-   only the signals that may trigger automated mitigation actions and
-   not how the actions are defined or executed.  These considerations
-   are deployment-specific.  Likewise, the document does not correlate
-   specific discard counters with other events and counters (e.g.,
-   ICMP).  Such a correlation is not trivial and depends on local
-   configuration and specific conditions (e.g., rate-limit policy,
-   overload, or Access Control Lists (ACLs)).
+   This document is mainly scoped to reporting packet loss at Layer 3,
+   frames discarded at Layer 2, and in between (e.g., MPLS [RFC3031]).
+   This document considers only the signals that may trigger automated
+   mitigation actions and not how the actions are defined or executed.
+   These considerations are deployment-specific.  Likewise, the document
+   does not correlate specific discard counters with other events and
+   counters (e.g., ICMP).  Such a correlation is not trivial and depends
+   on local configuration and specific conditions (e.g., rate-limit
+   policy, overload, or Access Control Lists (ACLs)).
 
    Section 3 describes the problem space and requirements.  Section 4
    defines the IM and its classification scheme.  Section 5 specifies
@@ -2016,6 +2016,11 @@ Table of Contents
    [RFC2863]  McCloghrie, K. and F. Kastenholz, "The Interfaces Group
               MIB", RFC 2863, DOI 10.17487/RFC2863, June 2000,
               <https://www.rfc-editor.org/rfc/rfc2863>.
+
+   [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
+              Label Switching Architecture", RFC 3031,
+              DOI 10.17487/RFC3031, January 2001,
+              <https://www.rfc-editor.org/rfc/rfc3031>.
 
    [RFC3444]  Pras, A. and J. Schoenwaelder, "On the Difference between
               Information Models and Data Models", RFC 3444,
