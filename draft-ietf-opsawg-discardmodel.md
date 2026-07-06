@@ -143,6 +143,8 @@ Intended packet discards (Intended discards, for short):
 Unintended packet discards (Unintended discards, for short):
 : Are packets that were dropped, which the network operator otherwise intended to deliver, i.e., which indicates an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.
 
+Whether a discard is intended or unintended is an operator determination; discard classes defined by this document provide input to that determination but do not, by themselves, make it.
+
 # Problem Statement   {#problem}
 
 The fundamental problem for network operators is how to automatically detect when and where unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected, for example:
@@ -167,7 +169,11 @@ FEATURE-DISCARD-DURATION:
 FEATURE-DISCARD-CLASS:
 : The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no action. Refer to {{ex-table}} for more examples.
 
-While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions (refer to {{mapping}} for examples).
+While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions.
+
+The classification defined in this document does not by itself determine whether a specific discard instance is intended or unintended. That determination is made by the operator, based on local policy, configured intent, baseline behavior, duration, affected scope, service context, and other operational evidence. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.
+
+The purpose of the discard classification is to expose the signal with enough precision that an operator or automation system can make that determination consistently. {{mapping}} provides illustrative examples of how discard class, rate, duration, and inferred cause can be combined to determine whether a discard is unintended and what action, if any, is appropriate.
 
 # Information Model (IM)   {#infomodel}
 
