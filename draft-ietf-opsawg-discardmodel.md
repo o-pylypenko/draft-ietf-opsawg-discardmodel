@@ -198,7 +198,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |  ...
     |  |  +-- l3
     |  |  |  ...
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     ...
     |  +-- discards* [direction]
     |     +-- direction    identityref
@@ -219,6 +219,7 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
+    |        +-- qos!
     |           ...
     +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
@@ -227,7 +228,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |  ...
     |  |  +-- l3
     |  |  |  ...
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     ...
     |  +-- discards
     |     +-- l2
@@ -247,6 +248,7 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
+    |        +-- qos!
     |           ...
     +-- device {pdr-common:device-stats}?
        +-- traffic
@@ -254,7 +256,7 @@ module: ietf-packet-discard-reporting-sx
        |  |  ...
        |  +-- l3
        |  |  ...
-       |  +-- qos
+       |  +-- qos!
        |     ...
        +-- discards
           +-- l2
@@ -274,6 +276,7 @@ module: ietf-packet-discard-reporting-sx
           |  +-- l3
           |     ...
           +-- no-buffer
+             +-- qos!
                 ...
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
@@ -356,7 +359,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 This DM implements the IM defined in {{infomodel}} for the interface, device, and control-plane components. It is a device model per {{Section 2.1 of ?RFC8969}}. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).
 
-The IM defines the abstract classification tree using YANG data structure extensions {{?RFC8791}}. This DM imports that module and reuses the same groupings and hierarchy of components, directions, layers, and discard classes, attaching them via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and are not instantiated in this DM.
+The IM defines the abstract classification tree using YANG data structure extensions {{?RFC8791}}. The reusable groupings are defined in the "ietf-packet-discard-reporting-common" module ({{common-module}}). This DM imports that common module and reuses the same hierarchy of components, directions, layers, and discard classes, attaching the groupings via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and is not instantiated in this DM.
 
 ## Structure {#datamodel-structure}
 
@@ -367,16 +370,16 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro traffic-discard-stats {control-plane-stats}?
+    +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  ...
        +--ro discards* [direction]
           ...
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro traffic-discard-stats {interface-stats}?
-       +--ro discard-order-capability*   identityref?
-       +--ro traffic* [direction] {interface-stats}?
+    +--ro traffic-discard-stats {pdr-common:interface-stats}?
+       +--ro discard-order-capability*   identityref
+       +--ro traffic* [direction]
        |  +--ro direction    identityref
        |  +--ro l2
        |  |  ...
@@ -385,7 +388,7 @@ module: ietf-packet-discard-reporting
        |  +--ro qos!
        |     +--ro class* [id]
        |        ...
-       +--ro discards* [direction]?
+       +--ro discards* [direction]
           +--ro direction    identityref
           +--ro l2
           |  ...
@@ -408,7 +411,7 @@ module: ietf-packet-discard-reporting
                 +--ro class* [id]
                    ...
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro traffic-discard-stats {device-stats}?
+    +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -484,8 +487,8 @@ An IPv4 packet discarded on egress due to no buffers would increment:
 
 - `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets`
 - `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes`
-- `interface/discards[direction="egress"]/no-buffer/class[id="0"]/packets`
-- `interface/discards[direction="egress"]/no-buffer/class[id="0"]/bytes`
+- `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/packets`
+- `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/bytes`
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
@@ -585,7 +588,7 @@ There are no particularly sensitive writable data nodes.
 
 Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:
 
-rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:
+rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:
 : Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.
 : Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.
 
