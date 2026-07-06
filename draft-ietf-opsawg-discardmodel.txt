@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 5 January 2027                                           Nvidia
+Expires: 7 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             4 July 2026
+                                                             6 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 January 2027.
+   This Internet-Draft will expire on 7 January 2027.
 
 Copyright Notice
 
@@ -326,7 +326,7 @@ Table of Contents
        |  |  |  ...
        |  |  +-- l3
        |  |  |  ...
-       |  |  +-- qos
+       |  |  +-- qos!
        |  |     ...
        |  +-- discards* [direction]
        |     +-- direction    identityref
@@ -347,6 +347,7 @@ Table of Contents
        |     |  +-- l3
        |     |     ...
        |     +-- no-buffer
+       |        +-- qos!
        |           ...
        +-- flow* [direction] {pdr-common:flow-reporting}?
        |  +-- direction    identityref
@@ -355,7 +356,7 @@ Table of Contents
        |  |  |  ...
        |  |  +-- l3
        |  |  |  ...
-       |  |  +-- qos
+       |  |  +-- qos!
        |  |     ...
        |  +-- discards
        |     +-- l2
@@ -375,6 +376,7 @@ Table of Contents
        |     |  +-- l3
        |     |     ...
        |     +-- no-buffer
+       |        +-- qos!
        |           ...
        +-- device {pdr-common:device-stats}?
           +-- traffic
@@ -382,7 +384,7 @@ Table of Contents
           |  |  ...
           |  +-- l3
           |  |  ...
-          |  +-- qos
+          |  +-- qos!
           |     ...
           +-- discards
              +-- l2
@@ -402,6 +404,7 @@ Table of Contents
              |  +-- l3
              |     ...
              +-- no-buffer
+                +-- qos!
                    ...
 
                     Figure 1: Abstract IM Tree Structure
@@ -537,13 +540,13 @@ Table of Contents
         WG List:  OPSAWG <mailto:opsawg@ietf.org>
 
         Editor:   John Evans
-                  <mailto:jevanamz@amazon.co.uk>
+                  <mailto:john@nopacketleftbehind.net>
 
         Editor:   Oleksandr Pylypenko
                   <mailto:opylypenko@nvidia.com>
 
         Author:   Jeffrey Haas
-                  <mailto:jhaas@juniper.net>
+                  <mailto:jeffrey.haas@hpe.com>
 
         Author:   Aviran Kadosh
                   <mailto:akadosh@cisco.com>
@@ -623,7 +626,7 @@ Table of Contents
        base direction;
        description
          "Reports statistics for the sent packets to
-          to the network.";
+          the network.";
      }
 
      identity address-family {
@@ -1183,13 +1186,13 @@ Table of Contents
         WG List:  OPSAWG <mailto:opsawg@ietf.org>
 
         Editor:   John Evans
-                  <mailto:jevanamz@amazon.co.uk>
+                  <mailto:john@nopacketleftbehind.net>
 
         Editor:   Oleksandr Pylypenko
                   <mailto:opylypenko@nvidia.com>
 
         Author:   Jeffrey Haas
-                  <mailto:jhaas@juniper.net>
+                  <mailto:jeffrey.haas@hpe.com>
 
         Author:   Aviran Kadosh
                   <mailto:akadosh@cisco.com>
@@ -1285,12 +1288,14 @@ Table of Contents
    single device (interfaces and control plane).
 
    The IM defines the abstract classification tree using YANG data
-   structure extensions [RFC8791].  This DM imports that module and
-   reuses the same groupings and hierarchy of components, directions,
-   layers, and discard classes, attaching them via augment statements to
-   existing YANG modules for routing, interfaces, and logical network
-   elements.  The flow component is defined only in the IM for use by
-   flow-oriented data models and are not instantiated in this DM.
+   structure extensions [RFC8791].  The reusable groupings are defined
+   in the "ietf-packet-discard-reporting-common" module (Section 4.3).
+   This DM imports that common module and reuses the same hierarchy of
+   components, directions, layers, and discard classes, attaching the
+   groupings via augment statements to existing YANG modules for
+   routing, interfaces, and logical network elements.  The flow
+   component is defined only in the IM for use by flow-oriented data
+   models and is not instantiated in this DM.
 
 5.1.  Structure
 
@@ -1303,16 +1308,16 @@ Table of Contents
 
      augment /rt:routing/rt:control-plane-protocols
                /rt:control-plane-protocol:
-       +--ro traffic-discard-stats {control-plane-stats}?
+       +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic* [direction]
           |  ...
           +--ro discards* [direction]
              ...
      augment /if:interfaces/if:interface/if:statistics:
-       +--ro traffic-discard-stats {interface-stats}?
-          +--ro discard-order-capability*   identityref?
-          +--ro traffic* [direction] {interface-stats}?
+       +--ro traffic-discard-stats {pdr-common:interface-stats}?
+          +--ro discard-order-capability*   identityref
+          +--ro traffic* [direction]
           |  +--ro direction    identityref
           |  +--ro l2
           |  |  ...
@@ -1321,7 +1326,7 @@ Table of Contents
           |  +--ro qos!
           |     +--ro class* [id]
           |        ...
-          +--ro discards* [direction]?
+          +--ro discards* [direction]
              +--ro direction    identityref
              +--ro l2
              |  ...
@@ -1344,7 +1349,7 @@ Table of Contents
                    +--ro class* [id]
                       ...
      augment /lne:logical-network-elements/lne:logical-network-element:
-       +--ro traffic-discard-stats {device-stats}?
+       +--ro traffic-discard-stats {pdr-common:device-stats}?
           +--ro discard-order-capability*   identityref
           +--ro traffic
           |  +--ro l2
@@ -1490,10 +1495,10 @@ Table of Contents
    *  interface/discards[direction="egress"]/l3/address-family-
       stat[address-family="ipv4"]/unicast/bytes
 
-   *  interface/discards[direction="egress"]/no-buffer/
+   *  interface/discards[direction="egress"]/no-buffer/qos/
       class[id="0"]/packets
 
-   *  interface/discards[direction="egress"]/no-buffer/
+   *  interface/discards[direction="egress"]/no-buffer/qos/
       class[id="0"]/bytes
 
    A multicast IPv6 packet dropped due to RPF check failure would
@@ -1566,13 +1571,13 @@ Table of Contents
         WG List:  OPSAWG <mailto:opsawg@ietf.org>
 
         Editor:   John Evans
-                  <mailto:jevanamz@amazon.co.uk>
+                  <mailto:john@nopacketleftbehind.net>
 
         Editor:   Oleksandr Pylypenko
                   <mailto:opylypenko@nvidia.com>
 
         Author:   Jeffrey Haas
-                  <mailto:jhaas@juniper.net>
+                  <mailto:jeffrey.haas@hpe.com>
 
         Author:   Aviran Kadosh
                   <mailto:akadosh@cisco.com>
@@ -1890,10 +1895,10 @@ Table of Contents
    vulnerabilities:
 
    rt:control-plane-protocol/pdr:traffic-discard-stats,
-   if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-
-   stats, and lne:logical-network-element/pdr:traffic-discard-stats:  Access
-      to these data nodes would reveal information about the attacks to
-      which an element is subject, misconfigurations, etc.
+   if:statistics/pdr:traffic-discard-stats, and lne:logical-network-
+   element/pdr:traffic-discard-stats:  Access to these data nodes would
+      reveal information about the attacks to which an element is
+      subject, misconfigurations, etc.
 
       Also, an attacker who can inject packets can infer the efficiency
       of its attack by monitoring (the increase of) some discard

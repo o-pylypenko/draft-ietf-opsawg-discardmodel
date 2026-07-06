@@ -1061,7 +1061,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Evans, et al.</td>
-<td class="center">Expires 5 January 2027</td>
+<td class="center">Expires 7 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1074,12 @@ svg {
 <dd class="internet-draft">draft-ietf-opsawg-discardmodel-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-04" class="published">4 July 2026</time>
+<time datetime="2026-07-06" class="published">6 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-05">5 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-07">7 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1148,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 7 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1450,7 +1450,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |  ...
     |  |  +-- l3
     |  |  |  ...
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     ...
     |  +-- discards* [direction]
     |     +-- direction    identityref
@@ -1471,6 +1471,7 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
+    |        +-- qos!
     |           ...
     +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
@@ -1479,7 +1480,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |  ...
     |  |  +-- l3
     |  |  |  ...
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     ...
     |  +-- discards
     |     +-- l2
@@ -1499,6 +1500,7 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
+    |        +-- qos!
     |           ...
     +-- device {pdr-common:device-stats}?
        +-- traffic
@@ -1506,7 +1508,7 @@ module: ietf-packet-discard-reporting-sx
        |  |  ...
        |  +-- l3
        |  |  ...
-       |  +-- qos
+       |  +-- qos!
        |     ...
        +-- discards
           +-- l2
@@ -1526,6 +1528,7 @@ module: ietf-packet-discard-reporting-sx
           |  +-- l3
           |     ...
           +-- no-buffer
+             +-- qos!
                 ...
 </pre>
 </div>
@@ -1691,13 +1694,13 @@ module ietf-packet-discard-reporting-common {
      WG List:  OPSAWG &lt;mailto:opsawg@ietf.org&gt;
 
      Editor:   John Evans
-               &lt;mailto:jevanamz@amazon.co.uk&gt;
+               &lt;mailto:john@nopacketleftbehind.net&gt;
 
      Editor:   Oleksandr Pylypenko
                &lt;mailto:opylypenko@nvidia.com&gt;
 
      Author:   Jeffrey Haas
-               &lt;mailto:jhaas@juniper.net&gt;
+               &lt;mailto:jeffrey.haas@hpe.com&gt;
 
      Author:   Aviran Kadosh
                &lt;mailto:akadosh@cisco.com&gt;
@@ -1777,7 +1780,7 @@ module ietf-packet-discard-reporting-common {
     base direction;
     description
       "Reports statistics for the sent packets to
-       to the network.";
+       the network.";
   }
 
   identity address-family {
@@ -2342,13 +2345,13 @@ module ietf-packet-discard-reporting-sx {
      WG List:  OPSAWG &lt;mailto:opsawg@ietf.org&gt;
 
      Editor:   John Evans
-               &lt;mailto:jevanamz@amazon.co.uk&gt;
+               &lt;mailto:john@nopacketleftbehind.net&gt;
 
      Editor:   Oleksandr Pylypenko
                &lt;mailto:opylypenko@nvidia.com&gt;
 
      Author:   Jeffrey Haas
-               &lt;mailto:jhaas@juniper.net&gt;
+               &lt;mailto:jeffrey.haas@hpe.com&gt;
 
      Author:   Aviran Kadosh
                &lt;mailto:akadosh@cisco.com&gt;
@@ -2446,7 +2449,7 @@ module ietf-packet-discard-reporting-sx {
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-data-model-dm" class="section-name selfRef">Data Model (DM)</a>
       </h2>
 <p id="section-5-1">This DM implements the IM defined in <a href="#infomodel" class="auto internal xref">Section 4</a> for the interface, device, and control-plane components. It is a device model per <span><a href="https://rfc-editor.org/rfc/rfc8969#section-2.1" class="relref">Section 2.1</a> of [<a href="#RFC8969" class="cite xref">RFC8969</a>]</span>. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2">The IM defines the abstract classification tree using YANG data structure extensions <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>. This DM imports that module and reuses the same groupings and hierarchy of components, directions, layers, and discard classes, attaching them via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and are not instantiated in this DM.<a href="#section-5-2" class="pilcrow">¶</a></p>
+<p id="section-5-2">The IM defines the abstract classification tree using YANG data structure extensions <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>. The reusable groupings are defined in the "ietf-packet-discard-reporting-common" module (<a href="#common-module" class="auto internal xref">Section 4.3</a>). This DM imports that common module and reuses the same hierarchy of components, directions, layers, and discard classes, attaching the groupings via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and is not instantiated in this DM.<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div id="datamodel-structure">
 <section id="section-5.1">
         <h3 id="name-structure-2">
@@ -2461,16 +2464,16 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro traffic-discard-stats {control-plane-stats}?
+    +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  ...
        +--ro discards* [direction]
           ...
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro traffic-discard-stats {interface-stats}?
-       +--ro discard-order-capability*   identityref?
-       +--ro traffic* [direction] {interface-stats}?
+    +--ro traffic-discard-stats {pdr-common:interface-stats}?
+       +--ro discard-order-capability*   identityref
+       +--ro traffic* [direction]
        |  +--ro direction    identityref
        |  +--ro l2
        |  |  ...
@@ -2479,7 +2482,7 @@ module: ietf-packet-discard-reporting
        |  +--ro qos!
        |     +--ro class* [id]
        |        ...
-       +--ro discards* [direction]?
+       +--ro discards* [direction]
           +--ro direction    identityref
           +--ro l2
           |  ...
@@ -2502,7 +2505,7 @@ module: ietf-packet-discard-reporting
                 +--ro class* [id]
                    ...
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro traffic-discard-stats {device-stats}?
+    +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -2631,10 +2634,10 @@ module: ietf-packet-discard-reporting
             <p id="section-5.3-7.2.1"><code>interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes</code><a href="#section-5.3-7.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-7.3">
-            <p id="section-5.3-7.3.1"><code>interface/discards[direction="egress"]/no-buffer/class[id="0"]/packets</code><a href="#section-5.3-7.3.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-7.3.1"><code>interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/packets</code><a href="#section-5.3-7.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-5.3-7.4">
-            <p id="section-5.3-7.4.1"><code>interface/discards[direction="egress"]/no-buffer/class[id="0"]/bytes</code><a href="#section-5.3-7.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.3-7.4.1"><code>interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/bytes</code><a href="#section-5.3-7.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-5.3-8">A multicast IPv6 packet dropped due to RPF check failure would increment:<a href="#section-5.3-8" class="pilcrow">¶</a></p>
@@ -2716,13 +2719,13 @@ module ietf-packet-discard-reporting {
      WG List:  OPSAWG &lt;mailto:opsawg@ietf.org&gt;
 
      Editor:   John Evans
-               &lt;mailto:jevanamz@amazon.co.uk&gt;
+               &lt;mailto:john@nopacketleftbehind.net&gt;
 
      Editor:   Oleksandr Pylypenko
                &lt;mailto:opylypenko@nvidia.com&gt;
 
      Author:   Jeffrey Haas
-               &lt;mailto:jhaas@juniper.net&gt;
+               &lt;mailto:jeffrey.haas@hpe.com&gt;
 
      Author:   Aviran Kadosh
                &lt;mailto:akadosh@cisco.com&gt;
@@ -3008,7 +3011,7 @@ module ietf-packet-discard-reporting {
 <p id="section-8.2-4">There are no particularly sensitive writable data nodes.<a href="#section-8.2-4" class="pilcrow">¶</a></p>
 <p id="section-8.2-5">Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:<a href="#section-8.2-5" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlParallel" id="section-8.2-6">
-          <dt id="section-8.2-6.1">rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:</dt>
+          <dt id="section-8.2-6.1">rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:</dt>
           <dd style="margin-left: 1.5em" id="section-8.2-6.2">
             <p id="section-8.2-6.2.1">Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.<a href="#section-8.2-6.2.1" class="pilcrow">¶</a></p>
 </dd>
