@@ -17,13 +17,13 @@ module ietf-packet-discard-reporting-common {
      WG List:  OPSAWG <mailto:opsawg@ietf.org>
 
      Editor:   John Evans
-               <mailto:jevanamz@amazon.co.uk>
+               <mailto:john@nopacketleftbehind.net>
 
      Editor:   Oleksandr Pylypenko
                <mailto:opylypenko@nvidia.com>
 
      Author:   Jeffrey Haas
-               <mailto:jhaas@juniper.net>
+               <mailto:jeffrey.haas@hpe.com>
 
      Author:   Aviran Kadosh
                <mailto:akadosh@cisco.com>
@@ -103,7 +103,7 @@ module ietf-packet-discard-reporting-common {
     base direction;
     description
       "Reports statistics for the sent packets to
-       to the network.";
+       the network.";
   }
 
   identity address-family {
