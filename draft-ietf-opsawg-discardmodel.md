@@ -679,38 +679,42 @@ See {{mapping}} for examples of how these discard signals map to root causes and
 
 The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  Tables {{<ex-table}} and {{<ex-table2}} give example discard signal-to-mitigation action mappings based on the features described in {{problem}}.
 
+Tables {{<ex-table}} and {{<ex-table2}} are a single logical example split into two physical tables for readability. Rows with the same Case value correspond. Table {{<ex-table}} shows the observed discard signal, inferred cause, rate, duration, and example operator determination of whether the discard is unintended. Table {{<ex-table2}} shows the corresponding example mitigation action.
 
-| DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
-|:--------------|:--------------|:-------------|:----------------:|
-| ingress/discards/errors/l2/rx | Upstream device or link error | >Baseline| O(1min) |
-| ingress/discards/errors/l3/ttl-expired | Tracert | <=Baseline | |
-| ingress/discards/errors/l3/ttl-expired | Convergence | >Baseline | O(1s) |
-| ingress/discards/errors/l3/ttl-expired | Routing loop | >Baseline | O(1min) |
-| .\*/policy/.\* | Policy | | |
-| ingress/discards/errors/l3/no-route | Convergence | >Baseline | O(1s) |
-| ingress/discards/errors/l3/no-route | Config error | >Baseline | O(1min) |
-| ingress/discards/errors/l3/no-route | Invalid destination | >Baseline | O(10min) |
-| ingress/discards/errors/internal | Device errors | >Baseline | O(1min) |
-| egress/discards/no-buffer | Congestion | <=Baseline | |
-| egress/discards/no-buffer | Congestion | >Baseline | O(1min) |
+The Unintended? column is illustrative. It is not a normative property of the discard class. In practice, the same discard class can be intended or unintended depending on the operator's policy, expected baseline for that class, persistence of the signal, affected scope, and other operational context.
+
+
+| CASE | DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
+|:-----|:--------------|:--------------|:-------------|:----------------:|
+| E1 | ingress/discards/errors/l2/rx | Upstream device or link error | >Baseline| O(1min) |
+| T1 | ingress/discards/errors/l3/ttl-expired | Tracert | <=Baseline | |
+| T2 | ingress/discards/errors/l3/ttl-expired | Convergence | >Baseline | O(1s) |
+| T3 | ingress/discards/errors/l3/ttl-expired | Routing loop | >Baseline | O(1min) |
+| P1 | .\*/policy/.\* | Policy | | |
+| R1 | ingress/discards/errors/l3/no-route | Convergence | >Baseline | O(1s) |
+| R2 | ingress/discards/errors/l3/no-route | Config error | >Baseline | O(1min) |
+| R3 | ingress/discards/errors/l3/no-route | Invalid destination | >Baseline | O(10min) |
+| I1 | ingress/discards/errors/internal | Device errors | >Baseline | O(1min) |
+| B1 | egress/discards/no-buffer | Congestion | <=Baseline | |
+| B2 | egress/discards/no-buffer | Congestion | >Baseline | O(1min) |
 {: #ex-table title="Example Signal-Cause-Mitigation Mapping (1)"}
 
-| DISCARD-CLASS |  Unintended? | Possible actions |
-|:--------------|:-----------:|:-----------------|
-| ingress/discards/errors/l2/rx | Y | Take upstream link or device out-of-service |
-| ingress/discards/errors/l3/ttl-expired | N | no action |
-| ingress/discards/errors/l3/ttl-expired | Y | No action |
-| ingress/discards/errors/l3/ttl-expired | Y | Roll-back change |
-| .\*/policy/.\* |  N | No action |
-| ingress/discards/errors/l3/no-route | Y | No action |
-| ingress/discards/errors/l3/no-route | Y | Roll-back change |
-| ingress/discards/errors/l3/no-route | N | Escalate to operator |
-| ingress/discards/errors/internal | Y | Take device out-of-service |
-| egress/discards/no-buffer | N | No action |
-| egress/discards/no-buffer | Y | Bring capacity back into service or move traffic |
+| CASE | DISCARD-CLASS |  Unintended? | Possible actions |
+|:-----|:--------------|:-----------:|:-----------------|
+| E1 | ingress/discards/errors/l2/rx | Y | Take upstream link or device out-of-service |
+| T1 | ingress/discards/errors/l3/ttl-expired | N | no action |
+| T2 | ingress/discards/errors/l3/ttl-expired | Y | No action |
+| T3 | ingress/discards/errors/l3/ttl-expired | Y | Roll-back change |
+| P1 |.\*/policy/.\* |  N | No action |
+| R1 | ingress/discards/errors/l3/no-route | Y | No action |
+| R2 | ingress/discards/errors/l3/no-route | Y | Roll-back change |
+| R3 | ingress/discards/errors/l3/no-route | N | Escalate to operator |
+| I1 | ingress/discards/errors/internal | Y | Take device out-of-service |
+| B1 | egress/discards/no-buffer | N | No action |
+| B2 | egress/discards/no-buffer | Y | Bring capacity back into service or move traffic |
 {: #ex-table2 title="Example Signal-Cause-Mitigation Mapping (2)"}
 
-The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent.
+The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent. A rate less than or equal to baseline generally represents expected behaviour for that operator and network context. A rate greater than baseline indicates an anomaly candidate.
 
 # Full Information Model Tree {#sec-im-full-tree}
 
