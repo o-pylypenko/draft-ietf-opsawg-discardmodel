@@ -319,7 +319,10 @@ discards/errors/:
    : These are frames discarded due to errors in the received Layer 2 frame, including: Cyclic Redundancy Check (CRC) errors, invalid Media Access Control (MAC) addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.
 
    * discards/errors/l3/rx/:
-   : These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors,  MTU exceeded, invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
+   : These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors and invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
+
+   * discards/errors/l3/mtu-exceeded/:
+   : These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet ({{?RFC791}}, {{?RFC8200}}).
 
    * discards/errors/l3/ttl-expired:
    : These discards occur due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.
