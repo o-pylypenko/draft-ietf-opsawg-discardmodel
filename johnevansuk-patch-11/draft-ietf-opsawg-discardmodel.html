@@ -2042,12 +2042,7 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "Reports SRv6 packets discarded because SRv6 Segment
-         Identifier (SID) processing failed. This includes packets
-         for which the active SID is invalid, unsupported, not
-         locally instantiated, not valid for the expected SRv6
-         endpoint behavior, or otherwise cannot be processed
-         according to the local SRv6 configuration and supported
-         endpoint behaviours.";
+         Identifier (SID) processing failed.";
     }
     leaf invalid-label {
       type yang:counter64;
