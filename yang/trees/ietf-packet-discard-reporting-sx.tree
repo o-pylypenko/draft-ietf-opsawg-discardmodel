@@ -71,8 +71,14 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  +-- rx
     |     |  |  |  +-- packets?          yang:counter64
     |     |  |  |  +-- checksum-error?   yang:counter64
-    |     |  |  |  +-- mtu-exceeded?     yang:counter64
     |     |  |  |  +-- invalid-packet?   yang:counter64
+    |     |  |  +-- mtu-exceeded
+    |     |  |  |  +-- packets?
+    |     |  |  |  |       yang:counter64
+    |     |  |  |  +-- fragmentation-not-permitted?
+    |     |  |  |  |       yang:counter64
+    |     |  |  |  +-- fragmentation-permitted-not-performed?
+    |     |  |  |          yang:counter64
     |     |  |  +-- ttl-expired?     yang:counter64
     |     |  |  +-- no-route?        yang:counter64
     |     |  |  +-- invalid-sid?     yang:counter64
@@ -163,8 +169,14 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  +-- rx
     |     |  |  |  +-- packets?          yang:counter64
     |     |  |  |  +-- checksum-error?   yang:counter64
-    |     |  |  |  +-- mtu-exceeded?     yang:counter64
     |     |  |  |  +-- invalid-packet?   yang:counter64
+    |     |  |  +-- mtu-exceeded
+    |     |  |  |  +-- packets?
+    |     |  |  |  |       yang:counter64
+    |     |  |  |  +-- fragmentation-not-permitted?
+    |     |  |  |  |       yang:counter64
+    |     |  |  |  +-- fragmentation-permitted-not-performed?
+    |     |  |  |          yang:counter64
     |     |  |  +-- ttl-expired?     yang:counter64
     |     |  |  +-- no-route?        yang:counter64
     |     |  |  +-- invalid-sid?     yang:counter64
@@ -254,8 +266,14 @@ module: ietf-packet-discard-reporting-sx
           |  |  +-- rx
           |  |  |  +-- packets?          yang:counter64
           |  |  |  +-- checksum-error?   yang:counter64
-          |  |  |  +-- mtu-exceeded?     yang:counter64
           |  |  |  +-- invalid-packet?   yang:counter64
+          |  |  +-- mtu-exceeded
+          |  |  |  +-- packets?
+          |  |  |  |       yang:counter64
+          |  |  |  +-- fragmentation-not-permitted?
+          |  |  |  |       yang:counter64
+          |  |  |  +-- fragmentation-permitted-not-performed?
+          |  |  |          yang:counter64
           |  |  +-- ttl-expired?     yang:counter64
           |  |  +-- no-route?        yang:counter64
           |  |  +-- invalid-sid?     yang:counter64
