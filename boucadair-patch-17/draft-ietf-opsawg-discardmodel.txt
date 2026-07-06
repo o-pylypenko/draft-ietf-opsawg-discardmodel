@@ -514,11 +514,13 @@ Table of Contents
 4.3.  "ietf-packet-discard-reporting-common" YANG Module
 
    The "ietf-packet-discard-reporting-common" module imports "ietf-yang-
-   types" defined in [RFC9911].  The modules references [RFC3031],
+   types" defined in [RFC9911].  The module references [RFC3031],
    [RFC8402], [RFC8660], and [RFC8754].
 
    <CODE BEGINS>
      file "ietf-packet-discard-reporting-common@2026-03-03.yang"
+   =============== NOTE: '\' line wrapping per RFC 8792 ================
+
    module ietf-packet-discard-reporting-common {
      yang-version 1.1;
      namespace "urn:ietf:params:xml:ns:yang:"
@@ -887,7 +889,9 @@ Table of Contents
          reference
            "RFC 8402: Segment Routing Architecture
             RFC 8660: Segment Routing with the MPLS Data Plane
-            RFC 8754: IPv6 Segment Routing Header (SRH)";
+            RFC 8754: IPv6 Segment Routing Header (SRH)
+            RFC 8986: Segment Routing over IPv6 (SRv6) Network \
+                                                           Programming";
        }
        leaf invalid-label {
          type yang:counter64;
