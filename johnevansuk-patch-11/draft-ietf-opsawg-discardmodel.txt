@@ -846,9 +846,6 @@ Table of Contents
          leaf checksum-error {
            type yang:counter64;
            description
-             "The number of received packets discarded due
-              to a checksum error.";
-           description
              "Reports IPv4 packets discarded because validation of the
               IPv4 header checksum failed.
 
