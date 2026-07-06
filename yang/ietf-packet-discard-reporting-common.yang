@@ -366,7 +366,8 @@ module ietf-packet-discard-reporting-common {
       reference
         "RFC 8402: Segment Routing Architecture
          RFC 8660: Segment Routing with the MPLS Data Plane
-         RFC 8754: IPv6 Segment Routing Header (SRH)";
+         RFC 8754: IPv6 Segment Routing Header (SRH)
+         RFC 8986: Segment Routing over IPv6 (SRv6) Network Programming";
     }
     leaf invalid-label {
       type yang:counter64;
