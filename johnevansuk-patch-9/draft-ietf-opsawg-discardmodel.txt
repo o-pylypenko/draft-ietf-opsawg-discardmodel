@@ -282,7 +282,7 @@ Table of Contents
    discard signals to appropriate mitigation actions.
 
    The classification defined in this document does not by itself
-   determine whether a specific discard instance is intended or
+   determine whether a specific discard condition is intended or
    unintended.  That determination is made by the operator, based on
    local policy, configured intent, baseline behavior, duration,
    affected scope, service context, and other operational evidence.  For
