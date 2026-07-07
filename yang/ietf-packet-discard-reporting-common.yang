@@ -152,7 +152,7 @@ module ietf-packet-discard-reporting-common {
   identity tail-drop {
     base no-buffer-type;
     description
-      "Indicates a tail-drop discard.";
+      "Indicates a discard due to tail drop.";
   }
 
   /*
