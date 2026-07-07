@@ -621,7 +621,7 @@ module ietf-packet-discard-reporting-common {
       description
         "Discard counters due to buffer unavailability.";
       list type {
-        key "direction";
+        key "drop-type";
         description
           "No buffer counters.";
         leaf drop-type {
