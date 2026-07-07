@@ -289,13 +289,17 @@ module ietf-packet-discard-reporting-common {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid Media Access Control (MAC) address.";
+           an invalid Media Access Control (MAC) address.
+           Applies to Ethernet or Ethernet-derived 
+           encapsulations where MAC addresses are present.";
       }
       leaf invalid-vlan {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid VLAN tag.";
+           an invalid VLAN tag. Applies to Ethernet or 
+           Ethernet-derived encapsulations where VLAN tags
+           are present.";
       }
       leaf invalid-frame {
         type yang:counter64;
