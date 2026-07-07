@@ -169,7 +169,7 @@ FEATURE-DISCARD-CLASS:
 
 While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions.
 
-The classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on local policy, configured intent, baseline behavior, duration, affected scope, service context, and other operational evidence. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.
+The classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on the discard class together with local policy, configured intent, baseline behavior, duration, affected scope, and other operational context. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.
 
 The purpose of the discard classification is to expose the signal with enough precision that an operator or automation system can make that determination consistently. {{mapping}} provides illustrative examples of how discard class, rate, duration, and inferred cause can be combined to determine whether a discard is unintended and what action, if any, is appropriate.
 
@@ -517,7 +517,7 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 
 # Operational Considerations
 
-##  Determining Intent for Policy
+##  Determining Intent for Policy {#intent}
 
 Device discard counters do not by themselves establish operator intent. Discards reported under policy (e.g., ACL/policer) indicate only that traffic matched a configured rule; such discards may still be unintended if the configuration is in error. Determining intent for policy discards requires external context (e.g., configuration validation and change history). Such contexts are local to each operator.
 
