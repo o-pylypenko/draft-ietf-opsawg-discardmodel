@@ -277,8 +277,27 @@ Table of Contents
    [RFC8343], FEATURE-DISCARD-CLASS requires a more detailed
    classification scheme than they define.  The IM provided in Section 4
    defines such a classification scheme to enable automated mapping from
-   discard signals to appropriate mitigation actions (refer to
-   Appendix B for examples).
+   discard signals to appropriate mitigation actions.
+
+   The classification defined in this document does not by itself
+   determine whether a specific discard condition is intended or
+   unintended.  That determination is made by the operator, based on the
+   discard class together with local policy, configured intent, baseline
+   behavior, duration, affected scope, and other operational context.
+   For example, policy discards may be intended when they enforce a
+   deliberate access-control rule, but unintended when a configuration
+   error causes valid traffic to match that rule.  Similarly, TTL-
+   expired packets may be expected at a low baseline rate due to
+   traceroute or other diagnostic activity, while a sustained increase
+   above baseline may indicate convergence, a routing loop, or another
+   operational fault.
+
+   The purpose of the discard classification is to expose the signal
+   with enough precision that an operator or automation system can make
+   that determination consistently.  Appendix B provides illustrative
+   examples of how discard class, rate, duration, and inferred cause can
+   be combined to determine whether a discard is unintended and what
+   action, if any, is appropriate.
 
 4.  Information Model (IM)
 

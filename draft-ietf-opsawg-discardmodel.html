@@ -1409,7 +1409,9 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 </dd>
       <dd class="break"></dd>
 </dl>
-<p id="section-3-5">While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and the YANG Data Model for Interface Management <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in <a href="#infomodel" class="auto internal xref">Section 4</a> defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions (refer to <a href="#mapping" class="auto internal xref">Appendix B</a> for examples).<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-5">While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and the YANG Data Model for Interface Management <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in <a href="#infomodel" class="auto internal xref">Section 4</a> defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions.<a href="#section-3-5" class="pilcrow">¶</a></p>
+<p id="section-3-6">The classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on the discard class together with local policy, configured intent, baseline behavior, duration, affected scope, and other operational context. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-7">The purpose of the discard classification is to expose the signal with enough precision that an operator or automation system can make that determination consistently. <a href="#mapping" class="auto internal xref">Appendix B</a> provides illustrative examples of how discard class, rate, duration, and inferred cause can be combined to determine whether a discard is unintended and what action, if any, is appropriate.<a href="#section-3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="infomodel">
@@ -2974,7 +2976,7 @@ module ietf-packet-discard-reporting {
       <h2 id="name-operational-considerations">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-operational-considerations" class="section-name selfRef">Operational Considerations</a>
       </h2>
-<div id="determining-intent-for-policy">
+<div id="intent">
 <section id="section-6.1">
         <h3 id="name-determining-intent-for-poli">
 <a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-determining-intent-for-poli" class="section-name selfRef">Determining Intent for Policy</a>
