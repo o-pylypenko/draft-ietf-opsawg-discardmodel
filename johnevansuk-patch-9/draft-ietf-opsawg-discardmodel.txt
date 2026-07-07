@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 7 January 2027                                           Nvidia
+Expires: 8 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             6 July 2026
+                                                             7 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 8 January 2027.
 
 Copyright Notice
 
@@ -222,10 +222,6 @@ Table of Contents
       tables may result in packets being dropped because they do not
       match a valid route; configuration errors may result in a valid
       packet incorrectly matching an ACL and being dropped.
-
-   Whether a discard is intended or unintended is an operator
-   determination; discard classes defined by this document provide input
-   to that determination but do not, by themselves, make it.
 
 3.  Problem Statement
 
