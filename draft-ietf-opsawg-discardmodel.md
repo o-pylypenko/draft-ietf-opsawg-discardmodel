@@ -84,6 +84,15 @@ contributor:
     email: nchachmo@cisco.com
 
 normative:
+     IEEE802.1Q:
+          title: "IEEE Standard for Local and Metropolitan Area Networks--Bridges and Bridged Networks"
+          author:
+               org: IEEE
+          seriesinfo:
+               IEEE: "Std 802.1Q-2022"
+               DOI: "10.1109/IEEESTD.2022.10004498"
+          target: https://doi.org/10.1109/IEEESTD.2022.10004498
+          date: 2022-12-22
 
 informative:
      RED93:
