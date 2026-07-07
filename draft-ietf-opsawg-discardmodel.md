@@ -108,7 +108,7 @@ Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards,
 
 This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting to address the above issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this IM for network elements, while maintaining consistency through clear semantics.
 
-The scope of this document is limited to reporting Layer 3 packet discards, Layer 2 frame discards, and discards during MPLS label processing {{?RFC3031}}. The reported signals may trigger automated mitigation actions; the definition and execution of those actions are deployment-specific. Protocol actions associated with a discard (e.g., ICMP error message generation) are governed by the applicable protocol specifications and local policy.
+The scope of this document is limited to reporting Layer 3 packet discards, Layer 2 frame discards, and discards during MPLS label processing {{!RFC3031}}. The reported signals may trigger automated mitigation actions; the definition and execution of those actions are deployment-specific. Protocol actions associated with a discard (e.g., ICMP error message generation) are governed by the applicable protocol specifications and local policy.
 
 {{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and its classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. Appendices {{<wheredropped}} and {{<mapping}} provide additional context and implementation guidance.
 
@@ -327,6 +327,9 @@ discards/errors/:
    * discards/errors/l3/no-route/:
    : These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
 
+   * discards/errors/neighbor-resolution-failure/:
+   : These discards occur due when forwarding engine could not resolve or use the link-layer adjacency required to forward the packet to the selected next hop {{!RFC826}}{{!RFC4891}}.
+
    * discards/errors/internal/:
    : These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
@@ -337,7 +340,7 @@ An example of possible signal-to-mitigation action mapping is provided in {{mapp
 
 ## "ietf-packet-discard-reporting-common" YANG Module {#common-module}
 
-The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}. The module references {{!RFC3031}}, {{!RFC8402}}, {{!RFC8660}}, {{!RFC8754}}, and {{?RFC8986}}.
+The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}. The module references {{!RFC8402}}, {{!RFC8660}}, {{!RFC8754}}, and {{?RFC8986}}.
 
 ~~~~~~~~~~
 <CODE BEGINS> file "ietf-packet-discard-reporting-common@2026-03-03.yang"
