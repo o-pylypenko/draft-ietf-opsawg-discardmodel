@@ -1831,9 +1831,10 @@ Table of Contents
    routing loop, or another operational fault.
 
    Congestion-related loss depends on operator context.  A level of no-
-   buffer discard below a defined SLA may be expected or intended.  The
-   same discard class above the SLA, sustained for longer than expected,
-   may be unintended and require action.
+   buffer discards below a defined traffic performance
+   indicator(captured in an SLA, typically) may be expected or intended.
+   The same discard class above a performance indicator, sustained for
+   longer than expected, may be unintended and thus require action.
 
    Policy discards may also require additional context.  Discards
    reported under policy, for example ACL or policer discards, indicate
