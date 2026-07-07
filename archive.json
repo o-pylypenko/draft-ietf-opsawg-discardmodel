@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-05T01:42:53.195693+00:00",
+  "timestamp": "2026-07-07T01:45:29.977360+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -145,6 +145,162 @@
       "updatedAt": "2026-06-10T22:05:38Z",
       "closedAt": "2026-06-10T22:05:38Z",
       "comments": []
+    },
+    {
+      "number": 79,
+      "id": "I_kwDOOCO1i88AAAABHx7Nkw",
+      "title": "(Carlos Review) ICMP",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/79",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 1. No ICMP generation/suppression signal tied to discard events.\n>    `ttl-expired`, `mtu-exceeded`, and `policy` discards are\n> exactly the\n>    conditions RFC 792/RFC 4443 require or permit an ICMP(v6) error\n> to\n>    accompany. The document is silent on whether the corresponding\n> ICMP\n>    was sent, suppressed by rate-limiting (RFC 4443 Section 2.4),\n> or\n>    never generated. This gap matters operationally: traceroute and\n> most\n>    path-diagnostic OAM depend on these ICMP messages reaching the\n>    source, so a discard counter and a traceroute trace of the same\n> event\n>    can silently diverge -- which incidentaly is exactly the\n>    automated-mitigation failure mode the document is meant to\n> prevent.\n>    RFC 6192 (which can be a useful Informational reference),\n> Section 4,\n>    documents this as existing operational practice: ICMP error\n>    generation, including TTL/Hop-limit-expired handling\n> specifically, is\n>    commonly rate-limited independently of the forwarding-plane\n> discard\n>    decision. RFC 4884 (ICMP multi-part messages) is existing\n> machinery\n>    for carrying diagnostic payload (interface, MPLS label stack, a\n> few\n>    others) in these same ICMP errors and is worth citing as\n>    complementary rather than reinventing it. Recommend either\n> modeling\n>    ICMP-sent/suppressed state explicitly, or stating the omission\n> is a\n>    deliberate scope decision with rationale.\n\n[Med] This was a deliberate design choice to focus only on key discard counters and not include a comprehensive list of events. Added a sentence to make this explicit.\n",
+      "createdAt": "2026-07-06T07:50:10Z",
+      "updatedAt": "2026-07-06T07:50:10Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 80,
+      "id": "I_kwDOOCO1i88AAAABHx7fLQ",
+      "title": "(Carlos Review) MPLS/SRv6",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/80",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> \n> 2. Address-family model does not cleanly represent MPLS/SRv6\n> traffic,\n>    only its discards. The `all` identity functions as a catch-all\n>    workaround rather than a proper address-family hierarchy.\n> Concretely:\n>    `invalid-label`/`invalid-sid` (explicitly, MPLS and SR\n> specific,\n>    respectivly) discard counters exist under `errors-l3-rx` with\n> no\n>    corresponding traffic-accounting home for MPLS/SRv6-forwarded\n>    packets. It would be nice to close structurally (a proper\n>    address-family/sub-identity hierarchy).\n",
+      "createdAt": "2026-07-06T07:50:48Z",
+      "updatedAt": "2026-07-06T07:51:15Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agree that there are other ways to model this. The reasoning for the approach in the spec is captured here:\n\n   2.  There are many possible ways to define the discard classification\n       tree.  For example, an approach is to use a multi-rooted tree,\n       rooted in each protocol.  Instead, a better approach is to define\n       a tree where protocol discards and causal discard classes are\n       accounted for orthogonally.  This decision reduces the number of\n       combinations of classes and has proven sufficient for determining\n       mitigation actions.\n\nMore granular counters may be defined in the future if needed. The use of identities allows for extensibility. \n\nI don't think a change is needed.\n",
+          "createdAt": "2026-07-06T07:51:15Z",
+          "updatedAt": "2026-07-06T07:51:15Z"
+        }
+      ]
+    },
+    {
+      "number": 81,
+      "id": "I_kwDOOCO1i88AAAABHx77KA",
+      "title": "(Carlos Review) DF-driven discard",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/81",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> \n> 3. `mtu-exceeded` does not distinguish DF-driven discard (IPv4\n> DF=1,\n>    IPv6 always) from fragmentable IPv4 (DF=0). As written it is\n> one\n>    undifferentiated leaf; the PMTUD/PLPMTUD-relevant distinction\n> is\n>    lost, and an implementer/operator cannot tell from the model\n> whether\n>    the packet was ever eligible for fragmentation. I can foresee\n> many\n>    automations that could depend on and use this (now missing)\n>    information, both for RCA as well as for optimization.\n",
+      "createdAt": "2026-07-06T07:51:51Z",
+      "updatedAt": "2026-07-06T18:57:09Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "add the sub classes\ninterface/discards/errors/l3/mtu-exceeded/fragmentation-not-permitted\ninterface/discards/errors/l3/mtu-exceeded/fragmentation-permitted-not-performed",
+          "createdAt": "2026-07-06T17:11:07Z",
+          "updatedAt": "2026-07-06T17:11:07Z"
+        },
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "interface/discards/errors/l3/mtu-exceeded/fragmentation-not-permitted\nReports packets discarded because the packet size exceeded the applicable MTU and the forwarding node was not permitted to fragment the packet. This includes IPv4 packets with the DF bit set and IPv6 packets, where fragmentation by transit nodes is not performed.\n\ninterface/discards/errors/l3/mtu-exceeded/fragmentation-permitted-not-performed\nReports packets discarded because the packet size exceeded the applicable MTU, fragmentation was permitted in principle, but the packet was not fragmented and forwarded. This includes IPv4 packets with the DF bit clear that were discarded due to local implementation behaviour, configuration, policy, resource limits, or other local conditions.",
+          "createdAt": "2026-07-06T18:57:09Z",
+          "updatedAt": "2026-07-06T18:57:09Z"
+        }
+      ]
+    },
+    {
+      "number": 82,
+      "id": "I_kwDOOCO1i88AAAABHx8MeA",
+      "title": "(Carlos Review) discard taxonomy",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/82",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 4. The discard taxonomy (Section 4.2) is not fully 1:1 with the\n> YANG\n>    identities. Internet-area instances of this gap:\n>    - GTSM (RFC 5082) hop-count-filtering drops are a control-plane\n>      security classification, not ordinary TTL exhaustion in\n> transit;\n>      RFC 5082 Section 5 explicitly leaves silent-drop-vs-ICMP\n> behavior\n>      unspecified for non-matching packets, and RFC 6192 Section 4\n> lists\n>      GTSM alongside ingress filtering as a control-plane anti-\n> spoofing\n>      classification method. These could be classified under\n>      control-plane `policy`, not `errors/ttl-expired`; the\n> document does\n>      not say so, and conflating the two counters makes both\n>      operationally ambiguous. I recommend makign this explicit and\n>      disambiguated.\n>    - No subtype for IPv6 extension-header processing discards (RFC\n> 8200\n>      Section 4, RFC 9098).\n>    - No subtype for reassembly failure (RFC 8200 Section 4.5, RFC\n> 8900).\n>    - TTL Expiry VCCV (RFC 5085 Section 5.1.3, CC Type 3) and MPLS\n> LSP\n>      Ping (RFC 8029) both deliberately set TTL to 1 to trigger OAM\n>      interception at a target hop. That's intentional, not an\n> error, and\n>      `errors/ttl-expired` today has no way to tell the two apart.\n> How to\n>      disambiguate policy-driven from genuine transit exxhaustion?\n> It's a\n>      similar issue as the OAM-triggered TTL expiry and GTSM above.\n",
+      "createdAt": "2026-07-06T07:52:32Z",
+      "updatedAt": "2026-07-06T18:56:08Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "add the following sub-classes\n\ncontrol-plane/discards/policy/gtsm\n\ninterface/discards/errors/l3/rx/ipv6-extension-header\ninterface/discards/errors/l3/rx/reassembly\n\ninterface/discards/errors/l3/ttl-expired/oam/mpls-lsp-ping\ninterface/discards/errors/l3/ttl-expired/oam/mpls-lsp-traceroute\ninterface/discards/errors/l3/ttl-expired/oam/vccv\n",
+          "createdAt": "2026-07-06T17:14:42Z",
+          "updatedAt": "2026-07-06T17:14:42Z"
+        },
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "control-plane/discards/policy/gtsm\nReports control-plane packets discarded because they failed a Generalized TTL Security Mechanism (GTSM) check. These are packets addressed to a control-plane protocol session for which the received IP TTL or IPv6 Hop Limit did not satisfy the configured GTSM acceptance criteria. These packets are policy or security discards, not ordinary TTL-expired forwarding discards.\n\ninterface/discards/errors/l3/rx/ipv6-extension-header\nReports IPv6 packets discarded during IPv6 extension-header processing. This includes packets with malformed, unsupported, inconsistent, or otherwise invalid extension-header chains.\n\ninterface/discards/errors/l3/rx/reassembly\nReports packets discarded because fragment reassembly failed. This includes packets for which the required fragments were not received before the reassembly timeout, overlapping or inconsistent fragments were detected, or local reassembly resources were exhausted.\n\ninterface/discards/errors/l3/ttl-expired/oam/mpls-lsp-ping\nReports TTL-expired packets that the implementation identifies as MPLS LSP Ping OAM packets. These packets are separated from ordinary transit TTL exhaustion because TTL expiry was associated with OAM processing rather than unintended packet lifetime expiry.\n\ninterface/discards/errors/l3/ttl-expired/oam/mpls-lsp-traceroute\nReports TTL-expired packets that the implementation identifies as MPLS LSP traceroute OAM packets. This includes MPLS echo request packets using controlled TTL values to discover or test a specific hop along an LSP. These packets are separated from ordinary transit TTL exhaustion because TTL expiry is part of the OAM mechanism.\n\ninterface/discards/errors/l3/ttl-expired/oam/vccv\nReports TTL-expired packets that the implementation identifies as Virtual Circuit Connectivity Verification (VCCV) OAM packets using TTL expiry as the control-channel mechanism. This includes VCCV CC Type 3 packets where the PW label TTL is used to deliver the packet to the PE control or OAM function. These packets are separated from ordinary transit TTL exhaustion because TTL expiry is part of the OAM mechanism.",
+          "createdAt": "2026-07-06T18:56:07Z",
+          "updatedAt": "2026-07-06T18:56:07Z"
+        }
+      ]
+    },
+    {
+      "number": 83,
+      "id": "I_kwDOOCO1i88AAAABHx8aJw",
+      "title": "(Carlos Review) Nits",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/83",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 9. Section 1 scope reads \"limited to reporting packet loss at\n> Layer 3\n>    and frames discarded at Layer 2\" but MPLS/SRv6 discard reasons\n> are\n>    present throughout; please tighten the scope statement.\n> 10. `invalid-vlan`/`invalid-mac` are Ethernet-specific; note\n>     applicability for non-Ethernet L2 technologies.\n",
+      "createdAt": "2026-07-06T07:53:05Z",
+      "updatedAt": "2026-07-06T07:53:05Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 84,
+      "id": "I_kwDOOCO1i88AAAABHx8jrg",
+      "title": "(Carlos Review) Minor Comments",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/84",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> 5. `checksum-error` (errors-l3-rx) does not note that IPv4 has a\n> header\n>    checksum and IPv6 does not (RFC 791 vs. RFC 8200) --\n> applicability by\n>    address family could be stated.\n> 6. `invalid-sid` lacks an informative reference to SRv6\n> architecture\n>    (RFC 8402 / RFC 8986).\n> 7. No neighbor-resolution-failure (ARP/ND unresolved) discard\n> subtype;\n>    doesn't map cleanly to `no-route` or `internal`.\n> 8. Foundational IP references (RFC 791, RFC 8200) are absent\n> despite\n>    heavy dependence on IP-layer semantics (TTL, header validity,\n> MTU).\n>    RFC 4884, RFC 5082, RFC 6192, RFC 5085, and RFC 8029 should\n> also be\n>    added as informative references if the comments are useful.\n",
+      "createdAt": "2026-07-06T07:53:27Z",
+      "updatedAt": "2026-07-06T19:49:09Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> 8\\. Foundational IP references (RFC 791, RFC 8200) are absent\n>     despite\n\nThat's OK per the IESG statement on the matter: https://datatracker.ietf.org/doc/statement-iesg-iesg-statement-normative-and-informative-references-20060419/. Especially, this part\n\n>  \"It is not considered necessary to cite basic specifications that may be safely assumed to be known to practitioners (for example, [RFC 791](https://datatracker.ietf.org/doc/rfc791/) need not be cited in every specification that mentions IPv4).\"",
+          "createdAt": "2026-07-06T09:01:45Z",
+          "updatedAt": "2026-07-06T09:02:00Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "> 5\\. `checksum-error` (errors-l3-rx) does not note that IPv4 has a\n>     header\n>     checksum and IPv6 does not (RFC 791 vs. RFC 8200) --\n>     applicability by\n>     address family could be stated.\n\nOK\n\n> 6\\. `invalid-sid` lacks an informative reference to SRv6\n>     architecture\n>     (RFC 8402 / RFC 8986).\n\nOK",
+          "createdAt": "2026-07-06T09:02:36Z",
+          "updatedAt": "2026-07-06T09:02:36Z"
+        },
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "7. No neighbor-resolution-failure (ARP/ND unresolved) discard\nsubtype;\ndoesn't map cleanly to no-route or internal.\n\nAdd new sub-type:\ninterface/discards/errors/l3/neighbor-resolution-failure\n\nleaf neighbor-resolution-failure {\n  type yang:counter64;\n  description\n    \"Reports packets discarded because the forwarding device\n     could not resolve or use the link-layer adjacency required\n     to forward the packet to the selected next hop.\n\n     This includes packets dropped because ARP resolution for an\n     IPv4 next hop failed, Neighbor Discovery resolution for an\n     IPv6 next hop failed, or the resolved neighbor entry was\n     unusable according to local neighbor state.\n\n     This counter applies when route selection identified a next\n     hop, but forwarding could not complete because the required\n     neighbor or adjacency information was unavailable or unusable.\n     Packets discarded because no route matched the destination\n     are reported under 'no-route'. Packets discarded due to\n     internal device faults are reported under 'internal'.\";\n}",
+          "createdAt": "2026-07-06T19:49:09Z",
+          "updatedAt": "2026-07-06T19:49:09Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -3326,6 +3482,583 @@
       "mergeCommit": {
         "oid": "84e215451d0d30b4cd9858577b12bba565642e44"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 78,
+      "id": "PR_kwDOOCO1i87uPQHc",
+      "title": "(Carlos Review) ICMP",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/78",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-06T07:49:09Z",
+      "updatedAt": "2026-07-06T19:50:47Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-16",
+      "headRefOid": "cce28782fcf8eadd2fb870205df61cd8e360ccba",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I agree that this is not needed but given how many may approach this spec, I think it is better to make the scope clear.",
+          "createdAt": "2026-07-06T09:26:38Z",
+          "updatedAt": "2026-07-06T09:26:38Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFDs09g",
+          "commit": {
+            "abbreviatedOid": "f473988"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "This feels unecessary:\n\nLikewise, the document does not correlate specific discard counters with other events and counters (e.g., ICMP). Such a correlation is not trivial and depends on local configuration and specific conditions (e.g., rate-limit policy, overload, or Access Control Lists (ACLs)).\n\nSuggested\nThis document considers only the signals that may trigger automated mitigation actions and not how those signals are processed or how the actions are defined or executed. These considerations are deployment-specific.",
+          "createdAt": "2026-07-06T09:10:19Z",
+          "updatedAt": "2026-07-06T09:10:19Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIS06Q",
+          "commit": {
+            "abbreviatedOid": "cce2878"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-06T19:44:30Z",
+          "updatedAt": "2026-07-06T19:50:47Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe scope of this document is limited to reporting Layer 3 packet discards, Layer 2 frame discards, and discards during MPLS label processing {{?RFC3031}}. The reported signals may trigger automated mitigation actions; the definition and execution of those actions are deployment-specific. Protocol actions associated with a discard (e.g., ICMP error message generation) are governed by the applicable protocol specifications and local policy.\n```",
+              "createdAt": "2026-07-06T19:44:30Z",
+              "updatedAt": "2026-07-06T19:50:47Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "agree with keeping follow-on protocol actions outside this model -- but could we tighten the paragraph like this?",
+              "createdAt": "2026-07-06T19:50:37Z",
+              "updatedAt": "2026-07-06T19:50:47Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 85,
+      "id": "PR_kwDOOCO1i87uQvhC",
+      "title": "Enhance descriptions and add references",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/85",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated descriptions for checksum-error and invalid-label leaves to include additional context and references.",
+      "createdAt": "2026-07-06T08:56:32Z",
+      "updatedAt": "2026-07-06T20:24:40Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-17",
+      "headRefOid": "a60ee791a3a2ca0aedfc608036e57efaeb968553",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFDxhDw",
+          "commit": {
+            "abbreviatedOid": "2a23178"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T09:20:39Z",
+          "updatedAt": "2026-07-06T09:20:39Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "There are two different things here:\n- IP header checksum error for packet in transit (we have this)\n- higher level checksum error for packets to/from the control plane (we don't have this but should add it under errored discards to the control plane)",
+              "createdAt": "2026-07-06T09:20:39Z",
+              "updatedAt": "2026-07-06T09:20:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFDzf8w",
+          "commit": {
+            "abbreviatedOid": "2a23178"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T09:25:24Z",
+          "updatedAt": "2026-07-06T09:25:24Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "That would work as well, but that need to be made explicit in the module/text. If you go that way, the IPv6 case should be clarified here. Carlos has a point for that part. ",
+              "createdAt": "2026-07-06T09:25:24Z",
+              "updatedAt": "2026-07-06T09:25:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIjuyA",
+          "commit": {
+            "abbreviatedOid": "2a23178"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:22:19Z",
+          "updatedAt": "2026-07-06T20:22:20Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe \"ietf-packet-discard-reporting-common\" module imports \"ietf-yang-types\" defined in {{!RFC9911}}. The module references {{?RFC3031}}, {{?RFC8402}}, {{?RFC8660}}, and {{?RFC8754}}.\n```",
+              "createdAt": "2026-07-06T20:22:19Z",
+              "updatedAt": "2026-07-06T20:22:19Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIkYDw",
+          "commit": {
+            "abbreviatedOid": "2a23178"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:24:04Z",
+          "updatedAt": "2026-07-06T20:24:04Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\n         RFC 8754: IPv6 Segment Routing Header (SRH)\n         RFC 8986: Segment Routing over IPv6 (SRv6) Network Programming\";\n```",
+              "createdAt": "2026-07-06T20:24:04Z",
+              "updatedAt": "2026-07-06T20:24:19Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 86,
+      "id": "PR_kwDOOCO1i87ucNSe",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/86",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address Gorry Fairhurst's comments:\r\nclarify that the draft does not define what is intended and what is not - that is down to the operator.  It provide the classification needed for the operator to make that determination",
+      "createdAt": "2026-07-06T16:21:17Z",
+      "updatedAt": "2026-07-06T23:09:44Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-9",
+      "headRefOid": "d46181ba65f6909c7718da2c7d9adea9fe69e762",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFG_erQ",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me.\n\nNote that the deigest is already covered in \"[6.1. ](https://o-pylypenko.github.io/draft-ietf-opsawg-discardmodel/draft-ietf-opsawg-discardmodel.html#section-6.1)[Determining Intent for Policy](https://o-pylypenko.github.io/draft-ietf-opsawg-discardmodel/draft-ietf-opsawg-discardmodel.html#name-determining-intent-for-poli)\".\n\n",
+          "createdAt": "2026-07-06T16:32:24Z",
+          "updatedAt": "2026-07-06T16:32:24Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIn83w",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:32:39Z",
+          "updatedAt": "2026-07-06T20:32:39Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/78#discussion_r3531628857\n\nthis statement needs a single place",
+              "createdAt": "2026-07-06T20:32:39Z",
+              "updatedAt": "2026-07-06T20:32:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIpjXQ",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:37:01Z",
+          "updatedAt": "2026-07-06T20:37:01Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "This contradicts the amendment -- so probably need to drop the definition (intended/unintended) and just specifiy the mechanism? (policy/pipeline errors/etc)?\n",
+              "createdAt": "2026-07-06T20:37:01Z",
+              "updatedAt": "2026-07-06T20:37:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIpsOw",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:37:27Z",
+          "updatedAt": "2026-07-06T20:37:27Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIsX6Q",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:45:04Z",
+          "updatedAt": "2026-07-06T20:45:04Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "```suggestion\nThe classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on local policy, configured intent, baseline behavior, duration, affected scope, service context, and other operational evidence. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.\n```",
+              "createdAt": "2026-07-06T20:45:04Z",
+              "updatedAt": "2026-07-06T20:45:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFJIyaw",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:09:31Z",
+          "updatedAt": "2026-07-06T22:09:31Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Sorry Oleks - not sure what you mean?",
+              "createdAt": "2026-07-06T22:09:31Z",
+              "updatedAt": "2026-07-06T22:09:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFJJmLw",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:11:50Z",
+          "updatedAt": "2026-07-06T22:11:50Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Yes you're right - we need to delete all of the \"These are intended/unintended discards\" - will address separately",
+              "createdAt": "2026-07-06T22:11:50Z",
+              "updatedAt": "2026-07-06T22:11:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFJaUng",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T23:09:44Z",
+          "updatedAt": "2026-07-06T23:09:44Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I mean that this clarification in more or less same form is at least here, then further down on line 174, and proposed in #78 line 111.\r\n",
+              "createdAt": "2026-07-06T23:09:44Z",
+              "updatedAt": "2026-07-06T23:09:44Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 87,
+      "id": "PR_kwDOOCO1i87ucnQB",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/87",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address Gorry Fairhurst's feedback:\r\nClarify that Table 1 and Table 2 are split - add case to bind. Clarify that the Unintended designation is an example, rather than normative.",
+      "createdAt": "2026-07-06T16:37:08Z",
+      "updatedAt": "2026-07-06T20:47:34Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-10",
+      "headRefOid": "077e18baa2d201d2a7d89a26051ec6a084d325c7",
+      "closedAt": "2026-07-06T20:47:34Z",
+      "mergedAt": "2026-07-06T20:47:34Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "d4b09221ae3eda693734848f81635498715d6690"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIs91g",
+          "commit": {
+            "abbreviatedOid": "077e18b"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-06T20:46:43Z",
+          "updatedAt": "2026-07-06T20:46:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 88,
+      "id": "PR_kwDOOCO1i87ugHby",
+      "title": "Fix YANG tree and model consistency",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/88",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixing emails in the yang modules, minor inconsistencies in manually copied trees, and tightening the language around DM/IM",
+      "createdAt": "2026-07-06T19:00:08Z",
+      "updatedAt": "2026-07-06T19:15:20Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "fix-emails-and-nits",
+      "headRefOid": "86d451f274d2029a794efdf2668895e8954e39c1",
+      "closedAt": "2026-07-06T19:15:19Z",
+      "mergedAt": "2026-07-06T19:15:19Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "61a5b7383fc20d26929cd47417af0328f765116e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIGdAw",
+          "commit": {
+            "abbreviatedOid": "86d451f"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me - thanks Oleks!",
+          "createdAt": "2026-07-06T19:13:55Z",
+          "updatedAt": "2026-07-06T19:13:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 89,
+      "id": "PR_kwDOOCO1i87uhF2A",
+      "title": "Johnevansuk patch 11",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/89",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Address Carlos comments:\r\n5. `checksum-error` (errors-l3-rx) does not note that IPv4 has a header checksum and IPv6 does not (RFC 791 vs. RFC 8200) -- applicability by address family could be stated.\r\n6. `invalid-sid` lacks an informative reference to SRv6 architecture (RFC 8402 / RFC 8986).\r\n\r\nChanges\r\n- Clarify that checksum-error reports IPv4 header checksum failures only.\r\n- State that checksum-error is not applicable to IPv6 internet-layer header processing.\r\n- Clarify that upper-layer checksum failures are outside this L3 checksum-error counter.\r\n- Clarify invalid-sid as SRv6 SID processing failure.",
+      "createdAt": "2026-07-06T19:43:18Z",
+      "updatedAt": "2026-07-06T22:04:18Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "61a5b7383fc20d26929cd47417af0328f765116e",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-11",
+      "headRefOid": "8e4dbbc50c6fab87f3691e946ea04b27057c2cc3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIulvQ",
+          "commit": {
+            "abbreviatedOid": "26c110f"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:51:34Z",
+          "updatedAt": "2026-07-06T20:51:34Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "duplicated description -- fails yanglint",
+              "createdAt": "2026-07-06T20:51:34Z",
+              "updatedAt": "2026-07-06T20:51:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFIwFlQ",
+          "commit": {
+            "abbreviatedOid": "1893278"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T20:55:58Z",
+          "updatedAt": "2026-07-06T20:55:58Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "nit: I think listing all possible reasons is not required, just \"can't be processed ... \" is descriptive enough. ",
+              "createdAt": "2026-07-06T20:55:58Z",
+              "updatedAt": "2026-07-06T20:55:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFJGqAw",
+          "commit": {
+            "abbreviatedOid": "1893278"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-06T22:04:17Z",
+          "updatedAt": "2026-07-06T22:04:18Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "Fixed thanks Oleks",
+              "createdAt": "2026-07-06T22:04:17Z",
+              "updatedAt": "2026-07-06T22:04:18Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 90,
+      "id": "PR_kwDOOCO1i87uj17S",
+      "title": "Update ietf-packet-discard-reporting-common.yang",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/90",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Addressed Carlos comments:\r\n\r\n10. `invalid-vlan`/`invalid-mac` are Ethernet-specific; note applicability for non-Ethernet L2 technologies.",
+      "createdAt": "2026-07-06T21:52:08Z",
+      "updatedAt": "2026-07-06T21:52:08Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4b09221ae3eda693734848f81635498715d6690",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-12",
+      "headRefOid": "df02f9d7be5e4d07b850b9a06dee554920e5d3f1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 91,
+      "id": "PR_kwDOOCO1i87ulFoF",
+      "title": "Add MTU fragmentation discard subclasses",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/91",
+      "state": "OPEN",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Refs #81\n\nAdd an aggregate `packets` counter:\n- `fragmentation-not-permitted` for IPv4 packets with DF set and IPv6 packets; and\n- `fragmentation-permitted-not-performed` for fragmentable IPv4 packets that were discarded without being fragmented.\n",
+      "createdAt": "2026-07-06T23:03:28Z",
+      "updatedAt": "2026-07-06T23:05:23Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4b09221ae3eda693734848f81635498715d6690",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "pr81-mtu-fragmentation",
+      "headRefOid": "912711b8a7b54ff5c373476b0ae738771af23380",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
