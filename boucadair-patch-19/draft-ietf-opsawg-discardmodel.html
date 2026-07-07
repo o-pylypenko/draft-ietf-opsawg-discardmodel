@@ -1840,7 +1840,7 @@ module ietf-packet-discard-reporting-common {
   identity aqm {
     base no-buffer-type;
     description
-      "Indicates discard due to an Active Queue Management (AQM)
+      "Indicates a discard due to an Active Queue Management (AQM)
        algorithm.";
   }
 
@@ -2318,7 +2318,7 @@ module ietf-packet-discard-reporting-common {
       list type {
         key "drop-type";
         description
-          "No buffer counters.";
+          "Congestion-related discard counters.";
         leaf drop-type {
           type identityref {
             base no-buffer-type;
