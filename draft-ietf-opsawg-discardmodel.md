@@ -530,7 +530,7 @@ Some discard classes provide a strong signal on their own. For example, errors/l
 
 Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator(captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action.
 
-Policy discards may also require additional context. Discards reported under policy, for example ACL or policer discards, indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history.
+Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify configuration enforced in underlying nodes and continousily ensure that configuration is consistent with the intended service to deliver.
 
 ## Deployment Experience {#experience}
 
