@@ -1229,7 +1229,7 @@ svg {
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-operational-considerations" class="internal xref">Operational Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-determining-intent-for-poli" class="internal xref">Determining Intent for Policy</a></p>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-determining-operator-intent" class="internal xref">Determining Operator Intent</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-deployment-experience" class="internal xref">Deployment Experience</a></p>
@@ -2978,10 +2978,13 @@ module ietf-packet-discard-reporting {
       </h2>
 <div id="intent">
 <section id="section-6.1">
-        <h3 id="name-determining-intent-for-poli">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-determining-intent-for-poli" class="section-name selfRef">Determining Intent for Policy</a>
+        <h3 id="name-determining-operator-intent">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-determining-operator-intent" class="section-name selfRef">Determining Operator Intent</a>
         </h3>
-<p id="section-6.1-1">Device discard counters do not by themselves establish operator intent. Discards reported under policy (e.g., ACL/policer) indicate only that traffic matched a configured rule; such discards may still be unintended if the configuration is in error. Determining intent for policy discards requires external context (e.g., configuration validation and change history). Such contexts are local to each operator.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">Device discard counters do not by themselves establish operator intent. The classification defined in this document identifies the discard condition. Whether that condition is intended or unintended is determined by the operator using the discard class together with local policy, configured intent, baseline behaviour, duration, affected scope, service context, and other operational evidence.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-2">Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.<a href="#section-6.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.1-3">Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator(captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
+<p id="section-6.1-4">Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify configuration enforced in underlying nodes and continousily ensure that configuration is consistent with the intended service to deliver.<a href="#section-6.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="experience">
