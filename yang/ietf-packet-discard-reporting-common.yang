@@ -365,6 +365,31 @@ module ietf-packet-discard-reporting-common {
         "The number of received packets discarded due to not
          matching a valid route.";
     }
+    leaf neighbor-resolution-failure {
+      type yang:counter64;
+      description
+        "Reports packets discarded because the forwarding engine
+         could not resolve or use the link-layer adjacency required
+         to forward the packet to the selected next hop.
+
+         This includes packets dropped because ARP resolution for an
+         IPv4 next hop failed, Neighbor Discovery resolution for an
+         IPv6 next hop failed, or the resolved neighbor entry was
+         unusable according to local neighbor state.
+
+         This counter applies when route selection identified a next
+         hop, but forwarding could not complete because the required
+         neighbor or adjacency information was unavailable or unusable.
+         Packets discarded because no route matched the destination
+         are reported under 'no-route'. Packets discarded due to
+         internal device faults are reported under 'internal'.";
+      reference
+        "RFC 826: An Ethernet Address Resolution Protocol -- or --
+                  Converting Network Protocol Addresses to 48.bit
+                  Ethernet Address for Transmission on Ethernet
+                  Hardware
+         RFC 4861: Neighbor Discovery for IP version 6 (IPv6)";
+    }
     leaf invalid-sid {
       type yang:counter64;
       description
