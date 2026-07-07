@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 7 January 2027                                           Nvidia
+Expires: 8 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             6 July 2026
+                                                             7 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 8 January 2027.
 
 Copyright Notice
 
@@ -846,8 +846,15 @@ Table of Contents
          leaf checksum-error {
            type yang:counter64;
            description
-             "The number of received packets discarded due
-              to a checksum error.";
+             "Reports IPv4 packets discarded because validation of the
+              IPv4 header checksum failed.
+
+              This counter is applicable only to IPv4 packets. IPv6 does
+              not include an internet-layer header checksum, so IPv6
+              packets are not reported under this counter. solely due to
+              IPv6 header processing. Upper-layer checksum failures,
+              including TCP, UDP, or ICMPv6 checksum failures, are not
+              reported by this L3 header checksum counter.";
          }
          leaf mtu-exceeded {
            type yang:counter64;
@@ -880,11 +887,8 @@ Table of Contents
        leaf invalid-sid {
          type yang:counter64;
          description
-           "The number of received packets discarded due to an
-            invalid Segment Routing over IPv6 (SRv6) segment
-            identifier (SID).
-            For SR-MPLS, invalid SIDs have to be accounted
-            under invalid-label.";
+           "Reports SRv6 packets discarded because SRv6 Segment
+            Identifier (SID) processing failed.";
        }
        leaf invalid-label {
          type yang:counter64;
