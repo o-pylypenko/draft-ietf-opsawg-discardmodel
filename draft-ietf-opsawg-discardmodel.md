@@ -143,8 +143,6 @@ Intended packet discards (Intended discards, for short):
 Unintended packet discards (Unintended discards, for short):
 : Are packets that were dropped, which the network operator otherwise intended to deliver, i.e., which indicates an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.
 
-Whether a discard is intended or unintended is an operator determination; discard classes defined by this document provide input to that determination but do not, by themselves, make it.
-
 # Problem Statement   {#problem}
 
 The fundamental problem for network operators is how to automatically detect when and where unintended packet loss is occurring and determine the appropriate action to mitigate it. For any network, there are a small set of potential actions that can be taken to mitigate customer impact when unintended packet loss is detected, for example:
