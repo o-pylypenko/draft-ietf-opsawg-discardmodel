@@ -116,7 +116,7 @@ module ietf-packet-discard-reporting {
   identity no-buffer {
     base discard-class;
     description
-      "Indicates a discard due to buffer unavailability.";
+      "Indicates a congestion-related discard.";
   }
 
   /*
