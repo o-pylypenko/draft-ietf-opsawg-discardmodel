@@ -2316,7 +2316,7 @@ module ietf-packet-discard-reporting-common {
       description
         "Discard counters due to buffer unavailability.";
       list type {
-        key "direction";
+        key "drop-type";
         description
           "No buffer counters.";
         leaf drop-type {
@@ -3807,8 +3807,8 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- type* [direction]
-    |           +-- drop-type?   identityref
+    |        +-- type* [drop-type]
+    |           +-- drop-type    identityref
     |           +-- qos!
     |              +-- class* [id]
     |                 +-- id         string
@@ -3908,8 +3908,8 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- type* [direction]
-    |           +-- drop-type?   identityref
+    |        +-- type* [drop-type]
+    |           +-- drop-type    identityref
     |           +-- qos!
     |              +-- class* [id]
     |                 +-- id         string
@@ -4008,8 +4008,8 @@ module: ietf-packet-discard-reporting-sx
           |     +-- rpf?          yang:counter64
           |     +-- ddos?         yang:counter64
           +-- no-buffer
-             +-- type* [direction]
-                +-- drop-type?   identityref
+             +-- type* [drop-type]
+                +-- drop-type    identityref
                 +-- qos!
                    +-- class* [id]
                       +-- id         string
@@ -4140,8 +4140,8 @@ module: ietf-packet-discard-reporting
           |     +--ro rpf?          yang:counter64
           |     +--ro ddos?         yang:counter64
           +--ro no-buffer
-             +--ro type* [direction]
-                +--ro drop-type?   identityref
+             +--ro type* [drop-type]
+                +--ro drop-type    identityref
                 +--ro qos!
                    +--ro class* [id]
                       +--ro id         string
@@ -4242,8 +4242,8 @@ module: ietf-packet-discard-reporting
           |     +--ro rpf?          yang:counter64
           |     +--ro ddos?         yang:counter64
           +--ro no-buffer
-             +--ro type* [direction]
-                +--ro drop-type?   identityref
+             +--ro type* [drop-type]
+                +--ro drop-type    identityref
                 +--ro qos!
                    +--ro class* [id]
                       +--ro id         string
