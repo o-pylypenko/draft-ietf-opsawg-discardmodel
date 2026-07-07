@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 7 January 2027                                           Nvidia
+Expires: 8 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             6 July 2026
+                                                             7 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 January 2027.
+   This Internet-Draft will expire on 8 January 2027.
 
 Copyright Notice
 
@@ -163,15 +163,13 @@ Table of Contents
    specifies a YANG implementation of this IM for network elements,
    while maintaining consistency through clear semantics.
 
-   This document is mainly scoped to reporting packet loss at Layer 3,
-   frames discarded at Layer 2, and in between (e.g., MPLS [RFC3031]).
-   This document considers only the signals that may trigger automated
-   mitigation actions and not how the actions are defined or executed.
-   These considerations are deployment-specific.  Likewise, the document
-   does not correlate specific discard counters with other events and
-   counters (e.g., ICMP).  Such a correlation is not trivial and depends
-   on local configuration and specific conditions (e.g., rate-limit
-   policy, overload, or Access Control Lists (ACLs)).
+   The scope of this document is limited to reporting Layer 3 packet
+   discards, Layer 2 frame discards, and discards during MPLS label
+   processing [RFC3031].  The reported signals may trigger automated
+   mitigation actions; the definition and execution of those actions are
+   deployment-specific.  Protocol actions associated with a discard
+   (e.g., ICMP error message generation) are governed by the applicable
+   protocol specifications and local policy.
 
    Section 3 describes the problem space and requirements.  Section 4
    defines the IM and its classification scheme.  Section 5 specifies
