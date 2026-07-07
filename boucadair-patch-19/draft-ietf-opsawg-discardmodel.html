@@ -1677,7 +1677,7 @@ module: ietf-packet-discard-reporting-sx
           <dd class="break"></dd>
 <dt id="section-4.2-1.5">discards/no-buffer/:</dt>
           <dd style="margin-left: 1.5em" id="section-4.2-1.6">
-            <p id="section-4.2-1.6.1">These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an active queue management algorithm, such as Random Early Detection (RED) <span>[<a href="#RED93" class="cite xref">RED93</a>]</span> or Controlled Delay (CoDel) <span>[<a href="#RFC8289" class="cite xref">RFC8289</a>]</span>.<a href="#section-4.2-1.6.1" class="pilcrow">¶</a></p>
+            <p id="section-4.2-1.6.1">These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an Active Queue Management (AQM) algorithm, such as Random Early Detection (RED) <span>[<a href="#RED93" class="cite xref">RED93</a>]</span> or Controlled Delay (CoDel) <span>[<a href="#RFC8289" class="cite xref">RFC8289</a>]</span>. <code>no-buffer</code> discard counter are listed per drop type ("aqm", "tail-drop", etc.).<a href="#section-4.2-1.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>

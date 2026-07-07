@@ -519,9 +519,10 @@ Table of Contents
 
    discards/no-buffer/:  These are discards due to buffer exhaustion
       (that is congestion related discards).  These can be tail-drop
-      discards or due to an active queue management algorithm, such as
-      Random Early Detection (RED) [RED93] or Controlled Delay (CoDel)
-      [RFC8289].
+      discards or due to an Active Queue Management (AQM) algorithm,
+      such as Random Early Detection (RED) [RED93] or Controlled Delay
+      (CoDel) [RFC8289]. no-buffer discard counter are listed per drop
+      type ("aqm", "tail-drop", etc.).
 
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
