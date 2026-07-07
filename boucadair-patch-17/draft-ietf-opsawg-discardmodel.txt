@@ -501,6 +501,11 @@ Table of Contents
             which may be due to routing configuration errors or may be
             transient discards during convergence.
 
+      *  discards/errors/neighbor-resolution-failure/:  These discards
+            occur due when forwarding engine could not resolve or use
+            the link-layer adjacency required to forward the packet to
+            the selected next hop [RFC826][RFC4891].
+
       *  discards/errors/internal/:  These discards occur due to
             internal device issues, including: parity errors in device
             memory or other internal hardware errors.  Any errored
@@ -519,8 +524,8 @@ Table of Contents
 4.3.  "ietf-packet-discard-reporting-common" YANG Module
 
    The "ietf-packet-discard-reporting-common" module imports "ietf-yang-
-   types" defined in [RFC9911].  The module references [RFC3031],
-   [RFC8402], [RFC8660], [RFC8754], and [RFC8986].
+   types" defined in [RFC9911].  The module references [RFC8402],
+   [RFC8660], [RFC8754], and [RFC8986].
 
    <CODE BEGINS>
      file "ietf-packet-discard-reporting-common@2026-03-03.yang"
@@ -1999,6 +2004,12 @@ Table of Contents
 
 10.1.  Normative References
 
+   [RFC826]   Plummer, D., "An Ethernet Address Resolution Protocol: Or
+              Converting Network Protocol Addresses to 48.bit Ethernet
+              Address for Transmission on Ethernet Hardware", STD 37,
+              RFC 826, DOI 10.17487/RFC826, November 1982,
+              <https://www.rfc-editor.org/rfc/rfc826>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2017,6 +2028,11 @@ Table of Contents
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
+
+   [RFC4891]  Graveman, R., Parthasarathy, M., Savola, P., and H.
+              Tschofenig, "Using IPsec to Secure IPv6-in-IPv4 Tunnels",
+              RFC 4891, DOI 10.17487/RFC4891, May 2007,
+              <https://www.rfc-editor.org/rfc/rfc4891>.
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
