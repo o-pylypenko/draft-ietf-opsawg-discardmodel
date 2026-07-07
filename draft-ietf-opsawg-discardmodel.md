@@ -526,9 +526,15 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 
 # Operational Considerations
 
-##  Determining Intent for Policy {#intent}
+##  Determining Operator Intent {#intent}
 
-Device discard counters do not by themselves establish operator intent. Discards reported under policy (e.g., ACL/policer) indicate only that traffic matched a configured rule; such discards may still be unintended if the configuration is in error. Determining intent for policy discards requires external context (e.g., configuration validation and change history). Such contexts are local to each operator.
+Device discard counters do not by themselves establish operator intent. The classification defined in this document identifies the discard condition. Whether that condition is intended or unintended is determined by the operator using the discard class together with local policy, configured intent, baseline behaviour, duration, affected scope, service context, and other operational evidence.
+
+Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.
+
+Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator(captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action.
+
+Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify configuration enforced in underlying nodes and continousily ensure that configuration is consistent with the intended service to deliver.
 
 ## Deployment Experience {#experience}
 
