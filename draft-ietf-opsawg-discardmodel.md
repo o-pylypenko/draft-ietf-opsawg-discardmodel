@@ -167,7 +167,11 @@ FEATURE-DISCARD-DURATION:
 FEATURE-DISCARD-CLASS:
 : The type or class of discards, which is crucial for selecting the appropriate type of mitigation. Examples may be:  error discards may require taking faulty components out of service, no-buffer discards may require traffic redistribution, or intended policy discards typically require no action. Refer to {{ex-table}} for more examples.
 
-While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions (refer to {{mapping}} for examples).
+While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB {{?RFC2863}} and the YANG Data Model for Interface Management {{?RFC8343}}, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in {{infomodel}} defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions.
+
+The classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on the discard class together with local policy, configured intent, baseline behavior, duration, affected scope, and other operational context. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.
+
+The purpose of the discard classification is to expose the signal with enough precision that an operator or automation system can make that determination consistently. {{mapping}} provides illustrative examples of how discard class, rate, duration, and inferred cause can be combined to determine whether a discard is unintended and what action, if any, is appropriate.
 
 # Information Model (IM)   {#infomodel}
 
@@ -752,6 +756,7 @@ The content of this document has benefitted from feedback from JR Rivers, Ronan 
 Thanks to Benoît Claise, Joe Clarke, Tom Petch, Mahesh Jethanandani, Paul Aitken, and Randy Bush for the review and comments.
 
 Thanks to Ladislav Lhotka for the YANGDOCTORS reviews, Sergio Belotti for the OPSDIR review, Satoru Matsushima for the INTDIR review,
-Derrell Piper for the SECDIR review, Roni Even for the GENART review, and Michael Tüxen for the TSVART review.
+Derrell Piper for the SECDIR review, Roni Even for the GENART review, and Michael Tüxen for the TSVART review. Special thanks to
+Carlos Pignataro for the detailed INTDIR review and suggestions that enhanced this specification.
 
 Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.
