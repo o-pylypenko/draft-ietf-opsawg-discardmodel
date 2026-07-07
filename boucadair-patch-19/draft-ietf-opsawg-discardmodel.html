@@ -1847,7 +1847,7 @@ module ietf-packet-discard-reporting-common {
   identity tail-drop {
     base no-buffer-type;
     description
-      "Indicates a tail-drop discard.";
+      "Indicates a discard due to tail drop.";
   }
 
   /*
@@ -2324,7 +2324,7 @@ module ietf-packet-discard-reporting-common {
             base no-buffer-type;
           }
           description
-            "Specifies a no buffer discard type.";
+            "Specifies the discard type.";
         }
         uses qos;
       }
