@@ -337,12 +337,6 @@ module ietf-packet-discard-reporting-common {
            including TCP, UDP, or ICMPv6 checksum failures, are not
            reported by this L3 header checksum counter.";
       }
-      leaf mtu-exceeded {
-        type yang:counter64;
-        description
-          "The number of received packets discarded due to
-           MTU exceeded.";
-      }
       leaf invalid-packet {
         type yang:counter64;
         description
@@ -352,6 +346,41 @@ module ietf-packet-discard-reporting-common {
            version, invalid flags or control bits, malformed
            packets.";
       }
+    }
+    container mtu-exceeded {
+      description
+        "Counters for packets discarded because their size exceeded
+         the applicable Maximum Transmission Unit (MTU).";
+      leaf packets {
+        type yang:counter64;
+        description
+          "The total number of packets discarded because their size
+           exceeded the applicable MTU.  This includes packets
+           reported by the more specific counters in this
+           container.";
+      }
+      leaf fragmentation-not-permitted {
+        type yang:counter64;
+        description
+          "The number of packets discarded because the packet size
+           exceeded the applicable MTU and the forwarding node was
+           not permitted to fragment the packet.  This includes IPv4
+           packets with the Don't Fragment (DF) bit set and IPv6
+           packets, which forwarding nodes do not fragment.";
+      }
+      leaf fragmentation-permitted-not-performed {
+        type yang:counter64;
+        description
+          "The number of packets discarded because the packet size
+           exceeded the applicable MTU, fragmentation was permitted
+           in principle, but the packet was not fragmented and
+           forwarded.  This includes IPv4 packets with the DF bit
+           clear.";
+      }
+      reference
+        "RFC 791: Internet Protocol, Sections 3.1 and 3.2
+         RFC 8200: Internet Protocol, Version 6 (IPv6)
+                   Specification, Sections 4.5 and 5";
     }
     leaf ttl-expired {
       type yang:counter64;

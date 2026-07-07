@@ -74,8 +74,14 @@ module: ietf-packet-discard-reporting
           |  |  +--ro rx
           |  |  |  +--ro packets?          yang:counter64
           |  |  |  +--ro checksum-error?   yang:counter64
-          |  |  |  +--ro mtu-exceeded?     yang:counter64
           |  |  |  +--ro invalid-packet?   yang:counter64
+          |  |  +--ro mtu-exceeded
+          |  |  |  +--ro packets?
+          |  |  |  |       yang:counter64
+          |  |  |  +--ro fragmentation-not-permitted?
+          |  |  |  |       yang:counter64
+          |  |  |  +--ro fragmentation-permitted-not-performed?
+          |  |  |          yang:counter64
           |  |  +--ro ttl-expired?                   yang:counter64
           |  |  +--ro no-route?                      yang:counter64
           |  |  +--ro neighbor-resolution-failure?   yang:counter64
@@ -168,8 +174,14 @@ module: ietf-packet-discard-reporting
           |  |  +--ro rx
           |  |  |  +--ro packets?          yang:counter64
           |  |  |  +--ro checksum-error?   yang:counter64
-          |  |  |  +--ro mtu-exceeded?     yang:counter64
           |  |  |  +--ro invalid-packet?   yang:counter64
+          |  |  +--ro mtu-exceeded
+          |  |  |  +--ro packets?
+          |  |  |  |       yang:counter64
+          |  |  |  +--ro fragmentation-not-permitted?
+          |  |  |  |       yang:counter64
+          |  |  |  +--ro fragmentation-permitted-not-performed?
+          |  |  |          yang:counter64
           |  |  +--ro ttl-expired?                   yang:counter64
           |  |  +--ro no-route?                      yang:counter64
           |  |  +--ro neighbor-resolution-failure?   yang:counter64
