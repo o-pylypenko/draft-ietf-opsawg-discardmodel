@@ -629,7 +629,7 @@ module ietf-packet-discard-reporting-common {
             base no-buffer-type;
           }
           description
-            "Specifies a no buffer discard type.";
+            "Specifies the discard type.";
         }
         uses qos;
       }
