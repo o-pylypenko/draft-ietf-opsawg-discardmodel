@@ -1061,7 +1061,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Evans, et al.</td>
-<td class="center">Expires 7 January 2027</td>
+<td class="center">Expires 8 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1074,12 @@ svg {
 <dd class="internet-draft">draft-ietf-opsawg-discardmodel-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-06" class="published">6 July 2026</time>
+<time datetime="2026-07-07" class="published">7 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-07">7 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-08">8 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1148,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 8 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1631,7 +1631,7 @@ module: ietf-packet-discard-reporting-sx
                 <span class="break"></span><dl class="dlParallel" id="section-4.2-1.4.2.3.1">
                   <dt id="section-4.2-1.4.2.3.1.1">discards/errors/l3/mtu-exceeded/:</dt>
                   <dd style="margin-left: 1.5em" id="section-4.2-1.4.2.3.1.2">
-                    <p id="section-4.2-1.4.2.3.1.2.1">These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet (<span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span>, <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>).<a href="#section-4.2-1.4.2.3.1.2.1" class="pilcrow">¶</a></p>
+                    <p id="section-4.2-1.4.2.3.1.2.1">These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet (Sections <a href="https://rfc-editor.org/rfc/rfc791#section-3.1" class="relref">3.1</a> and <a href="https://rfc-editor.org/rfc/rfc791#section-3.2" class="relref">3.2</a> of <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span>, Sections <a href="https://rfc-editor.org/rfc/rfc8200#section-4.5" class="relref">4.5</a> and <a href="https://rfc-editor.org/rfc/rfc8200#section-5" class="relref">5</a> of <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>).<a href="#section-4.2-1.4.2.3.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
@@ -3122,6 +3122,10 @@ module ietf-packet-discard-reporting {
 <a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="RFC791">[RFC791]</dt>
+        <dd>
+<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Internet Protocol"</span>, <span class="seriesInfo">STD 5</span>, <span class="seriesInfo">RFC 791</span>, <span class="seriesInfo">DOI 10.17487/RFC791</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc791">https://www.rfc-editor.org/rfc/rfc791</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -3145,6 +3149,10 @@ module ietf-packet-discard-reporting {
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8200">[RFC8200]</dt>
+        <dd>
+<span class="refAuthor">Deering, S.</span> and <span class="refAuthor">R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 86</span>, <span class="seriesInfo">RFC 8200</span>, <span class="seriesInfo">DOI 10.17487/RFC8200</span>, <time datetime="2017-07" class="refDate">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8200">https://www.rfc-editor.org/rfc/rfc8200</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8341">[RFC8341]</dt>
         <dd>
@@ -3182,10 +3190,6 @@ module ietf-packet-discard-reporting {
 <dt id="RED93">[RED93]</dt>
         <dd>
 <span class="refAuthor">Floyd, S.</span> and <span class="refAuthor">V. Jacobson</span>, <span class="refTitle">"Random early detection gateways for congestion avoidance"</span>, <time datetime="1993-08" class="refDate">August 1993</time>, <span>&lt;<a href="https://ieeexplore.ieee.org/document/251892">https://ieeexplore.ieee.org/document/251892</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC791">[RFC791]</dt>
-        <dd>
-<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Internet Protocol"</span>, <span class="seriesInfo">STD 5</span>, <span class="seriesInfo">RFC 791</span>, <span class="seriesInfo">DOI 10.17487/RFC791</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc791">https://www.rfc-editor.org/rfc/rfc791</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2827">[RFC2827]</dt>
         <dd>
@@ -3234,10 +3238,6 @@ module ietf-packet-discard-reporting {
 <dt id="RFC8040">[RFC8040]</dt>
         <dd>
 <span class="refAuthor">Bierman, A.</span>, <span class="refAuthor">Bjorklund, M.</span>, and <span class="refAuthor">K. Watsen</span>, <span class="refTitle">"RESTCONF Protocol"</span>, <span class="seriesInfo">RFC 8040</span>, <span class="seriesInfo">DOI 10.17487/RFC8040</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8040">https://www.rfc-editor.org/rfc/rfc8040</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8200">[RFC8200]</dt>
-        <dd>
-<span class="refAuthor">Deering, S.</span> and <span class="refAuthor">R. Hinden</span>, <span class="refTitle">"Internet Protocol, Version 6 (IPv6) Specification"</span>, <span class="seriesInfo">STD 86</span>, <span class="seriesInfo">RFC 8200</span>, <span class="seriesInfo">DOI 10.17487/RFC8200</span>, <time datetime="2017-07" class="refDate">July 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8200">https://www.rfc-editor.org/rfc/rfc8200</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8289">[RFC8289]</dt>
         <dd>
