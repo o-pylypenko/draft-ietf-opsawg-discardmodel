@@ -108,11 +108,13 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- qos!
-    |           +-- class* [id]
-    |              +-- id         string
-    |              +-- packets?   yang:counter64
-    |              +-- bytes?     yang:counter64
+    |        +-- type* [drop-type]
+    |           +-- drop-type    identityref
+    |           +-- qos!
+    |              +-- class* [id]
+    |                 +-- id         string
+    |                 +-- packets?   yang:counter64
+    |                 +-- bytes?     yang:counter64
     +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
@@ -207,11 +209,13 @@ module: ietf-packet-discard-reporting-sx
     |     |     +-- rpf?          yang:counter64
     |     |     +-- ddos?         yang:counter64
     |     +-- no-buffer
-    |        +-- qos!
-    |           +-- class* [id]
-    |              +-- id         string
-    |              +-- packets?   yang:counter64
-    |              +-- bytes?     yang:counter64
+    |        +-- type* [drop-type]
+    |           +-- drop-type    identityref
+    |           +-- qos!
+    |              +-- class* [id]
+    |                 +-- id         string
+    |                 +-- packets?   yang:counter64
+    |                 +-- bytes?     yang:counter64
     +-- device {pdr-common:device-stats}?
        +-- traffic
        |  +-- l2
@@ -305,8 +309,10 @@ module: ietf-packet-discard-reporting-sx
           |     +-- rpf?          yang:counter64
           |     +-- ddos?         yang:counter64
           +-- no-buffer
-             +-- qos!
-                +-- class* [id]
-                   +-- id         string
-                   +-- packets?   yang:counter64
-                   +-- bytes?     yang:counter64
+             +-- type* [drop-type]
+                +-- drop-type    identityref
+                +-- qos!
+                   +-- class* [id]
+                      +-- id         string
+                      +-- packets?   yang:counter64
+                      +-- bytes?     yang:counter64

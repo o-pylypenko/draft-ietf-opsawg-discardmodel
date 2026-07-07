@@ -111,11 +111,13 @@ module: ietf-packet-discard-reporting
           |     +--ro rpf?          yang:counter64
           |     +--ro ddos?         yang:counter64
           +--ro no-buffer
-             +--ro qos!
-                +--ro class* [id]
-                   +--ro id         string
-                   +--ro packets?   yang:counter64
-                   +--ro bytes?     yang:counter64
+             +--ro type* [drop-type]
+                +--ro drop-type    identityref
+                +--ro qos!
+                   +--ro class* [id]
+                      +--ro id         string
+                      +--ro packets?   yang:counter64
+                      +--ro bytes?     yang:counter64
   augment /lne:logical-network-elements/lne:logical-network-element:
     +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
@@ -211,8 +213,10 @@ module: ietf-packet-discard-reporting
           |     +--ro rpf?          yang:counter64
           |     +--ro ddos?         yang:counter64
           +--ro no-buffer
-             +--ro qos!
-                +--ro class* [id]
-                   +--ro id         string
-                   +--ro packets?   yang:counter64
-                   +--ro bytes?     yang:counter64
+             +--ro type* [drop-type]
+                +--ro drop-type    identityref
+                +--ro qos!
+                   +--ro class* [id]
+                      +--ro id         string
+                      +--ro packets?   yang:counter64
+                      +--ro bytes?     yang:counter64
