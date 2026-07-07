@@ -137,6 +137,24 @@ module ietf-packet-discard-reporting-common {
       "Identity for IPv6 address family.";
   }
 
+  identity no-buffer-type {
+    description
+      "Identity for no buffer discard tpes.";
+  }
+
+  identity aqm {
+    base no-buffer-type;
+    description
+      "Indicates discard due to an Active Queue Management (AQM)
+       algorithm.";
+  }
+
+  identity tail-drop {
+    base no-buffer-type;
+    description
+      "Indicates a tail-drop discard.";
+  }
+
   /*
    * Groupings
    */
@@ -602,7 +620,19 @@ module ietf-packet-discard-reporting-common {
     container no-buffer {
       description
         "Discard counters due to buffer unavailability.";
-      uses qos;
+      list type {
+        key "direction";
+        description
+          "No buffer counters.";
+        leaf drop-type {
+          type identityref {
+            base no-buffer-type;
+          }
+          description
+            "Specifies a no buffer discard type.";
+        }
+        uses qos;
+      }
     }
   }
 
