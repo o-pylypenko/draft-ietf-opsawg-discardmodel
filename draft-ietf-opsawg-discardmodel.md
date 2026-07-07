@@ -526,7 +526,7 @@ The "ietf-packet-discard-reporting" module imports "ietf-packet-discard-reportin
 
 Device discard counters do not by themselves establish operator intent. The classification defined in this document identifies the discard condition. Whether that condition is intended or unintended is determined by the operator using the discard class together with local policy, configured intent, baseline behaviour, duration, affected scope, service context, and other operational evidence.
 
-Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.
+Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.
 
 Congestion-related loss depends on operator context. A level of no-buffer discard below a defined SLA may be expected or intended. The same discard class above the SLA, sustained for longer than expected, may be unintended and require action.
 
