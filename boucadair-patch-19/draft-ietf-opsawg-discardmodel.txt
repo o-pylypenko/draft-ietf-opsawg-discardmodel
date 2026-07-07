@@ -95,7 +95,7 @@ Table of Contents
      5.3.  Usage Examples
      5.4.  "ietf-packet-discard-reporting" YANG Module
    6.  Operational Considerations
-     6.1.  Determining Intent for Policy
+     6.1.  Determining Operator Intent
      6.2.  Deployment Experience
      6.3.  Anchoring Flow Structure
    7.  Implementation Status
@@ -277,8 +277,27 @@ Table of Contents
    [RFC8343], FEATURE-DISCARD-CLASS requires a more detailed
    classification scheme than they define.  The IM provided in Section 4
    defines such a classification scheme to enable automated mapping from
-   discard signals to appropriate mitigation actions (refer to
-   Appendix B for examples).
+   discard signals to appropriate mitigation actions.
+
+   The classification defined in this document does not by itself
+   determine whether a specific discard condition is intended or
+   unintended.  That determination is made by the operator, based on the
+   discard class together with local policy, configured intent, baseline
+   behavior, duration, affected scope, and other operational context.
+   For example, policy discards may be intended when they enforce a
+   deliberate access-control rule, but unintended when a configuration
+   error causes valid traffic to match that rule.  Similarly, TTL-
+   expired packets may be expected at a low baseline rate due to
+   traceroute or other diagnostic activity, while a sustained increase
+   above baseline may indicate convergence, a routing loop, or another
+   operational fault.
+
+   The purpose of the discard classification is to expose the signal
+   with enough precision that an operator or automation system can make
+   that determination consistently.  Appendix B provides illustrative
+   examples of how discard class, rate, duration, and inferred cause can
+   be combined to determine whether a discard is unintended and what
+   action, if any, is appropriate.
 
 4.  Information Model (IM)
 
@@ -350,7 +369,10 @@ Table of Contents
        |     |     ...
        |     +-- no-buffer
        |        +-- qos!
-       |           ...
+       |           +-- class* [id]
+       |              |  ...
+       |              +-- discard-type* [type]
+       |                 ...
        +-- flow* [direction] {pdr-common:flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
@@ -379,7 +401,10 @@ Table of Contents
        |     |     ...
        |     +-- no-buffer
        |        +-- qos!
-       |           ...
+       |           +-- class* [id]
+       |              |  ...
+       |              +-- discard-type* [type]
+       |                 ...
        +-- device {pdr-common:device-stats}?
           +-- traffic
           |  +-- l2
@@ -407,7 +432,10 @@ Table of Contents
              |     ...
              +-- no-buffer
                 +-- qos!
-                   ...
+                   +-- class* [id]
+                      |  ...
+                      +-- discard-type* [type]
+                         ...
 
                     Figure 1: Abstract IM Tree Structure
 
@@ -517,12 +545,12 @@ Table of Contents
             discards not explicitly assigned to other classes are also
             accounted for here.
 
-   discards/no-buffer/:  These are discards due to buffer exhaustion
-      (that is congestion related discards).  These can be tail-drop
-      discards or due to an Active Queue Management (AQM) algorithm,
-      such as Random Early Detection (RED) [RED93] or Controlled Delay
-      (CoDel) [RFC8289]. no-buffer discard counter are listed per drop
-      type ("aqm", "tail-drop", etc.).
+   discards/no-buffer/:  These are congestion-related discards,
+      including tail-drop discards due to buffer exhaustion and discards
+      due to an Active Queue Management (AQM) algorithm, such as Random
+      Early Detection (RED) [RED93] or Controlled Delay (CoDel)
+      [RFC8289].  Implementations MAY additionally report per-type
+      counters in the discard-type list.
 
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
@@ -802,6 +830,30 @@ Table of Contents
          description
            "Per-class QoS traffic counters.";
          uses class-list;
+       }
+     }
+
+     grouping no-buffer-qos {
+       description
+         "QoS discard counters.";
+       uses qos {
+         augment "qos/class" {
+           description
+             "Adds per-type discard counters to each QoS class.";
+           list discard-type {
+             key "type";
+             description
+               "Per-type discard counters.";
+             leaf type {
+               type identityref {
+                 base no-buffer-type;
+               }
+               description
+                 "Specifies the discard type.";
+             }
+             uses basic-packets-bytes;
+           }
+         }
        }
      }
 
@@ -1156,20 +1208,8 @@ Table of Contents
        }
        container no-buffer {
          description
-           "Discard counters due to buffer unavailability.";
-         list type {
-           key "drop-type";
-           description
-             "Congestion-related discard counters.";
-           leaf drop-type {
-             type identityref {
-               base no-buffer-type;
-             }
-             description
-               "Specifies the discard type.";
-           }
-           uses qos;
-         }
+           "Congestion-related discard counters.";
+         uses no-buffer-qos;
        }
      }
 
@@ -1465,7 +1505,9 @@ Table of Contents
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
-                      ...
+                      |  ...
+                      +--ro discard-type* [type]
+                         ...
      augment /lne:logical-network-elements/lne:logical-network-element:
        +--ro traffic-discard-stats {pdr-common:device-stats}?
           +--ro discard-order-capability*   identityref
@@ -1497,7 +1539,9 @@ Table of Contents
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
-                      ...
+                      |  ...
+                      +--ro discard-type* [type]
+                         ...
 
                     Figure 2: Abstract DM Tree Structure
 
@@ -1548,30 +1592,37 @@ Table of Contents
 
    7.   The aggregate QoS traffic and no-buffer discard classes MUST
         account for all underlying packets received, transmitted, and
-        discarded across all other classes.
+        discarded across all other classes.  All packets and bytes
+        reported under discard-type MUST also be included in the
+        enclosing class aggregate.
 
    8.   In addition to the Layer 2 and Layer 3 aggregate classes, an
         individual discarded packet MUST only account against a single
-        error, policy, or no-buffer discard subclass.
+        error, policy, or no-buffer discard subclass.  When per-type
+        counters are reported, the discard MUST be counted in at most
+        one discard-type entry.
 
    9.   When there are multiple reasons for discarding a packet, the
         ordering of discard class reporting MUST be defined.  Typically,
         this can be exposed by an implementation by means of discard-
         order-capability.
 
-   10.  If Diffserv [RFC2475] is not used, no-buffer discards MUST be
+   10.  class[id] represents the QoS class assigned to a packet by the
+        forwarding implementation using Diffserv [RFC2475], IEEE 802.1Q
+        PCP [IEEE802.1Q], MPLS TC [RFC5462], or another mechanism.  If
+        no QoS classification is used, no-buffer discards MUST be
         reported as class[id="0"], which represents the default class.
 
    11.  When traffic is mirrored, the discard metrics MUST account for
         the original traffic rather than the reflected traffic.
 
-   12.  No-buffer discards can be realized differently with different
-        memory architectures.  Whether a no-buffer discard is attributed
-        to ingress or egress can differ accordingly.  For successful
-        auto-mitigation, discards due to an egress interface congestion
-        MUST be reportable on egress, while discards due to device-level
-        congestion (e.g., due to exceeding the device forwarding rate)
-        MUST be reportable on ingress.
+   12.  Congestion-related discards can be realized differently with
+        different queueing and memory architectures.  Whether a no-
+        buffer discard is attributed to ingress or egress can differ
+        accordingly.  For successful auto-mitigation, discards due to an
+        egress interface congestion MUST be reportable on egress, while
+        discards due to device-level congestion (e.g., due to exceeding
+        the device forwarding rate) MUST be reportable on ingress.
 
    13.  When the ingress and egress headers differ (for example, at a
         tunnel endpoint), the discard class attribution MUST relate to
@@ -1605,7 +1656,8 @@ Table of Contents
 
    *  interface/discards[direction="ingress"]/errors/l3/ttl-expired
 
-   An IPv4 packet discarded on egress due to no buffers would increment:
+   An IPv4 packet discarded on egress by tail drop due to buffer
+   exhaustion would increment:
 
    *  interface/discards[direction="egress"]/l3/address-family-
       stat[address-family="ipv4"]/unicast/packets
@@ -1618,6 +1670,14 @@ Table of Contents
 
    *  interface/discards[direction="egress"]/no-buffer/qos/
       class[id="0"]/bytes
+
+   If per-type counters are reported, the packet would also increment:
+
+   *  interface/discards[direction="egress"]/no-buffer/qos/
+      class[id="0"]/discard-type[type="tail-drop"]/packets
+
+   *  interface/discards[direction="egress"]/no-buffer/qos/
+      class[id="0"]/discard-type[type="tail-drop"]/bytes
 
    A multicast IPv6 packet dropped due to RPF check failure would
    increment:
@@ -1766,7 +1826,7 @@ Table of Contents
      identity no-buffer {
        base discard-class;
        description
-         "Indicates a discard due to buffer unavailability.";
+         "Indicates a congestion-related discard.";
      }
 
      /*
@@ -1844,15 +1904,40 @@ Table of Contents
 
 6.  Operational Considerations
 
-6.1.  Determining Intent for Policy
+6.1.  Determining Operator Intent
 
    Device discard counters do not by themselves establish operator
-   intent.  Discards reported under policy (e.g., ACL/policer) indicate
-   only that traffic matched a configured rule; such discards may still
-   be unintended if the configuration is in error.  Determining intent
-   for policy discards requires external context (e.g., configuration
-   validation and change history).  Such contexts are local to each
-   operator.
+   intent.  The classification defined in this document identifies the
+   discard condition.  Whether that condition is intended or unintended
+   is determined by the operator using the discard class together with
+   local policy, configured intent, baseline behaviour, duration,
+   affected scope, service context, and other operational evidence.
+
+   Some discard classes provide a strong signal on their own.  For
+   example, errors/l2/rx above baseline will generally indicate
+   unintended loss, since it reports errored received frames.
+   Similarly, TTL-expired packets may be expected at a low baseline rate
+   due to traceroute or other diagnostic activity, while a sustained
+   increase above baseline may indicate convergence issue, an infinite
+   routing loop, or another operational fault.
+
+   Congestion-related loss depends on operator context.  A level of no-
+   buffer discards below a defined traffic performance indicator
+   (captured in an SLA, typically) may be expected or intended.  The
+   same discard class above a performance indicator, sustained for
+   longer than expected, may be unintended and thus require action.
+   When available, discard-type counters allow operators to apply
+   different baselines to AQM and tail-drop discards.
+
+   Policy discards may also require additional context.  Discards
+   reported under policy (for example, ACL or policer discards) indicate
+   only that traffic matched a configured rule.  They may still be
+   unintended if the configuration is in error.  Determining intent for
+   policy discards requires operator-local context, such as
+   configuration validation, service policy, and change history.
+   Operators should verify configuration enforced in underlying nodes
+   and continousily ensure that configuration is consistent with the
+   intended service to deliver.
 
 6.2.  Deployment Experience
 
@@ -2067,6 +2152,12 @@ Table of Contents
 
 10.1.  Normative References
 
+   [IEEE802.1Q]
+              IEEE, "IEEE Standard for Local and Metropolitan Area
+              Networks--Bridges and Bridged Networks", IEEE Std 802.1Q-
+              2022, DOI 10.1109/IEEESTD.2022.10004498, 22 December 2022,
+              <https://doi.org/10.1109/IEEESTD.2022.10004498>.
+
    [RFC791]   Postel, J., "Internet Protocol", STD 5, RFC 791,
               DOI 10.17487/RFC791, September 1981,
               <https://www.rfc-editor.org/rfc/rfc791>.
@@ -2100,6 +2191,11 @@ Table of Contents
               Tschofenig, "Using IPsec to Secure IPv6-in-IPv4 Tunnels",
               RFC 4891, DOI 10.17487/RFC4891, May 2007,
               <https://www.rfc-editor.org/rfc/rfc4891>.
+
+   [RFC5462]  Andersson, L. and R. Asati, "Multiprotocol Label Switching
+              (MPLS) Label Stack Entry: "EXP" Field Renamed to "Traffic
+              Class" Field", RFC 5462, DOI 10.17487/RFC5462, February
+              2009, <https://www.rfc-editor.org/rfc/rfc5462>.
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -2544,11 +2640,13 @@ Appendix C.  Full Information Model Tree
        |     |     +-- rpf?          yang:counter64
        |     |     +-- ddos?         yang:counter64
        |     +-- no-buffer
-       |        +-- type* [drop-type]
-       |           +-- drop-type    identityref
-       |           +-- qos!
-       |              +-- class* [id]
-       |                 +-- id         string
+       |        +-- qos!
+       |           +-- class* [id]
+       |              +-- id              string
+       |              +-- packets?        yang:counter64
+       |              +-- bytes?          yang:counter64
+       |              +-- discard-type* [type]
+       |                 +-- type       identityref
        |                 +-- packets?   yang:counter64
        |                 +-- bytes?     yang:counter64
        +-- flow* [direction] {pdr-common:flow-reporting}?
@@ -2645,11 +2743,13 @@ Appendix C.  Full Information Model Tree
        |     |     +-- rpf?          yang:counter64
        |     |     +-- ddos?         yang:counter64
        |     +-- no-buffer
-       |        +-- type* [drop-type]
-       |           +-- drop-type    identityref
-       |           +-- qos!
-       |              +-- class* [id]
-       |                 +-- id         string
+       |        +-- qos!
+       |           +-- class* [id]
+       |              +-- id              string
+       |              +-- packets?        yang:counter64
+       |              +-- bytes?          yang:counter64
+       |              +-- discard-type* [type]
+       |                 +-- type       identityref
        |                 +-- packets?   yang:counter64
        |                 +-- bytes?     yang:counter64
        +-- device {pdr-common:device-stats}?
@@ -2745,11 +2845,13 @@ Appendix C.  Full Information Model Tree
              |     +-- rpf?          yang:counter64
              |     +-- ddos?         yang:counter64
              +-- no-buffer
-                +-- type* [drop-type]
-                   +-- drop-type    identityref
-                   +-- qos!
-                      +-- class* [id]
-                         +-- id         string
+                +-- qos!
+                   +-- class* [id]
+                      +-- id              string
+                      +-- packets?        yang:counter64
+                      +-- bytes?          yang:counter64
+                      +-- discard-type* [type]
+                         +-- type       identityref
                          +-- packets?   yang:counter64
                          +-- bytes?     yang:counter64
 
@@ -2870,11 +2972,13 @@ Appendix D.  Full Data Model Tree
              |     +--ro rpf?          yang:counter64
              |     +--ro ddos?         yang:counter64
              +--ro no-buffer
-                +--ro type* [drop-type]
-                   +--ro drop-type    identityref
-                   +--ro qos!
-                      +--ro class* [id]
-                         +--ro id         string
+                +--ro qos!
+                   +--ro class* [id]
+                      +--ro id              string
+                      +--ro packets?        yang:counter64
+                      +--ro bytes?          yang:counter64
+                      +--ro discard-type* [type]
+                         +--ro type       identityref
                          +--ro packets?   yang:counter64
                          +--ro bytes?     yang:counter64
      augment /lne:logical-network-elements/lne:logical-network-element:
@@ -2972,11 +3076,13 @@ Appendix D.  Full Data Model Tree
              |     +--ro rpf?          yang:counter64
              |     +--ro ddos?         yang:counter64
              +--ro no-buffer
-                +--ro type* [drop-type]
-                   +--ro drop-type    identityref
-                   +--ro qos!
-                      +--ro class* [id]
-                         +--ro id         string
+                +--ro qos!
+                   +--ro class* [id]
+                      +--ro id              string
+                      +--ro packets?        yang:counter64
+                      +--ro bytes?          yang:counter64
+                      +--ro discard-type* [type]
+                         +--ro type       identityref
                          +--ro packets?   yang:counter64
                          +--ro bytes?     yang:counter64
 
