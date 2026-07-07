@@ -163,11 +163,13 @@ Table of Contents
    specifies a YANG implementation of this IM for network elements,
    while maintaining consistency through clear semantics.
 
-   The scope of this document is limited to reporting packet loss at
-   Layer 3 and frames discarded at Layer 2.  This document considers
-   only the signals that may trigger automated mitigation actions and
-   not how the actions are defined or executed.  Such considerations are
-   deployment-specific.
+   The scope of this document is limited to reporting Layer 3 packet
+   discards, Layer 2 frame discards, and discards during MPLS label
+   processing [RFC3031].  The reported signals may trigger automated
+   mitigation actions; the definition and execution of those actions are
+   deployment-specific.  Protocol actions associated with a discard
+   (e.g., ICMP error message generation) are governed by the applicable
+   protocol specifications and local policy.
 
    Section 3 describes the problem space and requirements.  Section 4
    defines the IM and its classification scheme.  Section 5 specifies
@@ -504,6 +506,11 @@ Table of Contents
             which may be due to routing configuration errors or may be
             transient discards during convergence.
 
+      *  discards/errors/neighbor-resolution-failure/:  These discards
+            occur due when forwarding engine could not resolve or use
+            the link-layer adjacency required to forward the packet to
+            the selected next hop [RFC826][RFC4891].
+
       *  discards/errors/internal/:  These discards occur due to
             internal device issues, including: parity errors in device
             memory or other internal hardware errors.  Any errored
@@ -522,7 +529,8 @@ Table of Contents
 4.3.  "ietf-packet-discard-reporting-common" YANG Module
 
    The "ietf-packet-discard-reporting-common" module imports "ietf-yang-
-   types" defined in [RFC9911].
+   types" defined in [RFC9911].  The module references [RFC8402],
+   [RFC8660], [RFC8754], and [RFC8986].
 
    <CODE BEGINS>
      file "ietf-packet-discard-reporting-common@2026-03-03.yang"
@@ -817,13 +825,17 @@ Table of Contents
            type yang:counter64;
            description
              "The number of received frames discarded due to
-              an invalid Media Access Control (MAC) address.";
+              an invalid Media Access Control (MAC) address.
+              Applies to Ethernet or Ethernet-derived
+              encapsulations where MAC addresses are present.";
          }
          leaf invalid-vlan {
            type yang:counter64;
            description
              "The number of received frames discarded due to
-              an invalid VLAN tag.";
+              an invalid VLAN tag. Applies to Ethernet or
+              Ethernet-derived encapsulations where VLAN tags
+              are present.";
          }
          leaf invalid-frame {
            type yang:counter64;
@@ -851,8 +863,15 @@ Table of Contents
          leaf checksum-error {
            type yang:counter64;
            description
-             "The number of received packets discarded due
-              to a checksum error.";
+             "Reports IPv4 packets discarded because validation of the
+              IPv4 header checksum failed.
+
+              This counter is applicable only to IPv4 packets. IPv6 does
+              not include an internet-layer header checksum, so IPv6
+              packets are not reported under this counter. solely due to
+              IPv6 header processing. Upper-layer checksum failures,
+              including TCP, UDP, or ICMPv6 checksum failures, are not
+              reported by this L3 header checksum counter.";
          }
          leaf invalid-packet {
            type yang:counter64;
@@ -911,6 +930,32 @@ Table of Contents
            "The number of received packets discarded due to not
             matching a valid route.";
        }
+       leaf neighbor-resolution-failure {
+         type yang:counter64;
+         description
+           "Reports packets discarded because the forwarding engine
+            could not resolve or use the link-layer adjacency required
+            to forward the packet to the selected next hop.
+
+            This includes packets dropped because ARP resolution for an
+            IPv4 next hop failed, Neighbor Discovery resolution for an
+            IPv6 next hop failed, or the resolved neighbor entry was
+            unusable according to local neighbor state.
+
+            This counter applies when route selection identified a next
+            hop, but forwarding could not complete because the required
+            neighbor or adjacency information was unavailable or
+            unusable. Packets discarded because no route matched
+            the destination are reported under 'no-route'. Packets
+            discarded due to internal device faults are reported
+            under 'internal'.";
+         reference
+           "RFC 826: An Ethernet Address Resolution Protocol -- or --
+                     Converting Network Protocol Addresses to 48.bit
+                     Ethernet Address for Transmission on Ethernet
+                     Hardware
+            RFC 4861: Neighbor Discovery for IP version 6 (IPv6)";
+       }
        leaf invalid-sid {
          type yang:counter64;
          description
@@ -919,12 +964,20 @@ Table of Contents
             identifier (SID).
             For SR-MPLS, invalid SIDs have to be accounted
             under invalid-label.";
+         reference
+           "RFC 8402: Segment Routing Architecture
+            RFC 8660: Segment Routing with the MPLS Data Plane
+            RFC 8754: IPv6 Segment Routing Header (SRH)
+            RFC 8986: Segment Routing over IPv6 (SRv6) Network
+                      Programming";
        }
        leaf invalid-label {
          type yang:counter64;
          description
            "The number of received packets discarded due to an
             invalid MPLS label.";
+         reference
+           "RFC 3031: Multiprotocol Label Switching Architecture";
        }
      }
 
@@ -1987,6 +2040,12 @@ Table of Contents
               DOI 10.17487/RFC791, September 1981,
               <https://www.rfc-editor.org/rfc/rfc791>.
 
+   [RFC826]   Plummer, D., "An Ethernet Address Resolution Protocol: Or
+              Converting Network Protocol Addresses to 48.bit Ethernet
+              Address for Transmission on Ethernet Hardware", STD 37,
+              RFC 826, DOI 10.17487/RFC826, November 1982,
+              <https://www.rfc-editor.org/rfc/rfc826>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1997,9 +2056,19 @@ Table of Contents
               Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
               <https://www.rfc-editor.org/rfc/rfc2475>.
 
+   [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
+              Label Switching Architecture", RFC 3031,
+              DOI 10.17487/RFC3031, January 2001,
+              <https://www.rfc-editor.org/rfc/rfc3031>.
+
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
+
+   [RFC4891]  Graveman, R., Parthasarathy, M., Savola, P., and H.
+              Tschofenig, "Using IPsec to Secure IPv6-in-IPv4 Tunnels",
+              RFC 4891, DOI 10.17487/RFC4891, May 2007,
+              <https://www.rfc-editor.org/rfc/rfc4891>.
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -2033,10 +2102,26 @@ Table of Contents
               DOI 10.17487/RFC8349, March 2018,
               <https://www.rfc-editor.org/rfc/rfc8349>.
 
+   [RFC8402]  Filsfils, C., Ed., Previdi, S., Ed., Ginsberg, L.,
+              Decraene, B., Litkowski, S., and R. Shakir, "Segment
+              Routing Architecture", RFC 8402, DOI 10.17487/RFC8402,
+              July 2018, <https://www.rfc-editor.org/rfc/rfc8402>.
+
    [RFC8530]  Berger, L., Hopps, C., Lindem, A., Bogdanovic, D., and X.
               Liu, "YANG Model for Logical Network Elements", RFC 8530,
               DOI 10.17487/RFC8530, March 2019,
               <https://www.rfc-editor.org/rfc/rfc8530>.
+
+   [RFC8660]  Bashandy, A., Ed., Filsfils, C., Ed., Previdi, S.,
+              Decraene, B., Litkowski, S., and R. Shakir, "Segment
+              Routing with the MPLS Data Plane", RFC 8660,
+              DOI 10.17487/RFC8660, December 2019,
+              <https://www.rfc-editor.org/rfc/rfc8660>.
+
+   [RFC8754]  Filsfils, C., Ed., Dukes, D., Ed., Previdi, S., Leddy, J.,
+              Matsushima, S., and D. Voyer, "IPv6 Segment Routing Header
+              (SRH)", RFC 8754, DOI 10.17487/RFC8754, March 2020,
+              <https://www.rfc-editor.org/rfc/rfc8754>.
 
    [RFC8791]  Bierman, A., Björklund, M., and K. Watsen, "YANG Data
               Structure Extensions", RFC 8791, DOI 10.17487/RFC8791,
@@ -2141,6 +2226,12 @@ Table of Contents
               L. Geng, "A Framework for Automating Service and Network
               Management with YANG", RFC 8969, DOI 10.17487/RFC8969,
               January 2021, <https://www.rfc-editor.org/rfc/rfc8969>.
+
+   [RFC8986]  Filsfils, C., Ed., Camarillo, P., Ed., Leddy, J., Voyer,
+              D., Matsushima, S., and Z. Li, "Segment Routing over IPv6
+              (SRv6) Network Programming", RFC 8986,
+              DOI 10.17487/RFC8986, February 2021,
+              <https://www.rfc-editor.org/rfc/rfc8986>.
 
    [RFC9000]  Iyengar, J., Ed. and M. Thomson, Ed., "QUIC: A UDP-Based
               Multiplexed and Secure Transport", RFC 9000,
@@ -2393,10 +2484,11 @@ Appendix C.  Full Information Model Tree
        |     |  |  |  |       yang:counter64
        |     |  |  |  +-- fragmentation-permitted-not-performed?
        |     |  |  |          yang:counter64
-       |     |  |  +-- ttl-expired?     yang:counter64
-       |     |  |  +-- no-route?        yang:counter64
-       |     |  |  +-- invalid-sid?     yang:counter64
-       |     |  |  +-- invalid-label?   yang:counter64
+       |     |  |  +-- ttl-expired?                   yang:counter64
+       |     |  |  +-- no-route?                      yang:counter64
+       |     |  |  +-- neighbor-resolution-failure?   yang:counter64
+       |     |  |  +-- invalid-sid?                   yang:counter64
+       |     |  |  +-- invalid-label?                 yang:counter64
        |     |  |  +-- tx
        |     |  |     +-- packets?   yang:counter64
        |     |  +-- internal
@@ -2491,10 +2583,11 @@ Appendix C.  Full Information Model Tree
        |     |  |  |  |       yang:counter64
        |     |  |  |  +-- fragmentation-permitted-not-performed?
        |     |  |  |          yang:counter64
-       |     |  |  +-- ttl-expired?     yang:counter64
-       |     |  |  +-- no-route?        yang:counter64
-       |     |  |  +-- invalid-sid?     yang:counter64
-       |     |  |  +-- invalid-label?   yang:counter64
+       |     |  |  +-- ttl-expired?                   yang:counter64
+       |     |  |  +-- no-route?                      yang:counter64
+       |     |  |  +-- neighbor-resolution-failure?   yang:counter64
+       |     |  |  +-- invalid-sid?                   yang:counter64
+       |     |  |  +-- invalid-label?                 yang:counter64
        |     |  |  +-- tx
        |     |  |     +-- packets?   yang:counter64
        |     |  +-- internal
@@ -2588,10 +2681,11 @@ Appendix C.  Full Information Model Tree
              |  |  |  |       yang:counter64
              |  |  |  +-- fragmentation-permitted-not-performed?
              |  |  |          yang:counter64
-             |  |  +-- ttl-expired?     yang:counter64
-             |  |  +-- no-route?        yang:counter64
-             |  |  +-- invalid-sid?     yang:counter64
-             |  |  +-- invalid-label?   yang:counter64
+             |  |  +-- ttl-expired?                   yang:counter64
+             |  |  +-- no-route?                      yang:counter64
+             |  |  +-- neighbor-resolution-failure?   yang:counter64
+             |  |  +-- invalid-sid?                   yang:counter64
+             |  |  +-- invalid-label?                 yang:counter64
              |  |  +-- tx
              |  |     +-- packets?   yang:counter64
              |  +-- internal
@@ -2710,10 +2804,11 @@ Appendix D.  Full Data Model Tree
              |  |  |  |       yang:counter64
              |  |  |  +--ro fragmentation-permitted-not-performed?
              |  |  |          yang:counter64
-             |  |  +--ro ttl-expired?     yang:counter64
-             |  |  +--ro no-route?        yang:counter64
-             |  |  +--ro invalid-sid?     yang:counter64
-             |  |  +--ro invalid-label?   yang:counter64
+             |  |  +--ro ttl-expired?                   yang:counter64
+             |  |  +--ro no-route?                      yang:counter64
+             |  |  +--ro neighbor-resolution-failure?   yang:counter64
+             |  |  +--ro invalid-sid?                   yang:counter64
+             |  |  +--ro invalid-label?                 yang:counter64
              |  |  +--ro tx
              |  |     +--ro packets?   yang:counter64
              |  +--ro internal
@@ -2809,10 +2904,11 @@ Appendix D.  Full Data Model Tree
              |  |  |  |       yang:counter64
              |  |  |  +--ro fragmentation-permitted-not-performed?
              |  |  |          yang:counter64
-             |  |  +--ro ttl-expired?     yang:counter64
-             |  |  +--ro no-route?        yang:counter64
-             |  |  +--ro invalid-sid?     yang:counter64
-             |  |  +--ro invalid-label?   yang:counter64
+             |  |  +--ro ttl-expired?                   yang:counter64
+             |  |  +--ro no-route?                      yang:counter64
+             |  |  +--ro neighbor-resolution-failure?   yang:counter64
+             |  |  +--ro invalid-sid?                   yang:counter64
+             |  |  +--ro invalid-label?                 yang:counter64
              |  |  +--ro tx
              |  |     +--ro packets?   yang:counter64
              |  +--ro internal

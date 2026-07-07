@@ -1308,7 +1308,7 @@ svg {
 <p id="section-1-1">The primary function of a network is to transport and deliver packets according to service level objectives. For network operators, understanding both where and why packet loss occurs within a network is essential for effective operation. Device-reported packet loss provides the most direct signal for identifying service impact. While certain types of packet loss, such as policy-based discards, are intentional and part of normal network operation, unintended packet loss can impact customer services.  To automate network operations, operators must be able to detect customer-impacting packet loss, determine its root cause, and apply appropriate mitigation actions. Precise classification of packet loss is thus crucial to ensure that anomalous packet loss is easily detected and that the right action is taken to mitigate the impact. Taking the wrong action can make problems worse; for example, removing a congested device from service can exacerbate congestion by redirecting traffic to other already congested links or devices.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards, ifInErrors, and ifOutErrors defined in "The Interfaces Group MIB" <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and "A YANG Data Model for Interface Management" <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, are insufficient for automating network operations. First, they lack precision; for instance, ifInDiscards aggregates all discarded inbound packets without specifying the cause, making it challenging to distinguish between intended and unintended discards. Second, these definitions are ambiguous, leading to inconsistent vendor implementations. For example, in some implementations ifInErrors accounts only for errored packets that are dropped, while in others, it includes all errored packets, whether they are dropped or not. Many implementations support more discard metrics than these, however, they have been inconsistently implemented due to the lack of a standardised classification scheme and clear semantics for packet loss reporting. For example, <span>[<a href="#RFC7270" class="cite xref">RFC7270</a>]</span> provides support for reporting discards per flow in IP Flow Information Export (IPFIX) <span>[<a href="#RFC7011" class="cite xref">RFC7011</a>]</span> using the forwardingStatus IPFIX Information Element, however, the defined drop reason codes also lack sufficient clarity to facilitate automated root cause analysis and impact mitigation (e.g., the "For us" reason code).<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting to address the above issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this IM for network elements, while maintaining consistency through clear semantics.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed. Such considerations are deployment-specific.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">The scope of this document is limited to reporting Layer 3 packet discards, Layer 2 frame discards, and discards during MPLS label processing <span>[<a href="#RFC3031" class="cite xref">RFC3031</a>]</span>. The reported signals may trigger automated mitigation actions; the definition and execution of those actions are deployment-specific. Protocol actions associated with a discard (e.g., ICMP error message generation) are governed by the applicable protocol specifications and local policy.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><a href="#problem" class="auto internal xref">Section 3</a> describes the problem space and requirements. <a href="#infomodel" class="auto internal xref">Section 4</a> defines the IM and its classification scheme. <a href="#datamodel" class="auto internal xref">Section 5</a> specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. Appendices <a href="#wheredropped" class="auto internal xref">A</a> and <a href="#mapping" class="auto internal xref">B</a> provide additional context and implementation guidance.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="editorial-note-to-be-removed-by-the-rfc-editor">
 <section id="section-1.1">
@@ -1656,9 +1656,18 @@ module: ietf-packet-discard-reporting-sx
 </li>
               <li class="normal" id="section-4.2-1.4.2.6">
                 <span class="break"></span><dl class="dlParallel" id="section-4.2-1.4.2.6.1">
-                  <dt id="section-4.2-1.4.2.6.1.1">discards/errors/internal/:</dt>
+                  <dt id="section-4.2-1.4.2.6.1.1">discards/errors/neighbor-resolution-failure/:</dt>
                   <dd style="margin-left: 1.5em" id="section-4.2-1.4.2.6.1.2">
-                    <p id="section-4.2-1.4.2.6.1.2.1">These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.<a href="#section-4.2-1.4.2.6.1.2.1" class="pilcrow">¶</a></p>
+                    <p id="section-4.2-1.4.2.6.1.2.1">These discards occur due when forwarding engine could not resolve or use the link-layer adjacency required to forward the packet to the selected next hop <span>[<a href="#RFC826" class="cite xref">RFC826</a>]</span><span>[<a href="#RFC4891" class="cite xref">RFC4891</a>]</span>.<a href="#section-4.2-1.4.2.6.1.2.1" class="pilcrow">¶</a></p>
+</dd>
+                <dd class="break"></dd>
+</dl>
+</li>
+              <li class="normal" id="section-4.2-1.4.2.7">
+                <span class="break"></span><dl class="dlParallel" id="section-4.2-1.4.2.7.1">
+                  <dt id="section-4.2-1.4.2.7.1.1">discards/errors/internal/:</dt>
+                  <dd style="margin-left: 1.5em" id="section-4.2-1.4.2.7.1.2">
+                    <p id="section-4.2-1.4.2.7.1.2.1">These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.<a href="#section-4.2-1.4.2.7.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
@@ -1680,7 +1689,7 @@ module: ietf-packet-discard-reporting-sx
         <h3 id="name-ietf-packet-discard-reporti">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-ietf-packet-discard-reporti" class="section-name selfRef">"ietf-packet-discard-reporting-common" YANG Module</a>
         </h3>
-<p id="section-4.3-1">The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in <span>[<a href="#RFC9911" class="cite xref">RFC9911</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in <span>[<a href="#RFC9911" class="cite xref">RFC9911</a>]</span>. The module references <span>[<a href="#RFC8402" class="cite xref">RFC8402</a>]</span>, <span>[<a href="#RFC8660" class="cite xref">RFC8660</a>]</span>, <span>[<a href="#RFC8754" class="cite xref">RFC8754</a>]</span>, and <span>[<a href="#RFC8986" class="cite xref">RFC8986</a>]</span>.<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <div class="breakable sourcecode" id="section-4.3-2">
 <pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting-common@2026-03-03.yang"
 
@@ -1975,13 +1984,17 @@ module ietf-packet-discard-reporting-common {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid Media Access Control (MAC) address.";
+           an invalid Media Access Control (MAC) address.
+           Applies to Ethernet or Ethernet-derived
+           encapsulations where MAC addresses are present.";
       }
       leaf invalid-vlan {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid VLAN tag.";
+           an invalid VLAN tag. Applies to Ethernet or
+           Ethernet-derived encapsulations where VLAN tags
+           are present.";
       }
       leaf invalid-frame {
         type yang:counter64;
@@ -2009,8 +2022,15 @@ module ietf-packet-discard-reporting-common {
       leaf checksum-error {
         type yang:counter64;
         description
-          "The number of received packets discarded due
-           to a checksum error.";
+          "Reports IPv4 packets discarded because validation of the
+           IPv4 header checksum failed.
+
+           This counter is applicable only to IPv4 packets. IPv6 does
+           not include an internet-layer header checksum, so IPv6
+           packets are not reported under this counter. solely due to
+           IPv6 header processing. Upper-layer checksum failures,
+           including TCP, UDP, or ICMPv6 checksum failures, are not
+           reported by this L3 header checksum counter.";
       }
       leaf invalid-packet {
         type yang:counter64;
@@ -2069,6 +2089,32 @@ module ietf-packet-discard-reporting-common {
         "The number of received packets discarded due to not
          matching a valid route.";
     }
+    leaf neighbor-resolution-failure {
+      type yang:counter64;
+      description
+        "Reports packets discarded because the forwarding engine
+         could not resolve or use the link-layer adjacency required
+         to forward the packet to the selected next hop.
+
+         This includes packets dropped because ARP resolution for an
+         IPv4 next hop failed, Neighbor Discovery resolution for an
+         IPv6 next hop failed, or the resolved neighbor entry was
+         unusable according to local neighbor state.
+
+         This counter applies when route selection identified a next
+         hop, but forwarding could not complete because the required
+         neighbor or adjacency information was unavailable or
+         unusable. Packets discarded because no route matched
+         the destination are reported under 'no-route'. Packets
+         discarded due to internal device faults are reported
+         under 'internal'.";
+      reference
+        "RFC 826: An Ethernet Address Resolution Protocol -- or --
+                  Converting Network Protocol Addresses to 48.bit
+                  Ethernet Address for Transmission on Ethernet
+                  Hardware
+         RFC 4861: Neighbor Discovery for IP version 6 (IPv6)";
+    }
     leaf invalid-sid {
       type yang:counter64;
       description
@@ -2077,12 +2123,20 @@ module ietf-packet-discard-reporting-common {
          identifier (SID).
          For SR-MPLS, invalid SIDs have to be accounted
          under invalid-label.";
+      reference
+        "RFC 8402: Segment Routing Architecture
+         RFC 8660: Segment Routing with the MPLS Data Plane
+         RFC 8754: IPv6 Segment Routing Header (SRH)
+         RFC 8986: Segment Routing over IPv6 (SRv6) Network
+                   Programming";
     }
     leaf invalid-label {
       type yang:counter64;
       description
         "The number of received packets discarded due to an
          invalid MPLS label.";
+      reference
+        "RFC 3031: Multiprotocol Label Switching Architecture";
     }
   }
 
@@ -3126,6 +3180,10 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Internet Protocol"</span>, <span class="seriesInfo">STD 5</span>, <span class="seriesInfo">RFC 791</span>, <span class="seriesInfo">DOI 10.17487/RFC791</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc791">https://www.rfc-editor.org/rfc/rfc791</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC826">[RFC826]</dt>
+        <dd>
+<span class="refAuthor">Plummer, D.</span>, <span class="refTitle">"An Ethernet Address Resolution Protocol: Or Converting Network Protocol Addresses to 48.bit Ethernet Address for Transmission on Ethernet Hardware"</span>, <span class="seriesInfo">STD 37</span>, <span class="seriesInfo">RFC 826</span>, <span class="seriesInfo">DOI 10.17487/RFC826</span>, <time datetime="1982-11" class="refDate">November 1982</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc826">https://www.rfc-editor.org/rfc/rfc826</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
@@ -3134,9 +3192,17 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">Blake, S.</span>, <span class="refAuthor">Black, D.</span>, <span class="refAuthor">Carlson, M.</span>, <span class="refAuthor">Davies, E.</span>, <span class="refAuthor">Wang, Z.</span>, and <span class="refAuthor">W. Weiss</span>, <span class="refTitle">"An Architecture for Differentiated Services"</span>, <span class="seriesInfo">RFC 2475</span>, <span class="seriesInfo">DOI 10.17487/RFC2475</span>, <time datetime="1998-12" class="refDate">December 1998</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2475">https://www.rfc-editor.org/rfc/rfc2475</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC3031">[RFC3031]</dt>
+        <dd>
+<span class="refAuthor">Rosen, E.</span>, <span class="refAuthor">Viswanathan, A.</span>, and <span class="refAuthor">R. Callon</span>, <span class="refTitle">"Multiprotocol Label Switching Architecture"</span>, <span class="seriesInfo">RFC 3031</span>, <span class="seriesInfo">DOI 10.17487/RFC3031</span>, <time datetime="2001-01" class="refDate">January 2001</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3031">https://www.rfc-editor.org/rfc/rfc3031</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC3688">[RFC3688]</dt>
         <dd>
 <span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC4891">[RFC4891]</dt>
+        <dd>
+<span class="refAuthor">Graveman, R.</span>, <span class="refAuthor">Parthasarathy, M.</span>, <span class="refAuthor">Savola, P.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Using IPsec to Secure IPv6-in-IPv4 Tunnels"</span>, <span class="seriesInfo">RFC 4891</span>, <span class="seriesInfo">DOI 10.17487/RFC4891</span>, <time datetime="2007-05" class="refDate">May 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4891">https://www.rfc-editor.org/rfc/rfc4891</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6020">[RFC6020]</dt>
         <dd>
@@ -3166,9 +3232,21 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">Lhotka, L.</span>, <span class="refAuthor">Lindem, A.</span>, and <span class="refAuthor">Y. Qu</span>, <span class="refTitle">"A YANG Data Model for Routing Management (NMDA Version)"</span>, <span class="seriesInfo">RFC 8349</span>, <span class="seriesInfo">DOI 10.17487/RFC8349</span>, <time datetime="2018-03" class="refDate">March 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8349">https://www.rfc-editor.org/rfc/rfc8349</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC8402">[RFC8402]</dt>
+        <dd>
+<span class="refAuthor">Filsfils, C., Ed.</span>, <span class="refAuthor">Previdi, S., Ed.</span>, <span class="refAuthor">Ginsberg, L.</span>, <span class="refAuthor">Decraene, B.</span>, <span class="refAuthor">Litkowski, S.</span>, and <span class="refAuthor">R. Shakir</span>, <span class="refTitle">"Segment Routing Architecture"</span>, <span class="seriesInfo">RFC 8402</span>, <span class="seriesInfo">DOI 10.17487/RFC8402</span>, <time datetime="2018-07" class="refDate">July 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8402">https://www.rfc-editor.org/rfc/rfc8402</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8530">[RFC8530]</dt>
         <dd>
 <span class="refAuthor">Berger, L.</span>, <span class="refAuthor">Hopps, C.</span>, <span class="refAuthor">Lindem, A.</span>, <span class="refAuthor">Bogdanovic, D.</span>, and <span class="refAuthor">X. Liu</span>, <span class="refTitle">"YANG Model for Logical Network Elements"</span>, <span class="seriesInfo">RFC 8530</span>, <span class="seriesInfo">DOI 10.17487/RFC8530</span>, <time datetime="2019-03" class="refDate">March 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8530">https://www.rfc-editor.org/rfc/rfc8530</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8660">[RFC8660]</dt>
+        <dd>
+<span class="refAuthor">Bashandy, A., Ed.</span>, <span class="refAuthor">Filsfils, C., Ed.</span>, <span class="refAuthor">Previdi, S.</span>, <span class="refAuthor">Decraene, B.</span>, <span class="refAuthor">Litkowski, S.</span>, and <span class="refAuthor">R. Shakir</span>, <span class="refTitle">"Segment Routing with the MPLS Data Plane"</span>, <span class="seriesInfo">RFC 8660</span>, <span class="seriesInfo">DOI 10.17487/RFC8660</span>, <time datetime="2019-12" class="refDate">December 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8660">https://www.rfc-editor.org/rfc/rfc8660</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8754">[RFC8754]</dt>
+        <dd>
+<span class="refAuthor">Filsfils, C., Ed.</span>, <span class="refAuthor">Dukes, D., Ed.</span>, <span class="refAuthor">Previdi, S.</span>, <span class="refAuthor">Leddy, J.</span>, <span class="refAuthor">Matsushima, S.</span>, and <span class="refAuthor">D. Voyer</span>, <span class="refTitle">"IPv6 Segment Routing Header (SRH)"</span>, <span class="seriesInfo">RFC 8754</span>, <span class="seriesInfo">DOI 10.17487/RFC8754</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8754">https://www.rfc-editor.org/rfc/rfc8754</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8791">[RFC8791]</dt>
         <dd>
@@ -3266,6 +3344,10 @@ module ietf-packet-discard-reporting {
 <dt id="RFC8969">[RFC8969]</dt>
         <dd>
 <span class="refAuthor">Wu, Q., Ed.</span>, <span class="refAuthor">Boucadair, M., Ed.</span>, <span class="refAuthor">Lopez, D.</span>, <span class="refAuthor">Xie, C.</span>, and <span class="refAuthor">L. Geng</span>, <span class="refTitle">"A Framework for Automating Service and Network Management with YANG"</span>, <span class="seriesInfo">RFC 8969</span>, <span class="seriesInfo">DOI 10.17487/RFC8969</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8969">https://www.rfc-editor.org/rfc/rfc8969</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8986">[RFC8986]</dt>
+        <dd>
+<span class="refAuthor">Filsfils, C., Ed.</span>, <span class="refAuthor">Camarillo, P., Ed.</span>, <span class="refAuthor">Leddy, J.</span>, <span class="refAuthor">Voyer, D.</span>, <span class="refAuthor">Matsushima, S.</span>, and <span class="refAuthor">Z. Li</span>, <span class="refTitle">"Segment Routing over IPv6 (SRv6) Network Programming"</span>, <span class="seriesInfo">RFC 8986</span>, <span class="seriesInfo">DOI 10.17487/RFC8986</span>, <time datetime="2021-02" class="refDate">February 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8986">https://www.rfc-editor.org/rfc/rfc8986</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9000">[RFC9000]</dt>
         <dd>
@@ -3666,10 +3748,11 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  |  |       yang:counter64
     |     |  |  |  +-- fragmentation-permitted-not-performed?
     |     |  |  |          yang:counter64
-    |     |  |  +-- ttl-expired?     yang:counter64
-    |     |  |  +-- no-route?        yang:counter64
-    |     |  |  +-- invalid-sid?     yang:counter64
-    |     |  |  +-- invalid-label?   yang:counter64
+    |     |  |  +-- ttl-expired?                   yang:counter64
+    |     |  |  +-- no-route?                      yang:counter64
+    |     |  |  +-- neighbor-resolution-failure?   yang:counter64
+    |     |  |  +-- invalid-sid?                   yang:counter64
+    |     |  |  +-- invalid-label?                 yang:counter64
     |     |  |  +-- tx
     |     |  |     +-- packets?   yang:counter64
     |     |  +-- internal
@@ -3764,10 +3847,11 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  |  |       yang:counter64
     |     |  |  |  +-- fragmentation-permitted-not-performed?
     |     |  |  |          yang:counter64
-    |     |  |  +-- ttl-expired?     yang:counter64
-    |     |  |  +-- no-route?        yang:counter64
-    |     |  |  +-- invalid-sid?     yang:counter64
-    |     |  |  +-- invalid-label?   yang:counter64
+    |     |  |  +-- ttl-expired?                   yang:counter64
+    |     |  |  +-- no-route?                      yang:counter64
+    |     |  |  +-- neighbor-resolution-failure?   yang:counter64
+    |     |  |  +-- invalid-sid?                   yang:counter64
+    |     |  |  +-- invalid-label?                 yang:counter64
     |     |  |  +-- tx
     |     |  |     +-- packets?   yang:counter64
     |     |  +-- internal
@@ -3861,10 +3945,11 @@ module: ietf-packet-discard-reporting-sx
           |  |  |  |       yang:counter64
           |  |  |  +-- fragmentation-permitted-not-performed?
           |  |  |          yang:counter64
-          |  |  +-- ttl-expired?     yang:counter64
-          |  |  +-- no-route?        yang:counter64
-          |  |  +-- invalid-sid?     yang:counter64
-          |  |  +-- invalid-label?   yang:counter64
+          |  |  +-- ttl-expired?                   yang:counter64
+          |  |  +-- no-route?                      yang:counter64
+          |  |  +-- neighbor-resolution-failure?   yang:counter64
+          |  |  +-- invalid-sid?                   yang:counter64
+          |  |  +-- invalid-label?                 yang:counter64
           |  |  +-- tx
           |  |     +-- packets?   yang:counter64
           |  +-- internal
@@ -3990,10 +4075,11 @@ module: ietf-packet-discard-reporting
           |  |  |  |       yang:counter64
           |  |  |  +--ro fragmentation-permitted-not-performed?
           |  |  |          yang:counter64
-          |  |  +--ro ttl-expired?     yang:counter64
-          |  |  +--ro no-route?        yang:counter64
-          |  |  +--ro invalid-sid?     yang:counter64
-          |  |  +--ro invalid-label?   yang:counter64
+          |  |  +--ro ttl-expired?                   yang:counter64
+          |  |  +--ro no-route?                      yang:counter64
+          |  |  +--ro neighbor-resolution-failure?   yang:counter64
+          |  |  +--ro invalid-sid?                   yang:counter64
+          |  |  +--ro invalid-label?                 yang:counter64
           |  |  +--ro tx
           |  |     +--ro packets?   yang:counter64
           |  +--ro internal
@@ -4089,10 +4175,11 @@ module: ietf-packet-discard-reporting
           |  |  |  |       yang:counter64
           |  |  |  +--ro fragmentation-permitted-not-performed?
           |  |  |          yang:counter64
-          |  |  +--ro ttl-expired?     yang:counter64
-          |  |  +--ro no-route?        yang:counter64
-          |  |  +--ro invalid-sid?     yang:counter64
-          |  |  +--ro invalid-label?   yang:counter64
+          |  |  +--ro ttl-expired?                   yang:counter64
+          |  |  +--ro no-route?                      yang:counter64
+          |  |  +--ro neighbor-resolution-failure?   yang:counter64
+          |  |  +--ro invalid-sid?                   yang:counter64
+          |  |  +--ro invalid-label?                 yang:counter64
           |  |  +--ro tx
           |  |     +--ro packets?   yang:counter64
           |  +--ro internal
