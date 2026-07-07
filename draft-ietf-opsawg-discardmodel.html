@@ -1684,8 +1684,6 @@ module: ietf-packet-discard-reporting-sx
 <div class="breakable sourcecode" id="section-4.3-2">
 <pre>&lt;CODE BEGINS&gt; file "ietf-packet-discard-reporting-common@2026-03-03.yang"
 
-=============== NOTE: '\' line wrapping per RFC 8792 ================
-
 module ietf-packet-discard-reporting-common {
   yang-version 1.1;
   namespace "urn:ietf:params:xml:ns:yang:"
@@ -2067,11 +2065,11 @@ module ietf-packet-discard-reporting-common {
 
          This counter applies when route selection identified a next
          hop, but forwarding could not complete because the required
-         neighbor or adjacency information was unavailable or \
-                                                            unusable.
-         Packets discarded because no route matched the destination
-         are reported under 'no-route'. Packets discarded due to
-         internal device faults are reported under 'internal'.";
+         neighbor or adjacency information was unavailable or
+         unusable. Packets discarded because no route matched
+         the destination are reported under 'no-route'. Packets
+         discarded due to internal device faults are reported
+         under 'internal'.";
       reference
         "RFC 826: An Ethernet Address Resolution Protocol -- or --
                   Converting Network Protocol Addresses to 48.bit
@@ -2091,8 +2089,8 @@ module ietf-packet-discard-reporting-common {
         "RFC 8402: Segment Routing Architecture
          RFC 8660: Segment Routing with the MPLS Data Plane
          RFC 8754: IPv6 Segment Routing Header (SRH)
-         RFC 8986: Segment Routing over IPv6 (SRv6) Network \
-                                                        Programming";
+         RFC 8986: Segment Routing over IPv6 (SRv6) Network
+                   Programming";
     }
     leaf invalid-label {
       type yang:counter64;
