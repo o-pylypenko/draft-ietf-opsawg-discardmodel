@@ -279,10 +279,10 @@ Table of Contents
 
    The classification defined in this document does not by itself
    determine whether a specific discard condition is intended or
-   unintended.  That determination is made by the operator, based on
-   local policy, configured intent, baseline behavior, duration,
-   affected scope, service context, and other operational evidence.  For
-   example, policy discards may be intended when they enforce a
+   unintended.  That determination is made by the operator, based on the
+   discard class together with local policy, configured intent, baseline
+   behavior, duration, affected scope, and other operational context.
+   For example, policy discards may be intended when they enforce a
    deliberate access-control rule, but unintended when a configuration
    error causes valid traffic to match that rule.  Similarly, TTL-
    expired packets may be expected at a low baseline rate due to
