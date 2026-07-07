@@ -337,7 +337,7 @@ discards/errors/:
    : These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
-:  These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an active queue management algorithm, such as Random Early Detection (RED) {{RED93}} or Controlled Delay (CoDel) {{?RFC8289}}.
+:  These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an Active Queue Management (AQM) algorithm, such as Random Early Detection (RED) {{RED93}} or Controlled Delay (CoDel) {{?RFC8289}}. `no-buffer` discard counter are listed per drop type ("aqm", "tail-drop", etc.).
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
