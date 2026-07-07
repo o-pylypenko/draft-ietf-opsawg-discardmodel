@@ -108,7 +108,7 @@ Existing metrics for reporting packet loss, such as ifInDiscards, ifOutDiscards,
 
 This document defines an Information Model (IM) and specifies a corresponding YANG Data Model (DM) for packet loss reporting to address the above issues. The IM provides precise classification of packet loss to enable accurate automated mitigation. The DM specifies a YANG implementation of this IM for network elements, while maintaining consistency through clear semantics.
 
-The scope of this document is limited to reporting packet loss at Layer 3 and frames discarded at Layer 2. This document considers only the signals that may trigger automated mitigation actions and not how the actions are defined or executed. Such considerations are deployment-specific.
+The scope of this document is limited to reporting Layer 3 packet discards, Layer 2 frame discards, and discards during MPLS label processing {{?RFC3031}}. The reported signals may trigger automated mitigation actions; the definition and execution of those actions are deployment-specific. Protocol actions associated with a discard (e.g., ICMP error message generation) are governed by the applicable protocol specifications and local policy.
 
 {{problem}} describes the problem space and requirements. {{infomodel}} defines the IM and its classification scheme. {{datamodel}} specifies the corresponding YANG data model and implementation requirements together with a set of usage examples, and the complete YANG module definition. Appendices {{<wheredropped}} and {{<mapping}} provide additional context and implementation guidance.
 
@@ -198,7 +198,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |  ...
     |  |  +-- l3
     |  |  |  ...
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     ...
     |  +-- discards* [direction]
     |     +-- direction    identityref
@@ -219,6 +219,7 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
+    |        +-- qos!
     |           ...
     +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
@@ -227,7 +228,7 @@ module: ietf-packet-discard-reporting-sx
     |  |  |  ...
     |  |  +-- l3
     |  |  |  ...
-    |  |  +-- qos
+    |  |  +-- qos!
     |  |     ...
     |  +-- discards
     |     +-- l2
@@ -247,6 +248,7 @@ module: ietf-packet-discard-reporting-sx
     |     |  +-- l3
     |     |     ...
     |     +-- no-buffer
+    |        +-- qos!
     |           ...
     +-- device {pdr-common:device-stats}?
        +-- traffic
@@ -254,7 +256,7 @@ module: ietf-packet-discard-reporting-sx
        |  |  ...
        |  +-- l3
        |  |  ...
-       |  +-- qos
+       |  +-- qos!
        |     ...
        +-- discards
           +-- l2
@@ -274,6 +276,7 @@ module: ietf-packet-discard-reporting-sx
           |  +-- l3
           |     ...
           +-- no-buffer
+             +-- qos!
                 ...
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
@@ -356,7 +359,7 @@ The "ietf-packet-discard-reporting-sx" module uses the "sx" structure defined in
 
 This DM implements the IM defined in {{infomodel}} for the interface, device, and control-plane components. It is a device model per {{Section 2.1 of ?RFC8969}}. Specifically, it is a device-local (network element) operational state model: counters are scoped to a single device (interfaces and control plane).
 
-The IM defines the abstract classification tree using YANG data structure extensions {{?RFC8791}}. This DM imports that module and reuses the same groupings and hierarchy of components, directions, layers, and discard classes, attaching them via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and are not instantiated in this DM.
+The IM defines the abstract classification tree using YANG data structure extensions {{?RFC8791}}. The reusable groupings are defined in the "ietf-packet-discard-reporting-common" module ({{common-module}}). This DM imports that common module and reuses the same hierarchy of components, directions, layers, and discard classes, attaching the groupings via augment statements to existing YANG modules for routing, interfaces, and logical network elements. The flow component is defined only in the IM for use by flow-oriented data models and is not instantiated in this DM.
 
 ## Structure {#datamodel-structure}
 
@@ -367,16 +370,16 @@ module: ietf-packet-discard-reporting
 
   augment /rt:routing/rt:control-plane-protocols
             /rt:control-plane-protocol:
-    +--ro traffic-discard-stats {control-plane-stats}?
+    +--ro traffic-discard-stats {pdr-common:control-plane-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic* [direction]
        |  ...
        +--ro discards* [direction]
           ...
   augment /if:interfaces/if:interface/if:statistics:
-    +--ro traffic-discard-stats {interface-stats}?
-       +--ro discard-order-capability*   identityref?
-       +--ro traffic* [direction] {interface-stats}?
+    +--ro traffic-discard-stats {pdr-common:interface-stats}?
+       +--ro discard-order-capability*   identityref
+       +--ro traffic* [direction]
        |  +--ro direction    identityref
        |  +--ro l2
        |  |  ...
@@ -385,7 +388,7 @@ module: ietf-packet-discard-reporting
        |  +--ro qos!
        |     +--ro class* [id]
        |        ...
-       +--ro discards* [direction]?
+       +--ro discards* [direction]
           +--ro direction    identityref
           +--ro l2
           |  ...
@@ -408,7 +411,7 @@ module: ietf-packet-discard-reporting
                 +--ro class* [id]
                    ...
   augment /lne:logical-network-elements/lne:logical-network-element:
-    +--ro traffic-discard-stats {device-stats}?
+    +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
        +--ro traffic
        |  +--ro l2
@@ -484,8 +487,8 @@ An IPv4 packet discarded on egress due to no buffers would increment:
 
 - `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets`
 - `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes`
-- `interface/discards[direction="egress"]/no-buffer/class[id="0"]/packets`
-- `interface/discards[direction="egress"]/no-buffer/class[id="0"]/bytes`
+- `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/packets`
+- `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/bytes`
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
@@ -585,7 +588,7 @@ There are no particularly sensitive writable data nodes.
 
 Some of the readable data nodes in this YANG module may be considered sensitive or vulnerable in some network environments.  It is thus important to control read access (e.g., via get, get-config, or notification) to these data nodes. Specifically, the following subtrees and data nodes have particular sensitivities/vulnerabilities:
 
-rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:
+rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic-discard-stats, and lne:logical-network-element/pdr:traffic-discard-stats:
 : Access to these data nodes would reveal information about the attacks to which an element is subject, misconfigurations, etc.
 : Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.
 
@@ -676,38 +679,42 @@ See {{mapping}} for examples of how these discard signals map to root causes and
 
 The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  Tables {{<ex-table}} and {{<ex-table2}} give example discard signal-to-mitigation action mappings based on the features described in {{problem}}.
 
+Tables {{<ex-table}} and {{<ex-table2}} are a single logical example split into two physical tables for readability. Rows with the same Case value correspond. Table {{<ex-table}} shows the observed discard signal, inferred cause, rate, duration, and example operator determination of whether the discard is unintended. Table {{<ex-table2}} shows the corresponding example mitigation action.
 
-| DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
-|:--------------|:--------------|:-------------|:----------------:|
-| ingress/discards/errors/l2/rx | Upstream device or link error | >Baseline| O(1min) |
-| ingress/discards/errors/l3/ttl-expired | Tracert | <=Baseline | |
-| ingress/discards/errors/l3/ttl-expired | Convergence | >Baseline | O(1s) |
-| ingress/discards/errors/l3/ttl-expired | Routing loop | >Baseline | O(1min) |
-| .\*/policy/.\* | Policy | | |
-| ingress/discards/errors/l3/no-route | Convergence | >Baseline | O(1s) |
-| ingress/discards/errors/l3/no-route | Config error | >Baseline | O(1min) |
-| ingress/discards/errors/l3/no-route | Invalid destination | >Baseline | O(10min) |
-| ingress/discards/errors/internal | Device errors | >Baseline | O(1min) |
-| egress/discards/no-buffer | Congestion | <=Baseline | |
-| egress/discards/no-buffer | Congestion | >Baseline | O(1min) |
+The Unintended? column is illustrative. It is not a normative property of the discard class. In practice, the same discard class can be intended or unintended depending on the operator's policy, expected baseline for that class, persistence of the signal, affected scope, and other operational context.
+
+
+| CASE | DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
+|:-----|:--------------|:--------------|:-------------|:----------------:|
+| E1 | ingress/discards/errors/l2/rx | Upstream device or link error | >Baseline| O(1min) |
+| T1 | ingress/discards/errors/l3/ttl-expired | Tracert | <=Baseline | |
+| T2 | ingress/discards/errors/l3/ttl-expired | Convergence | >Baseline | O(1s) |
+| T3 | ingress/discards/errors/l3/ttl-expired | Routing loop | >Baseline | O(1min) |
+| P1 | .\*/policy/.\* | Policy | | |
+| R1 | ingress/discards/errors/l3/no-route | Convergence | >Baseline | O(1s) |
+| R2 | ingress/discards/errors/l3/no-route | Config error | >Baseline | O(1min) |
+| R3 | ingress/discards/errors/l3/no-route | Invalid destination | >Baseline | O(10min) |
+| I1 | ingress/discards/errors/internal | Device errors | >Baseline | O(1min) |
+| B1 | egress/discards/no-buffer | Congestion | <=Baseline | |
+| B2 | egress/discards/no-buffer | Congestion | >Baseline | O(1min) |
 {: #ex-table title="Example Signal-Cause-Mitigation Mapping (1)"}
 
-| DISCARD-CLASS |  Unintended? | Possible actions |
-|:--------------|:-----------:|:-----------------|
-| ingress/discards/errors/l2/rx | Y | Take upstream link or device out-of-service |
-| ingress/discards/errors/l3/ttl-expired | N | no action |
-| ingress/discards/errors/l3/ttl-expired | Y | No action |
-| ingress/discards/errors/l3/ttl-expired | Y | Roll-back change |
-| .\*/policy/.\* |  N | No action |
-| ingress/discards/errors/l3/no-route | Y | No action |
-| ingress/discards/errors/l3/no-route | Y | Roll-back change |
-| ingress/discards/errors/l3/no-route | N | Escalate to operator |
-| ingress/discards/errors/internal | Y | Take device out-of-service |
-| egress/discards/no-buffer | N | No action |
-| egress/discards/no-buffer | Y | Bring capacity back into service or move traffic |
+| CASE | DISCARD-CLASS |  Unintended? | Possible actions |
+|:-----|:--------------|:-----------:|:-----------------|
+| E1 | ingress/discards/errors/l2/rx | Y | Take upstream link or device out-of-service |
+| T1 | ingress/discards/errors/l3/ttl-expired | N | no action |
+| T2 | ingress/discards/errors/l3/ttl-expired | Y | No action |
+| T3 | ingress/discards/errors/l3/ttl-expired | Y | Roll-back change |
+| P1 |.\*/policy/.\* |  N | No action |
+| R1 | ingress/discards/errors/l3/no-route | Y | No action |
+| R2 | ingress/discards/errors/l3/no-route | Y | Roll-back change |
+| R3 | ingress/discards/errors/l3/no-route | N | Escalate to operator |
+| I1 | ingress/discards/errors/internal | Y | Take device out-of-service |
+| B1 | egress/discards/no-buffer | N | No action |
+| B2 | egress/discards/no-buffer | Y | Bring capacity back into service or move traffic |
 {: #ex-table2 title="Example Signal-Cause-Mitigation Mapping (2)"}
 
-The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent.
+The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent. A rate less than or equal to baseline generally represents expected behaviour for that operator and network context. A rate greater than baseline indicates an anomaly candidate.
 
 # Full Information Model Tree {#sec-im-full-tree}
 

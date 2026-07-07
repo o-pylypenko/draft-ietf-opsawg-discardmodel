@@ -17,13 +17,13 @@ module ietf-packet-discard-reporting-common {
      WG List:  OPSAWG <mailto:opsawg@ietf.org>
 
      Editor:   John Evans
-               <mailto:jevanamz@amazon.co.uk>
+               <mailto:john@nopacketleftbehind.net>
 
      Editor:   Oleksandr Pylypenko
                <mailto:opylypenko@nvidia.com>
 
      Author:   Jeffrey Haas
-               <mailto:jhaas@juniper.net>
+               <mailto:jeffrey.haas@hpe.com>
 
      Author:   Aviran Kadosh
                <mailto:akadosh@cisco.com>
@@ -103,7 +103,7 @@ module ietf-packet-discard-reporting-common {
     base direction;
     description
       "Reports statistics for the sent packets to
-       to the network.";
+       the network.";
   }
 
   identity address-family {
@@ -289,13 +289,17 @@ module ietf-packet-discard-reporting-common {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid Media Access Control (MAC) address.";
+           an invalid Media Access Control (MAC) address.
+           Applies to Ethernet or Ethernet-derived 
+           encapsulations where MAC addresses are present.";
       }
       leaf invalid-vlan {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid VLAN tag.";
+           an invalid VLAN tag. Applies to Ethernet or 
+           Ethernet-derived encapsulations where VLAN tags
+           are present.";
       }
       leaf invalid-frame {
         type yang:counter64;
@@ -323,8 +327,15 @@ module ietf-packet-discard-reporting-common {
       leaf checksum-error {
         type yang:counter64;
         description
-          "The number of received packets discarded due
-           to a checksum error.";
+          "Reports IPv4 packets discarded because validation of the
+           IPv4 header checksum failed.
+
+           This counter is applicable only to IPv4 packets. IPv6 does
+           not include an internet-layer header checksum, so IPv6
+           packets are not reported under this counter. solely due to
+           IPv6 header processing. Upper-layer checksum failures,
+           including TCP, UDP, or ICMPv6 checksum failures, are not
+           reported by this L3 header checksum counter.";
       }
       leaf mtu-exceeded {
         type yang:counter64;
