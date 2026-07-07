@@ -623,7 +623,7 @@ module ietf-packet-discard-reporting-common {
       list type {
         key "drop-type";
         description
-          "No buffer counters.";
+          "Congestion-related discard counters.";
         leaf drop-type {
           type identityref {
             base no-buffer-type;
