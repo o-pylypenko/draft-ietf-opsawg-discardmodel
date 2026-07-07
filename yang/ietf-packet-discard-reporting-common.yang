@@ -145,7 +145,7 @@ module ietf-packet-discard-reporting-common {
   identity aqm {
     base no-buffer-type;
     description
-      "Indicates discard due to an Active Queue Management (AQM)
+      "Indicates a discard due to an Active Queue Management (AQM)
        algorithm.";
   }
 
