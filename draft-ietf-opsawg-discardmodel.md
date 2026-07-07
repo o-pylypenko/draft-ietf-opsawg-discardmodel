@@ -334,7 +334,7 @@ An example of possible signal-to-mitigation action mapping is provided in {{mapp
 
 ## "ietf-packet-discard-reporting-common" YANG Module {#common-module}
 
-The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}. The module references {{?RFC3031}}, {{?RFC8402}}, {{?RFC8660}}, and {{?RFC8754}}.
+The "ietf-packet-discard-reporting-common" module imports "ietf-yang-types" defined in {{!RFC9911}}. The module references {{!RFC3031}}, {{!RFC8402}}, {{!RFC8660}}, {{!RFC8754}}, and {{?RFC8986}}.
 
 ~~~~~~~~~~
 <CODE BEGINS> file "ietf-packet-discard-reporting-common@2026-03-03.yang"
