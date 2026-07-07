@@ -289,13 +289,17 @@ module ietf-packet-discard-reporting-common {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid Media Access Control (MAC) address.";
+           an invalid Media Access Control (MAC) address.
+           Applies to Ethernet or Ethernet-derived 
+           encapsulations where MAC addresses are present.";
       }
       leaf invalid-vlan {
         type yang:counter64;
         description
           "The number of received frames discarded due to
-           an invalid VLAN tag.";
+           an invalid VLAN tag. Applies to Ethernet or 
+           Ethernet-derived encapsulations where VLAN tags
+           are present.";
       }
       leaf invalid-frame {
         type yang:counter64;
@@ -323,8 +327,15 @@ module ietf-packet-discard-reporting-common {
       leaf checksum-error {
         type yang:counter64;
         description
-          "The number of received packets discarded due
-           to a checksum error.";
+          "Reports IPv4 packets discarded because validation of the
+           IPv4 header checksum failed.
+
+           This counter is applicable only to IPv4 packets. IPv6 does
+           not include an internet-layer header checksum, so IPv6
+           packets are not reported under this counter. solely due to
+           IPv6 header processing. Upper-layer checksum failures,
+           including TCP, UDP, or ICMPv6 checksum failures, are not
+           reported by this L3 header checksum counter.";
       }
       leaf invalid-packet {
         type yang:counter64;
@@ -383,6 +394,32 @@ module ietf-packet-discard-reporting-common {
         "The number of received packets discarded due to not
          matching a valid route.";
     }
+    leaf neighbor-resolution-failure {
+      type yang:counter64;
+      description
+        "Reports packets discarded because the forwarding engine
+         could not resolve or use the link-layer adjacency required
+         to forward the packet to the selected next hop.
+
+         This includes packets dropped because ARP resolution for an
+         IPv4 next hop failed, Neighbor Discovery resolution for an
+         IPv6 next hop failed, or the resolved neighbor entry was
+         unusable according to local neighbor state.
+
+         This counter applies when route selection identified a next
+         hop, but forwarding could not complete because the required
+         neighbor or adjacency information was unavailable or
+         unusable. Packets discarded because no route matched
+         the destination are reported under 'no-route'. Packets
+         discarded due to internal device faults are reported
+         under 'internal'.";
+      reference
+        "RFC 826: An Ethernet Address Resolution Protocol -- or --
+                  Converting Network Protocol Addresses to 48.bit
+                  Ethernet Address for Transmission on Ethernet
+                  Hardware
+         RFC 4861: Neighbor Discovery for IP version 6 (IPv6)";
+    }
     leaf invalid-sid {
       type yang:counter64;
       description
@@ -391,12 +428,20 @@ module ietf-packet-discard-reporting-common {
          identifier (SID).
          For SR-MPLS, invalid SIDs have to be accounted
          under invalid-label.";
+      reference
+        "RFC 8402: Segment Routing Architecture
+         RFC 8660: Segment Routing with the MPLS Data Plane
+         RFC 8754: IPv6 Segment Routing Header (SRH)
+         RFC 8986: Segment Routing over IPv6 (SRv6) Network
+                   Programming";
     }
     leaf invalid-label {
       type yang:counter64;
       description
         "The number of received packets discarded due to an
          invalid MPLS label.";
+      reference
+        "RFC 3031: Multiprotocol Label Switching Architecture";
     }
   }
 

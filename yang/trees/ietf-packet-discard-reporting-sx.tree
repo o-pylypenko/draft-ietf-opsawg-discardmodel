@@ -79,10 +79,11 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  |  |       yang:counter64
     |     |  |  |  +-- fragmentation-permitted-not-performed?
     |     |  |  |          yang:counter64
-    |     |  |  +-- ttl-expired?     yang:counter64
-    |     |  |  +-- no-route?        yang:counter64
-    |     |  |  +-- invalid-sid?     yang:counter64
-    |     |  |  +-- invalid-label?   yang:counter64
+    |     |  |  +-- ttl-expired?                   yang:counter64
+    |     |  |  +-- no-route?                      yang:counter64
+    |     |  |  +-- neighbor-resolution-failure?   yang:counter64
+    |     |  |  +-- invalid-sid?                   yang:counter64
+    |     |  |  +-- invalid-label?                 yang:counter64
     |     |  |  +-- tx
     |     |  |     +-- packets?   yang:counter64
     |     |  +-- internal
@@ -177,10 +178,11 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  |  |       yang:counter64
     |     |  |  |  +-- fragmentation-permitted-not-performed?
     |     |  |  |          yang:counter64
-    |     |  |  +-- ttl-expired?     yang:counter64
-    |     |  |  +-- no-route?        yang:counter64
-    |     |  |  +-- invalid-sid?     yang:counter64
-    |     |  |  +-- invalid-label?   yang:counter64
+    |     |  |  +-- ttl-expired?                   yang:counter64
+    |     |  |  +-- no-route?                      yang:counter64
+    |     |  |  +-- neighbor-resolution-failure?   yang:counter64
+    |     |  |  +-- invalid-sid?                   yang:counter64
+    |     |  |  +-- invalid-label?                 yang:counter64
     |     |  |  +-- tx
     |     |  |     +-- packets?   yang:counter64
     |     |  +-- internal
@@ -274,10 +276,11 @@ module: ietf-packet-discard-reporting-sx
           |  |  |  |       yang:counter64
           |  |  |  +-- fragmentation-permitted-not-performed?
           |  |  |          yang:counter64
-          |  |  +-- ttl-expired?     yang:counter64
-          |  |  +-- no-route?        yang:counter64
-          |  |  +-- invalid-sid?     yang:counter64
-          |  |  +-- invalid-label?   yang:counter64
+          |  |  +-- ttl-expired?                   yang:counter64
+          |  |  +-- no-route?                      yang:counter64
+          |  |  +-- neighbor-resolution-failure?   yang:counter64
+          |  |  +-- invalid-sid?                   yang:counter64
+          |  |  +-- invalid-label?                 yang:counter64
           |  |  +-- tx
           |  |     +-- packets?   yang:counter64
           |  +-- internal
