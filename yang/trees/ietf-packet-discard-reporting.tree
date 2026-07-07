@@ -76,10 +76,11 @@ module: ietf-packet-discard-reporting
           |  |  |  +--ro checksum-error?   yang:counter64
           |  |  |  +--ro mtu-exceeded?     yang:counter64
           |  |  |  +--ro invalid-packet?   yang:counter64
-          |  |  +--ro ttl-expired?     yang:counter64
-          |  |  +--ro no-route?        yang:counter64
-          |  |  +--ro invalid-sid?     yang:counter64
-          |  |  +--ro invalid-label?   yang:counter64
+          |  |  +--ro ttl-expired?                   yang:counter64
+          |  |  +--ro no-route?                      yang:counter64
+          |  |  +--ro neighbor-resolution-failure?   yang:counter64
+          |  |  +--ro invalid-sid?                   yang:counter64
+          |  |  +--ro invalid-label?                 yang:counter64
           |  |  +--ro tx
           |  |     +--ro packets?   yang:counter64
           |  +--ro internal
@@ -169,10 +170,11 @@ module: ietf-packet-discard-reporting
           |  |  |  +--ro checksum-error?   yang:counter64
           |  |  |  +--ro mtu-exceeded?     yang:counter64
           |  |  |  +--ro invalid-packet?   yang:counter64
-          |  |  +--ro ttl-expired?     yang:counter64
-          |  |  +--ro no-route?        yang:counter64
-          |  |  +--ro invalid-sid?     yang:counter64
-          |  |  +--ro invalid-label?   yang:counter64
+          |  |  +--ro ttl-expired?                   yang:counter64
+          |  |  +--ro no-route?                      yang:counter64
+          |  |  +--ro neighbor-resolution-failure?   yang:counter64
+          |  |  +--ro invalid-sid?                   yang:counter64
+          |  |  +--ro invalid-label?                 yang:counter64
           |  |  +--ro tx
           |  |     +--ro packets?   yang:counter64
           |  +--ro internal
