@@ -324,6 +324,7 @@ discards/errors/:
 
    * discards/errors/l3/rx/:
    : These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors and invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).
+   : These discards are based upon the outer header of packets. 
 
    * discards/errors/l3/mtu-exceeded/:
    : These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet ({{Sections 3.1 and 3.2 of !RFC791}}, {{Sections 4.5 and 5 of !RFC8200}}).
