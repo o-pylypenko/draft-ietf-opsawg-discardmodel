@@ -1586,8 +1586,9 @@ Table of Contents
         single direction or context, i.e., ingress or egress or device.
         This is to avoid double counting.
 
-   5.   A frame accounted for at Layer 2 MUST NOT be accounted for at
-        Layer 3 and vice versa.  This is to avoid double counting.
+   5.   A frame discard accounted for at Layer 2 MUST NOT be accounted
+        for at Layer 3 and vice versa.  This is to avoid double
+        counting.
 
    6.   The aggregate Layer 2 and Layer 3 traffic and discard classes
         SHOULD account for all underlying frames or packets received,
