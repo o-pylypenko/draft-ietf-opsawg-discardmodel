@@ -1608,9 +1608,10 @@ Table of Contents
         one discard-type entry.
 
    9.   When there are multiple reasons for discarding a packet, the
-        ordering of discard class reporting MUST be defined.  Typically,
-        this can be exposed by an implementation by means of discard-
-        order-capability.
+        ordering of discard class reporting MUST be unambigousily
+        characterized and exposed by an implementation.  Typically, this
+        can be exposed by an implementation by means of discard-order-
+        capability.
 
    10.  class[id] represents the QoS class assigned to a packet by the
         forwarding implementation using Diffserv [RFC2475], IEEE 802.1Q
