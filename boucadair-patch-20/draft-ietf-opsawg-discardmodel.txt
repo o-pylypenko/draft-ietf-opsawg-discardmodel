@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 8 January 2027                                           Nvidia
+Expires: 9 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             7 July 2026
+                                                             8 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2027.
+   This Internet-Draft will expire on 9 January 2027.
 
 Copyright Notice
 
@@ -369,7 +369,10 @@ Table of Contents
        |     |     ...
        |     +-- no-buffer
        |        +-- qos!
-       |           ...
+       |           +-- class* [id]
+       |              |  ...
+       |              +-- discard-type* [type]
+       |                 ...
        +-- flow* [direction] {pdr-common:flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
@@ -398,7 +401,10 @@ Table of Contents
        |     |     ...
        |     +-- no-buffer
        |        +-- qos!
-       |           ...
+       |           +-- class* [id]
+       |              |  ...
+       |              +-- discard-type* [type]
+       |                 ...
        +-- device {pdr-common:device-stats}?
           +-- traffic
           |  +-- l2
@@ -426,7 +432,10 @@ Table of Contents
              |     ...
              +-- no-buffer
                 +-- qos!
-                   ...
+                   +-- class* [id]
+                      |  ...
+                      +-- discard-type* [type]
+                         ...
 
                     Figure 1: Abstract IM Tree Structure
 
@@ -536,11 +545,12 @@ Table of Contents
             discards not explicitly assigned to other classes are also
             accounted for here.
 
-   discards/no-buffer/:  These are discards due to buffer exhaustion
-      (that is congestion related discards).  These can be tail-drop
-      discards or due to an active queue management algorithm, such as
-      Random Early Detection (RED) [RED93] or Controlled Delay (CoDel)
-      [RFC8289].
+   discards/no-buffer/:  These are congestion-related discards,
+      including tail-drop discards due to buffer exhaustion and discards
+      due to an Active Queue Management (AQM) algorithm, such as Random
+      Early Detection (RED) [RED93] or Controlled Delay (CoDel)
+      [RFC8289].  Implementations MAY additionally report per-type
+      counters in the discard-type list.
 
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
@@ -692,6 +702,24 @@ Table of Contents
          "Identity for IPv6 address family.";
      }
 
+     identity no-buffer-type {
+       description
+         "Defines a type for congestion-related discards.";
+     }
+
+     identity aqm {
+       base no-buffer-type;
+       description
+         "Indicates a discard due to an Active Queue Management (AQM)
+          algorithm.";
+     }
+
+     identity tail-drop {
+       base no-buffer-type;
+       description
+         "Indicates a discard due to tail drop.";
+     }
+
      /*
       * Groupings
       */
@@ -802,6 +830,30 @@ Table of Contents
          description
            "Per-class QoS traffic counters.";
          uses class-list;
+       }
+     }
+
+     grouping no-buffer-qos {
+       description
+         "QoS discard counters.";
+       uses qos {
+         augment "qos/class" {
+           description
+             "Adds per-type discard counters to each QoS class.";
+           list discard-type {
+             key "type";
+             description
+               "Per-type discard counters.";
+             leaf type {
+               type identityref {
+                 base no-buffer-type;
+               }
+               description
+                 "Specifies the discard type.";
+             }
+             uses basic-packets-bytes;
+           }
+         }
        }
      }
 
@@ -1156,8 +1208,8 @@ Table of Contents
        }
        container no-buffer {
          description
-           "Discard counters due to buffer unavailability.";
-         uses qos;
+           "Congestion-related discard counters.";
+         uses no-buffer-qos;
        }
      }
 
@@ -1453,7 +1505,9 @@ Table of Contents
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
-                      ...
+                      |  ...
+                      +--ro discard-type* [type]
+                         ...
      augment /lne:logical-network-elements/lne:logical-network-element:
        +--ro traffic-discard-stats {pdr-common:device-stats}?
           +--ro discard-order-capability*   identityref
@@ -1485,7 +1539,9 @@ Table of Contents
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
-                      ...
+                      |  ...
+                      +--ro discard-type* [type]
+                         ...
 
                     Figure 2: Abstract DM Tree Structure
 
@@ -1536,31 +1592,37 @@ Table of Contents
 
    7.   The aggregate QoS traffic and no-buffer discard classes MUST
         account for all underlying packets received, transmitted, and
-        discarded across all other classes.
+        discarded across all other classes.  All packets and bytes
+        reported under discard-type MUST also be included in the
+        enclosing class aggregate.
 
    8.   In addition to the Layer 2 and Layer 3 aggregate classes, an
         individual discarded packet MUST only account against a single
-        error, policy, or no-buffer discard subclass.
+        error, policy, or no-buffer discard subclass.  When per-type
+        counters are reported, the discard MUST be counted in at most
+        one discard-type entry.
 
    9.   When there are multiple reasons for discarding a packet, the
-        ordering of discard class reporting MUST be unambigousily
-        characterized and exposed by an implementation.  Typically, this
-        can be exposed by an implementation by means of discard-order-
-        capability.
+        ordering of discard class reporting MUST be defined.  Typically,
+        this can be exposed by an implementation by means of discard-
+        order-capability.
 
-   10.  If Diffserv [RFC2475] is not used, no-buffer discards MUST be
+   10.  class[id] represents the QoS class assigned to a packet by the
+        forwarding implementation using Diffserv [RFC2475], IEEE 802.1Q
+        PCP [IEEE802.1Q], MPLS TC [RFC5462], or another mechanism.  If
+        no QoS classification is used, no-buffer discards MUST be
         reported as class[id="0"], which represents the default class.
 
    11.  When traffic is mirrored, the discard metrics MUST account for
         the original traffic rather than the reflected traffic.
 
-   12.  No-buffer discards can be realized differently with different
-        memory architectures.  Whether a no-buffer discard is attributed
-        to ingress or egress can differ accordingly.  For successful
-        auto-mitigation, discards due to an egress interface congestion
-        MUST be reportable on egress, while discards due to device-level
-        congestion (e.g., due to exceeding the device forwarding rate)
-        MUST be reportable on ingress.
+   12.  Congestion-related discards can be realized differently with
+        different queueing and memory architectures.  Whether a no-
+        buffer discard is attributed to ingress or egress can differ
+        accordingly.  For successful auto-mitigation, discards due to an
+        egress interface congestion MUST be reportable on egress, while
+        discards due to device-level congestion (e.g., due to exceeding
+        the device forwarding rate) MUST be reportable on ingress.
 
    13.  When the ingress and egress headers differ (for example, at a
         tunnel endpoint), the discard class attribution MUST relate to
@@ -1594,7 +1656,8 @@ Table of Contents
 
    *  interface/discards[direction="ingress"]/errors/l3/ttl-expired
 
-   An IPv4 packet discarded on egress due to no buffers would increment:
+   An IPv4 packet discarded on egress by tail drop due to buffer
+   exhaustion would increment:
 
    *  interface/discards[direction="egress"]/l3/address-family-
       stat[address-family="ipv4"]/unicast/packets
@@ -1607,6 +1670,14 @@ Table of Contents
 
    *  interface/discards[direction="egress"]/no-buffer/qos/
       class[id="0"]/bytes
+
+   If per-type counters are reported, the packet would also increment:
+
+   *  interface/discards[direction="egress"]/no-buffer/qos/
+      class[id="0"]/discard-type[type="tail-drop"]/packets
+
+   *  interface/discards[direction="egress"]/no-buffer/qos/
+      class[id="0"]/discard-type[type="tail-drop"]/bytes
 
    A multicast IPv6 packet dropped due to RPF check failure would
    increment:
@@ -1755,7 +1826,7 @@ Table of Contents
      identity no-buffer {
        base discard-class;
        description
-         "Indicates a discard due to buffer unavailability.";
+         "Indicates a congestion-related discard.";
      }
 
      /*
@@ -1855,6 +1926,8 @@ Table of Contents
    (captured in an SLA, typically) may be expected or intended.  The
    same discard class above a performance indicator, sustained for
    longer than expected, may be unintended and thus require action.
+   When available, discard-type counters allow operators to apply
+   different baselines to AQM and tail-drop discards.
 
    Policy discards may also require additional context.  Discards
    reported under policy (for example, ACL or policer discards) indicate
@@ -2079,6 +2152,12 @@ Table of Contents
 
 10.1.  Normative References
 
+   [IEEE802.1Q]
+              IEEE, "IEEE Standard for Local and Metropolitan Area
+              Networks--Bridges and Bridged Networks", IEEE Std 802.1Q-
+              2022, DOI 10.1109/IEEESTD.2022.10004498, 22 December 2022,
+              <https://doi.org/10.1109/IEEESTD.2022.10004498>.
+
    [RFC791]   Postel, J., "Internet Protocol", STD 5, RFC 791,
               DOI 10.17487/RFC791, September 1981,
               <https://www.rfc-editor.org/rfc/rfc791>.
@@ -2112,6 +2191,11 @@ Table of Contents
               Tschofenig, "Using IPsec to Secure IPv6-in-IPv4 Tunnels",
               RFC 4891, DOI 10.17487/RFC4891, May 2007,
               <https://www.rfc-editor.org/rfc/rfc4891>.
+
+   [RFC5462]  Andersson, L. and R. Asati, "Multiprotocol Label Switching
+              (MPLS) Label Stack Entry: "EXP" Field Renamed to "Traffic
+              Class" Field", RFC 5462, DOI 10.17487/RFC5462, February
+              2009, <https://www.rfc-editor.org/rfc/rfc5462>.
 
    [RFC6020]  Bjorklund, M., Ed., "YANG - A Data Modeling Language for
               the Network Configuration Protocol (NETCONF)", RFC 6020,
@@ -2352,15 +2436,15 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    is unintended.  Table 2 shows the corresponding example mitigation
    action.
 
-   The Unintended? column is illustrative.  It is not a normative
+   The "Unintended?" column is illustrative.  It is not a normative
    property of the discard class.  In practice, the same discard class
    can be intended or unintended depending on the operator's policy,
    expected baseline for that class, persistence of the signal, affected
    scope, and other operational context.
 
    +====+=============================+===========+==========+========+
-   |CASE| DISCARD-CLASS               |Discard    |DISCARD-  |DISCARD-|
-   |    |                             |cause      |RATE      |DURATION|
+   |Case| DISCARD-CLASS               |Discard    |DISCARD-  |DISCARD-|
+   |    |                             |Cause      |RATE      |DURATION|
    +====+=============================+===========+==========+========+
    |E1  | ingress/discards/errors/l2/ |Upstream   |>Baseline |O(1min) |
    |    | rx                          |device or  |          |        |
@@ -2393,47 +2477,66 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    +----+-----------------------------+-----------+----------+--------+
    |B2  | egress/discards/no-buffer   |Congestion |>Baseline |O(1min) |
    +----+-----------------------------+-----------+----------+--------+
+   |A1  | egress/discards/no-         |AQM drop   |<=SLA     |        |
+   |    | buffer/../discard-          |           |          |        |
+   |    | type[type="aqm"]/           |           |          |        |
+   +----+-----------------------------+-----------+----------+--------+
+   |A2  | egress/discards/no-         |AQM drop   |>SLA      |O(1min) |
+   |    | buffer/../discard-          |           |          |        |
+   |    | type[type="aqm"]/           |           |          |        |
+   +----+-----------------------------+-----------+----------+--------+
 
            Table 1: Example Signal-Cause-Mitigation Mapping (1)
 
-    +====+=============================+=============+================+
-    |CASE| DISCARD-CLASS               | Unintended? | Possible       |
-    |    |                             |             | actions        |
-    +====+=============================+=============+================+
-    |E1  | ingress/discards/errors/l2/ |      Y      | Take upstream  |
-    |    | rx                          |             | link or device |
-    |    |                             |             | out-of-service |
-    +----+-----------------------------+-------------+----------------+
-    |T1  | ingress/discards/errors/l3/ |      N      | no action      |
-    |    | ttl-expired                 |             |                |
-    +----+-----------------------------+-------------+----------------+
-    |T2  | ingress/discards/errors/l3/ |      Y      | No action      |
-    |    | ttl-expired                 |             |                |
-    +----+-----------------------------+-------------+----------------+
-    |T3  | ingress/discards/errors/l3/ |      Y      | Roll-back      |
-    |    | ttl-expired                 |             | change         |
-    +----+-----------------------------+-------------+----------------+
-    |P1  | .*/policy/.*                |      N      | No action      |
-    +----+-----------------------------+-------------+----------------+
-    |R1  | ingress/discards/errors/l3/ |      Y      | No action      |
-    |    | no-route                    |             |                |
-    +----+-----------------------------+-------------+----------------+
-    |R2  | ingress/discards/errors/l3/ |      Y      | Roll-back      |
-    |    | no-route                    |             | change         |
-    +----+-----------------------------+-------------+----------------+
-    |R3  | ingress/discards/errors/l3/ |      N      | Escalate to    |
-    |    | no-route                    |             | operator       |
-    +----+-----------------------------+-------------+----------------+
-    |I1  | ingress/discards/errors/    |      Y      | Take device    |
-    |    | internal                    |             | out-of-service |
-    +----+-----------------------------+-------------+----------------+
-    |B1  | egress/discards/no-buffer   |      N      | No action      |
-    +----+-----------------------------+-------------+----------------+
-    |B2  | egress/discards/no-buffer   |      Y      | Bring capacity |
-    |    |                             |             | back into      |
-    |    |                             |             | service or     |
-    |    |                             |             | move traffic   |
-    +----+-----------------------------+-------------+----------------+
+   +======+=============================+=============+================+
+   | CASE | DISCARD-CLASS               | Unintended? | Possible       |
+   |      |                             |             | actions        |
+   +======+=============================+=============+================+
+   | E1   | ingress/discards/errors/l2/ |      Y      | Take upstream  |
+   |      | rx                          |             | link or        |
+   |      |                             |             | device out-    |
+   |      |                             |             | of-service     |
+   +------+-----------------------------+-------------+----------------+
+   | T1   | ingress/discards/errors/l3/ |      N      | no action      |
+   |      | ttl-expired                 |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | T2   | ingress/discards/errors/l3/ |      Y      | No action      |
+   |      | ttl-expired                 |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | T3   | ingress/discards/errors/l3/ |      Y      | Roll-back      |
+   |      | ttl-expired                 |             | change         |
+   +------+-----------------------------+-------------+----------------+
+   | P1   | .*/policy/.*                |      N      | No action      |
+   +------+-----------------------------+-------------+----------------+
+   | R1   | ingress/discards/errors/l3/ |      Y      | No action      |
+   |      | no-route                    |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | R2   | ingress/discards/errors/l3/ |      Y      | Roll-back      |
+   |      | no-route                    |             | change         |
+   +------+-----------------------------+-------------+----------------+
+   | R3   | ingress/discards/errors/l3/ |      N      | Escalate to    |
+   |      | no-route                    |             | operator       |
+   +------+-----------------------------+-------------+----------------+
+   | I1   | ingress/discards/errors/    |      Y      | Take device    |
+   |      | internal                    |             | out-of-        |
+   |      |                             |             | service        |
+   +------+-----------------------------+-------------+----------------+
+   | B1   | egress/discards/no-buffer   |      N      | No action      |
+   +------+-----------------------------+-------------+----------------+
+   | B2   | egress/discards/no-buffer   |      Y      | Bring          |
+   |      |                             |             | capacity back  |
+   |      |                             |             | into service   |
+   |      |                             |             | or move        |
+   |      |                             |             | traffic        |
+   +------+-----------------------------+-------------+----------------+
+   | A1   | egress/discards/no-         |      N      | No action      |
+   |      | buffer/../discard-          |             |                |
+   |      | type[type="aqm"]/           |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | A2   | egress/discards/no-         |      Y      | Move traffic   |
+   |      | buffer/../discard-          |             | or add         |
+   |      | type[type="aqm"]/           |             | capacity       |
+   +------+-----------------------------+-------------+----------------+
 
             Table 2: Example Signal-Cause-Mitigation Mapping (2)
 
@@ -2558,9 +2661,13 @@ Appendix C.  Full Information Model Tree
        |     +-- no-buffer
        |        +-- qos!
        |           +-- class* [id]
-       |              +-- id         string
-       |              +-- packets?   yang:counter64
-       |              +-- bytes?     yang:counter64
+       |              +-- id              string
+       |              +-- packets?        yang:counter64
+       |              +-- bytes?          yang:counter64
+       |              +-- discard-type* [type]
+       |                 +-- type       identityref
+       |                 +-- packets?   yang:counter64
+       |                 +-- bytes?     yang:counter64
        +-- flow* [direction] {pdr-common:flow-reporting}?
        |  +-- direction    identityref
        |  +-- traffic
@@ -2657,9 +2764,13 @@ Appendix C.  Full Information Model Tree
        |     +-- no-buffer
        |        +-- qos!
        |           +-- class* [id]
-       |              +-- id         string
-       |              +-- packets?   yang:counter64
-       |              +-- bytes?     yang:counter64
+       |              +-- id              string
+       |              +-- packets?        yang:counter64
+       |              +-- bytes?          yang:counter64
+       |              +-- discard-type* [type]
+       |                 +-- type       identityref
+       |                 +-- packets?   yang:counter64
+       |                 +-- bytes?     yang:counter64
        +-- device {pdr-common:device-stats}?
           +-- traffic
           |  +-- l2
@@ -2755,9 +2866,13 @@ Appendix C.  Full Information Model Tree
              +-- no-buffer
                 +-- qos!
                    +-- class* [id]
-                      +-- id         string
-                      +-- packets?   yang:counter64
-                      +-- bytes?     yang:counter64
+                      +-- id              string
+                      +-- packets?        yang:counter64
+                      +-- bytes?          yang:counter64
+                      +-- discard-type* [type]
+                         +-- type       identityref
+                         +-- packets?   yang:counter64
+                         +-- bytes?     yang:counter64
 
 Appendix D.  Full Data Model Tree
 
@@ -2878,9 +2993,13 @@ Appendix D.  Full Data Model Tree
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
-                      +--ro id         string
-                      +--ro packets?   yang:counter64
-                      +--ro bytes?     yang:counter64
+                      +--ro id              string
+                      +--ro packets?        yang:counter64
+                      +--ro bytes?          yang:counter64
+                      +--ro discard-type* [type]
+                         +--ro type       identityref
+                         +--ro packets?   yang:counter64
+                         +--ro bytes?     yang:counter64
      augment /lne:logical-network-elements/lne:logical-network-element:
        +--ro traffic-discard-stats {pdr-common:device-stats}?
           +--ro discard-order-capability*   identityref
@@ -2978,9 +3097,13 @@ Appendix D.  Full Data Model Tree
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
-                      +--ro id         string
-                      +--ro packets?   yang:counter64
-                      +--ro bytes?     yang:counter64
+                      +--ro id              string
+                      +--ro packets?        yang:counter64
+                      +--ro bytes?          yang:counter64
+                      +--ro discard-type* [type]
+                         +--ro type       identityref
+                         +--ro packets?   yang:counter64
+                         +--ro bytes?     yang:counter64
 
 Acknowledgements
 
