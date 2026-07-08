@@ -584,7 +584,8 @@ module ietf-packet-discard-reporting-common {
     leaf acl {
       type yang:counter64;
       description
-        "The number of packets discarded due to Layer 3 ACLs.";
+        "The number of packets discarded due to Layer 3
+         (and higher layers) ACLs.";
     }
     container policer {
       description
