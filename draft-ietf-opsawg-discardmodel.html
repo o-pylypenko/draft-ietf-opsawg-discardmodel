@@ -2085,10 +2085,7 @@ module ietf-packet-discard-reporting-common {
 
            This counter is applicable only to IPv4 packets. IPv6 does
            not include an internet-layer header checksum, so IPv6
-           packets are not reported under this counter. solely due to
-           IPv6 header processing. Upper-layer checksum failures,
-           including TCP, UDP, or ICMPv6 checksum failures, are not
-           reported by this L3 header checksum counter.";
+           packets are not reported under this counter.";
       }
       leaf invalid-packet {
         type yang:counter64;
