@@ -499,7 +499,7 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
 12. Congestion-related discards can be realized differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
 13. When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution MUST relate to the outer header at the point of discard.
-14. Traffic to the device control plane (to-CPU) has its own class. Traffic from the device control plane (from-CPU) is accounted for by origin, independent of the forwarding mechanism (e.g., any egress policer it traverses), and MUST also be accounted for in the same way as other egress traffic.
+14. Traffic to the device control plane (to-CPU) has its own class. However, traffic from the device control plane (from-CPU) MUST be accounted for in the same way as other egress traffic.
 
 ## Usage Examples {#examples}
 
