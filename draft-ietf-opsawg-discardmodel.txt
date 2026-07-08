@@ -520,6 +520,8 @@ Table of Contents
             (i.e., incorrect version, incorrect header length, invalid
             options, and other malformed packet conditions).
 
+            These discards are based upon the outer header of packets.
+
       *  discards/errors/l3/mtu-exceeded/:  These discards occur when
             the packet size exceeds the applicable MTU.  The subclasses
             distinguish whether the forwarding node was permitted to
