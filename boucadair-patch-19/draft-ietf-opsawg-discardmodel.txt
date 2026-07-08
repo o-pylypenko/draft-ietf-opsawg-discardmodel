@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 8 January 2027                                           Nvidia
+Expires: 9 January 2027                                           Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             7 July 2026
+                                                             8 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2027.
+   This Internet-Draft will expire on 9 January 2027.
 
 Copyright Notice
 
@@ -2436,15 +2436,15 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    is unintended.  Table 2 shows the corresponding example mitigation
    action.
 
-   The Unintended? column is illustrative.  It is not a normative
+   The "Unintended?" column is illustrative.  It is not a normative
    property of the discard class.  In practice, the same discard class
    can be intended or unintended depending on the operator's policy,
    expected baseline for that class, persistence of the signal, affected
    scope, and other operational context.
 
    +====+=============================+===========+==========+========+
-   |CASE| DISCARD-CLASS               |Discard    |DISCARD-  |DISCARD-|
-   |    |                             |cause      |RATE      |DURATION|
+   |Case| DISCARD-CLASS               |Discard    |DISCARD-  |DISCARD-|
+   |    |                             |Cause      |RATE      |DURATION|
    +====+=============================+===========+==========+========+
    |E1  | ingress/discards/errors/l2/ |Upstream   |>Baseline |O(1min) |
    |    | rx                          |device or  |          |        |
@@ -2477,47 +2477,66 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    +----+-----------------------------+-----------+----------+--------+
    |B2  | egress/discards/no-buffer   |Congestion |>Baseline |O(1min) |
    +----+-----------------------------+-----------+----------+--------+
+   |A1  | egress/discards/no-         |AQM drop   |<=SLA     |        |
+   |    | buffer/../discard-          |           |          |        |
+   |    | type[type="aqm"]/           |           |          |        |
+   +----+-----------------------------+-----------+----------+--------+
+   |A2  | egress/discards/no-         |AQM drop   |>SLA      |O(1min) |
+   |    | buffer/../discard-          |           |          |        |
+   |    | type[type="aqm"]/           |           |          |        |
+   +----+-----------------------------+-----------+----------+--------+
 
            Table 1: Example Signal-Cause-Mitigation Mapping (1)
 
-    +====+=============================+=============+================+
-    |CASE| DISCARD-CLASS               | Unintended? | Possible       |
-    |    |                             |             | actions        |
-    +====+=============================+=============+================+
-    |E1  | ingress/discards/errors/l2/ |      Y      | Take upstream  |
-    |    | rx                          |             | link or device |
-    |    |                             |             | out-of-service |
-    +----+-----------------------------+-------------+----------------+
-    |T1  | ingress/discards/errors/l3/ |      N      | no action      |
-    |    | ttl-expired                 |             |                |
-    +----+-----------------------------+-------------+----------------+
-    |T2  | ingress/discards/errors/l3/ |      Y      | No action      |
-    |    | ttl-expired                 |             |                |
-    +----+-----------------------------+-------------+----------------+
-    |T3  | ingress/discards/errors/l3/ |      Y      | Roll-back      |
-    |    | ttl-expired                 |             | change         |
-    +----+-----------------------------+-------------+----------------+
-    |P1  | .*/policy/.*                |      N      | No action      |
-    +----+-----------------------------+-------------+----------------+
-    |R1  | ingress/discards/errors/l3/ |      Y      | No action      |
-    |    | no-route                    |             |                |
-    +----+-----------------------------+-------------+----------------+
-    |R2  | ingress/discards/errors/l3/ |      Y      | Roll-back      |
-    |    | no-route                    |             | change         |
-    +----+-----------------------------+-------------+----------------+
-    |R3  | ingress/discards/errors/l3/ |      N      | Escalate to    |
-    |    | no-route                    |             | operator       |
-    +----+-----------------------------+-------------+----------------+
-    |I1  | ingress/discards/errors/    |      Y      | Take device    |
-    |    | internal                    |             | out-of-service |
-    +----+-----------------------------+-------------+----------------+
-    |B1  | egress/discards/no-buffer   |      N      | No action      |
-    +----+-----------------------------+-------------+----------------+
-    |B2  | egress/discards/no-buffer   |      Y      | Bring capacity |
-    |    |                             |             | back into      |
-    |    |                             |             | service or     |
-    |    |                             |             | move traffic   |
-    +----+-----------------------------+-------------+----------------+
+   +======+=============================+=============+================+
+   | CASE | DISCARD-CLASS               | Unintended? | Possible       |
+   |      |                             |             | actions        |
+   +======+=============================+=============+================+
+   | E1   | ingress/discards/errors/l2/ |      Y      | Take upstream  |
+   |      | rx                          |             | link or        |
+   |      |                             |             | device out-    |
+   |      |                             |             | of-service     |
+   +------+-----------------------------+-------------+----------------+
+   | T1   | ingress/discards/errors/l3/ |      N      | no action      |
+   |      | ttl-expired                 |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | T2   | ingress/discards/errors/l3/ |      Y      | No action      |
+   |      | ttl-expired                 |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | T3   | ingress/discards/errors/l3/ |      Y      | Roll-back      |
+   |      | ttl-expired                 |             | change         |
+   +------+-----------------------------+-------------+----------------+
+   | P1   | .*/policy/.*                |      N      | No action      |
+   +------+-----------------------------+-------------+----------------+
+   | R1   | ingress/discards/errors/l3/ |      Y      | No action      |
+   |      | no-route                    |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | R2   | ingress/discards/errors/l3/ |      Y      | Roll-back      |
+   |      | no-route                    |             | change         |
+   +------+-----------------------------+-------------+----------------+
+   | R3   | ingress/discards/errors/l3/ |      N      | Escalate to    |
+   |      | no-route                    |             | operator       |
+   +------+-----------------------------+-------------+----------------+
+   | I1   | ingress/discards/errors/    |      Y      | Take device    |
+   |      | internal                    |             | out-of-        |
+   |      |                             |             | service        |
+   +------+-----------------------------+-------------+----------------+
+   | B1   | egress/discards/no-buffer   |      N      | No action      |
+   +------+-----------------------------+-------------+----------------+
+   | B2   | egress/discards/no-buffer   |      Y      | Bring          |
+   |      |                             |             | capacity back  |
+   |      |                             |             | into service   |
+   |      |                             |             | or move        |
+   |      |                             |             | traffic        |
+   +------+-----------------------------+-------------+----------------+
+   | A1   | egress/discards/no-         |      N      | No action      |
+   |      | buffer/../discard-          |             |                |
+   |      | type[type="aqm"]/           |             |                |
+   +------+-----------------------------+-------------+----------------+
+   | A2   | egress/discards/no-         |      Y      | Move traffic   |
+   |      | buffer/../discard-          |             | or add         |
+   |      | type[type="aqm"]/           |             | capacity       |
+   +------+-----------------------------+-------------+----------------+
 
             Table 2: Example Signal-Cause-Mitigation Mapping (2)
 
