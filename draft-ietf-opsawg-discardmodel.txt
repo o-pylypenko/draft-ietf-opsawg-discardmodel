@@ -1633,10 +1633,8 @@ Table of Contents
         the outer header at the point of discard.
 
    14.  Traffic to the device control plane (to-CPU) has its own class.
-        Traffic from the device control plane (from-CPU) is accounted
-        for by origin, independent of the forwarding mechanism (e.g.,
-        any egress policer it traverses), and MUST also be accounted for
-        in the same way as other egress traffic.
+        However, traffic from the device control plane (from-CPU) MUST
+        be accounted for in the same way as other egress traffic.
 
 5.3.  Usage Examples
 

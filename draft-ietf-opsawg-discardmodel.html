@@ -2747,7 +2747,7 @@ module: ietf-packet-discard-reporting
             <p id="section-5.2-3.13.1">When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution <span class="bcp14">MUST</span> relate to the outer header at the point of discard.<a href="#section-5.2-3.13.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-5.2-3.14">
-            <p id="section-5.2-3.14.1">Traffic to the device control plane (to-CPU) has its own class. Traffic from the device control plane (from-CPU) is accounted for by origin, independent of the forwarding mechanism (e.g., any egress policer it traverses), and <span class="bcp14">MUST</span> also be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.14.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-3.14.1">Traffic to the device control plane (to-CPU) has its own class. However, traffic from the device control plane (from-CPU) <span class="bcp14">MUST</span> be accounted for in the same way as other egress traffic.<a href="#section-5.2-3.14.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 </section>
