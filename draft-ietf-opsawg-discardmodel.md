@@ -84,6 +84,15 @@ contributor:
     email: nchachmo@cisco.com
 
 normative:
+     IEEE802.1Q:
+          title: "IEEE Standard for Local and Metropolitan Area Networks--Bridges and Bridged Networks"
+          author:
+               org: IEEE
+          seriesinfo:
+               IEEE: "Std 802.1Q-2022"
+               DOI: "10.1109/IEEESTD.2022.10004498"
+          target: https://doi.org/10.1109/IEEESTD.2022.10004498
+          date: 2022-12-22
 
 informative:
      RED93:
@@ -224,7 +233,10 @@ module: ietf-packet-discard-reporting-sx
     |     |     ...
     |     +-- no-buffer
     |        +-- qos!
-    |           ...
+    |           +-- class* [id]
+    |              |  ...
+    |              +-- discard-type* [type]
+    |                 ...
     +-- flow* [direction] {pdr-common:flow-reporting}?
     |  +-- direction    identityref
     |  +-- traffic
@@ -253,7 +265,10 @@ module: ietf-packet-discard-reporting-sx
     |     |     ...
     |     +-- no-buffer
     |        +-- qos!
-    |           ...
+    |           +-- class* [id]
+    |              |  ...
+    |              +-- discard-type* [type]
+    |                 ...
     +-- device {pdr-common:device-stats}?
        +-- traffic
        |  +-- l2
@@ -281,7 +296,10 @@ module: ietf-packet-discard-reporting-sx
           |     ...
           +-- no-buffer
              +-- qos!
-                ...
+                +-- class* [id]
+                   |  ...
+                   +-- discard-type* [type]
+                      ...
 ~~~~~~~~~~
 {: #tree-im-abstract title="Abstract IM Tree Structure"}
 
@@ -341,7 +359,7 @@ discards/errors/:
    : These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.
 
 discards/no-buffer/:
-:  These are discards due to buffer exhaustion (that is congestion related discards). These can be tail-drop discards or due to an active queue management algorithm, such as Random Early Detection (RED) {{RED93}} or Controlled Delay (CoDel) {{?RFC8289}}.
+: These are congestion-related discards, including tail-drop discards due to buffer exhaustion and discards due to an Active Queue Management (AQM) algorithm, such as Random Early Detection (RED) {{RED93}} or Controlled Delay (CoDel) {{?RFC8289}}. Implementations MAY additionally report per-type counters in the `discard-type` list.
 
 An example of possible signal-to-mitigation action mapping is provided in {{mapping}}.
 
@@ -419,7 +437,9 @@ module: ietf-packet-discard-reporting
           +--ro no-buffer
              +--ro qos!
                 +--ro class* [id]
-                   ...
+                   |  ...
+                   +--ro discard-type* [type]
+                      ...
   augment /lne:logical-network-elements/lne:logical-network-element:
     +--ro traffic-discard-stats {pdr-common:device-stats}?
        +--ro discard-order-capability*   identityref
@@ -451,7 +471,9 @@ module: ietf-packet-discard-reporting
           +--ro no-buffer
              +--ro qos!
                 +--ro class* [id]
-                   ...
+                   |  ...
+                   +--ro discard-type* [type]
+                      ...
 ~~~~~~~~~~
 {: #tree-dm-abstract title="Abstract DM Tree Structure"}
 
@@ -469,12 +491,12 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 4. An individual packet MUST only be accounted for by either the Layer 3 traffic class or the Layer 3 discard classes within a single direction or context, i.e., ingress or egress or device.  This is to avoid double counting.
 5. A frame accounted for at Layer 2 MUST NOT be accounted for at Layer 3 and vice versa. This is to avoid double counting.
 6. The aggregate Layer 2 and Layer 3 traffic and discard classes SHOULD account for all underlying frames or packets received, transmitted, and discarded across all other classes. There might be exceptions when distinct discontinuity times are observed for more granular discards.
-7. The aggregate QoS traffic and no-buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes.
-8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.
+7. The aggregate QoS traffic and no-buffer discard classes MUST account for all underlying packets received, transmitted, and discarded across all other classes. All packets and bytes reported under `discard-type` MUST also be included in the enclosing `class` aggregate.
+8. In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass. When per-type counters are reported, the discard MUST be counted in at most one discard-type entry.
 9. When there are multiple reasons for discarding a packet, the ordering of discard class reporting MUST be defined. Typically, this can be exposed by an implementation by means of `discard-order-capability`.
-10. If Diffserv {{!RFC2475}} is not used, no-buffer discards MUST be reported as `class[id="0"]`, which represents the default class.
+10. `class[id]` represents the QoS class assigned to a packet by the forwarding implementation using Diffserv {{!RFC2475}}, IEEE 802.1Q PCP {{IEEE802.1Q}}, MPLS TC {{!RFC5462}}, or another mechanism. If no QoS classification is used, no-buffer discards MUST be reported as `class[id="0"]`, which represents the default class.
 11. When traffic is mirrored, the discard metrics MUST account for the original traffic rather than the reflected traffic.
-12. No-buffer discards can be realized differently with different memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
+12. Congestion-related discards can be realized differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to an egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
 13. When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution MUST relate to the outer header at the point of discard.
 14. Traffic to the device control plane (to-CPU) has its own class. Traffic from the device control plane (from-CPU) is accounted for by origin, independent of the forwarding mechanism (e.g., any egress policer it traverses), and MUST also be accounted for in the same way as other egress traffic.
 
@@ -493,12 +515,17 @@ A received unicast IPv6 packet discarded due to Hop Limit expiry would increment
 
 - `interface/discards[direction="ingress"]/errors/l3/ttl-expired`
 
-An IPv4 packet discarded on egress due to no buffers would increment:
+An IPv4 packet discarded on egress by tail drop due to buffer exhaustion would increment:
 
 - `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/packets`
 - `interface/discards[direction="egress"]/l3/address-family-stat[address-family="ipv4"]/unicast/bytes`
 - `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/packets`
 - `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/bytes`
+
+If per-type counters are reported, the packet would also increment:
+
+- `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/discard-type[type="tail-drop"]/packets`
+- `interface/discards[direction="egress"]/no-buffer/qos/class[id="0"]/discard-type[type="tail-drop"]/bytes`
 
 A multicast IPv6 packet dropped due to RPF check failure would increment:
 
@@ -532,7 +559,7 @@ Device discard counters do not by themselves establish operator intent. The clas
 
 Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.
 
-Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator (captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action.
+Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator (captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action. When available, `discard-type` counters allow operators to apply different baselines to AQM and tail-drop discards.
 
 Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify configuration enforced in underlying nodes and continousily ensure that configuration is consistent with the intended service to deliver.
 
@@ -697,10 +724,10 @@ The effectiveness of automated mitigation depends on correctly mapping discard s
 
 Tables {{<ex-table}} and {{<ex-table2}} are a single logical example split into two physical tables for readability. Rows with the same Case value correspond. Table {{<ex-table}} shows the observed discard signal, inferred cause, rate, duration, and example operator determination of whether the discard is unintended. Table {{<ex-table2}} shows the corresponding example mitigation action.
 
-The Unintended? column is illustrative. It is not a normative property of the discard class. In practice, the same discard class can be intended or unintended depending on the operator's policy, expected baseline for that class, persistence of the signal, affected scope, and other operational context.
+The "Unintended?" column is illustrative. It is not a normative property of the discard class. In practice, the same discard class can be intended or unintended depending on the operator's policy, expected baseline for that class, persistence of the signal, affected scope, and other operational context.
 
 
-| CASE | DISCARD-CLASS | Discard cause | DISCARD-RATE | DISCARD-DURATION |
+| Case | DISCARD-CLASS | Discard Cause | DISCARD-RATE | DISCARD-DURATION |
 |:-----|:--------------|:--------------|:-------------|:----------------:|
 | E1 | ingress/discards/errors/l2/rx | Upstream device or link error | >Baseline| O(1min) |
 | T1 | ingress/discards/errors/l3/ttl-expired | Tracert | <=Baseline | |
@@ -713,6 +740,8 @@ The Unintended? column is illustrative. It is not a normative property of the di
 | I1 | ingress/discards/errors/internal | Device errors | >Baseline | O(1min) |
 | B1 | egress/discards/no-buffer | Congestion | <=Baseline | |
 | B2 | egress/discards/no-buffer | Congestion | >Baseline | O(1min) |
+| A1 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | AQM drop | <=SLA | |
+| A2 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | AQM drop | >SLA | O(1min) |
 {: #ex-table title="Example Signal-Cause-Mitigation Mapping (1)"}
 
 | CASE | DISCARD-CLASS |  Unintended? | Possible actions |
@@ -728,6 +757,8 @@ The Unintended? column is illustrative. It is not a normative property of the di
 | I1 | ingress/discards/errors/internal | Y | Take device out-of-service |
 | B1 | egress/discards/no-buffer | N | No action |
 | B2 | egress/discards/no-buffer | Y | Bring capacity back into service or move traffic |
+| A1 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | N | No action |
+| A2 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | Y | Move traffic or add capacity |
 {: #ex-table2 title="Example Signal-Cause-Mitigation Mapping (2)"}
 
 The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent. A rate less than or equal to baseline generally represents expected behaviour for that operator and network context. A rate greater than baseline indicates an anomaly candidate.
