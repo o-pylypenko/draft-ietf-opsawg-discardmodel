@@ -501,6 +501,8 @@ Table of Contents
       triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
       Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
       all such policy-driven discards are reported under this class.
+      Consistent with the requirements listed in Section 5.2, a policy
+      discard increments one and only one of the policy subtypes.
 
    discards/errors/:  These are unintended discards due to errors in
       processing packets or frames.  There are multiple sub-classes:
