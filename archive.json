@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-07T01:45:29.977360+00:00",
+  "timestamp": "2026-07-09T01:26:29.122830+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -47,6 +47,26 @@
       "name": "wontfix",
       "description": "This will not be worked on",
       "color": "ffffff"
+    },
+    {
+      "name": "No-Change-Needed",
+      "description": "",
+      "color": "81d109"
+    },
+    {
+      "name": "Email-Clarification",
+      "description": "",
+      "color": "3b7a15"
+    },
+    {
+      "name": "Issue-Duplicate",
+      "description": "",
+      "color": "2d6f72"
+    },
+    {
+      "name": "has-PR",
+      "description": "",
+      "color": "14e773"
     }
   ],
   "issues": [
@@ -151,15 +171,15 @@
       "id": "I_kwDOOCO1i88AAAABHx7Nkw",
       "title": "(Carlos Review) ICMP",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/79",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> 1. No ICMP generation/suppression signal tied to discard events.\n>    `ttl-expired`, `mtu-exceeded`, and `policy` discards are\n> exactly the\n>    conditions RFC 792/RFC 4443 require or permit an ICMP(v6) error\n> to\n>    accompany. The document is silent on whether the corresponding\n> ICMP\n>    was sent, suppressed by rate-limiting (RFC 4443 Section 2.4),\n> or\n>    never generated. This gap matters operationally: traceroute and\n> most\n>    path-diagnostic OAM depend on these ICMP messages reaching the\n>    source, so a discard counter and a traceroute trace of the same\n> event\n>    can silently diverge -- which incidentaly is exactly the\n>    automated-mitigation failure mode the document is meant to\n> prevent.\n>    RFC 6192 (which can be a useful Informational reference),\n> Section 4,\n>    documents this as existing operational practice: ICMP error\n>    generation, including TTL/Hop-limit-expired handling\n> specifically, is\n>    commonly rate-limited independently of the forwarding-plane\n> discard\n>    decision. RFC 4884 (ICMP multi-part messages) is existing\n> machinery\n>    for carrying diagnostic payload (interface, MPLS label stack, a\n> few\n>    others) in these same ICMP errors and is worth citing as\n>    complementary rather than reinventing it. Recommend either\n> modeling\n>    ICMP-sent/suppressed state explicitly, or stating the omission\n> is a\n>    deliberate scope decision with rationale.\n\n[Med] This was a deliberate design choice to focus only on key discard counters and not include a comprehensive list of events. Added a sentence to make this explicit.\n",
       "createdAt": "2026-07-06T07:50:10Z",
-      "updatedAt": "2026-07-06T07:50:10Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-07T06:02:34Z",
+      "closedAt": "2026-07-07T06:02:34Z",
       "comments": []
     },
     {
@@ -171,10 +191,13 @@
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "duplicate",
+        "No-Change-Needed"
+      ],
       "body": "> \n> 2. Address-family model does not cleanly represent MPLS/SRv6\n> traffic,\n>    only its discards. The `all` identity functions as a catch-all\n>    workaround rather than a proper address-family hierarchy.\n> Concretely:\n>    `invalid-label`/`invalid-sid` (explicitly, MPLS and SR\n> specific,\n>    respectivly) discard counters exist under `errors-l3-rx` with\n> no\n>    corresponding traffic-accounting home for MPLS/SRv6-forwarded\n>    packets. It would be nice to close structurally (a proper\n>    address-family/sub-identity hierarchy).\n",
       "createdAt": "2026-07-06T07:50:48Z",
-      "updatedAt": "2026-07-06T07:51:15Z",
+      "updatedAt": "2026-07-08T14:04:10Z",
       "closedAt": null,
       "comments": [
         {
@@ -191,15 +214,15 @@
       "id": "I_kwDOOCO1i88AAAABHx77KA",
       "title": "(Carlos Review) DF-driven discard",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/81",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> \n> 3. `mtu-exceeded` does not distinguish DF-driven discard (IPv4\n> DF=1,\n>    IPv6 always) from fragmentable IPv4 (DF=0). As written it is\n> one\n>    undifferentiated leaf; the PMTUD/PLPMTUD-relevant distinction\n> is\n>    lost, and an implementer/operator cannot tell from the model\n> whether\n>    the packet was ever eligible for fragmentation. I can foresee\n> many\n>    automations that could depend on and use this (now missing)\n>    information, both for RCA as well as for optimization.\n",
       "createdAt": "2026-07-06T07:51:51Z",
-      "updatedAt": "2026-07-06T18:57:09Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-07T07:09:01Z",
+      "closedAt": "2026-07-07T07:09:01Z",
       "comments": [
         {
           "author": "johnevansuk",
@@ -226,10 +249,12 @@
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "No-Change-Needed"
+      ],
       "body": "> 4. The discard taxonomy (Section 4.2) is not fully 1:1 with the\n> YANG\n>    identities. Internet-area instances of this gap:\n>    - GTSM (RFC 5082) hop-count-filtering drops are a control-plane\n>      security classification, not ordinary TTL exhaustion in\n> transit;\n>      RFC 5082 Section 5 explicitly leaves silent-drop-vs-ICMP\n> behavior\n>      unspecified for non-matching packets, and RFC 6192 Section 4\n> lists\n>      GTSM alongside ingress filtering as a control-plane anti-\n> spoofing\n>      classification method. These could be classified under\n>      control-plane `policy`, not `errors/ttl-expired`; the\n> document does\n>      not say so, and conflating the two counters makes both\n>      operationally ambiguous. I recommend makign this explicit and\n>      disambiguated.\n>    - No subtype for IPv6 extension-header processing discards (RFC\n> 8200\n>      Section 4, RFC 9098).\n>    - No subtype for reassembly failure (RFC 8200 Section 4.5, RFC\n> 8900).\n>    - TTL Expiry VCCV (RFC 5085 Section 5.1.3, CC Type 3) and MPLS\n> LSP\n>      Ping (RFC 8029) both deliberately set TTL to 1 to trigger OAM\n>      interception at a target hop. That's intentional, not an\n> error, and\n>      `errors/ttl-expired` today has no way to tell the two apart.\n> How to\n>      disambiguate policy-driven from genuine transit exxhaustion?\n> It's a\n>      similar issue as the OAM-triggered TTL expiry and GTSM above.\n",
       "createdAt": "2026-07-06T07:52:32Z",
-      "updatedAt": "2026-07-06T18:56:08Z",
+      "updatedAt": "2026-07-08T14:11:59Z",
       "closedAt": null,
       "comments": [
         {
@@ -245,6 +270,13 @@
           "body": "control-plane/discards/policy/gtsm\nReports control-plane packets discarded because they failed a Generalized TTL Security Mechanism (GTSM) check. These are packets addressed to a control-plane protocol session for which the received IP TTL or IPv6 Hop Limit did not satisfy the configured GTSM acceptance criteria. These packets are policy or security discards, not ordinary TTL-expired forwarding discards.\n\ninterface/discards/errors/l3/rx/ipv6-extension-header\nReports IPv6 packets discarded during IPv6 extension-header processing. This includes packets with malformed, unsupported, inconsistent, or otherwise invalid extension-header chains.\n\ninterface/discards/errors/l3/rx/reassembly\nReports packets discarded because fragment reassembly failed. This includes packets for which the required fragments were not received before the reassembly timeout, overlapping or inconsistent fragments were detected, or local reassembly resources were exhausted.\n\ninterface/discards/errors/l3/ttl-expired/oam/mpls-lsp-ping\nReports TTL-expired packets that the implementation identifies as MPLS LSP Ping OAM packets. These packets are separated from ordinary transit TTL exhaustion because TTL expiry was associated with OAM processing rather than unintended packet lifetime expiry.\n\ninterface/discards/errors/l3/ttl-expired/oam/mpls-lsp-traceroute\nReports TTL-expired packets that the implementation identifies as MPLS LSP traceroute OAM packets. This includes MPLS echo request packets using controlled TTL values to discover or test a specific hop along an LSP. These packets are separated from ordinary transit TTL exhaustion because TTL expiry is part of the OAM mechanism.\n\ninterface/discards/errors/l3/ttl-expired/oam/vccv\nReports TTL-expired packets that the implementation identifies as Virtual Circuit Connectivity Verification (VCCV) OAM packets using TTL expiry as the control-channel mechanism. This includes VCCV CC Type 3 packets where the PW label TTL is used to deliver the packet to the PE control or OAM function. These packets are separated from ordinary transit TTL exhaustion because TTL expiry is part of the OAM mechanism.",
           "createdAt": "2026-07-06T18:56:07Z",
           "updatedAt": "2026-07-06T18:56:07Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "**Authors agreement**:\n* no need to be exhaustive here (see deployemnt section)\n* these are intended discarded\n* the classification may depend on where this happens duing internal processing. \n* Candidates for further discussion and usefulness exploratrion as part of a future augmentation of the module\n",
+          "createdAt": "2026-07-08T14:11:53Z",
+          "updatedAt": "2026-07-08T14:11:53Z"
         }
       ]
     },
@@ -253,15 +285,15 @@
       "id": "I_kwDOOCO1i88AAAABHx8aJw",
       "title": "(Carlos Review) Nits",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/83",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> 9. Section 1 scope reads \"limited to reporting packet loss at\n> Layer 3\n>    and frames discarded at Layer 2\" but MPLS/SRv6 discard reasons\n> are\n>    present throughout; please tighten the scope statement.\n> 10. `invalid-vlan`/`invalid-mac` are Ethernet-specific; note\n>     applicability for non-Ethernet L2 technologies.\n",
       "createdAt": "2026-07-06T07:53:05Z",
-      "updatedAt": "2026-07-06T07:53:05Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-07T06:02:35Z",
+      "closedAt": "2026-07-07T06:02:35Z",
       "comments": []
     },
     {
@@ -269,15 +301,15 @@
       "id": "I_kwDOOCO1i88AAAABHx8jrg",
       "title": "(Carlos Review) Minor Comments",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/84",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "> 5. `checksum-error` (errors-l3-rx) does not note that IPv4 has a\n> header\n>    checksum and IPv6 does not (RFC 791 vs. RFC 8200) --\n> applicability by\n>    address family could be stated.\n> 6. `invalid-sid` lacks an informative reference to SRv6\n> architecture\n>    (RFC 8402 / RFC 8986).\n> 7. No neighbor-resolution-failure (ARP/ND unresolved) discard\n> subtype;\n>    doesn't map cleanly to `no-route` or `internal`.\n> 8. Foundational IP references (RFC 791, RFC 8200) are absent\n> despite\n>    heavy dependence on IP-layer semantics (TTL, header validity,\n> MTU).\n>    RFC 4884, RFC 5082, RFC 6192, RFC 5085, and RFC 8029 should\n> also be\n>    added as informative references if the comments are useful.\n",
       "createdAt": "2026-07-06T07:53:27Z",
-      "updatedAt": "2026-07-06T19:49:09Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-07T07:01:56Z",
+      "closedAt": "2026-07-07T07:01:56Z",
       "comments": [
         {
           "author": "boucadair",
@@ -301,6 +333,382 @@
           "updatedAt": "2026-07-06T19:49:09Z"
         }
       ]
+    },
+    {
+      "number": 92,
+      "id": "I_kwDOOCO1i88AAAABH60zwA",
+      "title": "(Gorry DISCUSS)  congestion category",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/92",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "No-Change-Needed",
+        "Email-Clarification"
+      ],
+      "body": "(1) To me it is unclear which category congestion-related loss of \u201cnormal\u201d\ntraffic (e.g. BE) should be assigned. I was thinking that traffic bursts are\nexpected to result in some chance of packet discard at a router and that this\nought to be encouraged to trigger control for the transport congestion control\nto yield effective utilisation. They are a necessary side effect of probing for\navailable capacity. I therefore suggest that some loss/AQM marks are not a\nresult of a configuration mistake, so to which category do these\ncongestion-related discards belong? Ought these to be a separate category\nexactly to reveal more insight into where losses occur.\n",
+      "createdAt": "2026-07-07T07:49:39Z",
+      "updatedAt": "2026-07-08T06:39:00Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Proposed response:\nFor \u201cnormal\u201d traffic (e.g. BE), discards would be assigned to interface/discards/no-buffer/qos/class(BE).  This may be classified as intended if it is below the operators SLA (e.g. loss rate per measurement interval), and unintended if above the operators SLA.  This example is in Appendix B.\n",
+          "createdAt": "2026-07-07T09:49:36Z",
+          "updatedAt": "2026-07-07T09:49:36Z"
+        }
+      ]
+    },
+    {
+      "number": 93,
+      "id": "I_kwDOOCO1i88AAAABH61PHA",
+      "title": "(Gorry DISCUSS)  AQM & loss: separate category?",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/93",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "(2) Then, AQM: It is good to encourage queues to configure AQM, but that also\nresults in discard that will be statistical as the endpoints seek to converge\non the available bottleneck capacity. These discards are not a configuration\nproblem, and seem entirely normal, at least expected during a busy hour,\nalthough it would still seem to be helpful for an operator to know capacity is\nbeing often reached (I suspect also they could also observable as the\nutilisation by packet counters). Are we sure we wish to count these as\nunintended, rather than in a separate category?\n",
+      "createdAt": "2026-07-07T07:50:43Z",
+      "updatedAt": "2026-07-08T13:15:20Z",
+      "closedAt": "2026-07-08T13:15:20Z",
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Suggested reply:\nWhere AQM drops packets, those should similarly be counted as congestive discards, not as errors; i.e. AQM discards would be assigned to interface/discards/no-buffer/qos/class(). This may be classified as intended if it is below the operators SLA, and unintended if above the operators SLA. This example is in Appendix B.\n\nWhere AQM marks packets, for example using ECN, those are not packet discards and are outside the discard counters, although they may be useful related signals for an operator.\n\nWe will add this case to the examples in Appendix B.\n\nA1  AQM drop, <= SLA, unintended = N, no action\nA2  AQM drop, > SLA, unintended = Y, move traffic or add capacity\n",
+          "createdAt": "2026-07-07T09:58:47Z",
+          "updatedAt": "2026-07-07T10:46:04Z"
+        }
+      ]
+    },
+    {
+      "number": 94,
+      "id": "I_kwDOOCO1i88AAAABH61sgg",
+      "title": "(Gorry DISCUSS)  Examples for class discards",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/94",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "\n(3) I agree that traffic policing/conditioning for QoS can result in discarded\nthat are not anticipated. e.g., this discard might be due to overload of a\nprovisioned EF service which the document correctly (in my reading) is an\nintended packet discard. This might be clearly stated as an example?  For the\nLower than Best Effort (LBE) PHB, such loss seems acceptable/normal under\nperiods of high utilisation, so are these also intended?, and should this also\nbe explicitly said as an example ?\n",
+      "createdAt": "2026-07-07T07:51:56Z",
+      "updatedAt": "2026-07-08T13:15:21Z",
+      "closedAt": "2026-07-08T13:15:21Z",
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Proposed response:\nIf a configured policer drops traffic because the traffic exceeds a provisioned service profile, that is a policy discard: \ni.e., interface/discards/policy/qos/class(BE).\n\nFor example, EF traffic above its provisioned profile may be intentionally discarded by the policer. That does not mean the event is operationally irrelevant, because sustained discard may still indicate overload of the provisioned service or a mismatch between offered load and contracted capacity.\n\nSimilarly, for LBE traffic, loss during periods of high utilisation may be acceptable or intended according, subject to the operators SLA.\n\nSo to clarify: the model reports the discard cause, while intended versus unintended is determined by the operator using the discard class together with SLA, PHB, baseline, duration, scope, and service context.",
+          "createdAt": "2026-07-07T10:17:51Z",
+          "updatedAt": "2026-07-07T10:17:51Z"
+        },
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "It makes sense to add:\n- an aqm sub-class\n- policers per qos class\n\nHence, this is making me wonder if we should change the qos hierarchy, e.g.:\n\nOption 1: closest to what we have\ninterface/discards/no-buffer/qos/class\ninterface/discards/aqm/qos/class\ninterface/discards/policy/qos/class/policer\n\nOption 2: I think this is cleaner\n|interface/discards/qos/class/no-buffer\n|interface/discards/qos/class/no-buffer/aqm\n|interface/discards/qos/class/policer\n\n",
+          "createdAt": "2026-07-07T10:27:18Z",
+          "updatedAt": "2026-07-07T10:27:18Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "For consistency with no-buffer description in the doc, a simple approach would be to keep the current structure but graft aqm specifics as follows:\n\nOLD:\n\n>     |     +-- no-buffer\n>     |        +-- qos!\n>     |           +-- class* [id]\n>     |              +-- id         string\n>     |              +-- packets?   yang:counter64\n>     |              +-- bytes?     yang:counter64\n\nNEW:\n\n>     |     +-- no-buffer\n>     |        +-- qos!\n>     |           +-- class* [id]\n>     |              +-- id         string\n>     |              +-- packets?   yang:counter64\n>     |              +-- bytes?     yang:counter64\n>     |              +-- aqm?\n>     |                      +-- packets?   yang:counter64\n>     |                      +-- bytes?     yang:counter64\n\nAlternatively:\n\n>     |     +-- no-buffer\n>     |        +-- type* [drop-type]    <================ add a new identifty for no-buffer types: aqm, tail-drop.\n>     |            +-- drop-type identityref\n>     |            +-- qos!\n>     |                 +-- class* [id]\n>     |                 +-- id         string\n>     |                 +-- packets?   yang:counter64\n>     |                 +-- bytes?     yang:counter64",
+          "createdAt": "2026-07-07T10:53:15Z",
+          "updatedAt": "2026-07-07T11:15:24Z"
+        },
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "I think latter (drop-type) is best.",
+          "createdAt": "2026-07-07T17:09:03Z",
+          "updatedAt": "2026-07-07T17:09:03Z"
+        }
+      ]
+    },
+    {
+      "number": 97,
+      "id": "I_kwDOOCO1i88AAAABH-mqCA",
+      "title": "(Eric DISCUSS) ambigous checksum description",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/97",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "duplicate"
+      ],
+      "body": "```\n      leaf checksum-error {\n        type yang:counter64;\n        description\n          \"The number of received packets discarded due\n           to a checksum error.\";\n      }\n```\nis ambiguous as there is no check-sum in the IPv6 header. Be specific and\nstates that it only applies to IPv4/MPLS.\n",
+      "createdAt": "2026-07-07T16:27:45Z",
+      "updatedAt": "2026-07-08T13:38:24Z",
+      "closedAt": "2026-07-08T13:38:24Z",
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Already addressed with Carlos review.",
+          "createdAt": "2026-07-07T16:28:18Z",
+          "updatedAt": "2026-07-07T16:28:18Z"
+        }
+      ]
+    },
+    {
+      "number": 98,
+      "id": "I_kwDOOCO1i88AAAABH-nFlA",
+      "title": "(Eric DISCUSS) MTU Exceeded",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/98",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "duplicate"
+      ],
+      "body": "```\n    leaf mtu-exceeded {\n        type yang:counter64;\n        description\n          \"The number of received packets discarded due to\n           MTU exceeded.\";\n      }\n```\nMTU exceeded does not happen when receiving a packet but when transmitting\n(i.e., after forwarding) a packet on (an)other interface(s). Same for\n\"no-route\". The problem is even more complex when the forwarded packet is a\nmulticast one where it can be forwarded on n egress interfaces but cannot for m\negress interfaces.\n",
+      "createdAt": "2026-07-07T16:28:46Z",
+      "updatedAt": "2026-07-08T13:38:08Z",
+      "closedAt": "2026-07-08T13:38:08Z",
+      "comments": [
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "I've moved mtu-exceeds from under /rx already in #91 ",
+          "createdAt": "2026-07-07T16:35:34Z",
+          "updatedAt": "2026-07-07T16:35:34Z"
+        }
+      ]
+    },
+    {
+      "number": 99,
+      "id": "I_kwDOOCO1i88AAAABH-nRUA",
+      "title": "(Eric DISCUSS) invalid-sid",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/99",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [
+        "johnevansuk"
+      ],
+      "labels": [
+        "No-Change-Needed"
+      ],
+      "body": "`leaf invalid-sid` it is unclear whether only routers whose address is the\ndestination address have to count or other routers in the path (which should\nnot check) also have to count.\n",
+      "createdAt": "2026-07-07T16:29:10Z",
+      "updatedAt": "2026-07-08T14:03:49Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Only SR-aware routers will increment this when encountered.",
+          "createdAt": "2026-07-08T14:03:36Z",
+          "updatedAt": "2026-07-08T14:03:36Z"
+        }
+      ]
+    },
+    {
+      "number": 100,
+      "id": "I_kwDOOCO1i88AAAABH-nboA",
+      "title": "(Eric DISCUSS) parity errors",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/100",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "No-Change-Needed",
+        "Email-Clarification"
+      ],
+      "body": "`\"The number of packets discarded due to parity errors.\"` does it mean that the\ndevice CPU experimented a parity error during the receiving/forwarding of the\npacket ? Please be specific.\n",
+      "createdAt": "2026-07-07T16:29:36Z",
+      "updatedAt": "2026-07-08T06:40:31Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "We can't: \"These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors\"\n\nThis is intentionally generic -- every platform is different.",
+          "createdAt": "2026-07-07T16:39:51Z",
+          "updatedAt": "2026-07-07T16:39:51Z"
+        }
+      ]
+    },
+    {
+      "number": 101,
+      "id": "I_kwDOOCO1i88AAAABH-noAQ",
+      "title": "(Eric DISCUSS) ddos",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/101",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "\nI wonder how to ``\"The number of packets discarded due to Distributed\nDenial-of-Service (DDoS) protection policies.\"` as many DDoS are mitigated by\nrouting to a null-route or layer-3 ACL, which are different counters. Should it\nbe counted twice ?\n",
+      "createdAt": "2026-07-07T16:30:05Z",
+      "updatedAt": "2026-07-08T13:19:43Z",
+      "closedAt": "2026-07-08T13:19:43Z",
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "We do already say: \n\n> In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet MUST only account against a single error, policy, or no-buffer discard subclass.\n\nAdded a bried clarification.\n\n",
+          "createdAt": "2026-07-08T07:04:01Z",
+          "updatedAt": "2026-07-08T07:04:01Z"
+        }
+      ]
+    },
+    {
+      "number": 102,
+      "id": "I_kwDOOCO1i88AAAABH-nxbQ",
+      "title": "(Eric DISCUSS) L4 ACL",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/102",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I am puzzled by the absence in the model and in the text about layer-4 ACL\nsupport as they are often used. There should be at least some text in the\nintroduction and abstract about this limitation.\n",
+      "createdAt": "2026-07-07T16:30:27Z",
+      "updatedAt": "2026-07-08T13:45:05Z",
+      "closedAt": "2026-07-08T13:45:05Z",
+      "comments": []
+    },
+    {
+      "number": 103,
+      "id": "I_kwDOOCO1i88AAAABH-n3zA",
+      "title": "(Eric DISCUSS) Encap",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/103",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "Probably due a misreading of mine, but I see no discard counters when\nen/decapsulating a tunneled packet ? And/or how it can be differentiated from a\nforwarding operation.\n",
+      "createdAt": "2026-07-07T16:30:42Z",
+      "updatedAt": "2026-07-08T13:21:06Z",
+      "closedAt": "2026-07-08T13:21:06Z",
+      "comments": [
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "I think we discussed it in the early stages and decided not to define dedicated encap/decap discard classes -- tunnel processing falls under forwarding, so when the required forwarding state is missing, semantically it is the same as no-route from an operator's perspective. Rule 13 also says that tunnel endpoint attribution relates to the outer header.\n\n\n@johnevansuk \n\n\n",
+          "createdAt": "2026-07-07T17:01:02Z",
+          "updatedAt": "2026-07-07T17:01:02Z"
+        }
+      ]
+    },
+    {
+      "number": 105,
+      "id": "I_kwDOOCO1i88AAAABH_5ZGw",
+      "title": "(Ketan DISCUSS) MPLS",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/105",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "No-Change-Needed"
+      ],
+      "body": "1) It is not clear to me whether this document considers MPLS traffic as L2 or\nL3 (it is somewhat L2.5). Some aspects of L3 apply like \"no route\" but for MPLS\nit should be \"no ILM\". Then again there is some coverage for SR-MPLS and\ninvalid-label under layer 3 so I am assuming it is considered under L3? In any\ncase, I was looking for some clarity and if discards for MPLS traffic would\nbenefit from their separate counters as opposed to putting them under L3. Under\nL3, there is also address-family that covers IPv4 and IPv6 but not MPLS. There\nare also cases where the MPLS label is disposed and inner IP packet processed\nso we get multiple processing stages (see related point on double counting\nfurther below). Same happens on the egress direction as well.\n",
+      "createdAt": "2026-07-07T19:49:51Z",
+      "updatedAt": "2026-07-08T14:02:33Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "see also #80 ",
+          "createdAt": "2026-07-08T12:52:01Z",
+          "updatedAt": "2026-07-08T12:52:01Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The discard is made bacause of a lockup op, hence the label discard case listed under l3 as well.",
+          "createdAt": "2026-07-08T14:02:22Z",
+          "updatedAt": "2026-07-08T14:02:22Z"
+        }
+      ]
+    },
+    {
+      "number": 106,
+      "id": "I_kwDOOCO1i88AAAABH_5sqA",
+      "title": "(Ketan DISCUSS) double counting",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/106",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "2) Regarding the following text:\n\n> 5. A frame accounted for at Layer 2 MUST NOT be accounted for at Layer 3 and\n> vice versa. This is to avoid double counting.\n\nI am assuming this is regarding discards. AFAIK packet reception would get\ncounted at both L2 and L3 layers? There are also some other similar\nrequirements for avoiding double counting which are not very clear to me. If we\ntake example of encapsulations (MPLS, IP-in-IP, etc.) then there can be\nmultiple layers of encapsulation that get disposed or imposed as the packet\ntraverses a router. How are they going to get accounted for in a manner that\navoids double counting?\n",
+      "createdAt": "2026-07-07T19:50:29Z",
+      "updatedAt": "2026-07-08T13:53:39Z",
+      "closedAt": "2026-07-08T13:53:39Z",
+      "comments": []
+    },
+    {
+      "number": 107,
+      "id": "I_kwDOOCO1i88AAAABH_5-Wg",
+      "title": "(Ketan DISCUSS)  order of discard",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/107",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "3) Regarding unclear normative MUST in the following text:\n\n9, When there are multiple reasons for discarding a packet, the ordering of\ndiscard class reporting MUST be defined. Typically, this can be exposed by an\nimplementation by means of discard-order-capability.\n\nI am not sure what \"MUST be defined\" means. It sounds vague for something that\nis a MUST.\n",
+      "createdAt": "2026-07-07T19:51:06Z",
+      "updatedAt": "2026-07-08T13:18:33Z",
+      "closedAt": "2026-07-08T13:18:33Z",
+      "comments": []
+    },
+    {
+      "number": 108,
+      "id": "I_kwDOOCO1i88AAAABH_6ObA",
+      "title": "(Ketan DISCUSS) L2 qos",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/108",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "has-PR"
+      ],
+      "body": "4) Regarding the following text, what about QoS based on IEEE 802.1Q PCP bits\nor based on MPLS EXP bits ? What about QoS marking based on other than DSCP?\n\n10. If Diffserv [RFC2475] is not used, no-buffer discards MUST be reported as\nclass[id=\"0\"], which represents the default class.\n",
+      "createdAt": "2026-07-07T19:51:39Z",
+      "updatedAt": "2026-07-08T13:15:21Z",
+      "closedAt": "2026-07-08T13:15:21Z",
+      "comments": []
+    },
+    {
+      "number": 109,
+      "id": "I_kwDOOCO1i88AAAABH_6mGQ",
+      "title": "(Ketan DISCUSS) origin clarification",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/109",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "5) Could you clarify what is meant by \"origin\" here?\n\n> 14. Traffic to the device control plane (to-CPU) has its own class. Traffic\n> from the device control plane (from-CPU) is accounted for by origin,\n> independent of the forwarding mechanism (e.g., any egress policer it\n> traverses), and MUST also be accounted for in the same way as other egress\n> traffic.\n> ",
+      "createdAt": "2026-07-07T19:52:26Z",
+      "updatedAt": "2026-07-08T13:30:20Z",
+      "closedAt": "2026-07-08T13:30:20Z",
+      "comments": []
     }
   ],
   "pulls": [
@@ -3490,24 +3898,26 @@
       "id": "PR_kwDOOCO1i87uPQHc",
       "title": "(Carlos Review) ICMP",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/78",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-07-06T07:49:09Z",
-      "updatedAt": "2026-07-06T19:50:47Z",
+      "updatedAt": "2026-07-07T06:02:33Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "boucadair-patch-16",
-      "headRefOid": "cce28782fcf8eadd2fb870205df61cd8e360ccba",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "d5ec7de6861d7ee5e8d205a00eee4fbaaf55d1f7",
+      "closedAt": "2026-07-07T06:02:33Z",
+      "mergedAt": "2026-07-07T06:02:33Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "6951f370d0d29640a7e0eb4f29f46c7bac6a5d62"
+      },
       "comments": [
         {
           "author": "boucadair",
@@ -3564,24 +3974,26 @@
       "id": "PR_kwDOOCO1i87uQvhC",
       "title": "Enhance descriptions and add references",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/85",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Updated descriptions for checksum-error and invalid-label leaves to include additional context and references.",
       "createdAt": "2026-07-06T08:56:32Z",
-      "updatedAt": "2026-07-06T20:24:40Z",
+      "updatedAt": "2026-07-07T07:01:56Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
-      "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
+      "baseRefOid": "6951f370d0d29640a7e0eb4f29f46c7bac6a5d62",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "boucadair-patch-17",
-      "headRefOid": "a60ee791a3a2ca0aedfc608036e57efaeb968553",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "bc82a2035101d4058ba8a0cdbc4658b9aca8f53a",
+      "closedAt": "2026-07-07T07:01:55Z",
+      "mergedAt": "2026-07-07T07:01:55Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "fa5e886cbe970351012fddd45abb6d77a1a4cfa3"
+      },
       "comments": [],
       "reviews": [
         {
@@ -3663,6 +4075,26 @@
               "updatedAt": "2026-07-06T20:24:19Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFLIkqA",
+          "commit": {
+            "abbreviatedOid": "a60ee79"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T06:11:48Z",
+          "updatedAt": "2026-07-07T06:11:48Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe \"ietf-packet-discard-reporting-common\" module imports \"ietf-yang-types\" defined in {{!RFC9911}}. The module references {{!RFC3031}}, {{!RFC8402}}, {{!RFC8660}}, {{!RFC8754}}, and {{?RFC8986}}.\n```",
+              "createdAt": "2026-07-07T06:11:48Z",
+              "updatedAt": "2026-07-07T06:11:48Z"
+            }
+          ]
         }
       ]
     },
@@ -3671,24 +4103,26 @@
       "id": "PR_kwDOOCO1i87ucNSe",
       "title": "Update draft-ietf-opsawg-discardmodel.md",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/86",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Address Gorry Fairhurst's comments:\r\nclarify that the draft does not define what is intended and what is not - that is down to the operator.  It provide the classification needed for the operator to make that determination",
       "createdAt": "2026-07-06T16:21:17Z",
-      "updatedAt": "2026-07-06T23:09:44Z",
+      "updatedAt": "2026-07-07T17:15:29Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-9",
-      "headRefOid": "d46181ba65f6909c7718da2c7d9adea9fe69e762",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "47193f46a9f8d31c83aa1d8fb5ab9db036aa25c0",
+      "closedAt": "2026-07-07T17:15:28Z",
+      "mergedAt": "2026-07-07T17:15:28Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "d0d98780f43fe5bdb19e257f8a0211eeb627d947"
+      },
       "comments": [],
       "reviews": [
         {
@@ -3836,6 +4270,26 @@
               "updatedAt": "2026-07-06T23:09:44Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFNVDng",
+          "commit": {
+            "abbreviatedOid": "c74ec77"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T11:18:16Z",
+          "updatedAt": "2026-07-07T11:18:16Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "ack - removed",
+              "createdAt": "2026-07-07T11:18:16Z",
+              "updatedAt": "2026-07-07T11:18:17Z"
+            }
+          ]
         }
       ]
     },
@@ -3893,7 +4347,7 @@
       "labels": [],
       "body": "Fixing emails in the yang modules, minor inconsistencies in manually copied trees, and tightening the language around DM/IM",
       "createdAt": "2026-07-06T19:00:08Z",
-      "updatedAt": "2026-07-06T19:15:20Z",
+      "updatedAt": "2026-07-07T17:18:31Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "84e215451d0d30b4cd9858577b12bba565642e44",
@@ -3928,24 +4382,26 @@
       "id": "PR_kwDOOCO1i87uhF2A",
       "title": "Johnevansuk patch 11",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/89",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Address Carlos comments:\r\n5. `checksum-error` (errors-l3-rx) does not note that IPv4 has a header checksum and IPv6 does not (RFC 791 vs. RFC 8200) -- applicability by address family could be stated.\r\n6. `invalid-sid` lacks an informative reference to SRv6 architecture (RFC 8402 / RFC 8986).\r\n\r\nChanges\r\n- Clarify that checksum-error reports IPv4 header checksum failures only.\r\n- State that checksum-error is not applicable to IPv6 internet-layer header processing.\r\n- Clarify that upper-layer checksum failures are outside this L3 checksum-error counter.\r\n- Clarify invalid-sid as SRv6 SID processing failure.",
       "createdAt": "2026-07-06T19:43:18Z",
-      "updatedAt": "2026-07-06T22:04:18Z",
+      "updatedAt": "2026-07-07T02:41:17Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "61a5b7383fc20d26929cd47417af0328f765116e",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-11",
       "headRefOid": "8e4dbbc50c6fab87f3691e946ea04b27057c2cc3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-07T02:41:17Z",
+      "mergedAt": "2026-07-07T02:41:17Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "7c7a0d0ecbeec13fed5ad0cf62d6c58cece8c120"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4015,24 +4471,26 @@
       "id": "PR_kwDOOCO1i87uj17S",
       "title": "Update ietf-packet-discard-reporting-common.yang",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/90",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Addressed Carlos comments:\r\n\r\n10. `invalid-vlan`/`invalid-mac` are Ethernet-specific; note applicability for non-Ethernet L2 technologies.",
       "createdAt": "2026-07-06T21:52:08Z",
-      "updatedAt": "2026-07-06T21:52:08Z",
+      "updatedAt": "2026-07-07T05:39:21Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "d4b09221ae3eda693734848f81635498715d6690",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-12",
       "headRefOid": "df02f9d7be5e4d07b850b9a06dee554920e5d3f1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-07T05:39:20Z",
+      "mergedAt": "2026-07-07T05:39:20Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "03448ed95b455170725569474a3e87470bbf83ad"
+      },
       "comments": [],
       "reviews": []
     },
@@ -4041,24 +4499,534 @@
       "id": "PR_kwDOOCO1i87ulFoF",
       "title": "Add MTU fragmentation discard subclasses",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/91",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "o-pylypenko",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Refs #81\n\nAdd an aggregate `packets` counter:\n- `fragmentation-not-permitted` for IPv4 packets with DF set and IPv6 packets; and\n- `fragmentation-permitted-not-performed` for fragmentable IPv4 packets that were discarded without being fragmented.\n",
       "createdAt": "2026-07-06T23:03:28Z",
-      "updatedAt": "2026-07-06T23:05:23Z",
+      "updatedAt": "2026-07-07T17:18:29Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
-      "baseRefOid": "d4b09221ae3eda693734848f81635498715d6690",
+      "baseRefOid": "d081c977fe14f134cb1fd1b3386f6e778e12291e",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "pr81-mtu-fragmentation",
-      "headRefOid": "912711b8a7b54ff5c373476b0ae738771af23380",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "d578f834ea29c2978209f4fed53f70de3ec4dd0b",
+      "closedAt": "2026-07-07T07:09:00Z",
+      "mergedAt": "2026-07-07T07:09:00Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "481c14102334037c3aa78f16530cd4e300c18967"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFLGCtw",
+          "commit": {
+            "abbreviatedOid": "912711b"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-07T06:07:20Z",
+          "updatedAt": "2026-07-07T06:09:30Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\n   : These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet ({{Sections 3.1 and 3.2 of !RFC791}}, {{Sections 4.5 and 5 of !RFC8200}}).\n```",
+              "createdAt": "2026-07-07T06:07:20Z",
+              "updatedAt": "2026-07-07T06:09:30Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 95,
+      "id": "PR_kwDOOCO1i87uzBYE",
+      "title": "thanks Carlos",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/95",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-07T11:28:49Z",
+      "updatedAt": "2026-07-07T17:10:26Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "481c14102334037c3aa78f16530cd4e300c18967",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-18",
+      "headRefOid": "f2012a5ae8f58a28bf1b61a47655eeb0ab455e47",
+      "closedAt": "2026-07-07T17:10:26Z",
+      "mergedAt": "2026-07-07T17:10:26Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "45c4c4e534a586cd820266785c605ab28ce23d1c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 96,
+      "id": "PR_kwDOOCO1i87uzUJ7",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/96",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "To address Gorry's feedback, have refactored:\r\n-Determining Intent for Policy section to\r\n-Determining Operator Intent\r\nBroadened the description and added other examples",
+      "createdAt": "2026-07-07T11:40:56Z",
+      "updatedAt": "2026-07-07T17:18:15Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d0d98780f43fe5bdb19e257f8a0211eeb627d947",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-13",
+      "headRefOid": "6029d4bfb2eb8b9a25a5a6120528b1998fc244a3",
+      "closedAt": "2026-07-07T17:18:10Z",
+      "mergedAt": "2026-07-07T17:18:10Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "3bed215a3bb71e68f656195105daadab61f5e4d4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFN4jpg",
+          "commit": {
+            "abbreviatedOid": "c2cd3e8"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-07T12:28:48Z",
+          "updatedAt": "2026-07-07T12:33:26Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "```suggestion\nSome discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.\n```",
+              "createdAt": "2026-07-07T12:28:48Z",
+              "updatedAt": "2026-07-07T12:33:26Z"
+            },
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\nCongestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator(captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action.\n```",
+              "createdAt": "2026-07-07T12:31:05Z",
+              "updatedAt": "2026-07-07T12:33:26Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\nPolicy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify configuration enforced in underlying nodes and continousily ensure that configuration is consistent with the intended service to deliver.\n```",
+              "createdAt": "2026-07-07T12:33:14Z",
+              "updatedAt": "2026-07-07T12:33:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFOBKqg",
+          "commit": {
+            "abbreviatedOid": "c2cd3e8"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T12:48:41Z",
+          "updatedAt": "2026-07-07T12:48:41Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Config validation is how we try and prevent this, but if it happens in operation (i.e. has slipped through config validation) then its correlated the unexpected increase in ACL discards with a change",
+              "createdAt": "2026-07-07T12:48:41Z",
+              "updatedAt": "2026-07-07T12:48:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFOBrvA",
+          "commit": {
+            "abbreviatedOid": "cb34e4c"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T12:49:47Z",
+          "updatedAt": "2026-07-07T12:49:47Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "\"class above the SLA\" is meaningless to me John. ",
+              "createdAt": "2026-07-07T12:49:47Z",
+              "updatedAt": "2026-07-07T12:49:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFOCxPQ",
+          "commit": {
+            "abbreviatedOid": "56f3628"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T12:51:32Z",
+          "updatedAt": "2026-07-07T12:51:32Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Yeah. The point is to remind what is already done here. Thiis an OPS considerations section after all :-)",
+              "createdAt": "2026-07-07T12:51:32Z",
+              "updatedAt": "2026-07-07T12:51:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFOH-gA",
+          "commit": {
+            "abbreviatedOid": "c2cd3e8"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T12:59:46Z",
+          "updatedAt": "2026-07-07T12:59:47Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "That's what I mean - operationally we deal with this by correlated the unexpected increase in ACL discards with a change\r\n\r\n\r\n",
+              "createdAt": "2026-07-07T12:59:46Z",
+              "updatedAt": "2026-07-07T12:59:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFPj-UQ",
+          "commit": {
+            "abbreviatedOid": "910c095"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-07T15:56:52Z",
+          "updatedAt": "2026-07-07T15:56:52Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 104,
+      "id": "PR_kwDOOCO1i87u76G3",
+      "title": "Add no buffer discard types",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/104",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-07T17:22:00Z",
+      "updatedAt": "2026-07-08T13:15:19Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "c944a23c37b138af20035deecf8aaa6fdbcdb6c1",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-19",
+      "headRefOid": "82b658e0ee71b85870f6a1b9130606147a07e75e",
+      "closedAt": "2026-07-08T13:15:19Z",
+      "mergedAt": "2026-07-08T13:15:18Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "a0fc6595ea99ba0a1eec02cd2936a973897c45e9"
+      },
+      "comments": [
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "I'm trying something different (moving type under class), please do not merge yet. ",
+          "createdAt": "2026-07-07T20:04:36Z",
+          "updatedAt": "2026-07-07T20:04:36Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFQzFog",
+          "commit": {
+            "abbreviatedOid": "ed0085c"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T19:04:29Z",
+          "updatedAt": "2026-07-07T19:04:29Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "```suggestion\n      \"Defines a type for congestion-related discards.\";\n```",
+              "createdAt": "2026-07-07T19:04:29Z",
+              "updatedAt": "2026-07-07T19:16:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFQ47HQ",
+          "commit": {
+            "abbreviatedOid": "ed0085c"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T19:17:21Z",
+          "updatedAt": "2026-07-07T19:17:21Z",
+          "comments": [
+            {
+              "originalPosition": 12,
+              "body": "```suggestion\n      \"Indicates a discard due to an Active Queue Management (AQM)\n```",
+              "createdAt": "2026-07-07T19:17:21Z",
+              "updatedAt": "2026-07-07T19:17:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFQ5FrQ",
+          "commit": {
+            "abbreviatedOid": "ed0085c"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T19:17:43Z",
+          "updatedAt": "2026-07-07T19:17:43Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\n      \"Indicates a discard due to tail drop.\";\n```",
+              "createdAt": "2026-07-07T19:17:43Z",
+              "updatedAt": "2026-07-07T19:17:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFQ5iBg",
+          "commit": {
+            "abbreviatedOid": "ed0085c"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T19:18:46Z",
+          "updatedAt": "2026-07-07T19:18:47Z",
+          "comments": [
+            {
+              "originalPosition": 33,
+              "body": "```suggestion\n          \"Congestion-related discard counters.\";\n```",
+              "createdAt": "2026-07-07T19:18:47Z",
+              "updatedAt": "2026-07-07T19:18:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFQ56NQ",
+          "commit": {
+            "abbreviatedOid": "ed0085c"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-07T19:19:39Z",
+          "updatedAt": "2026-07-07T19:19:39Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\n            \"Specifies the discard type.\";\n```",
+              "createdAt": "2026-07-07T19:19:39Z",
+              "updatedAt": "2026-07-07T19:19:39Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 110,
+      "id": "PR_kwDOOCO1i87u_LPx",
+      "title": "ordering behavior",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/110",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified the characterization of discard class reporting for multiple discard reasons.",
+      "createdAt": "2026-07-07T19:55:44Z",
+      "updatedAt": "2026-07-08T13:18:32Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "a0fc6595ea99ba0a1eec02cd2936a973897c45e9",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-20",
+      "headRefOid": "f1a0cb435ddc6b12ab2173392a1dd9d049494335",
+      "closedAt": "2026-07-08T13:18:32Z",
+      "mergedAt": "2026-07-08T13:18:32Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "4c4111b95b8d026f73fda8470f1dcc4d79098a68"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 111,
+      "id": "PR_kwDOOCO1i87vKOXj",
+      "title": "one policy subtype",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/111",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added clarification on policy discards to include consistency with requirements.",
+      "createdAt": "2026-07-08T07:03:32Z",
+      "updatedAt": "2026-07-08T13:19:42Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "c944a23c37b138af20035deecf8aaa6fdbcdb6c1",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-21",
+      "headRefOid": "0c47ac73d6b5d9d47808030c99820e1672357c88",
+      "closedAt": "2026-07-08T13:19:42Z",
+      "mergedAt": "2026-07-08T13:19:42Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "2536280fa51efd736cdb9a595fd64b99d05df811"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 112,
+      "id": "PR_kwDOOCO1i87vKb5N",
+      "title": "outer header",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/112",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified the definition of L3 packet discards based on outer header.",
+      "createdAt": "2026-07-08T07:14:01Z",
+      "updatedAt": "2026-07-08T13:21:05Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "c944a23c37b138af20035deecf8aaa6fdbcdb6c1",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-22",
+      "headRefOid": "9c95e85721b87a024ba175c9de6d5d5d840dae3d",
+      "closedAt": "2026-07-08T13:21:05Z",
+      "mergedAt": "2026-07-08T13:21:05Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "7518c2e7a6feffcc1d1f2749126d622494ab7541"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 113,
+      "id": "PR_kwDOOCO1i87vTUxX",
+      "title": "mysterious origin",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/113",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified accounting for traffic from the device control plane.",
+      "createdAt": "2026-07-08T13:29:32Z",
+      "updatedAt": "2026-07-08T13:30:19Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "7518c2e7a6feffcc1d1f2749126d622494ab7541",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-23",
+      "headRefOid": "b64cf8cc4e58497d923c7cdafcd2871d9b279083",
+      "closedAt": "2026-07-08T13:30:19Z",
+      "mergedAt": "2026-07-08T13:30:19Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "b85673bc2754e8cd28178391f7da6a33ebf09b29"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 114,
+      "id": "PR_kwDOOCO1i87vTtQT",
+      "title": "acl clarification",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/114",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-08T13:44:42Z",
+      "updatedAt": "2026-07-08T13:45:04Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b85673bc2754e8cd28178391f7da6a33ebf09b29",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-24",
+      "headRefOid": "2937df7a1e26d0758b813a1ebd84d5560520d929",
+      "closedAt": "2026-07-08T13:45:04Z",
+      "mergedAt": "2026-07-08T13:45:04Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "7f3a5d0b92afbb672369bdd875aa75659c54b324"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 115,
+      "id": "PR_kwDOOCO1i87vT0Rk",
+      "title": "Update Layer 2 and Layer 3 discard accounting language",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/115",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified language regarding frame discards to ensure accurate accounting.",
+      "createdAt": "2026-07-08T13:48:42Z",
+      "updatedAt": "2026-07-08T13:53:15Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "7f3a5d0b92afbb672369bdd875aa75659c54b324",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-25",
+      "headRefOid": "334d7125bc2e5c577934f012449d35f34b47d5aa",
+      "closedAt": "2026-07-08T13:53:15Z",
+      "mergedAt": "2026-07-08T13:53:15Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "1b6c9e88621e17cfd3d28ab6d535b5e3e019ae4a"
+      },
       "comments": [],
       "reviews": []
     }
