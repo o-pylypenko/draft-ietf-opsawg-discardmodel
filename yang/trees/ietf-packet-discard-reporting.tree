@@ -109,7 +109,7 @@ module: ietf-packet-discard-reporting
           |     |        +--ro bytes?     yang:counter64
           |     +--ro null-route?   yang:counter64
           |     +--ro rpf?          yang:counter64
-          |     +--ro ddos?         yang:counter64
+          |     +--ro dos?          yang:counter64
           +--ro no-buffer
              +--ro qos!
                 +--ro class* [id]
@@ -213,7 +213,7 @@ module: ietf-packet-discard-reporting
           |     |        +--ro bytes?     yang:counter64
           |     +--ro null-route?   yang:counter64
           |     +--ro rpf?          yang:counter64
-          |     +--ro ddos?         yang:counter64
+          |     +--ro dos?          yang:counter64
           +--ro no-buffer
              +--ro qos!
                 +--ro class* [id]

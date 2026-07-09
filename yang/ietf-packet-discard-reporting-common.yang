@@ -608,11 +608,11 @@ module ietf-packet-discard-reporting-common {
         "The number of packets discarded due to failing
          Reverse Path Forwarding (RPF) check.";
     }
-    leaf ddos {
+    leaf dos {
       type yang:counter64;
       description
-        "The number of packets discarded due to Distributed
-         Denial-of-Service (DDoS) protection policies.";
+        "The number of packets discarded due to 
+         Denial-of-Service (DoS) protection policies.";
     }
   }
 
