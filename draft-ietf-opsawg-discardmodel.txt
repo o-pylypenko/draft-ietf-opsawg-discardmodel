@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 9 January 2027                                           Nvidia
+Expires: 10 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                             8 July 2026
+                                                             9 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 January 2027.
+   This Internet-Draft will expire on 10 January 2027.
 
 Copyright Notice
 
@@ -493,16 +493,16 @@ Table of Contents
 
    discards/policy/:  These are intended discards, meaning packets
       dropped due to a configured policy, including: ACLs, traffic
-      policers, unicast Reverse Path Forwarding (uRPF) checks,
-      Distributed Denial-of-Service (DDoS) protection rules, and
-      explicit null routes.  In practice, ingress DDoS protection
-      policies are often realized using mechanisms such as ingress
-      filtering and uRPF ([RFC2827], [RFC3704], and [RFC8704]), remotely
-      triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
-      Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
-      all such policy-driven discards are reported under this class.
-      Consistent with the requirements listed in Section 5.2, a policy
-      discard increments one and only one of the policy subtypes.
+      policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-
+      of-Service (DoS) protection rules, and explicit null routes.  In
+      practice, ingress DoS protection policies are often realized using
+      mechanisms such as ingress filtering and uRPF ([RFC2827],
+      [RFC3704], and [RFC8704]), remotely triggered blackholing
+      ([RFC3882], [RFC5635]), or BGP Flow Specification–based filters
+      ([RFC8955], [RFC8956], and [RFC9117]); all such policy-driven
+      discards are reported under this class.  Consistent with the
+      requirements listed in Section 5.2, a policy discard increments
+      one and only one of the policy subtypes.
 
    discards/errors/:  These are unintended discards due to errors in
       processing packets or frames.  There are multiple sub-classes:
@@ -1177,11 +1177,11 @@ Table of Contents
            "The number of packets discarded due to failing
             Reverse Path Forwarding (RPF) check.";
        }
-       leaf ddos {
+       leaf dos {
          type yang:counter64;
          description
-           "The number of packets discarded due to Distributed
-            Denial-of-Service (DDoS) protection policies.";
+           "The number of packets discarded due to
+            Denial-of-Service (DoS) protection policies.";
        }
      }
 
@@ -1557,8 +1557,8 @@ Table of Contents
    optimisations where needed.  While the DM defines a comprehensive set
    of counters and statistics, implementations MAY support a subset of
    the defined features based on device capabilities and operational
-   requirements.  However, implementations MUST clearly document which
-   features are supported and how they map to the DM.
+   requirements.  Implementations must clearly document which features
+   are supported and how they map to the DM.
 
    Requirements 1-13 relate to packets forwarded or discarded by the
    device, while requirement 14 relates to packets destined for or
@@ -2659,7 +2659,7 @@ Appendix C.  Full Information Model Tree
        |     |     |        +-- bytes?     yang:counter64
        |     |     +-- null-route?   yang:counter64
        |     |     +-- rpf?          yang:counter64
-       |     |     +-- ddos?         yang:counter64
+       |     |     +-- dos?          yang:counter64
        |     +-- no-buffer
        |        +-- qos!
        |           +-- class* [id]
@@ -2762,7 +2762,7 @@ Appendix C.  Full Information Model Tree
        |     |     |        +-- bytes?     yang:counter64
        |     |     +-- null-route?   yang:counter64
        |     |     +-- rpf?          yang:counter64
-       |     |     +-- ddos?         yang:counter64
+       |     |     +-- dos?          yang:counter64
        |     +-- no-buffer
        |        +-- qos!
        |           +-- class* [id]
@@ -2864,7 +2864,7 @@ Appendix C.  Full Information Model Tree
              |     |        +-- bytes?     yang:counter64
              |     +-- null-route?   yang:counter64
              |     +-- rpf?          yang:counter64
-             |     +-- ddos?         yang:counter64
+             |     +-- dos?          yang:counter64
              +-- no-buffer
                 +-- qos!
                    +-- class* [id]
@@ -2991,7 +2991,7 @@ Appendix D.  Full Data Model Tree
              |     |        +--ro bytes?     yang:counter64
              |     +--ro null-route?   yang:counter64
              |     +--ro rpf?          yang:counter64
-             |     +--ro ddos?         yang:counter64
+             |     +--ro dos?          yang:counter64
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
@@ -3095,7 +3095,7 @@ Appendix D.  Full Data Model Tree
              |     |        +--ro bytes?     yang:counter64
              |     +--ro null-route?   yang:counter64
              |     +--ro rpf?          yang:counter64
-             |     +--ro ddos?         yang:counter64
+             |     +--ro dos?          yang:counter64
              +--ro no-buffer
                 +--ro qos!
                    +--ro class* [id]
