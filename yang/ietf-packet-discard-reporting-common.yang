@@ -497,7 +497,11 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of packets discarded due to parity
-         errors.";
+         errors, which typically mean that the ASIC
+         detected corruption in an internal memory, table,
+         buffer, or metadata structure used while processing
+         the packet, and dropped the packet rather than
+         forwarding it using potentially bad state.";
     }
   }
 
