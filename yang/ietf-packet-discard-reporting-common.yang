@@ -425,7 +425,8 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of packets discarded because the
-         expired TTL (IPv4 or MPLS) or Hop Limit exceeded (IPv6).";
+         expired TTL (IPv4 or MPLS) or Hop Limit exceeded
+         (IPv6).";
     }
     leaf no-route {
       type yang:counter64;
