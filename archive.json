@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-09T01:26:29.122830+00:00",
+  "timestamp": "2026-07-12T01:19:15.295186+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -187,7 +187,7 @@
       "id": "I_kwDOOCO1i88AAAABHx7fLQ",
       "title": "(Carlos Review) MPLS/SRv6",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/80",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -197,8 +197,8 @@
       ],
       "body": "> \n> 2. Address-family model does not cleanly represent MPLS/SRv6\n> traffic,\n>    only its discards. The `all` identity functions as a catch-all\n>    workaround rather than a proper address-family hierarchy.\n> Concretely:\n>    `invalid-label`/`invalid-sid` (explicitly, MPLS and SR\n> specific,\n>    respectivly) discard counters exist under `errors-l3-rx` with\n> no\n>    corresponding traffic-accounting home for MPLS/SRv6-forwarded\n>    packets. It would be nice to close structurally (a proper\n>    address-family/sub-identity hierarchy).\n",
       "createdAt": "2026-07-06T07:50:48Z",
-      "updatedAt": "2026-07-08T14:04:10Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-10T05:33:42Z",
+      "closedAt": "2026-07-10T05:33:42Z",
       "comments": [
         {
           "author": "boucadair",
@@ -245,7 +245,7 @@
       "id": "I_kwDOOCO1i88AAAABHx8MeA",
       "title": "(Carlos Review) discard taxonomy",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/82",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -254,8 +254,8 @@
       ],
       "body": "> 4. The discard taxonomy (Section 4.2) is not fully 1:1 with the\n> YANG\n>    identities. Internet-area instances of this gap:\n>    - GTSM (RFC 5082) hop-count-filtering drops are a control-plane\n>      security classification, not ordinary TTL exhaustion in\n> transit;\n>      RFC 5082 Section 5 explicitly leaves silent-drop-vs-ICMP\n> behavior\n>      unspecified for non-matching packets, and RFC 6192 Section 4\n> lists\n>      GTSM alongside ingress filtering as a control-plane anti-\n> spoofing\n>      classification method. These could be classified under\n>      control-plane `policy`, not `errors/ttl-expired`; the\n> document does\n>      not say so, and conflating the two counters makes both\n>      operationally ambiguous. I recommend makign this explicit and\n>      disambiguated.\n>    - No subtype for IPv6 extension-header processing discards (RFC\n> 8200\n>      Section 4, RFC 9098).\n>    - No subtype for reassembly failure (RFC 8200 Section 4.5, RFC\n> 8900).\n>    - TTL Expiry VCCV (RFC 5085 Section 5.1.3, CC Type 3) and MPLS\n> LSP\n>      Ping (RFC 8029) both deliberately set TTL to 1 to trigger OAM\n>      interception at a target hop. That's intentional, not an\n> error, and\n>      `errors/ttl-expired` today has no way to tell the two apart.\n> How to\n>      disambiguate policy-driven from genuine transit exxhaustion?\n> It's a\n>      similar issue as the OAM-triggered TTL expiry and GTSM above.\n",
       "createdAt": "2026-07-06T07:52:32Z",
-      "updatedAt": "2026-07-08T14:11:59Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-10T05:33:19Z",
+      "closedAt": "2026-07-10T05:33:19Z",
       "comments": [
         {
           "author": "johnevansuk",
@@ -519,7 +519,7 @@
       "id": "I_kwDOOCO1i88AAAABH-nboA",
       "title": "(Eric DISCUSS) parity errors",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/100",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
@@ -529,8 +529,8 @@
       ],
       "body": "`\"The number of packets discarded due to parity errors.\"` does it mean that the\ndevice CPU experimented a parity error during the receiving/forwarding of the\npacket ? Please be specific.\n",
       "createdAt": "2026-07-07T16:29:36Z",
-      "updatedAt": "2026-07-08T06:40:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-09T14:36:21Z",
+      "closedAt": "2026-07-09T14:36:21Z",
       "comments": [
         {
           "author": "o-pylypenko",
@@ -708,6 +708,153 @@
       "createdAt": "2026-07-07T19:52:26Z",
       "updatedAt": "2026-07-08T13:30:20Z",
       "closedAt": "2026-07-08T13:30:20Z",
+      "comments": []
+    },
+    {
+      "number": 116,
+      "id": "I_kwDOOCO1i88AAAABILF4lQ",
+      "title": "(Chris DISCUSS) Documentation",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/116",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\"However, implementations MUST clearly document which features are supported\nand how they map to the DM.\"\n\nI'm wondering how anyone would really validate that?  This doesn't seem an\nappropriate use of MUST to me.\n",
+      "createdAt": "2026-07-09T05:29:16Z",
+      "updatedAt": "2026-07-09T14:31:37Z",
+      "closedAt": "2026-07-09T14:31:37Z",
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Let's s/MUST/must",
+          "createdAt": "2026-07-09T05:33:01Z",
+          "updatedAt": "2026-07-09T12:24:53Z"
+        },
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "I'm sort of with Chris on this - I'm not sure this really means much and think we should just delete it",
+          "createdAt": "2026-07-09T12:14:47Z",
+          "updatedAt": "2026-07-09T12:14:47Z"
+        }
+      ]
+    },
+    {
+      "number": 117,
+      "id": "I_kwDOOCO1i88AAAABIMXoCw",
+      "title": "Carlos Review: Add Foundational references",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/117",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Add references:\n\n8. Foundational IP references (RFC 791, RFC 8200) are absent despite\n   heavy dependence on IP-layer semantics (TTL, header validity, MTU).\n   RFC 4884, RFC 5082, RFC 6192, RFC 5085, and RFC 8029 should also be\n   added as informative references if the comments are useful.\n\nThat's OK per the IESG statement on the matter: https://datatracker.ietf.org/doc/statement-iesg-iesg-statement-normative-and-informative-references-20060419/. Especially, this part\n\n\"It is not considered necessary to cite basic specifications that may be safely assumed to be known to practitioners (for example, RFC 791 need not be cited in every specification that mentions IPv4).\"\n\nThat's OK for a generic protocol that runs over IP -- but that does not mean those citations ought to never be used. In this case, the keyword is \"heavy dependence on IP-layer semantics\". \n\nIn either case, your choice if 791 and 8200 are needed -- but there was a second part to this comment:\n\" RFC 4884, RFC 5082, RFC 6192, RFC 5085, and RFC 8029 should also be ...\"\n\nThanks!\n\nCarlos.\n ",
+      "createdAt": "2026-07-09T09:00:28Z",
+      "updatedAt": "2026-07-09T09:00:28Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 118,
+      "id": "I_kwDOOCO1i88AAAABIMcC1A",
+      "title": "Gorry discuss: incorporate Gorry's examples",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/118",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "\n(1) To me it is unclear which category congestion-related loss of \u201cnormal\u201d\ntraffic (e.g. BE) should be assigned. \n\nFor \u201cnormal\u201d traffic (e.g. BE), discards would be assigned to interface/discards/no-buffer/qos/class(BE). This may be classified as intended if it is below the operators SLA (e.g. loss rate per measurement interval), and unintended if above the operators SLA (e.g. loss rate in measured interval). This example is in Appendix B.\n\n**That sounds good and I agree - if these two sentences are clear in the next revision, then this will have been resolved.** \n\n(2) Then, AQM: It is good to encourage queues to configure AQM, but that also\nresults in discard that will be statistical as the endpoints seek to converge\non the available bottleneck capacity. These discards are not a configuration\nproblem, and seem entirely normal, at least expected during a busy hour,\nalthough it would still seem to be helpful for an operator to know capacity is\nbeing often reached (I suspect also they could also observable as the\nutilisation by packet counters). Are we sure we wish to count these as\nunintended, rather than in a separate category?\n\nWhere AQM drops packets, those should similarly be counted as congestive discards, not as errors; i.e. AQM discards would be assigned to interface/discards/no-buffer/qos/class(). This may be classified as intended if it is below the operators SLA, and unintended if above the operators SLA. This example is in Appendix B.\n\nWhere AQM marks packets, for example using ECN, those are not packet discards and are outside the discard counters, although they may be useful related signals for an operator.\n\nWe have added an additional AQM discard type to clearly differentiate AQM discards from other congestive loss types: https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/104/changes#diff-6d4c7b48518a072a04219635c569dbd41793bae013f0df47f9cc908d7251f19f\n\n**For me the no buffer \"type\" will address my primary concern here. Thanks for adding this.**\n\n(3) I agree that traffic policing/conditioning for QoS can result in discarded\nthat are not anticipated. e.g., this discard might be due to overload of a\nprovisioned EF service which the document correctly (in my reading) is an\nintended packet discard. This might be clearly stated as an example?  For the\nLower than Best Effort (LBE) PHB, such loss seems acceptable/normal under\nperiods of high utilisation, so are these also intended?, and should this also\nbe explicitly said as an example ?\n\nIf a configured policer drops traffic because the traffic exceeds a provisioned service profile, that is a policy discard:\ni.e., interface/discards/policy/qos/class(BE).\n\nFor example, EF traffic above its provisioned profile may be intentionally discarded by the policer. That does not mean the event is operationally irrelevant, because sustained discard may still indicate overload of the provisioned service or a mismatch between offered load and contracted capacity.\n\nSimilarly, for LBE traffic, loss during periods of high utilisation may be acceptable or intended according, subject to the operators SLA.\n\n**Exactly what I had hoped for. I anticipate the example will be clear in the new text, and this will be sufficient to address this.**\n\nSo to clarify: the model reports the discard cause, while intended versus unintended is determined by the operator using the discard class together with SLA, PHB, baseline, duration, scope, and service context.",
+      "createdAt": "2026-07-09T09:10:48Z",
+      "updatedAt": "2026-07-09T09:10:48Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 119,
+      "id": "I_kwDOOCO1i88AAAABIMciLA",
+      "title": "Carlos review: add design rationale",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/119",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "add a design rationale section which incorporates some of what is currently in deployment experience (tree structure and granularity, and possibly the IM in Yang discussion).\n\n",
+      "createdAt": "2026-07-09T09:11:53Z",
+      "updatedAt": "2026-07-09T09:11:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 120,
+      "id": "I_kwDOOCO1i88AAAABIMq06A",
+      "title": "(Eric COMMENT) YANG for IM",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/120",
+      "state": "OPEN",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "No-Change-Needed"
+      ],
+      "body": "### Section 4 (and its sub-section)\n\nTo be pendantic, I am really surprised (dare I say shocked) by the use of a\ndata modeling language to specify an information model rather than UML or ER\ndiagrams. See also RFC 3444.\n\nEven more 'data model' flavour are the specific data types such as `type\nyang:counter64;`, which clearly belongs to a data model and not an information\nmodel.\n\nSuggest renaming section 4 as a YANG *data* model (as well as changing the\ntitle & abstract to remove 'information model').\n\nIf I was cynical, I would hint that it is more to have more implementations\nhaving 'something' like the information while not implementing exactly the YANG\ndata model... But, this is only my personal feeling.\n",
+      "createdAt": "2026-07-09T09:45:21Z",
+      "updatedAt": "2026-07-09T09:48:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "The WG spent many cycles on this design aproach. \n\nPlease note that draft-ietf-opsawg-rfc5706bis also says:\n\n>    While an Information Model is typically described in English text (or\n>    sometimes UML) to define the conceptual management requirements,\n>    authors may choose to express it using YANG Data Structure Extensions\n>    [RFC8791] as described in Section 5.3.1.  **Using YANG for the\n>    Information Model can make it easier to link abstract concepts to\n>    concrete data types in the corresponding Data Model, helping maintain\n>    consistency between high-level design and practical deployment**.\n",
+          "createdAt": "2026-07-09T09:48:29Z",
+          "updatedAt": "2026-07-09T09:48:29Z"
+        }
+      ]
+    },
+    {
+      "number": 121,
+      "id": "I_kwDOOCO1i88AAAABIMsezw",
+      "title": "(Eric COMMENT) ttl /hop-limit",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/121",
+      "state": "CLOSED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [
+        "No-Change-Needed"
+      ],
+      "body": "s/leaf ttl-expired/leaf hop-limit-expired/ after all we are in 2026.\n\n`grouping errors-l2-tx ` would benefit from more leaves (e.g., interface down,\nno carrier, exceeded transmission attemps, buffer full, ...).\n\nShould something more specific about IPv6 extension headers be added in\naddition of `leaf invalid-packet ` ?\n\nWhile I am sure that some people will disagree with me (hence a COMMENT and not\na DISCUSS), `leaf invalid-label ` should be in errors-l2-rx as MPLS is more a\nlayer-2 (e.g., labels are valid only on a link) especially when a label is\nflagged as 'invalid'.\n",
+      "createdAt": "2026-07-09T09:49:15Z",
+      "updatedAt": "2026-07-09T14:36:04Z",
+      "closedAt": "2026-07-09T14:36:04Z",
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "No change is needed here. \n\nSee also the clarificaiton about the various use per address falmily in the draft.",
+          "createdAt": "2026-07-09T09:50:02Z",
+          "updatedAt": "2026-07-09T09:50:02Z"
+        }
+      ]
+    },
+    {
+      "number": 127,
+      "id": "I_kwDOOCO1i88AAAABIRk-6g",
+      "title": "we need to delete all of the \"These are intended/unintended discards\"",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/127",
+      "state": "OPEN",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Yes you're right - we need to delete all of the \"These are intended/unintended discards\" - will address separately\r\n\r\n_Originally posted by @johnevansuk in https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/86#discussion_r3532349234_\r\n            ",
+      "createdAt": "2026-07-09T22:10:23Z",
+      "updatedAt": "2026-07-09T22:10:23Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -5028,6 +5175,262 @@
         "oid": "1b6c9e88621e17cfd3d28ab6d535b5e3e019ae4a"
       },
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 122,
+      "id": "PR_kwDOOCO1i87vriv4",
+      "title": "Updated parity error description",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/122",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-09T10:18:55Z",
+      "updatedAt": "2026-07-09T14:32:26Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0e94aa53e555c438828a92cdc7fbe7cd999f3385",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-13",
+      "headRefOid": "6807bdb458c27c6f762b9e2067161632fd2ad61b",
+      "closedAt": "2026-07-09T14:32:25Z",
+      "mergedAt": "2026-07-09T14:32:25Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "2ead937f75b0473b743e6a480a24e4ff42125ace"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFfCxew",
+          "commit": {
+            "abbreviatedOid": "6807bdb"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-09T12:45:41Z",
+          "updatedAt": "2026-07-09T12:45:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 123,
+      "id": "PR_kwDOOCO1i87vsrDN",
+      "title": "Updated TTL discards description",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/123",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-09T11:08:45Z",
+      "updatedAt": "2026-07-09T14:34:50Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0e94aa53e555c438828a92cdc7fbe7cd999f3385",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-14",
+      "headRefOid": "dde9abf4b86a1857e377cf0a20e6496fde02301d",
+      "closedAt": "2026-07-09T14:34:50Z",
+      "mergedAt": "2026-07-09T14:34:50Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "8f934bce17371b9156ab14179e4ae88277530285"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFe-Pkg",
+          "commit": {
+            "abbreviatedOid": "2e8def1"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-09T12:32:46Z",
+          "updatedAt": "2026-07-09T12:33:40Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\n        expired TTL (IPv4 or MPLS) or Hop Limit exceeded (IPv6).\";\n```",
+              "createdAt": "2026-07-09T12:32:47Z",
+              "updatedAt": "2026-07-09T12:33:40Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "As you know, there is no \"lifetime\" thing (and hence HL expiry does not make sense)\n\n```suggestion\n```",
+              "createdAt": "2026-07-09T12:33:19Z",
+              "updatedAt": "2026-07-09T12:33:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFfCbZg",
+          "commit": {
+            "abbreviatedOid": "76235a9"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-09T12:44:45Z",
+          "updatedAt": "2026-07-09T12:44:45Z",
+          "comments": [
+            {
+              "originalPosition": 7,
+              "body": "```suggestion\n         expired TTL (IPv4 or MPLS) or Hop Limit exceeded (IPv6).\";\n```\n\nindent",
+              "createdAt": "2026-07-09T12:44:45Z",
+              "updatedAt": "2026-07-09T12:44:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFfCg5g",
+          "commit": {
+            "abbreviatedOid": "1405177"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-09T12:44:59Z",
+          "updatedAt": "2026-07-09T12:44:59Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 124,
+      "id": "PR_kwDOOCO1i87vuUKo",
+      "title": "soften language",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/124",
+      "state": "MERGED",
+      "author": "boucadair",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-09T12:24:00Z",
+      "updatedAt": "2026-07-09T14:31:36Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0e94aa53e555c438828a92cdc7fbe7cd999f3385",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "boucadair-patch-26",
+      "headRefOid": "b10e2e4a04153289685c04c172f7aac53e2e208e",
+      "closedAt": "2026-07-09T14:31:36Z",
+      "mergedAt": "2026-07-09T14:31:36Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "0cdb179e8a5b66859034a88deba8c983047e450a"
+      },
+      "comments": [
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Can we use must with a small \"m\"",
+          "createdAt": "2026-07-09T12:38:17Z",
+          "updatedAt": "2026-07-09T12:38:17Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "yeah, RFC8174 says:\r\n\r\n   o  When these words are not capitalized, they have their normal\r\n      English meanings and are not affected by this document.\r\n\r\n\r\n",
+          "createdAt": "2026-07-09T12:43:25Z",
+          "updatedAt": "2026-07-09T12:43:25Z"
+        },
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Agreed to use lower case in the IESG telechat",
+          "createdAt": "2026-07-09T14:31:30Z",
+          "updatedAt": "2026-07-09T14:31:30Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 125,
+      "id": "PR_kwDOOCO1i87vugcB",
+      "title": "changed ddos to dos",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/125",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-09T12:32:40Z",
+      "updatedAt": "2026-07-09T14:31:53Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0e94aa53e555c438828a92cdc7fbe7cd999f3385",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-16",
+      "headRefOid": "ef48117ffdc0bac5023b713588aa7cab05155711",
+      "closedAt": "2026-07-09T14:31:53Z",
+      "mergedAt": "2026-07-09T14:31:53Z",
+      "mergedBy": "boucadair",
+      "mergeCommit": {
+        "oid": "07acf0b34f5015b0bac0e38f213a2ce6dee026c1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABFe_WIQ",
+          "commit": {
+            "abbreviatedOid": "ef48117"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-09T12:36:00Z",
+          "updatedAt": "2026-07-09T12:36:00Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 126,
+      "id": "PR_kwDOOCO1i87vujHe",
+      "title": "Changed DDoS to DoS",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/126",
+      "state": "CLOSED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-09T12:34:44Z",
+      "updatedAt": "2026-07-09T12:35:38Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0e94aa53e555c438828a92cdc7fbe7cd999f3385",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-17",
+      "headRefOid": "2bc8e31579afe4c2e71b0d990d77efecaad90e12",
+      "closedAt": "2026-07-09T12:35:38Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "body": "covered in #125 ",
+          "createdAt": "2026-07-09T12:35:38Z",
+          "updatedAt": "2026-07-09T12:35:38Z"
+        }
+      ],
       "reviews": []
     }
   ]
