@@ -135,7 +135,6 @@ module ietf-packet-discard-reporting {
       type identityref {
         base discard-class;
       }
-      config false;
       description
         "The discard class identity that has this precedence.";
     }
