@@ -1423,6 +1423,8 @@ Table of Contents
        list flow {
          if-feature "pdr-common:flow-reporting";
          key "direction";
+         description
+           "Flow packet counters.";
          leaf direction {
            type identityref {
              base pdr-common:direction;
@@ -1430,8 +1432,6 @@ Table of Contents
            description
              "Specifies a direction.";
          }
-         description
-           "Flow packet counters.";
          uses pdr-common:traffic-and-discards;
        }
        container device {

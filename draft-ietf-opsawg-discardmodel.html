@@ -2570,6 +2570,8 @@ module ietf-packet-discard-reporting-sx {
     list flow {
       if-feature "pdr-common:flow-reporting";
       key "direction";
+      description
+        "Flow packet counters.";
       leaf direction {
         type identityref {
           base pdr-common:direction;
@@ -2577,8 +2579,6 @@ module ietf-packet-discard-reporting-sx {
         description
           "Specifies a direction.";
       }
-      description
-        "Flow packet counters.";
       uses pdr-common:traffic-and-discards;
     }
     container device {
