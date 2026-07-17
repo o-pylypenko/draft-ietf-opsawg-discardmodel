@@ -332,10 +332,10 @@ The corresponding YANG module is defined in {{infomodel-module}}.
 ## Subtype Definitions
 
 discards/policy/:
-: These are intended discards, meaning packets dropped due to a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes.  In practice, ingress DoS protection policies are often realized using mechanisms such as ingress filtering and uRPF ({{?RFC2827}}, {{?RFC3704}}, and {{?RFC8704}}), remotely triggered blackholing ({{?RFC3882}}, {{?RFC5635}}), or BGP Flow Specification–based filters ({{?RFC8955}}, {{?RFC8956}}, and {{?RFC9117}}); all such policy-driven discards are reported under this class. Consistent with the requirements listed in {{requirements}}, a policy discard increments one and only one of the policy subtypes.
+These are discards of packets that matched a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes. Such discards are typically intended, although whether a specific policy discard is intended is determined by the operator (see {{intent}}). In practice, ingress DoS protection policies are often realized using mechanisms such as ingress filtering and uRPF ({{?RFC2827}}, {{?RFC3704}}, and {{?RFC8704}}), remotely triggered blackholing ({{?RFC3882}}, {{?RFC5635}}), or BGP Flow Specification–based filters ({{?RFC8955}}, {{?RFC8956}}, and {{?RFC9117}}); all such policy-driven discards are reported under this class. Consistent with the requirements listed in {{requirements}}, a policy discard increments one and only one of the policy subtypes.
 
 discards/errors/:
-: These are unintended discards due to errors in processing packets or frames.  There are multiple sub-classes:
+: These are discards due to errors in processing packets or frames, which typically indicate unintended packet loss (see {{intent}}).  There are multiple sub-classes:
 
    * discards/errors/l2/rx/:
    : These are frames discarded due to errors in the received Layer 2 frame, including: Cyclic Redundancy Check (CRC) errors, invalid Media Access Control (MAC) addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.
@@ -703,12 +703,12 @@ Rx-->PHY/MAC+--> Ingress  +--> Buffers +--> Egress   +-->PHY/MAC+-> Tx
     |       |  | Pipeline |  |         |  | Pipeline |  |       |
     '-------'  '----------'  '---------'  '----------'  '-------'
 
-Unintended:
+Typically Unintended:
    errors/l2/rx  errors/l3/rx  no-buffer    errors/l3/tx
                  errors/l3/no-route
                  errors/l3/ttl-expired
                  errors/internal
-Intended:
+Typically Intended:
                  policy/acl                 policy/acl
                  policy/policer             policy/policer
                  policy/rpf
