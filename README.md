@@ -1,3 +1,5 @@
+<!-- regenerate: on (set to off if you edit this file) -->
+
 # Information and Data Models for Packet Discard Reporting
 
 This is the working area for the IETF [OPSAWG Working Group](https://datatracker.ietf.org/group/opsawg/documents/) Internet-Draft, "Information and Data Models for Packet Discard Reporting".
@@ -13,9 +15,8 @@ This is the working area for the IETF [OPSAWG Working Group](https://datatracker
 See the
 [guidelines for contributions](https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/blob/main/CONTRIBUTING.md).
 
-Contributions can be made by creating pull requests.
-The GitHub interface supports creating pull requests using the Edit (✏) button.
-
+The contributing file also has tips on how to make contributions, if you
+don't already know how to do that.
 
 ## Command Line Usage
 
