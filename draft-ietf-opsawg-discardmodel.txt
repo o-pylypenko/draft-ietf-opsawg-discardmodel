@@ -154,7 +154,14 @@ Table of Contents
    [RFC7011] using the forwardingStatus IPFIX Information Element,
    however, the defined drop reason codes also lack sufficient clarity
    to facilitate automated root cause analysis and impact mitigation
-   (e.g., the "For us" reason code).
+   (e.g., the "For us" reason code).  A common operational workflow is
+   to reconcile device- and interface-level packet loss with the traffic
+   flows that were impacted.  To support this, the IM defined in this
+   document includes a flow component which applies the same discard
+   classification at the flow level as at the device and interface
+   levels, so that flow-level discard reporting (e.g., via IPFIX) can be
+   directly correlated with device- and interface-level discard
+   reporting.
 
    This document defines an Information Model (IM) and specifies a
    corresponding YANG Data Model (DM) for packet loss reporting to
@@ -2009,12 +2016,15 @@ Table of Contents
 
 6.3.  Anchoring Flow Structure
 
-   The characterization of a flow depends on the underlying data model
-   that adheres to the IM.  From that standpoint, the IM does not make
-   an assumption about flow characterization and identification.  Future
-   flow-oriented data models MUST ensure that the flow structure is
-   anchored so that the discards are unambiguously associated with a
-   flow.
+   The flow component is included in the IM so that flow-level discard
+   classification is aligned with the device- and interface-level
+   classification, enabling correlation between flow records and device
+   or interface discard counters.  The characterization of a flow
+   depends on the underlying data model that adheres to the IM.  From
+   that standpoint, the IM does not make an assumption about flow
+   characterization and identification.  Future flow-oriented data
+   models MUST ensure that the flow structure is anchored so that the
+   discards are unambiguously associated with a flow.
 
 7.  Implementation Status
 
