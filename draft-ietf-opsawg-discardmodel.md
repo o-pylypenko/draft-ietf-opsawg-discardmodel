@@ -741,8 +741,8 @@ The "Unintended?" column is illustrative. It is not a normative property of the 
 | I1 | ingress/discards/errors/internal | Device errors | >Baseline | O(1min) |
 | B1 | egress/discards/no-buffer | Congestion | <=Baseline | |
 | B2 | egress/discards/no-buffer | Congestion | >Baseline | O(1min) |
-| A1 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | AQM drop | <=SLA | |
-| A2 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | AQM drop | >SLA | O(1min) |
+| A1 | egress/discards/no-buffer/../discard-type\[type="aqm"\]/ | AQM drop | <=SLA | |
+| A2 | egress/discards/no-buffer/../discard-type\[type="aqm"\]/ | AQM drop | >SLA | O(1min) |
 {: #ex-table title="Example Signal-Cause-Mitigation Mapping (1)"}
 
 | CASE | DISCARD-CLASS |  Unintended? | Possible actions |
@@ -758,8 +758,8 @@ The "Unintended?" column is illustrative. It is not a normative property of the 
 | I1 | ingress/discards/errors/internal | Y | Take device out-of-service |
 | B1 | egress/discards/no-buffer | N | No action |
 | B2 | egress/discards/no-buffer | Y | Bring capacity back into service or move traffic |
-| A1 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | N | No action |
-| A2 | egress/discards/no-buffer/../discard-type[type="aqm"]/ | Y | Move traffic or add capacity |
+| A1 | egress/discards/no-buffer/../discard-type\[type="aqm"\]/ | N | No action |
+| A2 | egress/discards/no-buffer/../discard-type\[type="aqm"\]/ | Y | Move traffic or add capacity |
 {: #ex-table2 title="Example Signal-Cause-Mitigation Mapping (2)"}
 
 The 'Baseline' in the 'DISCARD-RATE' column is both DISCARD-CLASS and network dependent. A rate less than or equal to baseline generally represents expected behaviour for that operator and network context. A rate greater than baseline indicates an anomaly candidate.
