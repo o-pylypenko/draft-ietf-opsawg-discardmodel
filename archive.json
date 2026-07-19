@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-12T01:19:15.295186+00:00",
+  "timestamp": "2026-07-19T01:17:00.282060+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -854,6 +854,38 @@
       "body": "Yes you're right - we need to delete all of the \"These are intended/unintended discards\" - will address separately\r\n\r\n_Originally posted by @johnevansuk in https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/86#discussion_r3532349234_\r\n            ",
       "createdAt": "2026-07-09T22:10:23Z",
       "updatedAt": "2026-07-09T22:10:23Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 131,
+      "id": "I_kwDOOCO1i88AAAABJLlZ5w",
+      "title": "Christopher discuss: relationship to ipfix discard model",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/131",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "> Thanks for referencing the IPFIX models and methods but they seem to be a\n> rather weird comparison to the YANG approach.  It would not be strange to have\n> an IPFIX exporter on each line card capturing the details of all the interfaces\n> on that line card. \n\nThat's not what is intended.\n\nA common operational flow is to reconcile device and interface packet loss with the flows that were impacted.\n\nRFC7270 defines the forwardingStatus Information Element which includes various reasons for packet drops, but they are not really useful for operations (e.g. \"For us\" reason code).  The intent is to align the flow level discard classification with the device and interface level discard classification to enable easy correlation between them.\n\n\n[ci] That\u2019s really interesting and not what I took from the text.  A statement that said the intent is for this draft to augment flow data and vice versa would be helpful.  (And yeah, Cisco\u2019s \u201cFor us\u201d isn\u2019t super helpful, but there are a lot of useful ones in that list\u2026)",
+      "createdAt": "2026-07-17T11:59:49Z",
+      "updatedAt": "2026-07-17T11:59:49Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 134,
+      "id": "I_kwDOOCO1i88AAAABJLv5IQ",
+      "title": "Paul Aitken's comments from claude review",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/134",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-07-17T12:23:42Z",
+      "updatedAt": "2026-07-17T12:23:42Z",
       "closedAt": null,
       "comments": []
     }
@@ -5432,6 +5464,297 @@
         }
       ],
       "reviews": []
+    },
+    {
+      "number": 128,
+      "id": "PR_kwDOOCO1i87y8wqg",
+      "title": "Carlos review: add design rationale",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/128",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added design rationale section to address Carlos's feedback\r\n\r\nIs a re-organisation.  No new content",
+      "createdAt": "2026-07-17T11:14:00Z",
+      "updatedAt": "2026-07-17T13:17:28Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-18",
+      "headRefOid": "d2dae67d6f8b8cbe02e196d81ba07cd1e730a569",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYNJyg",
+          "commit": {
+            "abbreviatedOid": "d2dae67"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-17T13:17:28Z",
+          "updatedAt": "2026-07-17T13:17:28Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 129,
+      "id": "PR_kwDOOCO1i87y9Pvi",
+      "title": "Carlos Review: Add Foundational references",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/129",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "4 new informative references (5082, 5085, 6192, 8029), 0 new normative. Text-only; no YANG changes.",
+      "createdAt": "2026-07-17T11:35:38Z",
+      "updatedAt": "2026-07-17T13:18:18Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-19",
+      "headRefOid": "b1b7d7b69077b4c67653d4b0216d5bf9df02cba5",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYNgvw",
+          "commit": {
+            "abbreviatedOid": "b1b7d7b"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-17T13:18:18Z",
+          "updatedAt": "2026-07-17T13:18:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 130,
+      "id": "PR_kwDOOCO1i87y9vw_",
+      "title": "Gorry discuss: incorporate Gorry's examples",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/130",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "{{intent}}, congestion paragraph: add BE example with model path under no-buffer/qos/class, intended/unintended determined by SLA loss-rate threshold, cross-referencing mapping cases B1/B2; add LE (RFC 8622) example \u2014 higher loss rate acceptable under high utilisation per operator policy. LE placed here (not policy) as utilisation-driven LE loss is a no-buffer discard. {{intent}}, policy paragraph: add policer example \u2014 EF (RFC 3246) traffic exceeding provisioned profile is an intended policy/l3/policer discard but may still signal service overload. Fixes continousily typo. 2 new informative references (3246, 8622). Text-only; no YANG changes.",
+      "createdAt": "2026-07-17T11:56:55Z",
+      "updatedAt": "2026-07-17T13:24:41Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-20",
+      "headRefOid": "028bf07f8bdc0a19e189f5479240b3b063c3984a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYP9Kg",
+          "commit": {
+            "abbreviatedOid": "028bf07"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-17T13:23:58Z",
+          "updatedAt": "2026-07-17T13:24:41Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\nCongestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator (captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action. For example, congestion-related discards of best-effort traffic are reported under `interface/discards[direction=\"egress\"]/no-buffer/qos/class[id]`, where `class[id]` identifies the best-effort class. Such discards may be determined to be intended if the loss rate over the measurement interval is below the operator's SLA, and unintended if it is above a traffic performance indicator (see cases B1 and B2 in {{mapping}}). Similarly, for Lower Effort (LE) {{?RFC8622}} traffic, a higher loss rate during periods of high utilisation may be acceptable or intended, subject to the operator's service policy. When available, `discard-type` counters allow operators to apply different baselines to AQM and tail-drop discards.\n```\n\nTo be consistent with the first sentence",
+              "createdAt": "2026-07-17T13:23:58Z",
+              "updatedAt": "2026-07-17T13:24:41Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 132,
+      "id": "PR_kwDOOCO1i87y96q7",
+      "title": "Christopher discuss: relationship to ipfix discard model",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/132",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Introduction: after the RFC 7270 forwardingStatus critique, add the operational motivation \u2014 reconciling device/interface loss with impacted flows \u2014 and state that the IM's flow component applies the same classification at flow level to enable direct correlation (e.g., via IPFIX). Anchoring Flow Structure: open with the correlation rationale for the flow component's existence in the IM. No new references; text-only; no YANG changes.",
+      "createdAt": "2026-07-17T12:04:56Z",
+      "updatedAt": "2026-07-17T13:26:18Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-21",
+      "headRefOid": "4a900f88a9ade2f02cc32732b815bdae5ce9c7aa",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYRGKw",
+          "commit": {
+            "abbreviatedOid": "4a900f8"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-17T13:26:18Z",
+          "updatedAt": "2026-07-17T13:26:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 133,
+      "id": "PR_kwDOOCO1i87y-Obu",
+      "title": "we need to delete all of the \"These are intended/unintended discards\"",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/133",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "discards/policy/ and discards/errors/ subtype definitions: reword from \"these are intended/unintended discards\" to cause-based descriptions with \"typically intended/unintended\" and cross-reference to {{intent}}, consistent with the clarified position that intent is an operator determination. Appendix A figure: Unintended:/Intended: group labels \u2192 Typically unintended:/Typically intended:. YANG modules: no changes required \u2014 verified ietf-packet-discard-reporting-common descriptions are already cause-based with no intent assertions. Text-only; no YANG changes.",
+      "createdAt": "2026-07-17T12:18:06Z",
+      "updatedAt": "2026-07-19T00:57:12Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-22",
+      "headRefOid": "e818e210a84d12196579bd9086f8ab29a769d2ea",
+      "closedAt": "2026-07-19T00:57:12Z",
+      "mergedAt": "2026-07-19T00:57:12Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "78abfb665a4131491e44e860200d9964853e6bc4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYRXkw",
+          "commit": {
+            "abbreviatedOid": "e818e21"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Well worded!",
+          "createdAt": "2026-07-17T13:26:54Z",
+          "updatedAt": "2026-07-17T13:26:54Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 135,
+      "id": "PR_kwDOOCO1i87y-dFx",
+      "title": "Paul Aitken's comments from claude review",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/135",
+      "state": "OPEN",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "updated container policer description",
+      "createdAt": "2026-07-17T12:27:18Z",
+      "updatedAt": "2026-07-17T13:27:28Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-23",
+      "headRefOid": "2fe11132c70f71c7c4e23c635af86d33e3c54365",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYRobw",
+          "commit": {
+            "abbreviatedOid": "2fe1113"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-17T13:27:28Z",
+          "updatedAt": "2026-07-17T13:27:28Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 136,
+      "id": "PR_kwDOOCO1i87y-r_X",
+      "title": "Paul Aitken's comments from claude review",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/136",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Updated descriptions",
+      "createdAt": "2026-07-17T12:36:37Z",
+      "updatedAt": "2026-07-19T00:57:37Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-24",
+      "headRefOid": "e518910b8994e1ed1a77ab6642ddc069372836e0",
+      "closedAt": "2026-07-19T00:57:37Z",
+      "mergedAt": "2026-07-19T00:57:37Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "454be64ac5e42ac3700643d3514c161716bd4f15"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGYR5NA",
+          "commit": {
+            "abbreviatedOid": "e518910"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-17T13:28:01Z",
+          "updatedAt": "2026-07-17T13:28:01Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
