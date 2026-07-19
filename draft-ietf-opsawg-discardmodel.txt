@@ -84,30 +84,31 @@ Table of Contents
      1.1.  Editorial Note (To be removed by the RFC Editor)
    2.  Terminology
    3.  Problem Statement
-   4.  Information Model (IM)
-     4.1.  Structure
-     4.2.  Subtype Definitions
-     4.3.  "ietf-packet-discard-reporting-common" YANG Module
-     4.4.  "ietf-packet-discard-reporting-sx" YANG Module
-   5.  Data Model (DM)
+   4.  Design Rationale
+   5.  Information Model (IM)
      5.1.  Structure
-     5.2.  Implementation Requirements
-     5.3.  Usage Examples
-     5.4.  "ietf-packet-discard-reporting" YANG Module
-   6.  Operational Considerations
-     6.1.  Determining Operator Intent
-     6.2.  Deployment Experience
-     6.3.  Anchoring Flow Structure
-   7.  Implementation Status
-     7.1.  Information Model Implementations
-     7.2.  Data Model Implementations
-   8.  Security Considerations
-     8.1.  Information Model
-     8.2.  Data Model
-   9.  IANA Considerations
-   10. References
-     10.1.  Normative References
-     10.2.  Informative References
+     5.2.  Subtype Definitions
+     5.3.  "ietf-packet-discard-reporting-common" YANG Module
+     5.4.  "ietf-packet-discard-reporting-sx" YANG Module
+   6.  Data Model (DM)
+     6.1.  Structure
+     6.2.  Implementation Requirements
+     6.3.  Usage Examples
+     6.4.  "ietf-packet-discard-reporting" YANG Module
+   7.  Operational Considerations
+     7.1.  Determining Operator Intent
+     7.2.  Deployment Experience
+     7.3.  Anchoring Flow Structure
+   8.  Implementation Status
+     8.1.  Information Model Implementations
+     8.2.  Data Model Implementations
+   9.  Security Considerations
+     9.1.  Information Model
+     9.2.  Data Model
+   10. IANA Considerations
+   11. References
+     11.1.  Normative References
+     11.2.  Informative References
    Appendix A.  Where Do Packets Get Dropped?
    Appendix B.  Example Signal-to-mitigation Action Mapping
    Appendix C.  Full Information Model Tree
@@ -179,11 +180,11 @@ Table of Contents
    protocol specifications and local policy.
 
    Section 3 describes the problem space and requirements.  Section 4
-   defines the IM and its classification scheme.  Section 5 specifies
-   the corresponding YANG data model and implementation requirements
-   together with a set of usage examples, and the complete YANG module
-   definition.  Appendices A and B provide additional context and
-   implementation guidance.
+   explains the design rationale.  Section 5 defines the IM and its
+   classification scheme.  Section 6 specifies the corresponding YANG
+   data model and implementation requirements together with a set of
+   usage examples, and the complete YANG module definition.  Appendices
+   A and B provide additional context and implementation guidance.
 
 1.1.  Editorial Note (To be removed by the RFC Editor)
 
@@ -282,7 +283,7 @@ Table of Contents
    FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces
    Group MIB [RFC2863] and the YANG Data Model for Interface Management
    [RFC8343], FEATURE-DISCARD-CLASS requires a more detailed
-   classification scheme than they define.  The IM provided in Section 4
+   classification scheme than they define.  The IM provided in Section 5
    defines such a classification scheme to enable automated mapping from
    discard signals to appropriate mitigation actions.
 
@@ -306,25 +307,45 @@ Table of Contents
    be combined to determine whether a discard is unintended and what
    action, if any, is appropriate.
 
-4.  Information Model (IM)
+4.  Design Rationale
 
-   The IM is defined using YANG [RFC7950], with Data Structure
-   Extensions [RFC8791], allowing the model to remain abstract and
-   decoupled from specific implementations in accordance with [RFC3444].
-   This abstraction supports different DM implementations, such as YANG
-   or IPFIX [RFC7011], while ensuring consistency across
-   implementations.  Using YANG for the IM enables this abstraction,
-   leverages the community's familiarity with its syntax, and ensures
-   lossless translation to the corresponding YANG data model, which is
-   defined in Section 5.
+   1.  The IM is defined using YANG [RFC7950], with Data Structure
+       Extensions [RFC8791], allowing the model to remain abstract and
+       decoupled from specific implementations in accordance with
+       [RFC3444].  This abstraction supports different DM
+       implementations, such as YANG or IPFIX [RFC7011], while ensuring
+       consistency across implementations.  Using YANG for the IM
+       enables this abstraction, leverages the community's familiarity
+       with its syntax, and ensures lossless translation to the
+       corresponding YANG data model, which is defined in Section 6.
+
+   2.  The number and granularity of discard classes defined in the IM
+       represent a compromise.  It aims to provide sufficient detail to
+       enable appropriate automated actions while avoiding excessive
+       detail, which may hinder quick problem identification.
+       Additionally, it helps to limit the quantity of data produced per
+       interface, constraining the data volume and device CPU impacts.
+       While further granularity is possible, the defined schema has
+       generally proven to be sufficient for the task of mitigating
+       unintended packet loss.
+
+   3.  There are many possible ways to define the discard classification
+       tree.  For example, an approach is to use a multi-rooted tree,
+       rooted in each protocol.  Instead, a better approach is to define
+       a tree where protocol discards and causal discard classes are
+       accounted for orthogonally.  This decision reduces the number of
+       combinations of classes and has proven sufficient for determining
+       mitigation actions.
+
+5.  Information Model (IM)
 
       Design note: In order to ease reuse of the IM structure by DMs but
       without requiring that these DMs to parse the "sx" structure
       defined in [RFC8791], main reusable nodes are defined in a common
-      module (Section 4.3) while the main IM structure is defined in
-      Section 4.4.
+      module (Section 5.3) while the main IM structure is defined in
+      Section 5.4.
 
-4.1.  Structure
+5.1.  Structure
 
    The IM defines a hierarchical classification scheme for packet
    discards, which captures where in a device the discards are accounted
@@ -494,27 +515,27 @@ Table of Contents
    maintaining backward compatibility.  New discard types can be added
    as new branches without affecting existing implementations.
 
-   The corresponding YANG module is defined in Section 4.4.
+   The corresponding YANG module is defined in Section 5.4.
 
-4.2.  Subtype Definitions
+5.2.  Subtype Definitions
 
    discards/policy/: These are discards of packets that matched a
    configured policy, including: ACLs, traffic policers, unicast Reverse
    Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection
    rules, and explicit null routes.  Such discards are typically
    intended, although whether a specific policy discard is intended is
-   determined by the operator (see Section 6.1).  In practice, ingress
+   determined by the operator (see Section 7.1).  In practice, ingress
    DoS protection policies are often realized using mechanisms such as
    ingress filtering and uRPF ([RFC2827], [RFC3704], and [RFC8704]),
    remotely triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
    Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
    all such policy-driven discards are reported under this class.
-   Consistent with the requirements listed in Section 5.2, a policy
+   Consistent with the requirements listed in Section 6.2, a policy
    discard increments one and only one of the policy subtypes.
 
    discards/errors/:  These are discards due to errors in processing
       packets or frames, which typically indicate unintended packet loss
-      (see Section 6.1).  There are multiple sub-classes:
+      (see Section 7.1).  There are multiple sub-classes:
 
       *  discards/errors/l2/rx/:  These are frames discarded due to
             errors in the received Layer 2 frame, including: Cyclic
@@ -568,7 +589,7 @@ Table of Contents
    An example of possible signal-to-mitigation action mapping is
    provided in Appendix B.
 
-4.3.  "ietf-packet-discard-reporting-common" YANG Module
+5.3.  "ietf-packet-discard-reporting-common" YANG Module
 
    The "ietf-packet-discard-reporting-common" module imports "ietf-yang-
    types" defined in [RFC9911].  The module references [RFC8402],
@@ -1328,11 +1349,11 @@ Table of Contents
    }
    <CODE ENDS>
 
-4.4.  "ietf-packet-discard-reporting-sx" YANG Module
+5.4.  "ietf-packet-discard-reporting-sx" YANG Module
 
    The "ietf-packet-discard-reporting-sx" module uses the "sx" structure
    defined in [RFC8791] and also imports the "ietf-packet-discard-
-   reporting-common" module (Section 4.3).
+   reporting-common" module (Section 5.3).
 
    <CODE BEGINS> file "ietf-packet-discard-reporting-sx@2026-03-03.yang"
    module ietf-packet-discard-reporting-sx {
@@ -1453,9 +1474,9 @@ Table of Contents
    }
    <CODE ENDS>
 
-5.  Data Model (DM)
+6.  Data Model (DM)
 
-   This DM implements the IM defined in Section 4 for the interface,
+   This DM implements the IM defined in Section 5 for the interface,
    device, and control-plane components.  It is a device model per
    Section 2.1 of [RFC8969].  Specifically, it is a device-local
    (network element) operational state model: counters are scoped to a
@@ -1463,7 +1484,7 @@ Table of Contents
 
    The IM defines the abstract classification tree using YANG data
    structure extensions [RFC8791].  The reusable groupings are defined
-   in the "ietf-packet-discard-reporting-common" module (Section 4.3).
+   in the "ietf-packet-discard-reporting-common" module (Section 5.3).
    This DM imports that common module and reuses the same hierarchy of
    components, directions, layers, and discard classes, attaching the
    groupings via augment statements to existing YANG modules for
@@ -1471,7 +1492,7 @@ Table of Contents
    component is defined only in the IM for use by flow-oriented data
    models and is not instantiated in this DM.
 
-5.1.  Structure
+6.1.  Structure
 
    There is a direct mapping between the IM components and their DM
    implementations, with each component in the hierarchy represented by
@@ -1563,7 +1584,7 @@ Table of Contents
 
    The full tree structure is provided in Appendix D.
 
-5.2.  Implementation Requirements
+6.2.  Implementation Requirements
 
    The following requirements apply to the implementation of the DM and
    are intended to ensure consistent implementation across different
@@ -1650,11 +1671,11 @@ Table of Contents
         However, traffic from the device control plane (from-CPU) MUST
         be accounted for in the same way as other egress traffic.
 
-5.3.  Usage Examples
+6.3.  Usage Examples
 
    This section assumes that no class of service is implemented.
 
-   If all of the requirements listed in Section 5.2 are met, a "good"
+   If all of the requirements listed in Section 6.2 are met, a "good"
    unicast IPv4 packet received would increment:
 
    *  interface/traffic[direction="ingress"]/l3/address-family-
@@ -1716,10 +1737,10 @@ Table of Contents
 
    *  interface/traffic[direction="ingress"]/qos/class[id="0"]/bytes
 
-5.4.  "ietf-packet-discard-reporting" YANG Module
+6.4.  "ietf-packet-discard-reporting" YANG Module
 
    The "ietf-packet-discard-reporting" module imports "ietf-packet-
-   discard-reporting-common" (Section 4.3), "ietf-netconf-acm"
+   discard-reporting-common" (Section 5.3), "ietf-netconf-acm"
    [RFC8341], "ietf-interfaces" [RFC8343], "ietf-routing" [RFC8349], and
    "ietf-logical-network-element" [RFC8530].
 
@@ -1918,9 +1939,9 @@ Table of Contents
    }
    <CODE ENDS>
 
-6.  Operational Considerations
+7.  Operational Considerations
 
-6.1.  Determining Operator Intent
+7.1.  Determining Operator Intent
 
    Device discard counters do not by themselves establish operator
    intent.  The classification defined in this document identifies the
@@ -1955,31 +1976,13 @@ Table of Contents
    and continousily ensure that configuration is consistent with the
    intended service to deliver.
 
-6.2.  Deployment Experience
+7.2.  Deployment Experience
 
    This section captures practical insights gained from implementing the
    model across multiple vendors' platforms, as guidance for future
    implementers and operators:
 
-   1.  The number and granularity of discard classes defined in the IM
-       represent a compromise.  It aims to provide sufficient detail to
-       enable appropriate automated actions while avoiding excessive
-       detail, which may hinder quick problem identification.
-       Additionally, it helps to limit the quantity of data produced per
-       interface, constraining the data volume and device CPU impacts.
-       While further granularity is possible, the defined schema has
-       generally proven to be sufficient for the task of mitigating
-       unintended packet loss.
-
-   2.  There are many possible ways to define the discard classification
-       tree.  For example, an approach is to use a multi-rooted tree,
-       rooted in each protocol.  Instead, a better approach is to define
-       a tree where protocol discards and causal discard classes are
-       accounted for orthogonally.  This decision reduces the number of
-       combinations of classes and has proven sufficient for determining
-       mitigation actions.
-
-   3.  Platforms often account for the number of packets discarded where
+   1.  Platforms often account for the number of packets discarded where
        the TTL has expired (or IPv6 Hop Limit exceeded), and the device
        CPU has returned an ICMP Time Exceeded message [RFC4884].  There
        is typically a policer applied to limit the number of packets
@@ -1990,17 +1993,17 @@ Table of Contents
        accounting of all ingress packets received with TTL=1 as a proxy
        measure.
 
-   4.  Where no route discards are implemented with a default null
+   2.  Where no route discards are implemented with a default null
        route, separate discard accounting is required for any explicit
        null routes configured in order to differentiate between
        interface/ingress/discards/policy/null-route/packets and
        interface/ingress/discards/errors/no-route/packets.
 
-   5.  It is useful to account separately for transit packets discarded
+   3.  It is useful to account separately for transit packets discarded
        by ACLs or policers, and packets discarded by ACLs or policers
        which limit the number of packets to the device control plane.
 
-   6.  It is not possible to identify a configuration error (e.g., when
+   4.  It is not possible to identify a configuration error (e.g., when
        intended discards are unintended) with device discard metrics
        alone.  For example, additional context is needed to determine if
        ACL discards are intended or due to a misconfigured ACL (i.e.,
@@ -2008,13 +2011,13 @@ Table of Contents
        significant change in ACL discards after a configuration change
        compared to before).
 
-   7.  Aggregate counters need to be able to deal with the possibility
+   5.  Aggregate counters need to be able to deal with the possibility
        of discontinuities in the underlying counters.
 
-   8.  While the classification tree is seven levels deep, a minimal
+   6.  While the classification tree is seven levels deep, a minimal
        implementation may only implement the top six.
 
-6.3.  Anchoring Flow Structure
+7.3.  Anchoring Flow Structure
 
    The flow component is included in the IM so that flow-level discard
    classification is aligned with the device- and interface-level
@@ -2026,7 +2029,7 @@ Table of Contents
    models MUST ensure that the flow structure is anchored so that the
    discards are unambiguously associated with a flow.
 
-7.  Implementation Status
+8.  Implementation Status
 
    Note to RFC Editor: This section is to be removed before publication
    as an RFC.
@@ -2044,9 +2047,9 @@ Table of Contents
    features.  Readers are advised to note that other implementations may
    exist.
 
-7.1.  Information Model Implementations
+8.1.  Information Model Implementations
 
-   The IM defined in Section 4 has been implemented or mapped on at
+   The IM defined in Section 5 has been implemented or mapped on at
    least nine hardware platforms across four vendors, including:
 
    *  Broadcom: Trident, Tomahawk 1, Tomahawk 3, Tomahawk 5
@@ -2057,10 +2060,10 @@ Table of Contents
 
    *  Marvell: TL7
 
-7.2.  Data Model Implementations
+8.2.  Data Model Implementations
 
    A YANG-compliant open-source SLAX script implements a subset of the
-   DM defined in Section 5 for Juniper MX routers.  This implementation
+   DM defined in Section 6 for Juniper MX routers.  This implementation
    is available at:
 
    *  https://github.com/o-pylypenko-aws/draft-ietf-opsawg-discardmodel-
@@ -2068,13 +2071,13 @@ Table of Contents
       discardmodel-sample/)
 
    Practical observations from these implementations are reflected in
-   Section 6.2.
+   Section 7.2.
 
-8.  Security Considerations
+9.  Security Considerations
 
-8.1.  Information Model
+9.1.  Information Model
 
-   The IM defined in Section 4.4 specifies a YANG module using [RFC8791]
+   The IM defined in Section 5.4 specifies a YANG module using [RFC8791]
    data extensions.  As such, there are no additional security issues
    related to the YANG module that need to be considered.
 
@@ -2089,12 +2092,12 @@ Table of Contents
    discard-reporting-common" module should identify the corresponding
    security considerations.
 
-8.2.  Data Model
+9.2.  Data Model
 
    This section is modeled after the template described in Section 3.7.1
    of [RFC9907].
 
-   The YANG module specified in Section 5.4 defines a data model that is
+   The YANG module specified in Section 6.4 defines a data model that is
    designed to be accessed via YANG-based management protocols, such as
    Network Configuration Protocol (NETCONF) [RFC6241] and RESTCONF
    [RFC8040].  These YANG-based management protocols (1) have to use a
@@ -2127,7 +2130,7 @@ Table of Contents
       counters (e.g., policy) and adjust its attack strategy
       accordingly.
 
-9.  IANA Considerations
+10.  IANA Considerations
 
    IANA is requested to register the following URIs in the "ns" registry
    within the "IETF XML Registry" group [RFC3688]:
@@ -2167,9 +2170,9 @@ Table of Contents
    Prefix:  pdr
    Reference:  RFC XXXX
 
-10.  References
+11.  References
 
-10.1.  Normative References
+11.1.  Normative References
 
    [IEEE802.1Q]
               IEEE, "IEEE Standard for Local and Metropolitan Area
@@ -2277,7 +2280,7 @@ Table of Contents
               DOI 10.17487/RFC9911, December 2025,
               <https://www.rfc-editor.org/rfc/rfc9911>.
 
-10.2.  Informative References
+11.2.  Informative References
 
    [RED93]    Floyd, S. and V. Jacobson, "Random early detection
               gateways for congestion avoidance", August 1993,
