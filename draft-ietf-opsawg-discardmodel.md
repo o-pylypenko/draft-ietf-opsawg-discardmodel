@@ -351,7 +351,7 @@ discards/errors/:
    : These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet ({{Sections 3.1 and 3.2 of !RFC791}}, {{Sections 4.5 and 5 of !RFC8200}}).
 
    * discards/errors/l3/ttl-expired:
-   : These discards occur due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.
+   : These discards occur due to TTL {{!RFC791}} (or Hop Limit {{!RFC8200}}) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, including MPLS LSP ping/traceroute {{?RFC8029}} and pseudowire VCCV {{?RFC5085}} which intentionally use TTL expiry, end-system TTL/Hop limit set too low, or routing loops in the network.
 
    * discards/errors/l3/no-route/:
    : These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.
