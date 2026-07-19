@@ -1673,7 +1673,7 @@ These are discards of packets that matched a configured policy, including: ACLs,
                 <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.4.1">
                   <dt id="section-5.2-2.2.2.4.1.1">discards/errors/l3/ttl-expired:</dt>
                   <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.4.1.2">
-                    <p id="section-5.2-2.2.2.4.1.2.1">These discards occur due to TTL (or Hop limit) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, end-system TTL/Hop limit set too low, or routing loops in the network.<a href="#section-5.2-2.2.2.4.1.2.1" class="pilcrow">¶</a></p>
+                    <p id="section-5.2-2.2.2.4.1.2.1">These discards occur due to TTL <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span> (or Hop Limit <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, including MPLS LSP ping/traceroute <span>[<a href="#RFC8029" class="cite xref">RFC8029</a>]</span> and pseudowire VCCV <span>[<a href="#RFC5085" class="cite xref">RFC5085</a>]</span> which intentionally use TTL expiry, end-system TTL/Hop limit set too low, or routing loops in the network.<a href="#section-5.2-2.2.2.4.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
@@ -3393,6 +3393,10 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">Bonica, R.</span>, <span class="refAuthor">Gan, D.</span>, <span class="refAuthor">Tappan, D.</span>, and <span class="refAuthor">C. Pignataro</span>, <span class="refTitle">"Extended ICMP to Support Multi-Part Messages"</span>, <span class="seriesInfo">RFC 4884</span>, <span class="seriesInfo">DOI 10.17487/RFC4884</span>, <time datetime="2007-04" class="refDate">April 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4884">https://www.rfc-editor.org/rfc/rfc4884</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC5085">[RFC5085]</dt>
+        <dd>
+<span class="refAuthor">Nadeau, T., Ed.</span> and <span class="refAuthor">C. Pignataro, Ed.</span>, <span class="refTitle">"Pseudowire Virtual Circuit Connectivity Verification (VCCV): A Control Channel for Pseudowires"</span>, <span class="seriesInfo">RFC 5085</span>, <span class="seriesInfo">DOI 10.17487/RFC5085</span>, <time datetime="2007-12" class="refDate">December 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5085">https://www.rfc-editor.org/rfc/rfc5085</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC5635">[RFC5635]</dt>
         <dd>
 <span class="refAuthor">Kumari, W.</span> and <span class="refAuthor">D. McPherson</span>, <span class="refTitle">"Remote Triggered Black Hole Filtering with Unicast Reverse Path Forwarding (uRPF)"</span>, <span class="seriesInfo">RFC 5635</span>, <span class="seriesInfo">DOI 10.17487/RFC5635</span>, <time datetime="2009-08" class="refDate">August 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5635">https://www.rfc-editor.org/rfc/rfc5635</a>&gt;</span>. </dd>
@@ -3408,6 +3412,10 @@ module ietf-packet-discard-reporting {
 <dt id="RFC7270">[RFC7270]</dt>
         <dd>
 <span class="refAuthor">Yourtchenko, A.</span>, <span class="refAuthor">Aitken, P.</span>, and <span class="refAuthor">B. Claise</span>, <span class="refTitle">"Cisco-Specific Information Elements Reused in IP Flow Information Export (IPFIX)"</span>, <span class="seriesInfo">RFC 7270</span>, <span class="seriesInfo">DOI 10.17487/RFC7270</span>, <time datetime="2014-06" class="refDate">June 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7270">https://www.rfc-editor.org/rfc/rfc7270</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8029">[RFC8029]</dt>
+        <dd>
+<span class="refAuthor">Kompella, K.</span>, <span class="refAuthor">Swallow, G.</span>, <span class="refAuthor">Pignataro, C., Ed.</span>, <span class="refAuthor">Kumar, N.</span>, <span class="refAuthor">Aldrin, S.</span>, and <span class="refAuthor">M. Chen</span>, <span class="refTitle">"Detecting Multiprotocol Label Switched (MPLS) Data-Plane Failures"</span>, <span class="seriesInfo">RFC 8029</span>, <span class="seriesInfo">DOI 10.17487/RFC8029</span>, <time datetime="2017-03" class="refDate">March 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8029">https://www.rfc-editor.org/rfc/rfc8029</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8040">[RFC8040]</dt>
         <dd>
