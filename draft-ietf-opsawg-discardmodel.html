@@ -2996,7 +2996,7 @@ module ietf-packet-discard-reporting {
       nacm:default-deny-all;
       config false;
       description
-        "List of traffic and control plane discard counters.";
+        "Traffic and discard counters for the control plane.";
       uses discard-order-policy;
       uses pdr-common:control-plane;
     }
@@ -3011,7 +3011,7 @@ module ietf-packet-discard-reporting {
       nacm:default-deny-all;
       config false;
       description
-        "List of traffic and interface discard counters.";
+        "Traffic and discard counters for the interface.";
       uses discard-order-policy;
       uses pdr-common:interface;
     }
@@ -3026,7 +3026,8 @@ module ietf-packet-discard-reporting {
       nacm:default-deny-all;
       config false;
       description
-        "List of traffic and device level discard counters.";
+        "Traffic and discard counters for the logical network
+         element.";
       uses discard-order-policy;
       uses pdr-common:traffic-and-discards;
     }
