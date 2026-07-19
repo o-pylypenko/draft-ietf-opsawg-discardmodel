@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 18 January 2027                                          Nvidia
+Expires: 20 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            17 July 2026
+                                                            19 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 January 2027.
+   This Internet-Draft will expire on 20 January 2027.
 
 Copyright Notice
 
@@ -491,21 +491,23 @@ Table of Contents
 
 4.2.  Subtype Definitions
 
-   discards/policy/:  These are intended discards, meaning packets
-      dropped due to a configured policy, including: ACLs, traffic
-      policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-
-      of-Service (DoS) protection rules, and explicit null routes.  In
-      practice, ingress DoS protection policies are often realized using
-      mechanisms such as ingress filtering and uRPF ([RFC2827],
-      [RFC3704], and [RFC8704]), remotely triggered blackholing
-      ([RFC3882], [RFC5635]), or BGP Flow Specification–based filters
-      ([RFC8955], [RFC8956], and [RFC9117]); all such policy-driven
-      discards are reported under this class.  Consistent with the
-      requirements listed in Section 5.2, a policy discard increments
-      one and only one of the policy subtypes.
+   discards/policy/: These are discards of packets that matched a
+   configured policy, including: ACLs, traffic policers, unicast Reverse
+   Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection
+   rules, and explicit null routes.  Such discards are typically
+   intended, although whether a specific policy discard is intended is
+   determined by the operator (see Section 6.1).  In practice, ingress
+   DoS protection policies are often realized using mechanisms such as
+   ingress filtering and uRPF ([RFC2827], [RFC3704], and [RFC8704]),
+   remotely triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
+   Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
+   all such policy-driven discards are reported under this class.
+   Consistent with the requirements listed in Section 5.2, a policy
+   discard increments one and only one of the policy subtypes.
 
-   discards/errors/:  These are unintended discards due to errors in
-      processing packets or frames.  There are multiple sub-classes:
+   discards/errors/:  These are discards due to errors in processing
+      packets or frames, which typically indicate unintended packet loss
+      (see Section 6.1).  There are multiple sub-classes:
 
       *  discards/errors/l2/rx/:  These are frames discarded due to
             errors in the received Layer 2 frame, including: Cyclic
@@ -2412,12 +2414,12 @@ Appendix A.  Where Do Packets Get Dropped?
       |       |  | Pipeline |  |         |  | Pipeline |  |       |
       '-------'  '----------'  '---------'  '----------'  '-------'
 
-  Unintended:
+  Typically Unintended:
      errors/l2/rx  errors/l3/rx  no-buffer    errors/l3/tx
                    errors/l3/no-route
                    errors/l3/ttl-expired
                    errors/internal
-  Intended:
+  Typically Intended:
                    policy/acl                 policy/acl
                    policy/policer             policy/policer
                    policy/rpf
