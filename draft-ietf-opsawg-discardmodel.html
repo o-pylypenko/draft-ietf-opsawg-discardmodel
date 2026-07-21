@@ -1061,7 +1061,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Evans, et al.</td>
-<td class="center">Expires 20 January 2027</td>
+<td class="center">Expires 22 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1074,12 @@ svg {
 <dd class="internet-draft">draft-ietf-opsawg-discardmodel-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-19" class="published">19 July 2026</time>
+<time datetime="2026-07-21" class="published">21 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-20">20 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-22">22 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1148,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3072,8 +3072,8 @@ module ietf-packet-discard-reporting {
         </h3>
 <p id="section-7.1-1">Device discard counters do not by themselves establish operator intent. The classification defined in this document identifies the discard condition. Whether that condition is intended or unintended is determined by the operator using the discard class together with local policy, configured intent, baseline behaviour, duration, affected scope, service context, and other operational evidence.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
 <p id="section-7.1-2">Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
-<p id="section-7.1-3">Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator (captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action. When available, <code>discard-type</code> counters allow operators to apply different baselines to AQM and tail-drop discards.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
-<p id="section-7.1-4">Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify configuration enforced in underlying nodes and continousily ensure that configuration is consistent with the intended service to deliver.<a href="#section-7.1-4" class="pilcrow">¶</a></p>
+<p id="section-7.1-3">Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator (captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action. For example, congestion-related discards of best-effort traffic are reported under <code>interface/discards[direction="egress"]/no-buffer/qos/class[id]</code>, where <code>class[id]</code> identifies the best-effort class. Such discards may be determined to be intended if the loss rate over the measurement interval is below the operator's SLA, and unintended if it is above the SLA (see cases B1 and B2 in <a href="#mapping" class="auto internal xref">Appendix B</a>). Similarly, for Lower Effort (LE) <span>[<a href="#RFC8622" class="cite xref">RFC8622</a>]</span> traffic, a higher loss rate during periods of high utilisation may be acceptable or intended, subject to the operator's service policy. When available, <code>discard-type</code> counters allow operators to apply different baselines to AQM and tail-drop discards.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
+<p id="section-7.1-4">Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. They may still be unintended if the configuration is in error. If a configured policer discards traffic because the offered load exceeds a provisioned service profile, that is an intended policy discard, reported under <code>policy/l3/policer</code>. For example, Expedited Forwarding (EF) <span>[<a href="#RFC3246" class="cite xref">RFC3246</a>]</span> traffic in excess of its provisioned profile may be intentionally discarded by a policer; while intended, sustained policer discards may still be operationally relevant, as they may indicate overload of the provisioned service or a mismatch between offered load and contracted capacity. Determining intent for policy discards requires operator-local context, such as configuration validation, service policy, and change history. Operators should verify the configuration enforced in underlying nodes and continuously ensure that the configuration is consistent with the intended service.<a href="#section-7.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="experience">
@@ -3373,6 +3373,10 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">McCloghrie, K.</span> and <span class="refAuthor">F. Kastenholz</span>, <span class="refTitle">"The Interfaces Group MIB"</span>, <span class="seriesInfo">RFC 2863</span>, <span class="seriesInfo">DOI 10.17487/RFC2863</span>, <time datetime="2000-06" class="refDate">June 2000</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2863">https://www.rfc-editor.org/rfc/rfc2863</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC3246">[RFC3246]</dt>
+        <dd>
+<span class="refAuthor">Davie, B.</span>, <span class="refAuthor">Charny, A.</span>, <span class="refAuthor">Bennet, J.C.R.</span>, <span class="refAuthor">Benson, K.</span>, <span class="refAuthor">Le Boudec, J.Y.</span>, <span class="refAuthor">Courtney, W.</span>, <span class="refAuthor">Davari, S.</span>, <span class="refAuthor">Firoiu, V.</span>, and <span class="refAuthor">D. Stiliadis</span>, <span class="refTitle">"An Expedited Forwarding PHB (Per-Hop Behavior)"</span>, <span class="seriesInfo">RFC 3246</span>, <span class="seriesInfo">DOI 10.17487/RFC3246</span>, <time datetime="2002-03" class="refDate">March 2002</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3246">https://www.rfc-editor.org/rfc/rfc3246</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC3444">[RFC3444]</dt>
         <dd>
 <span class="refAuthor">Pras, A.</span> and <span class="refAuthor">J. Schoenwaelder</span>, <span class="refTitle">"On the Difference between Information Models and Data Models"</span>, <span class="seriesInfo">RFC 3444</span>, <span class="seriesInfo">DOI 10.17487/RFC3444</span>, <time datetime="2003-01" class="refDate">January 2003</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3444">https://www.rfc-editor.org/rfc/rfc3444</a>&gt;</span>. </dd>
@@ -3432,6 +3436,10 @@ module ietf-packet-discard-reporting {
 <dt id="RFC8446">[RFC8446]</dt>
         <dd>
 <span class="refAuthor">Rescorla, E.</span>, <span class="refTitle">"The Transport Layer Security (TLS) Protocol Version 1.3"</span>, <span class="seriesInfo">RFC 8446</span>, <span class="seriesInfo">DOI 10.17487/RFC8446</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8446">https://www.rfc-editor.org/rfc/rfc8446</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8622">[RFC8622]</dt>
+        <dd>
+<span class="refAuthor">Bless, R.</span>, <span class="refTitle">"A Lower-Effort Per-Hop Behavior (LE PHB) for Differentiated Services"</span>, <span class="seriesInfo">RFC 8622</span>, <span class="seriesInfo">DOI 10.17487/RFC8622</span>, <time datetime="2019-06" class="refDate">June 2019</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8622">https://www.rfc-editor.org/rfc/rfc8622</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8704">[RFC8704]</dt>
         <dd>
