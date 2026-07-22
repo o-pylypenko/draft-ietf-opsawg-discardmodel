@@ -27,7 +27,7 @@ Abstract
    unintended (e.g., due to congestion or errors) - to enable automated
    network mitigation of unintended packet loss.  The YANG data model
    specifies an implementation of this Information Model for network
-   elements with a focus on the interface, device, and control-plane
+   elements with a focus on interface, device, and control-plane
    discards.
 
 About This Document
@@ -214,24 +214,23 @@ Table of Contents
 
    This document makes use of the following terms:
 
-   Packet discard:  It accounts for any instance where a packet is
-      dropped by a device, regardless of whether the discard was
-      intentional or unintentional.
+   Packet discard:  Any instance where a packet is dropped by a device,
+      regardless of whether the discard was intended or unintended.
 
-   Intended packet discards (Intended discards, for short):  Are packets
+   Intended packet discards (Intended discards, for short):  Packets
       dropped due to deliberate network policies or configurations
       designed to enforce security or Quality of Service (QoS).  For
       example, packets dropped because they match an Access Control List
       (ACL) denying certain traffic types.
 
-   Unintended packet discards (Unintended discards, for short):  Are
-      packets that were dropped, which the network operator otherwise
-      intended to deliver, i.e., which indicates an error state.  There
-      are many possible reasons for unintended packet loss, including:
-      erroring links may corrupt packets in transit; incorrect routing
-      tables may result in packets being dropped because they do not
-      match a valid route; configuration errors may result in a valid
-      packet incorrectly matching an ACL and being dropped.
+   Unintended packet discards (Unintended discards, for short):  Packets
+      that were dropped, which the network operator otherwise intended
+      to deliver, indicating an error state.  There are many possible
+      reasons for unintended packet loss, including: erroring links may
+      corrupt packets in transit; incorrect routing tables may result in
+      packets being dropped because they do not match a valid route;
+      configuration errors may result in a valid packet incorrectly
+      matching an ACL and being dropped.
 
 3.  Problem Statement
 
@@ -291,7 +290,7 @@ Table of Contents
    determine whether a specific discard condition is intended or
    unintended.  That determination is made by the operator, based on the
    discard class together with local policy, configured intent, baseline
-   behavior, duration, affected scope, and other operational context.
+   behaviour, duration, affected scope, and other operational context.
    For example, policy discards may be intended when they enforce a
    deliberate access-control rule, but unintended when a configuration
    error causes valid traffic to match that rule.  Similarly, TTL-
@@ -340,9 +339,9 @@ Table of Contents
 5.  Information Model (IM)
 
       Design note: In order to ease reuse of the IM structure by DMs but
-      without requiring that these DMs to parse the "sx" structure
-      defined in [RFC8791], main reusable nodes are defined in a common
-      module (Section 5.3) while the main IM structure is defined in
+      without requiring these DMs to parse the "sx" structure defined in
+      [RFC8791], the main reusable nodes are defined in a common module
+      (Section 5.3) while the main IM structure is defined in
       Section 5.4.
 
 5.1.  Structure
@@ -467,7 +466,7 @@ Table of Contents
 
                     Figure 1: Abstract IM Tree Structure
 
-   The discard reporting can be organized into several types: control
+   The discard reporting can be organised into several types: control
    plane, interface, flow, and device.  In order to allow for better
    mapping to underlying DMs, the IM supports a set of "features" to
    control the supported type.
@@ -525,7 +524,7 @@ Table of Contents
       protection rules, and explicit null routes.  Such discards are
       typically intended, although whether a specific policy discard is
       intended is determined by the operator (see Section 7.1).  In
-      practice, ingress DoS protection policies are often realized using
+      practice, ingress DoS protection policies are often realised using
       mechanisms such as ingress filtering and uRPF ([RFC2827],
       [RFC3704], and [RFC8704]), remotely triggered blackholing
       ([RFC3882], [RFC5635]), or BGP Flow Specification-based filters
@@ -536,7 +535,7 @@ Table of Contents
 
    discards/errors/:  These are discards due to errors in processing
       packets or frames, which typically indicate unintended packet loss
-      (see Section 7.1).  There are multiple sub-classes:
+      (see Section 7.1).  There are multiple subclasses:
 
       *  discards/errors/l2/rx/:  These are frames discarded due to
             errors in the received Layer 2 frame, including: Cyclic
@@ -561,16 +560,16 @@ Table of Contents
 
       *  discards/errors/l3/ttl-expired:  These discards occur due to
             TTL [RFC791] (or Hop Limit [RFC8200]) expiry.  These can
-            occur, e.g., for the following reasons: normal trace-route
+            occur, e.g., for the following reasons: normal traceroute
             operations, including MPLS LSP ping/traceroute [RFC8029] and
             pseudowire VCCV [RFC5085] which intentionally use TTL
             expiry, end-system TTL/Hop limit set too low, or routing
             loops in the network.
 
       *  discards/errors/l3/no-route:  These discards occur due to a
-            packet not matching any route in the routing table, e.g.,
-            which may be due to routing configuration errors or may be
-            transient discards during convergence.
+            packet not matching any route in the routing table.  This
+            may be due to routing configuration errors or to transient
+            conditions during convergence.
 
       *  discards/errors/l3/neighbor-resolution-failure:  These discards
             occur when the forwarding engine cannot resolve or use the
@@ -1027,9 +1026,9 @@ Table of Contents
        leaf ttl-expired {
          type yang:counter64;
          description
-           "The number of packets discarded because the
-            expired TTL (IPv4 or MPLS) or Hop Limit exceeded
-            (IPv6).";
+           "The number of packets discarded because the TTL
+            (IPv4 or MPLS) expired or the Hop Limit (IPv6)
+            was exceeded.";
        }
        leaf no-route {
          type yang:counter64;
@@ -1646,7 +1645,7 @@ Table of Contents
 
    9.   When there are multiple reasons for discarding a packet, the
         ordering of discard class reporting MUST be unambiguously
-        characterized and exposed by an implementation.  Typically, this
+        characterised and exposed by an implementation.  Typically, this
         can be exposed by an implementation by means of discard-order-
         capability.
 
@@ -1659,7 +1658,7 @@ Table of Contents
    11.  When traffic is mirrored, the discard metrics MUST account for
         the original traffic rather than the reflected traffic.
 
-   12.  Congestion-related discards can be realized differently with
+   12.  Congestion-related discards can be realised differently with
         different queueing and memory architectures.  Whether a no-
         buffer discard is attributed to ingress or egress can differ
         accordingly.  For successful auto-mitigation, discards due to
@@ -1823,7 +1822,7 @@ Table of Contents
         (https://trustee.ietf.org/license-info).
 
         All revisions of IETF and IANA published modules can be found
-        at the YANG Parameters registry
+        at the YANG Parameters registry group
         (https://www.iana.org/assignments/yang-parameters).
 
         This version of this YANG module is part of RFC XXXX; see the
@@ -1965,8 +1964,8 @@ Table of Contents
    unintended loss, since it reports errored received frames.
    Similarly, TTL-expired packets may be expected at a low baseline rate
    due to traceroute or other diagnostic activity, while a sustained
-   increase above baseline may indicate convergence issue, an infinite
-   routing loop, or another operational fault.
+   increase above baseline may indicate a convergence issue, a
+   persistent routing loop, or another operational fault.
 
    Congestion-related loss depends on operator context.  A level of no-
    buffer discards below a defined traffic performance indicator
@@ -2008,11 +2007,11 @@ Table of Contents
 
    1.  Platforms often account for the number of packets discarded where
        the TTL has expired (or IPv6 Hop Limit exceeded), and the device
-       CPU has returned an ICMP Time Exceeded message [RFC4884].  There
-       is typically a policer applied to limit the number of packets
-       sent to the device CPU, however, which implicitly limits the rate
-       of TTL discards that are processed.  One method to account for
-       all packet discards due to TTL expired, even those that are
+       CPU has returned an ICMP Time Exceeded message [RFC4884].
+       However, there is typically a policer applied to limit the number
+       of packets sent to the device CPU, which implicitly limits the
+       rate of TTL discards that are processed.  One method to account
+       for all packet discards due to TTL expiry, even those that are
        dropped by a policer when being forwarded to the CPU, is to use
        accounting of all ingress packets received with TTL=1 as a proxy
        measure.
@@ -2046,10 +2045,10 @@ Table of Contents
    The flow component is included in the IM so that flow-level discard
    classification is aligned with the device- and interface-level
    classification, enabling correlation between flow records and device
-   or interface discard counters.  The characterization of a flow
+   or interface discard counters.  The characterisation of a flow
    depends on the underlying data model that adheres to the IM.  From
    that standpoint, the IM does not make an assumption about flow
-   characterization and identification.  Future flow-oriented data
+   characterisation and identification.  Future flow-oriented data
    models MUST ensure that the flow structure is anchored so that the
    discards are unambiguously associated with a flow.
 
@@ -2150,8 +2149,8 @@ Table of Contents
       subject, misconfigurations, etc.
 
       Also, an attacker who can inject packets can infer the efficiency
-      of its attack by monitoring (the increase of) some discard
-      counters (e.g., policy) and adjust its attack strategy
+      of their attack by monitoring (the increase of) some discard
+      counters (e.g., policy) and adjust their attack strategy
       accordingly.
 
 10.  IANA Considerations
@@ -2517,7 +2516,7 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
    |    | rx                          |device or  |          |        |
    |    |                             |link error |          |        |
    +----+-----------------------------+-----------+----------+--------+
-   |T1  | ingress/discards/errors/l3/ |Tracert    |<=Baseline|        |
+   |T1  | ingress/discards/errors/l3/ |Traceroute |<=Baseline|        |
    |    | ttl-expired                 |           |          |        |
    +----+-----------------------------+-----------+----------+--------+
    |T2  | ingress/discards/errors/l3/ |Convergence|>Baseline | O(1s)  |
@@ -2555,55 +2554,65 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
 
            Table 1: Example Signal-Cause-Mitigation Mapping (1)
 
-   +======+=============================+=============+================+
-   | CASE | DISCARD-CLASS               | Unintended? | Possible       |
-   |      |                             |             | actions        |
-   +======+=============================+=============+================+
-   | E1   | ingress/discards/errors/l2/ |      Y      | Take upstream  |
-   |      | rx                          |             | link or        |
-   |      |                             |             | device out-    |
-   |      |                             |             | of-service     |
-   +------+-----------------------------+-------------+----------------+
-   | T1   | ingress/discards/errors/l3/ |      N      | no action      |
-   |      | ttl-expired                 |             |                |
-   +------+-----------------------------+-------------+----------------+
-   | T2   | ingress/discards/errors/l3/ |      Y      | No action      |
-   |      | ttl-expired                 |             |                |
-   +------+-----------------------------+-------------+----------------+
-   | T3   | ingress/discards/errors/l3/ |      Y      | Roll-back      |
-   |      | ttl-expired                 |             | change         |
-   +------+-----------------------------+-------------+----------------+
-   | P1   | .*/policy/.*                |      N      | No action      |
-   +------+-----------------------------+-------------+----------------+
-   | R1   | ingress/discards/errors/l3/ |      Y      | No action      |
-   |      | no-route                    |             |                |
-   +------+-----------------------------+-------------+----------------+
-   | R2   | ingress/discards/errors/l3/ |      Y      | Roll-back      |
-   |      | no-route                    |             | change         |
-   +------+-----------------------------+-------------+----------------+
-   | R3   | ingress/discards/errors/l3/ |      N      | Escalate to    |
-   |      | no-route                    |             | operator       |
-   +------+-----------------------------+-------------+----------------+
-   | I1   | ingress/discards/errors/    |      Y      | Take device    |
-   |      | internal                    |             | out-of-        |
-   |      |                             |             | service        |
-   +------+-----------------------------+-------------+----------------+
-   | B1   | egress/discards/no-buffer   |      N      | No action      |
-   +------+-----------------------------+-------------+----------------+
-   | B2   | egress/discards/no-buffer   |      Y      | Bring          |
-   |      |                             |             | capacity back  |
-   |      |                             |             | into service   |
-   |      |                             |             | or move        |
-   |      |                             |             | traffic        |
-   +------+-----------------------------+-------------+----------------+
-   | A1   | egress/discards/no-         |      N      | No action      |
-   |      | buffer/../discard-          |             |                |
-   |      | type[type="aqm"]/           |             |                |
-   +------+-----------------------------+-------------+----------------+
-   | A2   | egress/discards/no-         |      Y      | Move traffic   |
-   |      | buffer/../discard-          |             | or add         |
-   |      | type[type="aqm"]/           |             | capacity       |
-   +------+-----------------------------+-------------+----------------+
+   +====+========================================+===========+=========+
+   |Case| DISCARD-CLASS                          |Unintended?|Possible |
+   |    |                                        |           |actions  |
+   +====+========================================+===========+=========+
+   |E1  | ingress/discards/errors/l2/rx          |     Y     |Take     |
+   |    |                                        |           |upstream |
+   |    |                                        |           |link or  |
+   |    |                                        |           |device   |
+   |    |                                        |           |out of   |
+   |    |                                        |           |service  |
+   +----+----------------------------------------+-----------+---------+
+   |T1  | ingress/discards/errors/l3/ttl-expired |     N     |No       |
+   |    |                                        |           |action   |
+   +----+----------------------------------------+-----------+---------+
+   |T2  | ingress/discards/errors/l3/ttl-expired |     Y     |No       |
+   |    |                                        |           |action   |
+   +----+----------------------------------------+-----------+---------+
+   |T3  | ingress/discards/errors/l3/ttl-expired |     Y     |Roll     |
+   |    |                                        |           |back     |
+   |    |                                        |           |change   |
+   +----+----------------------------------------+-----------+---------+
+   |P1  | .*/policy/.*                           |     N     |No       |
+   |    |                                        |           |action   |
+   +----+----------------------------------------+-----------+---------+
+   |R1  | ingress/discards/errors/l3/no-route    |     Y     |No       |
+   |    |                                        |           |action   |
+   +----+----------------------------------------+-----------+---------+
+   |R2  | ingress/discards/errors/l3/no-route    |     Y     |Roll     |
+   |    |                                        |           |back     |
+   |    |                                        |           |change   |
+   +----+----------------------------------------+-----------+---------+
+   |R3  | ingress/discards/errors/l3/no-route    |     N     |Escalate |
+   |    |                                        |           |to       |
+   |    |                                        |           |operator |
+   +----+----------------------------------------+-----------+---------+
+   |I1  | ingress/discards/errors/internal       |     Y     |Take     |
+   |    |                                        |           |device   |
+   |    |                                        |           |out of   |
+   |    |                                        |           |service  |
+   +----+----------------------------------------+-----------+---------+
+   |B1  | egress/discards/no-buffer              |     N     |No       |
+   |    |                                        |           |action   |
+   +----+----------------------------------------+-----------+---------+
+   |B2  | egress/discards/no-buffer              |     Y     |Bring    |
+   |    |                                        |           |capacity |
+   |    |                                        |           |back     |
+   |    |                                        |           |into     |
+   |    |                                        |           |service  |
+   |    |                                        |           |or move  |
+   |    |                                        |           |traffic  |
+   +----+----------------------------------------+-----------+---------+
+   |A1  | egress/discards/no-buffer/../discard-  |     N     |No       |
+   |    | type[type="aqm"]/                      |           |action   |
+   +----+----------------------------------------+-----------+---------+
+   |A2  | egress/discards/no-buffer/../discard-  |     Y     |Move     |
+   |    | type[type="aqm"]/                      |           |traffic  |
+   |    |                                        |           |or add   |
+   |    |                                        |           |capacity |
+   +----+----------------------------------------+-----------+---------+
 
             Table 2: Example Signal-Cause-Mitigation Mapping (2)
 
