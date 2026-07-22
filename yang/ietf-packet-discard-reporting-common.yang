@@ -616,7 +616,7 @@ module ietf-packet-discard-reporting-common {
     leaf dos {
       type yang:counter64;
       description
-        "The number of packets discarded due to 
+        "The number of packets discarded due to
          Denial-of-Service (DoS) protection policies.";
     }
   }
