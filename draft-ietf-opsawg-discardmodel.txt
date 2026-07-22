@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 22 January 2027                                          Nvidia
+Expires: 23 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            21 July 2026
+                                                            22 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 January 2027.
+   This Internet-Draft will expire on 23 January 2027.
 
 Copyright Notice
 
@@ -1980,20 +1980,18 @@ Table of Contents
 
    Policy discards may also require additional context.  Discards
    reported under policy (for example, ACL or policer discards) indicate
-   only that traffic matched a configured rule.  They may still be
-   unintended if the configuration is in error.  If a configured policer
+   only that traffic matched a configured rule.  If a configured policer
    discards traffic because the offered load exceeds a provisioned
-   service profile, that is an intended policy discard, reported under
-   policy/l3/policer.  For example, Expedited Forwarding (EF) [RFC3246]
-   traffic in excess of its provisioned profile may be intentionally
-   discarded by a policer; while intended, sustained policer discards
-   may still be operationally relevant, as they may indicate overload of
-   the provisioned service or a mismatch between offered load and
-   contracted capacity.  Determining intent for policy discards requires
-   operator-local context, such as configuration validation, service
-   policy, and change history.  Operators should verify the
-   configuration enforced in underlying nodes and continuously ensure
-   that the configuration is consistent with the intended service.
+   service profile, that may be considered an intended discard, reported
+   under policy/l3/policer.  For example, Expedited Forwarding (EF)
+   [RFC3246] traffic in excess of its provisioned profile may be
+   intentionally discarded by a policer, although sustained policer
+   discards may still indicate overload of the provisioned service.
+   Policy discards may nonetheless be unintended if the configuration is
+   in error.  Determining intent for policy discards requires operator-
+   local context.  Operators should verify the configuration enforced in
+   underlying nodes and continuously ensure that the configuration is
+   consistent with the intended service.
 
 7.2.  Deployment Experience
 
