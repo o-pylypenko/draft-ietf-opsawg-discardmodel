@@ -11,7 +11,7 @@
 <meta content="Aviran Kadosh" name="author">
 <meta content="Mohamed Boucadair" name="author">
 <meta content="
-       This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on the interface, device, and control-plane discards. 
+       This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards. 
     " name="description">
 <meta content="xml2rfc 3.34.0" name="generator">
 <meta content="Troubleshooting" name="keyword">
@@ -1111,7 +1111,7 @@ svg {
 <h1 id="title">Information and Data Models for Packet Discard Reporting</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on the interface, device, and control-plane discards.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1350,17 +1350,17 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <span class="break"></span><dl class="dlParallel" id="section-2-4">
         <dt id="section-2-4.1">Packet discard:</dt>
         <dd style="margin-left: 1.5em" id="section-2-4.2">
-          <p id="section-2-4.2.1">It accounts for any instance where a packet is dropped by a device, regardless of whether the discard was intentional or unintentional.<a href="#section-2-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-2-4.2.1">Any instance where a packet is dropped by a device, regardless of whether the discard was intended or unintended.<a href="#section-2-4.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-4.3">Intended packet discards (Intended discards, for short):</dt>
         <dd style="margin-left: 1.5em" id="section-2-4.4">
-          <p id="section-2-4.4.1">Are packets dropped due to deliberate network policies or configurations designed to enforce security or Quality of Service (QoS). For example, packets dropped because they match an Access Control List (ACL) denying certain traffic types.<a href="#section-2-4.4.1" class="pilcrow">¶</a></p>
+          <p id="section-2-4.4.1">Packets dropped due to deliberate network policies or configurations designed to enforce security or Quality of Service (QoS). For example, packets dropped because they match an Access Control List (ACL) denying certain traffic types.<a href="#section-2-4.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-2-4.5">Unintended packet discards (Unintended discards, for short):</dt>
         <dd style="margin-left: 1.5em" id="section-2-4.6">
-          <p id="section-2-4.6.1">Are packets that were dropped, which the network operator otherwise intended to deliver, i.e., which indicates an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.<a href="#section-2-4.6.1" class="pilcrow">¶</a></p>
+          <p id="section-2-4.6.1">Packets that were dropped, which the network operator otherwise intended to deliver, indicating an error state.  There are many possible reasons for unintended packet loss, including: erroring links may corrupt packets in transit; incorrect routing tables may result in packets being dropped because they do not match a valid route; configuration errors may result in a valid packet incorrectly matching an ACL and being dropped.<a href="#section-2-4.6.1" class="pilcrow">¶</a></p>
 </dd>
       <dd class="break"></dd>
 </dl>
@@ -1413,7 +1413,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       <dd class="break"></dd>
 </dl>
 <p id="section-3-5">While most of FEATURE-DISCARD-SCOPE, FEATURE-DISCARD-RATE, and FEATURE-DISCARD-DURATION are implicitly supported by the Interfaces Group MIB <span>[<a href="#RFC2863" class="cite xref">RFC2863</a>]</span> and the YANG Data Model for Interface Management <span>[<a href="#RFC8343" class="cite xref">RFC8343</a>]</span>, FEATURE-DISCARD-CLASS requires a more detailed classification scheme than they define. The IM provided in <a href="#infomodel" class="auto internal xref">Section 5</a> defines such a classification scheme to enable automated mapping from discard signals to appropriate mitigation actions.<a href="#section-3-5" class="pilcrow">¶</a></p>
-<p id="section-3-6">The classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on the discard class together with local policy, configured intent, baseline behavior, duration, affected scope, and other operational context. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.<a href="#section-3-6" class="pilcrow">¶</a></p>
+<p id="section-3-6">The classification defined in this document does not by itself determine whether a specific discard condition is intended or unintended. That determination is made by the operator, based on the discard class together with local policy, configured intent, baseline behaviour, duration, affected scope, and other operational context. For example, policy discards may be intended when they enforce a deliberate access-control rule, but unintended when a configuration error causes valid traffic to match that rule. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence, a routing loop, or another operational fault.<a href="#section-3-6" class="pilcrow">¶</a></p>
 <p id="section-3-7">The purpose of the discard classification is to expose the signal with enough precision that an operator or automation system can make that determination consistently. <a href="#mapping" class="auto internal xref">Appendix B</a> provides illustrative examples of how discard class, rate, duration, and inferred cause can be combined to determine whether a discard is unintended and what action, if any, is appropriate.<a href="#section-3-7" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1442,7 +1442,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
       </h2>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-5-1.1">
-          <p id="section-5-1.1.1">Design note: In order to ease reuse of the IM structure by DMs but without requiring that these DMs to parse the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>, main reusable nodes are defined in a common module (<a href="#common-module" class="auto internal xref">Section 5.3</a>) while the main IM structure is defined in <a href="#infomodel-module" class="auto internal xref">Section 5.4</a>.<a href="#section-5-1.1.1" class="pilcrow">¶</a></p>
+          <p id="section-5-1.1.1">Design note: In order to ease reuse of the IM structure by DMs but without requiring these DMs to parse the "sx" structure defined in <span>[<a href="#RFC8791" class="cite xref">RFC8791</a>]</span>, the main reusable nodes are defined in a common module (<a href="#common-module" class="auto internal xref">Section 5.3</a>) while the main IM structure is defined in <a href="#infomodel-module" class="auto internal xref">Section 5.4</a>.<a href="#section-5-1.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="infomodel-structure">
@@ -1567,7 +1567,7 @@ module: ietf-packet-discard-reporting-sx
 <a href="#name-abstract-im-tree-structure" class="selfRef">Abstract IM Tree Structure</a>
           </figcaption></figure>
 </div>
-<p id="section-5.1-4">The discard reporting can be organized into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying DMs, the IM supports a set of "features" to control the supported type.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.1-4">The discard reporting can be organised into several types: control plane, interface, flow, and device. In order to allow for better mapping to underlying DMs, the IM supports a set of "features" to control the supported type.<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 <p id="section-5.1-5">A complete classification path follows the pattern: component/direction/type/layer/subtype/sub-subtype/.../metric. <a href="#wheredropped" class="auto internal xref">Appendix A</a> illustrates where these discards typically occur in a network device.  The elements of the tree are defined as follows:<a href="#section-5.1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1-6.1">
@@ -1633,12 +1633,12 @@ module: ietf-packet-discard-reporting-sx
 <span class="break"></span><dl class="dlParallel" id="section-5.2-1">
           <dt id="section-5.2-1.1">discards/policy/:</dt>
           <dd style="margin-left: 1.5em" id="section-5.2-1.2">
-            <p id="section-5.2-1.2.1">These are discards of packets that matched a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes. Such discards are typically intended, although whether a specific policy discard is intended is determined by the operator (see <a href="#intent" class="auto internal xref">Section 7.1</a>). In practice, ingress DoS protection policies are often realized using mechanisms such as ingress filtering and uRPF (<span>[<a href="#RFC2827" class="cite xref">RFC2827</a>]</span>, <span>[<a href="#RFC3704" class="cite xref">RFC3704</a>]</span>, and <span>[<a href="#RFC8704" class="cite xref">RFC8704</a>]</span>), remotely triggered blackholing (<span>[<a href="#RFC3882" class="cite xref">RFC3882</a>]</span>, <span>[<a href="#RFC5635" class="cite xref">RFC5635</a>]</span>), or BGP Flow Specification-based filters (<span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>, <span>[<a href="#RFC8956" class="cite xref">RFC8956</a>]</span>, and <span>[<a href="#RFC9117" class="cite xref">RFC9117</a>]</span>); all such policy-driven discards are reported under this class. Consistent with the requirements listed in <a href="#requirements" class="auto internal xref">Section 6.2</a>, a policy discard increments one and only one of the policy subtypes.<a href="#section-5.2-1.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-1.2.1">These are discards of packets that matched a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes. Such discards are typically intended, although whether a specific policy discard is intended is determined by the operator (see <a href="#intent" class="auto internal xref">Section 7.1</a>). In practice, ingress DoS protection policies are often realised using mechanisms such as ingress filtering and uRPF (<span>[<a href="#RFC2827" class="cite xref">RFC2827</a>]</span>, <span>[<a href="#RFC3704" class="cite xref">RFC3704</a>]</span>, and <span>[<a href="#RFC8704" class="cite xref">RFC8704</a>]</span>), remotely triggered blackholing (<span>[<a href="#RFC3882" class="cite xref">RFC3882</a>]</span>, <span>[<a href="#RFC5635" class="cite xref">RFC5635</a>]</span>), or BGP Flow Specification-based filters (<span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>, <span>[<a href="#RFC8956" class="cite xref">RFC8956</a>]</span>, and <span>[<a href="#RFC9117" class="cite xref">RFC9117</a>]</span>); all such policy-driven discards are reported under this class. Consistent with the requirements listed in <a href="#requirements" class="auto internal xref">Section 6.2</a>, a policy discard increments one and only one of the policy subtypes.<a href="#section-5.2-1.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-5.2-1.3">discards/errors/:</dt>
           <dd style="margin-left: 1.5em" id="section-5.2-1.4">
-            <p id="section-5.2-1.4.1">These are discards due to errors in processing packets or frames, which typically indicate unintended packet loss (see <a href="#intent" class="auto internal xref">Section 7.1</a>).  There are multiple sub-classes:<a href="#section-5.2-1.4.1" class="pilcrow">¶</a></p>
+            <p id="section-5.2-1.4.1">These are discards due to errors in processing packets or frames, which typically indicate unintended packet loss (see <a href="#intent" class="auto internal xref">Section 7.1</a>).  There are multiple subclasses:<a href="#section-5.2-1.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-1.4.2.1">
                 <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.1.1">
@@ -1676,7 +1676,7 @@ module: ietf-packet-discard-reporting-sx
                 <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.4.1">
                   <dt id="section-5.2-1.4.2.4.1.1">discards/errors/l3/ttl-expired:</dt>
                   <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.4.1.2">
-                    <p id="section-5.2-1.4.2.4.1.2.1">These discards occur due to TTL <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span> (or Hop Limit <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, including MPLS LSP ping/traceroute <span>[<a href="#RFC8029" class="cite xref">RFC8029</a>]</span> and pseudowire VCCV <span>[<a href="#RFC5085" class="cite xref">RFC5085</a>]</span> which intentionally use TTL expiry, end-system TTL/Hop limit set too low, or routing loops in the network.<a href="#section-5.2-1.4.2.4.1.2.1" class="pilcrow">¶</a></p>
+                    <p id="section-5.2-1.4.2.4.1.2.1">These discards occur due to TTL <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span> (or Hop Limit <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>) expiry. These can occur, e.g., for the following reasons: normal traceroute operations, including MPLS LSP ping/traceroute <span>[<a href="#RFC8029" class="cite xref">RFC8029</a>]</span> and pseudowire VCCV <span>[<a href="#RFC5085" class="cite xref">RFC5085</a>]</span> which intentionally use TTL expiry, end-system TTL/Hop limit set too low, or routing loops in the network.<a href="#section-5.2-1.4.2.4.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
@@ -1685,7 +1685,7 @@ module: ietf-packet-discard-reporting-sx
                 <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.5.1">
                   <dt id="section-5.2-1.4.2.5.1.1">discards/errors/l3/no-route:</dt>
                   <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.5.1.2">
-                    <p id="section-5.2-1.4.2.5.1.2.1">These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.<a href="#section-5.2-1.4.2.5.1.2.1" class="pilcrow">¶</a></p>
+                    <p id="section-5.2-1.4.2.5.1.2.1">These discards occur due to a packet not matching any route in the routing table. This may be due to routing configuration errors or to transient conditions during convergence.<a href="#section-5.2-1.4.2.5.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
@@ -2155,9 +2155,9 @@ module ietf-packet-discard-reporting-common {
     leaf ttl-expired {
       type yang:counter64;
       description
-        "The number of packets discarded because the
-         expired TTL (IPv4 or MPLS) or Hop Limit exceeded
-         (IPv6).";
+        "The number of packets discarded because the TTL
+         (IPv4 or MPLS) expired or the Hop Limit (IPv6)
+         was exceeded.";
     }
     leaf no-route {
       type yang:counter64;
@@ -2755,7 +2755,7 @@ module: ietf-packet-discard-reporting
             <p id="section-6.2-3.8.1">In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet <span class="bcp14">MUST</span> only account against a single error, policy, or no-buffer discard subclass. When per-type counters are reported, the discard <span class="bcp14">MUST</span> be counted in at most one discard-type entry.<a href="#section-6.2-3.8.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.9">
-            <p id="section-6.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be unambiguously characterized and exposed by an implementation. Typically, this can be exposed by an implementation by means of <code>discard-order-capability</code>.<a href="#section-6.2-3.9.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be unambiguously characterised and exposed by an implementation. Typically, this can be exposed by an implementation by means of <code>discard-order-capability</code>.<a href="#section-6.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.10">
             <p id="section-6.2-3.10.1"><code>class[id]</code> represents the QoS class assigned to a packet by the forwarding implementation using Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span>, IEEE 802.1Q PCP <span>[<a href="#IEEE802.1Q" class="cite xref">IEEE802.1Q</a>]</span>, MPLS TC <span>[<a href="#RFC5462" class="cite xref">RFC5462</a>]</span>, or another mechanism. If no QoS classification is used, no-buffer discards <span class="bcp14">MUST</span> be reported as <code>class[id="0"]</code>, which represents the default class.<a href="#section-6.2-3.10.1" class="pilcrow">¶</a></p>
@@ -2764,7 +2764,7 @@ module: ietf-packet-discard-reporting
             <p id="section-6.2-3.11.1">When traffic is mirrored, the discard metrics <span class="bcp14">MUST</span> account for the original traffic rather than the reflected traffic.<a href="#section-6.2-3.11.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.12">
-            <p id="section-6.2-3.12.1">Congestion-related discards can be realized differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to egress interface congestion <span class="bcp14">MUST</span> be reportable on <code>egress</code>, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) <span class="bcp14">MUST</span> be reportable on <code>ingress</code>.<a href="#section-6.2-3.12.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-3.12.1">Congestion-related discards can be realised differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to egress interface congestion <span class="bcp14">MUST</span> be reportable on <code>egress</code>, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) <span class="bcp14">MUST</span> be reportable on <code>ingress</code>.<a href="#section-6.2-3.12.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.13">
             <p id="section-6.2-3.13.1">When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution <span class="bcp14">MUST</span> relate to the outer header at the point of discard.<a href="#section-6.2-3.13.1" class="pilcrow">¶</a></p>
@@ -2938,7 +2938,7 @@ module ietf-packet-discard-reporting {
      (https://trustee.ietf.org/license-info).
 
      All revisions of IETF and IANA published modules can be found
-     at the YANG Parameters registry
+     at the YANG Parameters registry group
      (https://www.iana.org/assignments/yang-parameters).
 
      This version of this YANG module is part of RFC XXXX; see the
@@ -3080,7 +3080,7 @@ module ietf-packet-discard-reporting {
 <a href="#section-7.1" class="section-number selfRef">7.1. </a><a href="#name-determining-operator-intent" class="section-name selfRef">Determining Operator Intent</a>
         </h3>
 <p id="section-7.1-1">Device discard counters do not by themselves establish operator intent. The classification defined in this document identifies the discard condition. Whether that condition is intended or unintended is determined by the operator using the discard class together with local policy, configured intent, baseline behaviour, duration, affected scope, service context, and other operational evidence.<a href="#section-7.1-1" class="pilcrow">¶</a></p>
-<p id="section-7.1-2">Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate convergence issue, an infinite routing loop, or another operational fault.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
+<p id="section-7.1-2">Some discard classes provide a strong signal on their own. For example, errors/l2/rx above baseline will generally indicate unintended loss, since it reports errored received frames. Similarly, TTL-expired packets may be expected at a low baseline rate due to traceroute or other diagnostic activity, while a sustained increase above baseline may indicate a convergence issue, a persistent routing loop, or another operational fault.<a href="#section-7.1-2" class="pilcrow">¶</a></p>
 <p id="section-7.1-3">Congestion-related loss depends on operator context. A level of no-buffer discards below a defined traffic performance indicator (captured in an SLA, typically) may be expected or intended. The same discard class above a performance indicator, sustained for longer than expected, may be unintended and thus require action. For example, congestion-related discards of best-effort traffic are reported under <code>interface/discards[direction="egress"]/no-buffer/qos/class[id]</code>, where <code>class[id]</code> identifies the best-effort class. Such discards may be determined to be intended if the loss rate over the measurement interval is below the operator's SLA, and unintended if it is above the SLA (see cases B1 and B2 in <a href="#mapping" class="auto internal xref">Appendix B</a>). Similarly, for Lower Effort (LE) <span>[<a href="#RFC8622" class="cite xref">RFC8622</a>]</span> traffic, a higher loss rate during periods of high utilisation may be acceptable or intended, subject to the operator's service policy. When available, <code>discard-type</code> counters allow operators to apply different baselines to AQM and tail-drop discards.<a href="#section-7.1-3" class="pilcrow">¶</a></p>
 <p id="section-7.1-4">Policy discards may also require additional context. Discards reported under policy (for example, ACL or policer discards) indicate only that traffic matched a configured rule. If a configured policer discards traffic because the offered load exceeds a provisioned service profile, that may be considered an intended discard, reported under <code>policy/l3/policer</code>. For example, Expedited Forwarding (EF) <span>[<a href="#RFC3246" class="cite xref">RFC3246</a>]</span> traffic in excess of its provisioned profile may be intentionally discarded by a policer, although sustained policer discards may still indicate overload of the provisioned service. Policy discards may nonetheless be unintended if the configuration is in error. Determining intent for policy discards requires operator-local context. Operators should verify the configuration enforced in underlying nodes and continuously ensure that the configuration is consistent with the intended service.<a href="#section-7.1-4" class="pilcrow">¶</a></p>
 </section>
@@ -3093,7 +3093,7 @@ module ietf-packet-discard-reporting {
 <p id="section-7.2-1">This section captures practical insights gained from implementing the model across multiple vendors' platforms, as guidance for future implementers and operators:<a href="#section-7.2-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-7.2-2">
 <li id="section-7.2-2.1">
-            <p id="section-7.2-2.1.1">Platforms often account for the number of packets discarded where the TTL has expired (or IPv6 Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message <span>[<a href="#RFC4884" class="cite xref">RFC4884</a>]</span>. There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.<a href="#section-7.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-7.2-2.1.1">Platforms often account for the number of packets discarded where the TTL has expired (or IPv6 Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message <span>[<a href="#RFC4884" class="cite xref">RFC4884</a>]</span>. However, there is typically a policer applied to limit the number of packets sent to the device CPU, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expiry, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.<a href="#section-7.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.2-2.2">
             <p id="section-7.2-2.2.1">Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured in order to differentiate between <code>interface/discards[direction="ingress"]/policy/l3/null-route</code> and <code>interface/discards[direction="ingress"]/errors/l3/no-route</code>.<a href="#section-7.2-2.2.1" class="pilcrow">¶</a></p>
@@ -3102,7 +3102,12 @@ module ietf-packet-discard-reporting {
             <p id="section-7.2-2.3.1">It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.<a href="#section-7.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.2-2.4">
-            <p id="section-7.2-2.4.1">It is not possible to identify a configuration error (e.g., when intended discards are unintended) with device discard metrics alone. For example, additional context is needed to determine if ACL discards are intended or due to a misconfigured ACL (i.e., with configuration validation before deployment or by detecting a significant change in ACL discards after a configuration change compared to before).<a href="#section-7.2-2.4.1" class="pilcrow">¶</a></p>
+            <p id="section-7.2-2.4.1">It is not possible to identify a configuration error (e.g., when
+intended discards are unintended) with device discard metrics alone.  For
+example, additional context is needed to determine if ACL discards are
+intended or due to a misconfigured ACL (i.e., with configuration validation
+before deployment or by detecting a significant change in ACL discards after
+a configuration change compared to before).<a href="#section-7.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.2-2.5">
             <p id="section-7.2-2.5.1">Aggregate counters need to be able to deal with the possibility of discontinuities in the underlying counters.<a href="#section-7.2-2.5.1" class="pilcrow">¶</a></p>
@@ -3118,7 +3123,7 @@ module ietf-packet-discard-reporting {
         <h3 id="name-anchoring-flow-structure">
 <a href="#section-7.3" class="section-number selfRef">7.3. </a><a href="#name-anchoring-flow-structure" class="section-name selfRef">Anchoring Flow Structure</a>
         </h3>
-<p id="section-7.3-1">The flow component is included in the IM so that flow-level discard classification is aligned with the device- and interface-level classification, enabling correlation between flow records and device or interface discard counters. The characterization of a flow depends on the underlying data model that adheres to the IM. From that standpoint, the IM does not make an assumption about flow characterization and identification. Future flow-oriented data models <span class="bcp14">MUST</span> ensure that the flow structure is anchored so that the discards are unambiguously associated with a flow.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
+<p id="section-7.3-1">The flow component is included in the IM so that flow-level discard classification is aligned with the device- and interface-level classification, enabling correlation between flow records and device or interface discard counters. The characterisation of a flow depends on the underlying data model that adheres to the IM. From that standpoint, the IM does not make an assumption about flow characterisation and identification. Future flow-oriented data models <span class="bcp14">MUST</span> ensure that the flow structure is anchored so that the discards are unambiguously associated with a flow.<a href="#section-7.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3207,7 +3212,7 @@ module ietf-packet-discard-reporting {
           <dd class="break"></dd>
 <dt id="section-9.2-6.3"></dt>
           <dd style="margin-left: 1.5em" id="section-9.2-6.4">
-            <p id="section-9.2-6.4.1">Also, an attacker who can inject packets can infer the efficiency of its attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust its attack strategy accordingly.<a href="#section-9.2-6.4.1" class="pilcrow">¶</a></p>
+            <p id="section-9.2-6.4.1">Also, an attacker who can inject packets can infer the efficiency of their attack by monitoring (the increase of) some discard counters (e.g., policy) and adjust their attack strategy accordingly.<a href="#section-9.2-6.4.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
@@ -3625,7 +3630,7 @@ module ietf-packet-discard-reporting {
           <tr>
             <td class="text-left" rowspan="1" colspan="1">T1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
-            <td class="text-left" rowspan="1" colspan="1">Tracert</td>
+            <td class="text-left" rowspan="1" colspan="1">Traceroute</td>
             <td class="text-left" rowspan="1" colspan="1">&lt;=Baseline</td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
           </tr>
@@ -3717,7 +3722,7 @@ module ietf-packet-discard-reporting {
         </caption>
 <thead>
           <tr>
-            <th class="text-left" rowspan="1" colspan="1">CASE</th>
+            <th class="text-left" rowspan="1" colspan="1">Case</th>
             <th class="text-left" rowspan="1" colspan="1">DISCARD-CLASS</th>
             <th class="text-center" rowspan="1" colspan="1">Unintended?</th>
             <th class="text-left" rowspan="1" colspan="1">Possible actions</th>
@@ -3728,13 +3733,13 @@ module ietf-packet-discard-reporting {
             <td class="text-left" rowspan="1" colspan="1">E1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l2/rx</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
-            <td class="text-left" rowspan="1" colspan="1">Take upstream link or device out-of-service</td>
+            <td class="text-left" rowspan="1" colspan="1">Take upstream link or device out of service</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">T1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-center" rowspan="1" colspan="1">N</td>
-            <td class="text-left" rowspan="1" colspan="1">no action</td>
+            <td class="text-left" rowspan="1" colspan="1">No action</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">T2</td>
@@ -3746,7 +3751,7 @@ module ietf-packet-discard-reporting {
             <td class="text-left" rowspan="1" colspan="1">T3</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/ttl-expired</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
-            <td class="text-left" rowspan="1" colspan="1">Roll-back change</td>
+            <td class="text-left" rowspan="1" colspan="1">Roll back change</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">P1</td>
@@ -3764,7 +3769,7 @@ module ietf-packet-discard-reporting {
             <td class="text-left" rowspan="1" colspan="1">R2</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/l3/no-route</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
-            <td class="text-left" rowspan="1" colspan="1">Roll-back change</td>
+            <td class="text-left" rowspan="1" colspan="1">Roll back change</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">R3</td>
@@ -3776,7 +3781,7 @@ module ietf-packet-discard-reporting {
             <td class="text-left" rowspan="1" colspan="1">I1</td>
             <td class="text-left" rowspan="1" colspan="1">ingress/discards/errors/internal</td>
             <td class="text-center" rowspan="1" colspan="1">Y</td>
-            <td class="text-left" rowspan="1" colspan="1">Take device out-of-service</td>
+            <td class="text-left" rowspan="1" colspan="1">Take device out of service</td>
           </tr>
           <tr>
             <td class="text-left" rowspan="1" colspan="1">B1</td>
