@@ -261,7 +261,7 @@ Table of Contents
    four key features of packet loss:
 
    FEATURE-DISCARD-SCOPE:  Determines which devices, interfaces, and/or
-      flows are impacted.  This also needs to cover control plane
+      flows are impacted.  This also needs to cover control-plane
       discards.
 
    FEATURE-DISCARD-RATE:  The rate and/or magnitude of the discards,
@@ -349,7 +349,7 @@ Table of Contents
 
    The IM defines a hierarchical classification scheme for packet
    discards, which captures where in a device the discards are accounted
-   (component), in which direction of traffic they were flowing
+   for (component), in which direction of traffic they were flowing
    (direction), whether they were successfully processed or discarded
    (type), what protocol layer they belong to (layer), and the specific
    reason for any discards (subtypes).  This structure enables both
@@ -519,19 +519,20 @@ Table of Contents
 
 5.2.  Subtype Definitions
 
-   discards/policy/: These are discards of packets that matched a
-   configured policy, including: ACLs, traffic policers, unicast Reverse
-   Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection
-   rules, and explicit null routes.  Such discards are typically
-   intended, although whether a specific policy discard is intended is
-   determined by the operator (see Section 7.1).  In practice, ingress
-   DoS protection policies are often realized using mechanisms such as
-   ingress filtering and uRPF ([RFC2827], [RFC3704], and [RFC8704]),
-   remotely triggered blackholing ([RFC3882], [RFC5635]), or BGP Flow
-   Specification–based filters ([RFC8955], [RFC8956], and [RFC9117]);
-   all such policy-driven discards are reported under this class.
-   Consistent with the requirements listed in Section 6.2, a policy
-   discard increments one and only one of the policy subtypes.
+   discards/policy/:  These are discards of packets that matched a
+      configured policy, including: ACLs, traffic policers, unicast
+      Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS)
+      protection rules, and explicit null routes.  Such discards are
+      typically intended, although whether a specific policy discard is
+      intended is determined by the operator (see Section 7.1).  In
+      practice, ingress DoS protection policies are often realized using
+      mechanisms such as ingress filtering and uRPF ([RFC2827],
+      [RFC3704], and [RFC8704]), remotely triggered blackholing
+      ([RFC3882], [RFC5635]), or BGP Flow Specification-based filters
+      ([RFC8955], [RFC8956], and [RFC9117]); all such policy-driven
+      discards are reported under this class.  Consistent with the
+      requirements listed in Section 6.2, a policy discard increments
+      one and only one of the policy subtypes.
 
    discards/errors/:  These are discards due to errors in processing
       packets or frames, which typically indicate unintended packet loss
@@ -566,15 +567,15 @@ Table of Contents
             expiry, end-system TTL/Hop limit set too low, or routing
             loops in the network.
 
-      *  discards/errors/l3/no-route/:  These discards occur due to a
+      *  discards/errors/l3/no-route:  These discards occur due to a
             packet not matching any route in the routing table, e.g.,
             which may be due to routing configuration errors or may be
             transient discards during convergence.
 
-      *  discards/errors/neighbor-resolution-failure/:  These discards
-            occur due when forwarding engine could not resolve or use
-            the link-layer adjacency required to forward the packet to
-            the selected next hop [RFC826][RFC4891].
+      *  discards/errors/l3/neighbor-resolution-failure:  These discards
+            occur when the forwarding engine cannot resolve or use the
+            link-layer adjacency required to forward the packet to the
+            selected next hop ([RFC826], [RFC4861]).
 
       *  discards/errors/internal/:  These discards occur due to
             internal device issues, including: parity errors in device
@@ -1644,7 +1645,7 @@ Table of Contents
         one discard-type entry.
 
    9.   When there are multiple reasons for discarding a packet, the
-        ordering of discard class reporting MUST be unambigousily
+        ordering of discard class reporting MUST be unambiguously
         characterized and exposed by an implementation.  Typically, this
         can be exposed by an implementation by means of discard-order-
         capability.
@@ -1661,7 +1662,7 @@ Table of Contents
    12.  Congestion-related discards can be realized differently with
         different queueing and memory architectures.  Whether a no-
         buffer discard is attributed to ingress or egress can differ
-        accordingly.  For successful auto-mitigation, discards due to an
+        accordingly.  For successful auto-mitigation, discards due to
         egress interface congestion MUST be reportable on egress, while
         discards due to device-level congestion (e.g., due to exceeding
         the device forwarding rate) MUST be reportable on ingress.
@@ -1693,6 +1694,12 @@ Table of Contents
 
    A received unicast IPv6 packet discarded due to Hop Limit expiry
    would increment:
+
+   *  interface/discards[direction="ingress"]/l3/address-family-
+      stat[address-family="ipv6"]/unicast/packets
+
+   *  interface/discards[direction="ingress"]/l3/address-family-
+      stat[address-family="ipv6"]/unicast/bytes
 
    *  interface/discards[direction="ingress"]/errors/l3/ttl-expired
 
@@ -1730,7 +1737,7 @@ Table of Contents
 
    *  interface/discards[direction="ingress"]/policy/l3/rpf
 
-   A "good" Layer-2 frame received would increment:
+   A "good" Layer 2 frame received would increment:
 
    *  interface/traffic[direction="ingress"]/l2/frames
 
@@ -2013,8 +2020,8 @@ Table of Contents
    2.  Where no route discards are implemented with a default null
        route, separate discard accounting is required for any explicit
        null routes configured in order to differentiate between
-       interface/ingress/discards/policy/null-route/packets and
-       interface/ingress/discards/errors/no-route/packets.
+       interface/discards[direction="ingress"]/policy/l3/null-route and
+       interface/discards[direction="ingress"]/errors/l3/no-route.
 
    3.  It is useful to account separately for transit packets discarded
        by ACLs or policers, and packets discarded by ACLs or policers
@@ -2111,8 +2118,8 @@ Table of Contents
 
 9.2.  Data Model
 
-   This section is modeled after the template described in Section 3.7.1
-   of [RFC9907].
+   This section is modelled after the template described in
+   Section 3.7.1 of [RFC9907].
 
    The YANG module specified in Section 6.4 defines a data model that is
    designed to be accessed via YANG-based management protocols, such as
@@ -2226,10 +2233,10 @@ Table of Contents
               DOI 10.17487/RFC3688, January 2004,
               <https://www.rfc-editor.org/rfc/rfc3688>.
 
-   [RFC4891]  Graveman, R., Parthasarathy, M., Savola, P., and H.
-              Tschofenig, "Using IPsec to Secure IPv6-in-IPv4 Tunnels",
-              RFC 4891, DOI 10.17487/RFC4891, May 2007,
-              <https://www.rfc-editor.org/rfc/rfc4891>.
+   [RFC4861]  Narten, T., Nordmark, E., Simpson, W., and H. Soliman,
+              "Neighbor Discovery for IP version 6 (IPv6)", RFC 4861,
+              DOI 10.17487/RFC4861, September 2007,
+              <https://www.rfc-editor.org/rfc/rfc4861>.
 
    [RFC5462]  Andersson, L. and R. Asati, "Multiprotocol Label Switching
               (MPLS) Label Stack Entry: "EXP" Field Renamed to "Traffic
@@ -2491,10 +2498,10 @@ Appendix B.  Example Signal-to-mitigation Action Mapping
 
    Tables 1 and 2 are a single logical example split into two physical
    tables for readability.  Rows with the same Case value correspond.
-   Table 1 shows the observed discard signal, inferred cause, rate,
-   duration, and example operator determination of whether the discard
-   is unintended.  Table 2 shows the corresponding example mitigation
-   action.
+   Table 1 shows the observed discard signal, inferred cause, rate, and
+   duration.  Table 2 shows the example operator determination of
+   whether the discard is unintended and the corresponding example
+   mitigation action.
 
    The "Unintended?" column is illustrative.  It is not a normative
    property of the discard class.  In practice, the same discard class

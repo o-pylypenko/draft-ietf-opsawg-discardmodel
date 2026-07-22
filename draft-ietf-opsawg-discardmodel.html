@@ -1393,7 +1393,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <span class="break"></span><dl class="dlParallel" id="section-3-4">
         <dt id="section-3-4.1">FEATURE-DISCARD-SCOPE:</dt>
         <dd style="margin-left: 1.5em" id="section-3-4.2">
-          <p id="section-3-4.2.1">Determines which devices, interfaces, and/or flows are impacted. This also needs to cover control plane discards.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-4.2.1">Determines which devices, interfaces, and/or flows are impacted. This also needs to cover control-plane discards.<a href="#section-3-4.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-3-4.3">FEATURE-DISCARD-RATE:</dt>
@@ -1450,7 +1450,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
         <h3 id="name-structure">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-structure" class="section-name selfRef">Structure</a>
         </h3>
-<p id="section-5.1-1">The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted (component), in which direction of traffic they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (subtypes). This structure enables both high-level monitoring of total discards (i.e., aggregates) and more detailed triage to map to mitigation actions.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">The IM defines a hierarchical classification scheme for packet discards, which captures where in a device the discards are accounted for (component), in which direction of traffic they were flowing (direction), whether they were successfully processed or discarded (type), what protocol layer they belong to (layer), and the specific reason for any discards (subtypes). This structure enables both high-level monitoring of total discards (i.e., aggregates) and more detailed triage to map to mitigation actions.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">The abstract structure of the IM is depicted in <a href="#tree-im-abstract" class="auto internal xref">Figure 1</a>. The full YANG tree diagram of the IM is provided in <a href="#sec-im-full-tree" class="auto internal xref">Appendix C</a>.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <span id="name-abstract-im-tree-structure"></span><div id="tree-im-abstract">
 <figure id="figure-1">
@@ -1630,77 +1630,80 @@ module: ietf-packet-discard-reporting-sx
         <h3 id="name-subtype-definitions">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-subtype-definitions" class="section-name selfRef">Subtype Definitions</a>
         </h3>
-<p id="section-5.2-1">discards/policy/:
-These are discards of packets that matched a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes. Such discards are typically intended, although whether a specific policy discard is intended is determined by the operator (see <a href="#intent" class="auto internal xref">Section 7.1</a>). In practice, ingress DoS protection policies are often realized using mechanisms such as ingress filtering and uRPF (<span>[<a href="#RFC2827" class="cite xref">RFC2827</a>]</span>, <span>[<a href="#RFC3704" class="cite xref">RFC3704</a>]</span>, and <span>[<a href="#RFC8704" class="cite xref">RFC8704</a>]</span>), remotely triggered blackholing (<span>[<a href="#RFC3882" class="cite xref">RFC3882</a>]</span>, <span>[<a href="#RFC5635" class="cite xref">RFC5635</a>]</span>), or BGP Flow Specification–based filters (<span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>, <span>[<a href="#RFC8956" class="cite xref">RFC8956</a>]</span>, and <span>[<a href="#RFC9117" class="cite xref">RFC9117</a>]</span>); all such policy-driven discards are reported under this class. Consistent with the requirements listed in <a href="#requirements" class="auto internal xref">Section 6.2</a>, a policy discard increments one and only one of the policy subtypes.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlParallel" id="section-5.2-2">
-          <dt id="section-5.2-2.1">discards/errors/:</dt>
-          <dd style="margin-left: 1.5em" id="section-5.2-2.2">
-            <p id="section-5.2-2.2.1">These are discards due to errors in processing packets or frames, which typically indicate unintended packet loss (see <a href="#intent" class="auto internal xref">Section 7.1</a>).  There are multiple sub-classes:<a href="#section-5.2-2.2.1" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlParallel" id="section-5.2-1">
+          <dt id="section-5.2-1.1">discards/policy/:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-1.2">
+            <p id="section-5.2-1.2.1">These are discards of packets that matched a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes. Such discards are typically intended, although whether a specific policy discard is intended is determined by the operator (see <a href="#intent" class="auto internal xref">Section 7.1</a>). In practice, ingress DoS protection policies are often realized using mechanisms such as ingress filtering and uRPF (<span>[<a href="#RFC2827" class="cite xref">RFC2827</a>]</span>, <span>[<a href="#RFC3704" class="cite xref">RFC3704</a>]</span>, and <span>[<a href="#RFC8704" class="cite xref">RFC8704</a>]</span>), remotely triggered blackholing (<span>[<a href="#RFC3882" class="cite xref">RFC3882</a>]</span>, <span>[<a href="#RFC5635" class="cite xref">RFC5635</a>]</span>), or BGP Flow Specification-based filters (<span>[<a href="#RFC8955" class="cite xref">RFC8955</a>]</span>, <span>[<a href="#RFC8956" class="cite xref">RFC8956</a>]</span>, and <span>[<a href="#RFC9117" class="cite xref">RFC9117</a>]</span>); all such policy-driven discards are reported under this class. Consistent with the requirements listed in <a href="#requirements" class="auto internal xref">Section 6.2</a>, a policy discard increments one and only one of the policy subtypes.<a href="#section-5.2-1.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+<dt id="section-5.2-1.3">discards/errors/:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-1.4">
+            <p id="section-5.2-1.4.1">These are discards due to errors in processing packets or frames, which typically indicate unintended packet loss (see <a href="#intent" class="auto internal xref">Section 7.1</a>).  There are multiple sub-classes:<a href="#section-5.2-1.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-5.2-2.2.2.1">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.1.1">
-                  <dt id="section-5.2-2.2.2.1.1.1">discards/errors/l2/rx/:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.1.1.2">
-                    <p id="section-5.2-2.2.2.1.1.2.1">These are frames discarded due to errors in the received Layer 2 frame, including: Cyclic Redundancy Check (CRC) errors, invalid Media Access Control (MAC) addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.<a href="#section-5.2-2.2.2.1.1.2.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-5.2-1.4.2.1">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.1.1">
+                  <dt id="section-5.2-1.4.2.1.1.1">discards/errors/l2/rx/:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.1.1.2">
+                    <p id="section-5.2-1.4.2.1.1.2.1">These are frames discarded due to errors in the received Layer 2 frame, including: Cyclic Redundancy Check (CRC) errors, invalid Media Access Control (MAC) addresses, invalid VLAN tags, frame size violations and other malformed frame conditions.<a href="#section-5.2-1.4.2.1.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
 </li>
-              <li class="normal" id="section-5.2-2.2.2.2">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.2.1">
-                  <dt id="section-5.2-2.2.2.2.1.1">discards/errors/l3/rx/:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.2.1.2">
-                    <p id="section-5.2-2.2.2.2.1.2.1">These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors and invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).<a href="#section-5.2-2.2.2.2.1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-1.4.2.2">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.2.1">
+                  <dt id="section-5.2-1.4.2.2.1.1">discards/errors/l3/rx/:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.2.1.2">
+                    <p id="section-5.2-1.4.2.2.1.2.1">These discards occur due to errors in the received packet, indicating an upstream problem rather than an issue with the device dropping the errored packets, including: header checksum errors and invalid packet errors (i.e., incorrect version, incorrect header length, invalid options, and other malformed packet conditions).<a href="#section-5.2-1.4.2.2.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                   <dd class="break"></dd>
-<dt id="section-5.2-2.2.2.2.1.3"></dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.2.1.4">
-                    <p id="section-5.2-2.2.2.2.1.4.1">These discards are based upon the outer header of packets.<a href="#section-5.2-2.2.2.2.1.4.1" class="pilcrow">¶</a></p>
+<dt id="section-5.2-1.4.2.2.1.3"></dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.2.1.4">
+                    <p id="section-5.2-1.4.2.2.1.4.1">These discards are based upon the outer header of packets.<a href="#section-5.2-1.4.2.2.1.4.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
 </li>
-              <li class="normal" id="section-5.2-2.2.2.3">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.3.1">
-                  <dt id="section-5.2-2.2.2.3.1.1">discards/errors/l3/mtu-exceeded/:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.3.1.2">
-                    <p id="section-5.2-2.2.2.3.1.2.1">These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet (Sections <a href="https://rfc-editor.org/rfc/rfc791#section-3.1" class="relref">3.1</a> and <a href="https://rfc-editor.org/rfc/rfc791#section-3.2" class="relref">3.2</a> of <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span>, Sections <a href="https://rfc-editor.org/rfc/rfc8200#section-4.5" class="relref">4.5</a> and <a href="https://rfc-editor.org/rfc/rfc8200#section-5" class="relref">5</a> of <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>).<a href="#section-5.2-2.2.2.3.1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-1.4.2.3">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.3.1">
+                  <dt id="section-5.2-1.4.2.3.1.1">discards/errors/l3/mtu-exceeded/:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.3.1.2">
+                    <p id="section-5.2-1.4.2.3.1.2.1">These discards occur when the packet size exceeds the applicable MTU. The subclasses distinguish whether the forwarding node was permitted to fragment the packet (Sections <a href="https://rfc-editor.org/rfc/rfc791#section-3.1" class="relref">3.1</a> and <a href="https://rfc-editor.org/rfc/rfc791#section-3.2" class="relref">3.2</a> of <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span>, Sections <a href="https://rfc-editor.org/rfc/rfc8200#section-4.5" class="relref">4.5</a> and <a href="https://rfc-editor.org/rfc/rfc8200#section-5" class="relref">5</a> of <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>).<a href="#section-5.2-1.4.2.3.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
 </li>
-              <li class="normal" id="section-5.2-2.2.2.4">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.4.1">
-                  <dt id="section-5.2-2.2.2.4.1.1">discards/errors/l3/ttl-expired:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.4.1.2">
-                    <p id="section-5.2-2.2.2.4.1.2.1">These discards occur due to TTL <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span> (or Hop Limit <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, including MPLS LSP ping/traceroute <span>[<a href="#RFC8029" class="cite xref">RFC8029</a>]</span> and pseudowire VCCV <span>[<a href="#RFC5085" class="cite xref">RFC5085</a>]</span> which intentionally use TTL expiry, end-system TTL/Hop limit set too low, or routing loops in the network.<a href="#section-5.2-2.2.2.4.1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-1.4.2.4">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.4.1">
+                  <dt id="section-5.2-1.4.2.4.1.1">discards/errors/l3/ttl-expired:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.4.1.2">
+                    <p id="section-5.2-1.4.2.4.1.2.1">These discards occur due to TTL <span>[<a href="#RFC791" class="cite xref">RFC791</a>]</span> (or Hop Limit <span>[<a href="#RFC8200" class="cite xref">RFC8200</a>]</span>) expiry. These can occur, e.g., for the following reasons: normal trace-route operations, including MPLS LSP ping/traceroute <span>[<a href="#RFC8029" class="cite xref">RFC8029</a>]</span> and pseudowire VCCV <span>[<a href="#RFC5085" class="cite xref">RFC5085</a>]</span> which intentionally use TTL expiry, end-system TTL/Hop limit set too low, or routing loops in the network.<a href="#section-5.2-1.4.2.4.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
 </li>
-              <li class="normal" id="section-5.2-2.2.2.5">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.5.1">
-                  <dt id="section-5.2-2.2.2.5.1.1">discards/errors/l3/no-route/:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.5.1.2">
-                    <p id="section-5.2-2.2.2.5.1.2.1">These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.<a href="#section-5.2-2.2.2.5.1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-1.4.2.5">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.5.1">
+                  <dt id="section-5.2-1.4.2.5.1.1">discards/errors/l3/no-route:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.5.1.2">
+                    <p id="section-5.2-1.4.2.5.1.2.1">These discards occur due to a packet not matching any route in the routing table, e.g., which may be due to routing configuration errors or may be transient discards during convergence.<a href="#section-5.2-1.4.2.5.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
 </li>
-              <li class="normal" id="section-5.2-2.2.2.6">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.6.1">
-                  <dt id="section-5.2-2.2.2.6.1.1">discards/errors/neighbor-resolution-failure/:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.6.1.2">
-                    <p id="section-5.2-2.2.2.6.1.2.1">These discards occur due when forwarding engine could not resolve or use the link-layer adjacency required to forward the packet to the selected next hop <span>[<a href="#RFC826" class="cite xref">RFC826</a>]</span><span>[<a href="#RFC4891" class="cite xref">RFC4891</a>]</span>.<a href="#section-5.2-2.2.2.6.1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-1.4.2.6">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.6.1">
+                  <dt id="section-5.2-1.4.2.6.1.1">discards/errors/l3/neighbor-resolution-failure:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.6.1.2">
+                    <p id="section-5.2-1.4.2.6.1.2.1">These discards occur when the forwarding engine cannot resolve or use the link-layer adjacency required to forward the packet to the selected next hop (<span>[<a href="#RFC826" class="cite xref">RFC826</a>]</span>, <span>[<a href="#RFC4861" class="cite xref">RFC4861</a>]</span>).<a href="#section-5.2-1.4.2.6.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
 </li>
-              <li class="normal" id="section-5.2-2.2.2.7">
-                <span class="break"></span><dl class="dlParallel" id="section-5.2-2.2.2.7.1">
-                  <dt id="section-5.2-2.2.2.7.1.1">discards/errors/internal/:</dt>
-                  <dd style="margin-left: 1.5em" id="section-5.2-2.2.2.7.1.2">
-                    <p id="section-5.2-2.2.2.7.1.2.1">These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.<a href="#section-5.2-2.2.2.7.1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-5.2-1.4.2.7">
+                <span class="break"></span><dl class="dlParallel" id="section-5.2-1.4.2.7.1">
+                  <dt id="section-5.2-1.4.2.7.1.1">discards/errors/internal/:</dt>
+                  <dd style="margin-left: 1.5em" id="section-5.2-1.4.2.7.1.2">
+                    <p id="section-5.2-1.4.2.7.1.2.1">These discards occur due to internal device issues, including: parity errors in device memory or other internal hardware errors.  Any errored discards not explicitly assigned to other classes are also accounted for here.<a href="#section-5.2-1.4.2.7.1.2.1" class="pilcrow">¶</a></p>
 </dd>
                 <dd class="break"></dd>
 </dl>
@@ -1708,13 +1711,13 @@ These are discards of packets that matched a configured policy, including: ACLs,
             </ul>
 </dd>
           <dd class="break"></dd>
-<dt id="section-5.2-2.3">discards/no-buffer/:</dt>
-          <dd style="margin-left: 1.5em" id="section-5.2-2.4">
-            <p id="section-5.2-2.4.1">These are congestion-related discards, including tail-drop discards due to buffer exhaustion and discards due to an Active Queue Management (AQM) algorithm, such as Random Early Detection (RED) <span>[<a href="#RED93" class="cite xref">RED93</a>]</span> or Controlled Delay (CoDel) <span>[<a href="#RFC8289" class="cite xref">RFC8289</a>]</span>. Implementations <span class="bcp14">MAY</span> additionally report per-type counters in the <code>discard-type</code> list.<a href="#section-5.2-2.4.1" class="pilcrow">¶</a></p>
+<dt id="section-5.2-1.5">discards/no-buffer/:</dt>
+          <dd style="margin-left: 1.5em" id="section-5.2-1.6">
+            <p id="section-5.2-1.6.1">These are congestion-related discards, including tail-drop discards due to buffer exhaustion and discards due to an Active Queue Management (AQM) algorithm, such as Random Early Detection (RED) <span>[<a href="#RED93" class="cite xref">RED93</a>]</span> or Controlled Delay (CoDel) <span>[<a href="#RFC8289" class="cite xref">RFC8289</a>]</span>. Implementations <span class="bcp14">MAY</span> additionally report per-type counters in the <code>discard-type</code> list.<a href="#section-5.2-1.6.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-5.2-3">An example of possible signal-to-mitigation action mapping is provided in <a href="#mapping" class="auto internal xref">Appendix B</a>.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">An example of possible signal-to-mitigation action mapping is provided in <a href="#mapping" class="auto internal xref">Appendix B</a>.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="common-module">
@@ -2752,7 +2755,7 @@ module: ietf-packet-discard-reporting
             <p id="section-6.2-3.8.1">In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet <span class="bcp14">MUST</span> only account against a single error, policy, or no-buffer discard subclass. When per-type counters are reported, the discard <span class="bcp14">MUST</span> be counted in at most one discard-type entry.<a href="#section-6.2-3.8.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.9">
-            <p id="section-6.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be unambigousily characterized and exposed by an implementation. Typically, this can be exposed by an implementation by means of <code>discard-order-capability</code>.<a href="#section-6.2-3.9.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be unambiguously characterized and exposed by an implementation. Typically, this can be exposed by an implementation by means of <code>discard-order-capability</code>.<a href="#section-6.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.10">
             <p id="section-6.2-3.10.1"><code>class[id]</code> represents the QoS class assigned to a packet by the forwarding implementation using Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span>, IEEE 802.1Q PCP <span>[<a href="#IEEE802.1Q" class="cite xref">IEEE802.1Q</a>]</span>, MPLS TC <span>[<a href="#RFC5462" class="cite xref">RFC5462</a>]</span>, or another mechanism. If no QoS classification is used, no-buffer discards <span class="bcp14">MUST</span> be reported as <code>class[id="0"]</code>, which represents the default class.<a href="#section-6.2-3.10.1" class="pilcrow">¶</a></p>
@@ -2761,7 +2764,7 @@ module: ietf-packet-discard-reporting
             <p id="section-6.2-3.11.1">When traffic is mirrored, the discard metrics <span class="bcp14">MUST</span> account for the original traffic rather than the reflected traffic.<a href="#section-6.2-3.11.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.12">
-            <p id="section-6.2-3.12.1">Congestion-related discards can be realized differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to an egress interface congestion <span class="bcp14">MUST</span> be reportable on <code>egress</code>, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) <span class="bcp14">MUST</span> be reportable on <code>ingress</code>.<a href="#section-6.2-3.12.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-3.12.1">Congestion-related discards can be realized differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to egress interface congestion <span class="bcp14">MUST</span> be reportable on <code>egress</code>, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) <span class="bcp14">MUST</span> be reportable on <code>ingress</code>.<a href="#section-6.2-3.12.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.13">
             <p id="section-6.2-3.13.1">When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution <span class="bcp14">MUST</span> relate to the outer header at the point of discard.<a href="#section-6.2-3.13.1" class="pilcrow">¶</a></p>
@@ -2796,7 +2799,13 @@ module: ietf-packet-discard-reporting
 <p id="section-6.3-4">A received unicast IPv6 packet discarded due to Hop Limit expiry would increment:<a href="#section-6.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3-5.1">
-            <p id="section-6.3-5.1.1"><code>interface/discards[direction="ingress"]/errors/l3/ttl-expired</code><a href="#section-6.3-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.3-5.1.1"><code>interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/packets</code><a href="#section-6.3-5.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-5.2">
+            <p id="section-6.3-5.2.1"><code>interface/discards[direction="ingress"]/l3/address-family-stat[address-family="ipv6"]/unicast/bytes</code><a href="#section-6.3-5.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-6.3-5.3">
+            <p id="section-6.3-5.3.1"><code>interface/discards[direction="ingress"]/errors/l3/ttl-expired</code><a href="#section-6.3-5.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-6.3-6">An IPv4 packet discarded on egress by tail drop due to buffer exhaustion would increment:<a href="#section-6.3-6" class="pilcrow">¶</a></p>
@@ -2835,7 +2844,7 @@ module: ietf-packet-discard-reporting
             <p id="section-6.3-11.3.1"><code>interface/discards[direction="ingress"]/policy/l3/rpf</code><a href="#section-6.3-11.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.3-12">A "good" Layer-2 frame received would increment:<a href="#section-6.3-12" class="pilcrow">¶</a></p>
+<p id="section-6.3-12">A "good" Layer 2 frame received would increment:<a href="#section-6.3-12" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3-13.1">
             <p id="section-6.3-13.1.1"><code>interface/traffic[direction="ingress"]/l2/frames</code><a href="#section-6.3-13.1.1" class="pilcrow">¶</a></p>
@@ -3087,7 +3096,7 @@ module ietf-packet-discard-reporting {
             <p id="section-7.2-2.1.1">Platforms often account for the number of packets discarded where the TTL has expired (or IPv6 Hop Limit exceeded), and the device CPU has returned an ICMP Time Exceeded message <span>[<a href="#RFC4884" class="cite xref">RFC4884</a>]</span>. There is typically a policer applied to limit the number of packets sent to the device CPU, however, which implicitly limits the rate of TTL discards that are processed.  One method to account for all packet discards due to TTL expired, even those that are dropped by a policer when being forwarded to the CPU, is to use accounting of all ingress packets received with TTL=1 as a proxy measure.<a href="#section-7.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.2-2.2">
-            <p id="section-7.2-2.2.1">Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured in order to differentiate between interface/ingress/discards/policy/null-route/packets and interface/ingress/discards/errors/no-route/packets.<a href="#section-7.2-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-7.2-2.2.1">Where no route discards are implemented with a default null route, separate discard accounting is required for any explicit null routes configured in order to differentiate between <code>interface/discards[direction="ingress"]/policy/l3/null-route</code> and <code>interface/discards[direction="ingress"]/errors/l3/no-route</code>.<a href="#section-7.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-7.2-2.3">
             <p id="section-7.2-2.3.1">It is useful to account separately for transit packets discarded by ACLs or policers, and packets discarded by ACLs or policers which limit the number of packets to the device control plane.<a href="#section-7.2-2.3.1" class="pilcrow">¶</a></p>
@@ -3185,7 +3194,7 @@ module ietf-packet-discard-reporting {
         <h3 id="name-data-model">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-data-model" class="section-name selfRef">Data Model</a>
         </h3>
-<p id="section-9.2-1">This section is modeled after the template described in <span><a href="https://rfc-editor.org/rfc/rfc9907#section-3.7.1" class="relref">Section 3.7.1</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
+<p id="section-9.2-1">This section is modelled after the template described in <span><a href="https://rfc-editor.org/rfc/rfc9907#section-3.7.1" class="relref">Section 3.7.1</a> of [<a href="#RFC9907" class="cite xref">RFC9907</a>]</span>.<a href="#section-9.2-1" class="pilcrow">¶</a></p>
 <p id="section-9.2-2">The YANG module specified in <a href="#datamodel-module" class="auto internal xref">Section 6.4</a> defines a data model that is designed to be accessed via YANG-based management protocols, such as Network Configuration Protocol (NETCONF) <span>[<a href="#RFC6241" class="cite xref">RFC6241</a>]</span> and RESTCONF <span>[<a href="#RFC8040" class="cite xref">RFC8040</a>]</span>. These YANG-based management protocols (1) have to use a secure transport layer (e.g., Secure Shell (SSH) <span>[<a href="#RFC4252" class="cite xref">RFC4252</a>]</span>, TLS <span>[<a href="#RFC8446" class="cite xref">RFC8446</a>]</span>, and QUIC <span>[<a href="#RFC9000" class="cite xref">RFC9000</a>]</span>) and (2) have to use mutual authentication.<a href="#section-9.2-2" class="pilcrow">¶</a></p>
 <p id="section-9.2-3">The Network Configuration Access Control Model (NACM) <span>[<a href="#RFC8341" class="cite xref">RFC8341</a>]</span> provides the means to restrict access for particular NETCONF or RESTCONF users to a preconfigured subset of all available NETCONF or RESTCONF protocol operations and content.<a href="#section-9.2-3" class="pilcrow">¶</a></p>
 <p id="section-9.2-4">There are no particularly sensitive writable data nodes.<a href="#section-9.2-4" class="pilcrow">¶</a></p>
@@ -3292,9 +3301,9 @@ module ietf-packet-discard-reporting {
         <dd>
 <span class="refAuthor">Mealling, M.</span>, <span class="refTitle">"The IETF XML Registry"</span>, <span class="seriesInfo">BCP 81</span>, <span class="seriesInfo">RFC 3688</span>, <span class="seriesInfo">DOI 10.17487/RFC3688</span>, <time datetime="2004-01" class="refDate">January 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3688">https://www.rfc-editor.org/rfc/rfc3688</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC4891">[RFC4891]</dt>
+<dt id="RFC4861">[RFC4861]</dt>
         <dd>
-<span class="refAuthor">Graveman, R.</span>, <span class="refAuthor">Parthasarathy, M.</span>, <span class="refAuthor">Savola, P.</span>, and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"Using IPsec to Secure IPv6-in-IPv4 Tunnels"</span>, <span class="seriesInfo">RFC 4891</span>, <span class="seriesInfo">DOI 10.17487/RFC4891</span>, <time datetime="2007-05" class="refDate">May 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4891">https://www.rfc-editor.org/rfc/rfc4891</a>&gt;</span>. </dd>
+<span class="refAuthor">Narten, T.</span>, <span class="refAuthor">Nordmark, E.</span>, <span class="refAuthor">Simpson, W.</span>, and <span class="refAuthor">H. Soliman</span>, <span class="refTitle">"Neighbor Discovery for IP version 6 (IPv6)"</span>, <span class="seriesInfo">RFC 4861</span>, <span class="seriesInfo">DOI 10.17487/RFC4861</span>, <time datetime="2007-09" class="refDate">September 2007</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4861">https://www.rfc-editor.org/rfc/rfc4861</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5462">[RFC5462]</dt>
         <dd>
@@ -3588,7 +3597,7 @@ module ietf-packet-discard-reporting {
 <a href="#appendix-B" class="section-number selfRef">Appendix B. </a><a href="#name-example-signal-to-mitigatio" class="section-name selfRef">Example Signal-to-mitigation Action Mapping</a>
       </h2>
 <p id="appendix-B-1">The effectiveness of automated mitigation depends on correctly mapping discard signals to root causes and appropriate actions.  Tables <a href="#ex-table" class="auto internal xref">1</a> and <a href="#ex-table2" class="auto internal xref">2</a> give example discard signal-to-mitigation action mappings based on the features described in <a href="#problem" class="auto internal xref">Section 3</a>.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">Tables <a href="#ex-table" class="auto internal xref">1</a> and <a href="#ex-table2" class="auto internal xref">2</a> are a single logical example split into two physical tables for readability. Rows with the same Case value correspond. Table <a href="#ex-table" class="auto internal xref">1</a> shows the observed discard signal, inferred cause, rate, duration, and example operator determination of whether the discard is unintended. Table <a href="#ex-table2" class="auto internal xref">2</a> shows the corresponding example mitigation action.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-B-2">Tables <a href="#ex-table" class="auto internal xref">1</a> and <a href="#ex-table2" class="auto internal xref">2</a> are a single logical example split into two physical tables for readability. Rows with the same Case value correspond. Table <a href="#ex-table" class="auto internal xref">1</a> shows the observed discard signal, inferred cause, rate, and duration. Table <a href="#ex-table2" class="auto internal xref">2</a> shows the example operator determination of whether the discard is unintended and the corresponding example mitigation action.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
 <p id="appendix-B-3">The "Unintended?" column is illustrative. It is not a normative property of the discard class. In practice, the same discard class can be intended or unintended depending on the operator's policy, expected baseline for that class, persistence of the signal, affected scope, and other operational context.<a href="#appendix-B-3" class="pilcrow">¶</a></p>
 <span id="name-example-signal-cause-mitiga"></span><div id="ex-table">
 <table class="center" id="table-1">
