@@ -485,9 +485,9 @@ The full tree structure is provided in {{sec-dm-full-tree}}.
 
 ## Implementation Requirements {#requirements}
 
-The following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed. 
+The following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.
 
-Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device, and requirements 15 and 16 relate to feature support::
+Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device, and requirements 15 and 16 relate to feature support:
 
 1. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards MUST be accounted for.
 2. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards SHOULD be attributed to the physical or logical interface of the device where they occur.  Where they cannot be attributed to the interface, they MUST be attributed to the device.
