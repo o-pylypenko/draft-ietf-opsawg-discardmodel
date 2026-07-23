@@ -2201,6 +2201,11 @@ grouping errors-l3-rx {
         "The number of received packets discarded due to an
          invalid Segment Routing over IPv6 (SRv6) segment
          identifier (SID).
+         This counter is incremented only by the node processing
+         the SID (i.e., where the packet's destination address
+         matches a locally instantiated SID); transit nodes that
+         forward the packet without processing the SRH do not
+         increment it.
          For SR-MPLS, invalid SIDs have to be accounted
          under invalid-label.";
       reference
