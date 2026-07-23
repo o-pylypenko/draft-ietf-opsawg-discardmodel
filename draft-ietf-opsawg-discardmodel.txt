@@ -1597,15 +1597,12 @@ Table of Contents
    The following requirements apply to the implementation of the DM and
    are intended to ensure consistent implementation across different
    vendors and platforms while allowing for platform-specific
-   optimisations where needed.  While the DM defines a comprehensive set
-   of counters and statistics, implementations MAY support a subset of
-   the defined features based on device capabilities and operational
-   requirements.  Implementations must clearly document which features
-   are supported and how they map to the DM.
+   optimisations where needed.
 
    Requirements 1-13 relate to packets forwarded or discarded by the
    device, while requirement 14 relates to packets destined for or
-   originating from the device:
+   originating from the device, and requirements 15 and 16 relate to
+   feature support:
 
    1.   All instances of Layer 2 frame or Layer 3 packet receipt,
         transmission, and discards MUST be accounted for.
@@ -1679,6 +1676,17 @@ Table of Contents
    14.  Traffic to the device control plane (to-CPU) has its own class.
         However, traffic from the device control plane (from-CPU) MUST
         be accounted for in the same way as other egress traffic.
+
+   15.  Implementations MAY support a subset of the defined features
+        based on device capabilities and operational requirements.
+        Which features an implementation supports is discoverable from
+        the device itself: support for each feature is advertised via
+        the YANG library [RFC8525].
+
+   16.  Where an implementation supports a feature but does not populate
+        every counter within it, the implementation SHOULD expose which
+        counters are populated.  It may do so in documentation or via
+        programatic means (e.g., local help command).
 
 6.3.  Usage Examples
 
@@ -2410,6 +2418,11 @@ Table of Contents
    [RFC8446]  Rescorla, E., "The Transport Layer Security (TLS) Protocol
               Version 1.3", RFC 8446, DOI 10.17487/RFC8446, August 2018,
               <https://www.rfc-editor.org/rfc/rfc8446>.
+
+   [RFC8525]  Bierman, A., Bjorklund, M., Schoenwaelder, J., Watsen, K.,
+              and R. Wilton, "YANG Library", RFC 8525,
+              DOI 10.17487/RFC8525, March 2019,
+              <https://www.rfc-editor.org/rfc/rfc8525>.
 
    [RFC8622]  Bless, R., "A Lower-Effort Per-Hop Behavior (LE PHB) for
               Differentiated Services", RFC 8622, DOI 10.17487/RFC8622,
