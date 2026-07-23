@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 23 January 2027                                          Nvidia
+Expires: 24 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            22 July 2026
+                                                            23 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 January 2027.
+   This Internet-Draft will expire on 24 January 2027.
 
 Copyright Notice
 
@@ -1645,9 +1645,10 @@ Table of Contents
 
    9.   When there are multiple reasons for discarding a packet, the
         ordering of discard class reporting MUST be unambiguously
-        characterised and exposed by an implementation.  Typically, this
-        can be exposed by an implementation by means of discard-order-
-        capability.
+        characterised.  Implementations SHOULD expose this ordering by
+        means of discard-order-capability and MAY use another mechanism
+        (e.g., due to implementation constraints), provided the ordering
+        is documented.
 
    10.  class[id] represents the QoS class assigned to a packet by the
         forwarding implementation using Diffserv [RFC2475], IEEE 802.1Q

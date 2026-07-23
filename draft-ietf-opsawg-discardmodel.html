@@ -1061,7 +1061,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Evans, et al.</td>
-<td class="center">Expires 23 January 2027</td>
+<td class="center">Expires 24 January 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1074,12 +1074,12 @@ svg {
 <dd class="internet-draft">draft-ietf-opsawg-discardmodel-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-07-22" class="published">22 July 2026</time>
+<time datetime="2026-07-23" class="published">23 July 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2027-01-23">23 January 2027</time></dd>
+<dd class="expires"><time datetime="2027-01-24">24 January 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1148,7 +1148,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 23 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 January 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2755,7 +2755,7 @@ module: ietf-packet-discard-reporting
             <p id="section-6.2-3.8.1">In addition to the Layer 2 and Layer 3 aggregate classes, an individual discarded packet <span class="bcp14">MUST</span> only account against a single error, policy, or no-buffer discard subclass. When per-type counters are reported, the discard <span class="bcp14">MUST</span> be counted in at most one discard-type entry.<a href="#section-6.2-3.8.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.9">
-            <p id="section-6.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be unambiguously characterised and exposed by an implementation. Typically, this can be exposed by an implementation by means of <code>discard-order-capability</code>.<a href="#section-6.2-3.9.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-3.9.1">When there are multiple reasons for discarding a packet, the ordering of discard class reporting <span class="bcp14">MUST</span> be unambiguously characterised. Implementations <span class="bcp14">SHOULD</span> expose this ordering by means of <code>discard-order-capability</code> and <span class="bcp14">MAY</span> use another mechanism (e.g., due to implementation constraints), provided the ordering is documented.<a href="#section-6.2-3.9.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-6.2-3.10">
             <p id="section-6.2-3.10.1"><code>class[id]</code> represents the QoS class assigned to a packet by the forwarding implementation using Diffserv <span>[<a href="#RFC2475" class="cite xref">RFC2475</a>]</span>, IEEE 802.1Q PCP <span>[<a href="#IEEE802.1Q" class="cite xref">IEEE802.1Q</a>]</span>, MPLS TC <span>[<a href="#RFC5462" class="cite xref">RFC5462</a>]</span>, or another mechanism. If no QoS classification is used, no-buffer discards <span class="bcp14">MUST</span> be reported as <code>class[id="0"]</code>, which represents the default class.<a href="#section-6.2-3.10.1" class="pilcrow">¶</a></p>
