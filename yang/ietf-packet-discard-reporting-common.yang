@@ -353,12 +353,9 @@ module ietf-packet-discard-reporting-common {
     }
   }
   
-grouping errors-l3-rx {
+grouping errors-l3 {
     description
-      "Layer 3 packet error discard counters. The rx container
-       reports discards due to errors in the received packet,
-       indicating an upstream problem rather than an issue with
-       the reporting device.";
+      "Layer 3 packet error discard counters.";
     container rx {
       description
         "Counters for Layer 3 packets discarded due to errors
