@@ -355,7 +355,7 @@ module ietf-packet-discard-reporting-common {
 
   grouping errors-l3 {
     description
-      "Layer 3 ingress packet error discard counters.";
+      "Layer 3 packet error discard counters.";
     container rx {
       description
         "Counters for Layer 3 packets discarded due to errors
