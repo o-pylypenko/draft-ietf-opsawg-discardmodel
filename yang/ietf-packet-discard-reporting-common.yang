@@ -549,7 +549,7 @@ module ietf-packet-discard-reporting-common {
     container l3 {
       description
         "Layer 3 packet error discard counters.";
-      uses errors-l3-rx;
+      uses errors-l3;
       uses errors-l3-tx;
     }
     container internal {
