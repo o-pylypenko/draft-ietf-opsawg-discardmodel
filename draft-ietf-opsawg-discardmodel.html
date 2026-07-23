@@ -11,7 +11,7 @@
 <meta content="Aviran Kadosh" name="author">
 <meta content="Mohamed Boucadair" name="author">
 <meta content="
-       This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards. 
+       This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss by its cause (e.g., errors, congestion, or policy). This classification enables operators to determine which losses are expected or intended and which are unintended, and to select appropriate mitigation actions, including automated mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards. 
     " name="description">
 <meta content="xml2rfc 3.34.0" name="generator">
 <meta content="Troubleshooting" name="keyword">
@@ -1111,7 +1111,7 @@ svg {
 <h1 id="title">Information and Data Models for Packet Discard Reporting</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss - both intended (e.g., due to policy) and unintended (e.g., due to congestion or errors) - to enable automated network mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss by its cause (e.g., errors, congestion, or policy). This classification enables operators to determine which losses are expected or intended and which are unintended, and to select appropriate mitigation actions, including automated mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
