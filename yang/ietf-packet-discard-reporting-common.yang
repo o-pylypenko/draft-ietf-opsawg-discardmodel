@@ -358,7 +358,7 @@ grouping errors-l3-rx {
       "Layer 3 packet error discard counters. The rx container
        reports discards due to errors in the received packet,
        indicating an upstream problem rather than an issue with
-       the reporting device."
+       the reporting device.";
     container rx {
       description
         "Counters for Layer 3 packets discarded due to errors
