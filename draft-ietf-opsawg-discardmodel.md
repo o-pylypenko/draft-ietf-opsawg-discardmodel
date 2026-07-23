@@ -504,7 +504,7 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 13. When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution MUST relate to the outer header at the point of discard.
 14. Traffic to the device control plane (to-CPU) has its own class. However, traffic from the device control plane (from-CPU) MUST be accounted for in the same way as other egress traffic.
 15. Implementations MAY support a subset of the defined features based on device capabilities and operational requirements. Which features an implementation supports is discoverable from the device itself: support for each feature is advertised via the YANG library {{?RFC8525}}.
-16. Where an implementation supports a feature but does not populate every counter within it, the implementation SHOULD document which counters are populated.
+16. Where an implementation supports a feature but does not populate every counter within it, the implementation SHOULD expose which counters are populated. It may do so in documentation or via programatic means (e.g., local help command).
 
 ## Usage Examples {#examples}
 
