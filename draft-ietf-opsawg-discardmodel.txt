@@ -529,7 +529,12 @@ Table of Contents
       [RFC3704], and [RFC8704]), remotely triggered blackholing
       ([RFC3882], [RFC5635]), or BGP Flow Specification-based filters
       ([RFC8955], [RFC8956], and [RFC9117]); all such policy-driven
-      discards are reported under this class.  Consistent with the
+      discards are reported under this class.  Discards due to control-
+      plane protection policies [RFC6192], including the Generalized TTL
+      Security Mechanism (GTSM) [RFC5082], are reported under the
+      control-plane component's policy discards; a GTSM discard is a
+      failed configured check, not TTL exhaustion in transit, and is not
+      reported under errors/ttl-expired.  Consistent with the
       requirements listed in Section 6.2, a policy discard increments
       one and only one of the policy subtypes.
 
@@ -2347,6 +2352,11 @@ Table of Contents
               DOI 10.17487/RFC4884, April 2007,
               <https://www.rfc-editor.org/rfc/rfc4884>.
 
+   [RFC5082]  Gill, V., Heasley, J., Meyer, D., Savola, P., Ed., and C.
+              Pignataro, "The Generalized TTL Security Mechanism
+              (GTSM)", RFC 5082, DOI 10.17487/RFC5082, October 2007,
+              <https://www.rfc-editor.org/rfc/rfc5082>.
+
    [RFC5085]  Nadeau, T., Ed. and C. Pignataro, Ed., "Pseudowire Virtual
               Circuit Connectivity Verification (VCCV): A Control
               Channel for Pseudowires", RFC 5085, DOI 10.17487/RFC5085,
@@ -2356,6 +2366,10 @@ Table of Contents
               Filtering with Unicast Reverse Path Forwarding (uRPF)",
               RFC 5635, DOI 10.17487/RFC5635, August 2009,
               <https://www.rfc-editor.org/rfc/rfc5635>.
+
+   [RFC6192]  Dugal, D., Pignataro, C., and R. Dunn, "Protecting the
+              Router Control Plane", RFC 6192, DOI 10.17487/RFC6192,
+              March 2011, <https://www.rfc-editor.org/rfc/rfc6192>.
 
    [RFC6241]  Enns, R., Ed., Bjorklund, M., Ed., Schoenwaelder, J., Ed.,
               and A. Bierman, Ed., "Network Configuration Protocol
