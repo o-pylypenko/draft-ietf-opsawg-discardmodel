@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-21T01:17:13.842519+00:00",
+  "timestamp": "2026-07-23T01:23:07.199049+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -762,15 +762,15 @@
       "id": "I_kwDOOCO1i88AAAABIMcC1A",
       "title": "Gorry discuss: incorporate Gorry's examples",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/118",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "\n(1) To me it is unclear which category congestion-related loss of \u201cnormal\u201d\ntraffic (e.g. BE) should be assigned. \n\nFor \u201cnormal\u201d traffic (e.g. BE), discards would be assigned to interface/discards/no-buffer/qos/class(BE). This may be classified as intended if it is below the operators SLA (e.g. loss rate per measurement interval), and unintended if above the operators SLA (e.g. loss rate in measured interval). This example is in Appendix B.\n\n**That sounds good and I agree - if these two sentences are clear in the next revision, then this will have been resolved.** \n\n(2) Then, AQM: It is good to encourage queues to configure AQM, but that also\nresults in discard that will be statistical as the endpoints seek to converge\non the available bottleneck capacity. These discards are not a configuration\nproblem, and seem entirely normal, at least expected during a busy hour,\nalthough it would still seem to be helpful for an operator to know capacity is\nbeing often reached (I suspect also they could also observable as the\nutilisation by packet counters). Are we sure we wish to count these as\nunintended, rather than in a separate category?\n\nWhere AQM drops packets, those should similarly be counted as congestive discards, not as errors; i.e. AQM discards would be assigned to interface/discards/no-buffer/qos/class(). This may be classified as intended if it is below the operators SLA, and unintended if above the operators SLA. This example is in Appendix B.\n\nWhere AQM marks packets, for example using ECN, those are not packet discards and are outside the discard counters, although they may be useful related signals for an operator.\n\nWe have added an additional AQM discard type to clearly differentiate AQM discards from other congestive loss types: https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/104/changes#diff-6d4c7b48518a072a04219635c569dbd41793bae013f0df47f9cc908d7251f19f\n\n**For me the no buffer \"type\" will address my primary concern here. Thanks for adding this.**\n\n(3) I agree that traffic policing/conditioning for QoS can result in discarded\nthat are not anticipated. e.g., this discard might be due to overload of a\nprovisioned EF service which the document correctly (in my reading) is an\nintended packet discard. This might be clearly stated as an example?  For the\nLower than Best Effort (LBE) PHB, such loss seems acceptable/normal under\nperiods of high utilisation, so are these also intended?, and should this also\nbe explicitly said as an example ?\n\nIf a configured policer drops traffic because the traffic exceeds a provisioned service profile, that is a policy discard:\ni.e., interface/discards/policy/qos/class(BE).\n\nFor example, EF traffic above its provisioned profile may be intentionally discarded by the policer. That does not mean the event is operationally irrelevant, because sustained discard may still indicate overload of the provisioned service or a mismatch between offered load and contracted capacity.\n\nSimilarly, for LBE traffic, loss during periods of high utilisation may be acceptable or intended according, subject to the operators SLA.\n\n**Exactly what I had hoped for. I anticipate the example will be clear in the new text, and this will be sufficient to address this.**\n\nSo to clarify: the model reports the discard cause, while intended versus unintended is determined by the operator using the discard class together with SLA, PHB, baseline, duration, scope, and service context.",
       "createdAt": "2026-07-09T09:10:48Z",
-      "updatedAt": "2026-07-19T02:16:39Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-22T03:01:19Z",
+      "closedAt": "2026-07-22T03:01:19Z",
       "comments": []
     },
     {
@@ -5554,24 +5554,26 @@
       "id": "PR_kwDOOCO1i87y9vw_",
       "title": "Gorry discuss: incorporate Gorry's examples",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/130",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "johnevansuk",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "{{intent}}, congestion paragraph: add BE example with model path under no-buffer/qos/class, intended/unintended determined by SLA loss-rate threshold, cross-referencing mapping cases B1/B2; add LE (RFC 8622) example \u2014 higher loss rate acceptable under high utilisation per operator policy. LE placed here (not policy) as utilisation-driven LE loss is a no-buffer discard. {{intent}}, policy paragraph: add policer example \u2014 EF (RFC 3246) traffic exceeding provisioned profile is an intended policy/l3/policer discard but may still signal service overload. Fixes continousily typo. 2 new informative references (3246, 8622). Text-only; no YANG changes.",
       "createdAt": "2026-07-17T11:56:55Z",
-      "updatedAt": "2026-07-17T13:24:41Z",
+      "updatedAt": "2026-07-21T15:34:17Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "d4a20b4be3a3c9152851ce158c7e9cfdbdbc188f",
       "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "headRefName": "johnevansuk-patch-20",
       "headRefOid": "028bf07f8bdc0a19e189f5479240b3b063c3984a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-07-21T15:34:17Z",
+      "mergedAt": "2026-07-21T15:34:17Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "b40ac5e3970f92bde5c03a407654d2694df01a59"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5768,6 +5770,145 @@
           "body": "",
           "createdAt": "2026-07-17T13:28:01Z",
           "updatedAt": "2026-07-17T13:28:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 137,
+      "id": "PR_kwDOOCO1i870cQaS",
+      "title": "Gorry discuss: incorporate Gorry's examples",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/137",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Policy paragraph: rework to clarify that a policer discard due to offered load exceeding a provisioned profile may be considered intended (reported under policy/l3/policer), with EF (RFC 3246) as the worked example; note sustained policer discards may still indicate service overload; config-error caveat retained after the example. Fixes continousily typo.",
+      "createdAt": "2026-07-21T15:44:13Z",
+      "updatedAt": "2026-07-22T03:00:47Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b40ac5e3970f92bde5c03a407654d2694df01a59",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-1",
+      "headRefOid": "65efa44eaf91110430f84bbc541f255f71b54cfe",
+      "closedAt": "2026-07-22T03:00:47Z",
+      "mergedAt": "2026-07-22T03:00:47Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "ef9581491cff42bec4cbe547cb2781cf05e2c7bb"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGujabg",
+          "commit": {
+            "abbreviatedOid": "65efa44"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-21T15:50:20Z",
+          "updatedAt": "2026-07-21T15:50:20Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 138,
+      "id": "PR_kwDOOCO1i870tFW5",
+      "title": "More minor fixes",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/138",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "\r\n* RFC 4891 -> 4861\r\n* missing l3 level in the yang paths across the doc\r\n* fix discards/policy render\r\n* Recover L3 aggregate counters (mislabelled in 15f90ed, and dropped in cdd5a8e)\r\n* Other typos and minor corrections",
+      "createdAt": "2026-07-22T05:34:54Z",
+      "updatedAt": "2026-07-22T19:04:18Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "ef9581491cff42bec4cbe547cb2781cf05e2c7bb",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "more-fixes-1",
+      "headRefOid": "a023d608ec5ce7596fe80770aef1a66c06b0a480",
+      "closedAt": "2026-07-22T19:04:18Z",
+      "mergedAt": "2026-07-22T19:04:18Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "eb83aa79f4cf446a9bc1023c85dcca8246bfda9a"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG3HhQg",
+          "commit": {
+            "abbreviatedOid": "a023d60"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks Oleks LGTM!",
+          "createdAt": "2026-07-22T14:25:49Z",
+          "updatedAt": "2026-07-22T14:25:49Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 139,
+      "id": "PR_kwDOOCO1i870t-01",
+      "title": "British spelling consistency, grammar cleanup, minor nits",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/139",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "LLM-assisted; Prompt: \"Review the draft for typos, grammar, and British spelling consistency\"\n",
+      "createdAt": "2026-07-22T06:21:09Z",
+      "updatedAt": "2026-07-22T19:06:12Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "more-fixes-1",
+      "baseRefOid": "a023d608ec5ce7596fe80770aef1a66c06b0a480",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "more-fixes-2",
+      "headRefOid": "c7f09b477c6b7668cc62c847e4fcd30e14f11210",
+      "closedAt": "2026-07-22T19:06:12Z",
+      "mergedAt": "2026-07-22T19:06:12Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "0a0c90e44555f3407a470a164c5a2ca6110fb5fa"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABGzfHdA",
+          "commit": {
+            "abbreviatedOid": "c7f09b4"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-22T06:29:12Z",
+          "updatedAt": "2026-07-22T06:29:12Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG3GU8Q",
+          "commit": {
+            "abbreviatedOid": "c7f09b4"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Thanks Oleks LGTM",
+          "createdAt": "2026-07-22T14:23:41Z",
+          "updatedAt": "2026-07-22T14:23:41Z",
           "comments": []
         }
       ]
