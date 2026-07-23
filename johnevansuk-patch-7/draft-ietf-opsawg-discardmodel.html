@@ -2084,12 +2084,9 @@ module ietf-packet-discard-reporting-common {
     }
   }
 
-grouping errors-l3-rx {
+grouping errors-l3 {
     description
-      "Layer 3 packet error discard counters. The rx container
-       reports discards due to errors in the received packet,
-       indicating an upstream problem rather than an issue with
-       the reporting device.";
+      "Layer 3 packet error discard counters.";
     container rx {
       description
         "Counters for Layer 3 packets discarded due to errors
@@ -3918,22 +3915,6 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  +-- tx
     |     |  |     +-- frames?   yang:counter64
     |     |  +-- l3
-    |     |  |  +-- rx
-    |     |  |  |  +-- packets?          yang:counter64
-    |     |  |  |  +-- checksum-error?   yang:counter64
-    |     |  |  |  +-- invalid-packet?   yang:counter64
-    |     |  |  +-- mtu-exceeded
-    |     |  |  |  +-- packets?
-    |     |  |  |  |       yang:counter64
-    |     |  |  |  +-- fragmentation-not-permitted?
-    |     |  |  |  |       yang:counter64
-    |     |  |  |  +-- fragmentation-permitted-not-performed?
-    |     |  |  |          yang:counter64
-    |     |  |  +-- ttl-expired?                   yang:counter64
-    |     |  |  +-- no-route?                      yang:counter64
-    |     |  |  +-- neighbor-resolution-failure?   yang:counter64
-    |     |  |  +-- invalid-sid?                   yang:counter64
-    |     |  |  +-- invalid-label?                 yang:counter64
     |     |  |  +-- tx
     |     |  |     +-- packets?   yang:counter64
     |     |  +-- internal
@@ -4021,22 +4002,6 @@ module: ietf-packet-discard-reporting-sx
     |     |  |  +-- tx
     |     |  |     +-- frames?   yang:counter64
     |     |  +-- l3
-    |     |  |  +-- rx
-    |     |  |  |  +-- packets?          yang:counter64
-    |     |  |  |  +-- checksum-error?   yang:counter64
-    |     |  |  |  +-- invalid-packet?   yang:counter64
-    |     |  |  +-- mtu-exceeded
-    |     |  |  |  +-- packets?
-    |     |  |  |  |       yang:counter64
-    |     |  |  |  +-- fragmentation-not-permitted?
-    |     |  |  |  |       yang:counter64
-    |     |  |  |  +-- fragmentation-permitted-not-performed?
-    |     |  |  |          yang:counter64
-    |     |  |  +-- ttl-expired?                   yang:counter64
-    |     |  |  +-- no-route?                      yang:counter64
-    |     |  |  +-- neighbor-resolution-failure?   yang:counter64
-    |     |  |  +-- invalid-sid?                   yang:counter64
-    |     |  |  +-- invalid-label?                 yang:counter64
     |     |  |  +-- tx
     |     |  |     +-- packets?   yang:counter64
     |     |  +-- internal
@@ -4123,22 +4088,6 @@ module: ietf-packet-discard-reporting-sx
           |  |  +-- tx
           |  |     +-- frames?   yang:counter64
           |  +-- l3
-          |  |  +-- rx
-          |  |  |  +-- packets?          yang:counter64
-          |  |  |  +-- checksum-error?   yang:counter64
-          |  |  |  +-- invalid-packet?   yang:counter64
-          |  |  +-- mtu-exceeded
-          |  |  |  +-- packets?
-          |  |  |  |       yang:counter64
-          |  |  |  +-- fragmentation-not-permitted?
-          |  |  |  |       yang:counter64
-          |  |  |  +-- fragmentation-permitted-not-performed?
-          |  |  |          yang:counter64
-          |  |  +-- ttl-expired?                   yang:counter64
-          |  |  +-- no-route?                      yang:counter64
-          |  |  +-- neighbor-resolution-failure?   yang:counter64
-          |  |  +-- invalid-sid?                   yang:counter64
-          |  |  +-- invalid-label?                 yang:counter64
           |  |  +-- tx
           |  |     +-- packets?   yang:counter64
           |  +-- internal
@@ -4257,22 +4206,6 @@ module: ietf-packet-discard-reporting
           |  |  +--ro tx
           |  |     +--ro frames?   yang:counter64
           |  +--ro l3
-          |  |  +--ro rx
-          |  |  |  +--ro packets?          yang:counter64
-          |  |  |  +--ro checksum-error?   yang:counter64
-          |  |  |  +--ro invalid-packet?   yang:counter64
-          |  |  +--ro mtu-exceeded
-          |  |  |  +--ro packets?
-          |  |  |  |       yang:counter64
-          |  |  |  +--ro fragmentation-not-permitted?
-          |  |  |  |       yang:counter64
-          |  |  |  +--ro fragmentation-permitted-not-performed?
-          |  |  |          yang:counter64
-          |  |  +--ro ttl-expired?                   yang:counter64
-          |  |  +--ro no-route?                      yang:counter64
-          |  |  +--ro neighbor-resolution-failure?   yang:counter64
-          |  |  +--ro invalid-sid?                   yang:counter64
-          |  |  +--ro invalid-label?                 yang:counter64
           |  |  +--ro tx
           |  |     +--ro packets?   yang:counter64
           |  +--ro internal
@@ -4361,22 +4294,6 @@ module: ietf-packet-discard-reporting
           |  |  +--ro tx
           |  |     +--ro frames?   yang:counter64
           |  +--ro l3
-          |  |  +--ro rx
-          |  |  |  +--ro packets?          yang:counter64
-          |  |  |  +--ro checksum-error?   yang:counter64
-          |  |  |  +--ro invalid-packet?   yang:counter64
-          |  |  +--ro mtu-exceeded
-          |  |  |  +--ro packets?
-          |  |  |  |       yang:counter64
-          |  |  |  +--ro fragmentation-not-permitted?
-          |  |  |  |       yang:counter64
-          |  |  |  +--ro fragmentation-permitted-not-performed?
-          |  |  |          yang:counter64
-          |  |  +--ro ttl-expired?                   yang:counter64
-          |  |  +--ro no-route?                      yang:counter64
-          |  |  +--ro neighbor-resolution-failure?   yang:counter64
-          |  |  +--ro invalid-sid?                   yang:counter64
-          |  |  +--ro invalid-label?                 yang:counter64
           |  |  +--ro tx
           |  |     +--ro packets?   yang:counter64
           |  +--ro internal
