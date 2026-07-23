@@ -485,9 +485,9 @@ The full tree structure is provided in {{sec-dm-full-tree}}.
 
 ## Implementation Requirements {#requirements}
 
-The following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed. While the DM defines a comprehensive set of counters and statistics, implementations MAY support a subset of the defined features based on device capabilities and operational requirements. Implementations must clearly document which features are supported and how they map to the DM.
+The following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed. 
 
-Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device:
+Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device, and requirements 15 and 16 relate to feature support::
 
 1. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards MUST be accounted for.
 2. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards SHOULD be attributed to the physical or logical interface of the device where they occur.  Where they cannot be attributed to the interface, they MUST be attributed to the device.
@@ -503,6 +503,8 @@ Requirements 1-13 relate to packets forwarded or discarded by the device, while 
 12. Congestion-related discards can be realised differently with different queueing and memory architectures. Whether a no-buffer discard is attributed to ingress or egress can differ accordingly. For successful auto-mitigation, discards due to egress interface congestion MUST be reportable on `egress`, while discards due to device-level congestion (e.g., due to exceeding the device forwarding rate) MUST be reportable on `ingress`.
 13. When the ingress and egress headers differ (for example, at a tunnel endpoint), the discard class attribution MUST relate to the outer header at the point of discard.
 14. Traffic to the device control plane (to-CPU) has its own class. However, traffic from the device control plane (from-CPU) MUST be accounted for in the same way as other egress traffic.
+15. Implementations MAY support a subset of the defined features based on device capabilities and operational requirements. Which features an implementation supports is discoverable from the device itself: support for each feature is advertised via the YANG library {{?RFC8525}}.
+16. Where an implementation supports a feature but does not populate every counter within it, the implementation SHOULD document which counters are populated.
 
 ## Usage Examples {#examples}
 
