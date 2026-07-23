@@ -12,7 +12,7 @@ YANG=$(wildcard $(YANGDIR)/*.yang)
 STDYANG=$(wildcard $(YANGDIR)/ietf-*.yang)
 TXT=$(patsubst $(YANGDIR)/%.yang,$(YANGDIR)/trees/%.tree,$(YANG))
 
-.PHONY: yang-lint yang-gen-tree yang-clean pyang-setup
+.PHONY: yang-lint yanglint-lint yang-gen-tree yang-clean pyang-setup
 
 $(YANGDIR)/trees:
 	mkdir -p $@
@@ -23,6 +23,18 @@ ifeq ($(STDYANG),)
 	$(info No files matching $(YANGDIR)/ietf-*.yang found. Skipping pyang-lint.)
 else
 	pyang --ietf --max-line-length 69 -p $(YANG_PATH) $(STDYANG)
+endif
+
+YANGLINT ?= yanglint
+yanglint-lint: pyang-setup $(STDYANG)
+ifeq ($(STDYANG),)
+	$(info No files matching $(YANGDIR)/ietf-*.yang found. Skipping yanglint-lint.)
+else
+	$(YANGLINT) -p $(YANGDIR) \
+	    -p $(STDYANGDIR)/standard/ietf/RFC \
+	    -p $(STDYANGDIR)/standard/ieee/published/802.1 \
+	    -p $(STDYANGDIR)/experimental/ietf-extracted-YANG-modules \
+	    $(STDYANG)
 endif
 
 yang-gen-tree: $(YANGDIR)/trees pyang-lint $(TXT)
