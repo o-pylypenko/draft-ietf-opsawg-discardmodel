@@ -271,10 +271,22 @@ module ietf-packet-discard-reporting-common {
   grouping no-buffer-qos {
     description
       "QoS discard counters.";
-    uses qos {
-      augment "qos/class" {
+    container qos {
+      presence "QoS statistics are available.";
+      description
+        "Per-class QoS traffic counters.";
+      list class {
+        key "id";
+        min-elements 1;
         description
-          "Adds per-type discard counters to each QoS class.";
+          "Class traffic counters.";
+        leaf id {
+          type string;
+          description
+            "Indicates a Quality of Service (QoS) class
+             identifier.";
+        }
+        uses basic-packets-bytes;
         list discard-type {
           key "type";
           description
