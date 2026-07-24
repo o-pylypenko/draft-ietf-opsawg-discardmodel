@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 24 January 2027                                          Nvidia
+Expires: 25 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            23 July 2026
+                                                            24 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 January 2027.
+   This Internet-Draft will expire on 25 January 2027.
 
 Copyright Notice
 
@@ -1075,8 +1075,11 @@ Table of Contents
            "The number of received packets discarded due to an
             invalid Segment Routing over IPv6 (SRv6) segment
             identifier (SID).
-            For SR-MPLS, invalid SIDs have to be accounted
-            under invalid-label.";
+            This counter is incremented only by the node processing
+            the SID (i.e., where the packet's destination address
+            matches a locally instantiated SID); transit nodes that
+            forward the packet without processing the SRH do not
+            increment it.";
          reference
            "RFC 8402: Segment Routing Architecture
             RFC 8660: Segment Routing with the MPLS Data Plane
