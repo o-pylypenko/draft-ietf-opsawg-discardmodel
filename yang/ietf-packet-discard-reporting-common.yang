@@ -617,8 +617,16 @@ module ietf-packet-discard-reporting-common {
     leaf dos {
       type yang:counter64;
       description
-        "The number of packets discarded due to
-         Denial-of-Service (DoS) protection policies.";
+        "The number of packets discarded by dedicated
+         Denial-of-Service (DoS) protection mechanisms, such as
+         implementation-specific heuristics that identify and discard
+         DoS traffic.
+
+         Where a DoS attack is mitigated using an ACL or a null
+         route, those discards are reported under 'acl' or 
+         'null-route' respectively, not under this counter, since
+         the association with DoS mitigation is known only to the
+         operator.";
     }
   }
 
