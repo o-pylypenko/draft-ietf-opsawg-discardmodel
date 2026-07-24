@@ -283,7 +283,7 @@ module ietf-packet-discard-reporting-common {
         leaf id {
           type string;
           description
-            "Indicates a Quality of Service (QoS) class
+            "Indicates a Qo) class identifier.";
              identifier.";
         }
         uses basic-packets-bytes;
