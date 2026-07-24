@@ -489,7 +489,7 @@ The following requirements apply to the implementation of the DM and are intende
 
 Requirements 1-13 relate to packets forwarded or discarded by the device, while requirement 14 relates to packets destined for or originating from the device, and requirements 15 and 16 relate to feature support:
 
-1. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards MUST be accounted for.
+1. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards MUST be accounted for. A frame or packet MUST be counted as discarded only by the device that discards it, i.e., when the device makes the final determination not to forward or locally deliver it. Handing a packet to another processing path within the device (e.g., punting it to the control plane) is not a discard; if the packet is subsequently dropped, it MUST be accounted for in the class corresponding to where that drop occurs (see requirement 14).
 2. All instances of Layer 2 frame or Layer 3 packet receipt, transmission, and discards SHOULD be attributed to the physical or logical interface of the device where they occur.  Where they cannot be attributed to the interface, they MUST be attributed to the device.
 3. An individual frame MUST only be accounted for by either the Layer 2 traffic class or the Layer 2 discard classes within a single direction or context, i.e., ingress or egress or device.  This is to avoid double counting.
 4. An individual packet MUST only be accounted for by either the Layer 3 traffic class or the Layer 3 discard classes within a single direction or context, i.e., ingress or egress or device.  This is to avoid double counting.
