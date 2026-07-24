@@ -284,7 +284,6 @@ module ietf-packet-discard-reporting-common {
           type string;
           description
             "Indicates a Qo) class identifier.";
-             identifier.";
         }
         uses basic-packets-bytes;
         list discard-type {
