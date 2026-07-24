@@ -533,12 +533,11 @@ Table of Contents
       discards are reported under this class.  Discards due to control-
       plane protection policies [RFC6192], including the Generalized TTL
       Security Mechanism (GTSM) [RFC5082], are reported under the
-      control-plane component's policy discards; a GTSM discard means
-      the received TTL or Hop Limit did not match the configured
-      expected value, not that the TTL expired in transit, and hence it
-      is not reported under errors/ttl-expired.  Consistent with the
-      requirements listed in Section 6.2, a policy discard increments
-      one and only one of the policy subtypes.
+      control-plane component's policy discards.  A GTSM discard
+      indicates that the received TTL or Hop Limit is outside the
+      configured expected range.  Consistent with the requirements
+      listed in Section 6.2, a policy discard increments one and only
+      one of the policy subtypes.
 
    discards/errors/:  These are discards due to errors in processing
       packets or frames, which typically indicate unintended packet loss
