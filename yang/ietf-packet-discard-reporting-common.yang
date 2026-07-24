@@ -618,7 +618,7 @@ module ietf-packet-discard-reporting-common {
       description
         "The number of packets discarded by dedicated
          Denial-of-Service (DoS) protection mechanisms, such as
-         vendor-implemented heuristics that identify and discard
+         implementation-specific heuristics that identify and discard
          DoS traffic.
 
          Where a DoS attack is mitigated using an ACL or a null
