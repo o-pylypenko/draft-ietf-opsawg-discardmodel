@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 24 January 2027                                          Nvidia
+Expires: 25 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            23 July 2026
+                                                            24 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 January 2027.
+   This Internet-Draft will expire on 25 January 2027.
 
 Copyright Notice
 
@@ -1225,7 +1225,7 @@ Table of Contents
          description
            "The number of packets discarded by dedicated
             Denial-of-Service (DoS) protection mechanisms, such as
-            vendor-implemented heuristics that identify and discard
+            implementation-specific heuristics that identify and discard
             DoS traffic.
 
             Where a DoS attack is mitigated using an ACL or a null
