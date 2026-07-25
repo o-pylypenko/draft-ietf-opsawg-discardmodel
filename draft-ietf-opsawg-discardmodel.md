@@ -804,3 +804,5 @@ Derrell Piper for the SECDIR review, Roni Even for the GENART review, and Michae
 Carlos Pignataro for the detailed INTDIR review and suggestions that enhanced this specification.
 
 Thanks to Diego Lopez for shepherding the document and Mahesh Jethanandani for the AD review.
+
+Thanks to Christopher Inacio, Éric Vyncke, Gorry Fairhurst, Ketan Talaulikar, Deb Cooley, and Mike Bishop for the IESG review.
