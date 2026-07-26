@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-23T01:23:07.199049+00:00",
+  "timestamp": "2026-07-26T01:23:22.506055+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -491,7 +491,7 @@
       "id": "I_kwDOOCO1i88AAAABH-nRUA",
       "title": "(Eric DISCUSS) invalid-sid",
       "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/issues/99",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "boucadair",
       "authorAssociation": "COLLABORATOR",
       "assignees": [
@@ -502,8 +502,8 @@
       ],
       "body": "`leaf invalid-sid` it is unclear whether only routers whose address is the\ndestination address have to count or other routers in the path (which should\nnot check) also have to count.\n",
       "createdAt": "2026-07-07T16:29:10Z",
-      "updatedAt": "2026-07-08T14:03:49Z",
-      "closedAt": null,
+      "updatedAt": "2026-07-24T08:47:29Z",
+      "closedAt": "2026-07-24T08:47:29Z",
       "comments": [
         {
           "author": "boucadair",
@@ -5909,6 +5909,695 @@
           "body": "Thanks Oleks LGTM",
           "createdAt": "2026-07-22T14:23:41Z",
           "updatedAt": "2026-07-22T14:23:41Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 140,
+      "id": "PR_kwDOOCO1i871S6Cp",
+      "title": "Carlos review: add GTSM",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/140",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added GTSM reference to subtype definitions",
+      "createdAt": "2026-07-23T09:35:00Z",
+      "updatedAt": "2026-07-23T13:44:11Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "36d4f3f5b42dd5f35364d5ee3adc8736bbd7e25a",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-2",
+      "headRefOid": "0eccb4f8ef1d5376e377ff9680ac2c77d101575b",
+      "closedAt": "2026-07-23T13:44:11Z",
+      "mergedAt": "2026-07-23T13:44:11Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "fe5f7e410af092c56e0a20439d8169ee082f7bd1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG_oWSw",
+          "commit": {
+            "abbreviatedOid": "0eccb4f"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-23T13:10:21Z",
+          "updatedAt": "2026-07-23T13:10:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 141,
+      "id": "PR_kwDOOCO1i871UYJk",
+      "title": "(Ketan DISCUSS) order of discard",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/141",
+      "state": "CLOSED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Requirement 9: MUST now applies to the property (ordering unambiguously characterized) rather than vaguely to \"defined and exposed\"; discard-order-capability becomes the SHOULD mechanism for exposing it, with MAY for alternative documented mechanisms where implementation constraints require. Adopts the SHOULD/MAY structure proposed by the Ketan. Text-only; no YANG changes.",
+      "createdAt": "2026-07-23T10:32:18Z",
+      "updatedAt": "2026-07-23T10:35:35Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "36d4f3f5b42dd5f35364d5ee3adc8736bbd7e25a",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-3",
+      "headRefOid": "70d40716cbea9f52763f301d53a76f59d6183e7f",
+      "closedAt": "2026-07-23T10:35:35Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 142,
+      "id": "PR_kwDOOCO1i871UgDk",
+      "title": "(Ketan DISCUSS) order of discard",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/142",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Requirement 9: MUST now applies to the property (ordering unambiguously characterised) rather than vaguely to \"defined and exposed\"; discard-order-capability becomes the SHOULD mechanism for exposing it, with MAY for alternative documented mechanisms where implementation constraints require. Adopts the SHOULD/MAY structure proposed by the Ketan. Text-only; no YANG changes.",
+      "createdAt": "2026-07-23T10:37:31Z",
+      "updatedAt": "2026-07-23T13:43:50Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "36d4f3f5b42dd5f35364d5ee3adc8736bbd7e25a",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-4",
+      "headRefOid": "d3f0324a4aaf6b24aaa910191d66a3d553949b69",
+      "closedAt": "2026-07-23T13:43:50Z",
+      "mergedAt": "2026-07-23T13:43:50Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "574262df78335cb15944b27047a7fe3bf86e648f"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG_o0mQ",
+          "commit": {
+            "abbreviatedOid": "d3f0324"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-23T13:11:17Z",
+          "updatedAt": "2026-07-23T13:11:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 143,
+      "id": "PR_kwDOOCO1i871VBn3",
+      "title": "nitsv3",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/143",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Move RFC 2475 to informative references (idnits downref) RFC 8446 is obsolete - replace by: RFCRFC9846.",
+      "createdAt": "2026-07-23T10:57:23Z",
+      "updatedAt": "2026-07-23T13:47:52Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "36d4f3f5b42dd5f35364d5ee3adc8736bbd7e25a",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-5",
+      "headRefOid": "763ef078330eaf726657c64216f80258b1e41e02",
+      "closedAt": "2026-07-23T13:47:52Z",
+      "mergedAt": "2026-07-23T13:47:52Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG_ngHA",
+          "commit": {
+            "abbreviatedOid": "283b1b8"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-23T13:08:36Z",
+          "updatedAt": "2026-07-23T13:09:46Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\n10. `class[id]` represents the QoS class assigned to a packet by the forwarding implementation using Diffserv {{!RFC2475}}, IEEE 802.1Q PCP {{IEEE802.1Q}}, MPLS TC {{!RFC5462}}, or another mechanism. If no QoS classification is used, no-buffer discards MUST be reported as `class[id=\"0\"]`, which represents the default class.\n```",
+              "createdAt": "2026-07-23T13:08:36Z",
+              "updatedAt": "2026-07-23T13:09:46Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "The OLD is correct. \n\nAlready discussed in the AD review and the downref was called out in the IETF LC announcment.",
+              "createdAt": "2026-07-23T13:09:30Z",
+              "updatedAt": "2026-07-23T13:09:46Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 144,
+      "id": "PR_kwDOOCO1i871VoLJ",
+      "title": "(Christopher DISCUSS) Feature support",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/144",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Replaces the \"MUST clearly document which features are supported\" preamble sentence with two explicit requirements: 15 . implementations MAY support a subset of features, with support machine-discoverable via YANG library advertisement (RFC 8525, new informative reference); 16. SHOULD document any counters not populated within a supported feature. Intro line updated to cover requirements 15-16. Text-only; no YANG changes.",
+      "createdAt": "2026-07-23T11:21:42Z",
+      "updatedAt": "2026-07-23T13:47:06Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "36d4f3f5b42dd5f35364d5ee3adc8736bbd7e25a",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-6",
+      "headRefOid": "02e80e22f3f70c264e4cfa1cf7768c7207bca778",
+      "closedAt": "2026-07-23T13:47:05Z",
+      "mergedAt": "2026-07-23T13:47:05Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "b2df3bf9270579efbfed4c685a9c5e3dd390bae5"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG-4khg",
+          "commit": {
+            "abbreviatedOid": "dc2f02d"
+          },
+          "author": "github-actions",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-23T11:22:09Z",
+          "updatedAt": "2026-07-23T11:22:09Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "````suggestion\nThe following requirements apply to the implementation of the DM and are intended to ensure consistent implementation across different vendors and platforms while allowing for platform-specific optimisations where needed.\n````",
+              "createdAt": "2026-07-23T11:22:09Z",
+              "updatedAt": "2026-07-23T11:22:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABG_qqPw",
+          "commit": {
+            "abbreviatedOid": "3bae307"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-23T13:14:13Z",
+          "updatedAt": "2026-07-23T13:14:21Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\n16. Where an implementation supports a feature but does not populate every counter within it, the implementation SHOULD expose which counters are populated. It may do so in documentation or via programatic means (e.g., local help command).\n```",
+              "createdAt": "2026-07-23T13:14:13Z",
+              "updatedAt": "2026-07-23T13:14:21Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 145,
+      "id": "PR_kwDOOCO1i871bq2y",
+      "title": "Eric's Discuss 2: Correct errors-l3-rx descriptions",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/145",
+      "state": "CLOSED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The errors-l3-rx grouping description still said \"ingress\", which no longer matches its contents after mtu-exceeded moved out of the rx container. The grouping description now states the class semantics: the rx container reports discards due to errors in the received packet (upstream fault), while the remaining counters arise during forwarding at this device and are reported on ingress or egress according to where the discard occurs. The rx container description is reworded accordingly, dropping the direction framing (direction is carried by the discards list key). Description-only; no structural or semantic changes.",
+      "createdAt": "2026-07-23T15:06:22Z",
+      "updatedAt": "2026-07-23T15:22:15Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-7",
+      "headRefOid": "bb90f9ee4ae605ba48cb697c530bae49e343fba5",
+      "closedAt": "2026-07-23T15:22:15Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 146,
+      "id": "PR_kwDOOCO1i871dJD6",
+      "title": "Eric's DISCUSS: Clarify invalid-sid counting scope",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/146",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The invalid-sid leaf description now states the counter is incremented only by the node processing the SID (where the packet's destination address matches a locally instantiated SID); transit nodes forwarding without processing the SRH do not increment it. A packet is therefore counted exactly once, by the discarding node. Description-only; no structural changes.",
+      "createdAt": "2026-07-23T15:59:25Z",
+      "updatedAt": "2026-07-24T08:47:28Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-15",
+      "headRefOid": "d0c1cd8bdb48b5535ec690d48adb2f8dc69af1b6",
+      "closedAt": "2026-07-24T08:47:28Z",
+      "mergedAt": "2026-07-24T08:47:28Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "d1b684cf2253649f6a408c79649d2a2016ba0d1e"
+      },
+      "comments": [
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "I cut #152, if that's ok -- I think we can drop \";transit nodes that forward...\" and keep SR-MPLS clarification.",
+          "createdAt": "2026-07-23T22:37:06Z",
+          "updatedAt": "2026-07-23T22:37:06Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHGk0Ig",
+          "commit": {
+            "abbreviatedOid": "d0c1cd8"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-24T08:39:39Z",
+          "updatedAt": "2026-07-24T08:39:39Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 147,
+      "id": "PR_kwDOOCO1i871dW5H",
+      "title": "Eric discuss: Clarify dos leaf scope and counting",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/147",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The dos leaf description now states it covers dedicated DoS-protection mechanisms (e.g., vendor heuristics that identify and discard DoS traffic), and that DoS attacks mitigated via ACLs or null routes are reported under acl/null-route respectively, per the no-double-counting rule: one policy subtype per discard, with the DoS association known only to the operator. Moves the mailing-list explanation into the document. Description-only; no structural changes.",
+      "createdAt": "2026-07-23T16:07:08Z",
+      "updatedAt": "2026-07-24T09:13:06Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-25",
+      "headRefOid": "64dfc7716f2d5fcc863681613293242545a8d43a",
+      "closedAt": "2026-07-24T09:13:05Z",
+      "mergedAt": "2026-07-24T09:13:05Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "1ea73a15fb9d1b8de0786c50b69375b81018fc85"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHD2Flw",
+          "commit": {
+            "abbreviatedOid": "c1784cd"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-23T22:43:12Z",
+          "updatedAt": "2026-07-23T22:43:12Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "```suggestion\n         implementation-specific heuristics that identify and discard\n```",
+              "createdAt": "2026-07-23T22:43:12Z",
+              "updatedAt": "2026-07-23T22:43:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHGlIbQ",
+          "commit": {
+            "abbreviatedOid": "64dfc77"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-24T08:40:28Z",
+          "updatedAt": "2026-07-24T08:40:28Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 148,
+      "id": "PR_kwDOOCO1i871dtMb",
+      "title": "Eric DISCUSS: Rename errors-l3-rx grouping to errors-l3",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/148",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The grouping contains the rx container plus direction-neutral forwarding discard counters (mtu-exceeded, ttl-expired, no-route, neighbor-resolution-failure, invalid-sid, invalid-label); the -rx suffix misrepresented the non-rx contents. Renamed to errors-l3, with the uses site in the errors grouping updated. Internal rename only: no change to the data tree, instance paths, tree diagrams, or on-wire representation.",
+      "createdAt": "2026-07-23T16:20:43Z",
+      "updatedAt": "2026-07-23T21:35:39Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-26",
+      "headRefOid": "2c4e0d23d818003747bddcde22bb669b6594dc96",
+      "closedAt": "2026-07-23T21:35:39Z",
+      "mergedAt": "2026-07-23T21:35:39Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "3069e1b0fa13ed024ed34cf9593d1283396d050f"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 149,
+      "id": "PR_kwDOOCO1i871egxJ",
+      "title": "Add yanglint to CI",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/149",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The datatracker runs yanglint + pyang, so the -15 validation failure went uncaught",
+      "createdAt": "2026-07-23T16:53:33Z",
+      "updatedAt": "2026-07-23T16:55:54Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "yanglint-fixes",
+      "headRefOid": "4798c56cfe2c711f8902edd910f6eb28af547594",
+      "closedAt": "2026-07-23T16:55:54Z",
+      "mergedAt": "2026-07-23T16:55:54Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "acfd63f47c532a8ed72a85cbd101bc8178ec2726"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 150,
+      "id": "PR_kwDOOCO1i871elbA",
+      "title": "Gorry discuss: revise abstract",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/150",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The abstract tied cause directly to intent (\"intended (e.g., due to policy) and unintended (e.g., due to congestion or errors)\"), which is out of sync with the body's position that intended versus unintended is an operator determination \u2014 and mis-files expected congestion loss (e.g., below SLA) as unintended. The abstract now states classification is by cause (errors, congestion, policy), enabling operators to determine which losses are intended or expected and which are unintended, and to take the right mitigation actions. First and last sentences of the abstract unchanged. Abstract-only; no body or YANG changes.",
+      "createdAt": "2026-07-23T16:56:30Z",
+      "updatedAt": "2026-07-23T22:10:49Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "acfd63f47c532a8ed72a85cbd101bc8178ec2726",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-27",
+      "headRefOid": "96cc393bdbe99441479c7b68a7c58e363b1c1d13",
+      "closedAt": "2026-07-23T22:10:49Z",
+      "mergedAt": "2026-07-23T22:10:49Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "c9244404c03c1126d41ed206c70d0443e2893d84"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHDllCQ",
+          "commit": {
+            "abbreviatedOid": "33c41e0"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-23T21:53:23Z",
+          "updatedAt": "2026-07-23T21:53:24Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThis document defines an Information Model and specifies a corresponding YANG data model for packet discard reporting. The Information Model provides an implementation-independent framework for classifying packet loss by its cause (e.g., errors, congestion, or policy). This classification enables operators to determine which losses are expected or intended and which are unintended, and to select appropriate mitigation actions, including automated mitigation of unintended packet loss. The YANG data model specifies an implementation of this Information Model for network elements with a focus on interface, device, and control-plane discards.\n```",
+              "createdAt": "2026-07-23T21:53:23Z",
+              "updatedAt": "2026-07-23T21:53:24Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 151,
+      "id": "PR_kwDOOCO1i871e1Q_",
+      "title": "Restructure no-buffer-qos to work around datatracker yanglint",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/151",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "yanglint 2.1.30 complains 'Augment target node \"qos/class\" in grouping \"qos\" was not found' because it cannot resolve uses/augment when the grouping is instantiated inside an sx:structure (fixed upstream in [libyang](https://github.com/CESNET/libyang/commit/6485c51be7150f1c73a6c49ff74520457bf0c3f1))",
+      "createdAt": "2026-07-23T17:06:00Z",
+      "updatedAt": "2026-07-24T09:09:41Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "acfd63f47c532a8ed72a85cbd101bc8178ec2726",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "no-buffer-qos-fix",
+      "headRefOid": "f049d6f2852acc7771ada27f758f1bed4fe1ceed",
+      "closedAt": "2026-07-24T09:09:41Z",
+      "mergedAt": "2026-07-24T09:09:41Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "06032acb9a50dcb801e5ba5f0b7e1b01f413e580"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHGlpUw",
+          "commit": {
+            "abbreviatedOid": "05da576"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-07-24T08:41:44Z",
+          "updatedAt": "2026-07-24T08:42:07Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\n            \"Indicates a Qo) class identifier.\";\n```",
+              "createdAt": "2026-07-24T08:41:44Z",
+              "updatedAt": "2026-07-24T08:42:07Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\n```",
+              "createdAt": "2026-07-24T08:41:56Z",
+              "updatedAt": "2026-07-24T08:42:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHGx0bg",
+          "commit": {
+            "abbreviatedOid": "9ba0585"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-24T09:08:31Z",
+          "updatedAt": "2026-07-24T09:08:31Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "```suggestion\n            \"Indicates a QoS class identifier.\";\n```",
+              "createdAt": "2026-07-24T09:08:31Z",
+              "updatedAt": "2026-07-24T09:08:31Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 152,
+      "id": "PR_kwDOOCO1i871mTug",
+      "title": "Update draft-ietf-opsawg-discardmodel.md",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/152",
+      "state": "MERGED",
+      "author": "o-pylypenko",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "I think this will clarify \"which node counts\" for corner cases like ttl, invalid-sid, invalid-label -- srv6 concern Eric raised is, in fact, generic.",
+      "createdAt": "2026-07-23T22:35:09Z",
+      "updatedAt": "2026-07-24T09:15:21Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "c9244404c03c1126d41ed206c70d0443e2893d84",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "o-pylypenko-patch-1",
+      "headRefOid": "ad9296bfdfb689d3bf028817fb504b4cc13784d3",
+      "closedAt": "2026-07-24T09:15:21Z",
+      "mergedAt": "2026-07-24T09:15:21Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "f0382e691b82d5803188c279b35bba3e5929d4f4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHGljkQ",
+          "commit": {
+            "abbreviatedOid": "ad9296b"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Good clarification - thanks Oleks",
+          "createdAt": "2026-07-24T08:41:30Z",
+          "updatedAt": "2026-07-24T08:41:30Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHGmJaQ",
+          "commit": {
+            "abbreviatedOid": "ad9296b"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-24T08:42:53Z",
+          "updatedAt": "2026-07-24T08:42:53Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 153,
+      "id": "PR_kwDOOCO1i8710SQT",
+      "title": "Updated discards/policy description",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/153",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified the description of GTSM",
+      "createdAt": "2026-07-24T10:58:32Z",
+      "updatedAt": "2026-07-24T17:50:59Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "f0382e691b82d5803188c279b35bba3e5929d4f4",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-28",
+      "headRefOid": "20a31615c6089914c40bd66357dc3f816b336a6e",
+      "closedAt": "2026-07-24T17:50:58Z",
+      "mergedAt": "2026-07-24T17:50:58Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "e66d2f37f96a298e3095bb373aa236614eedfc2c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHJwKRg",
+          "commit": {
+            "abbreviatedOid": "e9e4e09"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-24T16:26:34Z",
+          "updatedAt": "2026-07-24T16:26:35Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\n: These are discards of packets that matched a configured policy, including: ACLs, traffic policers, unicast Reverse Path Forwarding (uRPF) checks, Denial-of-Service (DoS) protection rules, and explicit null routes. Such discards are typically intended, although whether a specific policy discard is intended is determined by the operator (see {{intent}}). In practice, ingress DoS protection policies are often realised using mechanisms such as ingress filtering and uRPF ({{?RFC2827}}, {{?RFC3704}}, and {{?RFC8704}}), remotely triggered blackholing ({{?RFC3882}}, {{?RFC5635}}), or BGP Flow Specification-based filters ({{?RFC8955}}, {{?RFC8956}}, and {{?RFC9117}}); all such policy-driven discards are reported under this class. Discards due to control-plane protection policies {{?RFC6192}}, including the Generalized TTL Security Mechanism (GTSM) {{?RFC5082}}, are reported under the control-plane component's policy discards. A GTSM discard indicates that the received TTL or Hop Limit is outside the configured expected range. Consistent with the requirements listed in {{requirements}}, a policy discard increments one and only one of the policy subtypes.\n```",
+              "createdAt": "2026-07-24T16:26:35Z",
+              "updatedAt": "2026-07-24T16:26:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHJwfnw",
+          "commit": {
+            "abbreviatedOid": "e9e4e09"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-24T16:27:30Z",
+          "updatedAt": "2026-07-24T16:27:30Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "gtsm is a range check according to the rfc + suggest to say only what it is (policy discard), to avoid possible confusion. ",
+              "createdAt": "2026-07-24T16:27:30Z",
+              "updatedAt": "2026-07-24T16:27:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHKRk6Q",
+          "commit": {
+            "abbreviatedOid": "20a3161"
+          },
+          "author": "boucadair",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-07-24T17:49:39Z",
+          "updatedAt": "2026-07-24T17:49:39Z",
           "comments": []
         }
       ]
