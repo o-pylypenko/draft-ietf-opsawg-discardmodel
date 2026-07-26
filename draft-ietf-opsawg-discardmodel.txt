@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 25 January 2027                                          Nvidia
+Expires: 27 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            24 July 2026
+                                                            26 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 January 2027.
+   This Internet-Draft will expire on 27 January 2027.
 
 Copyright Notice
 
@@ -3257,6 +3257,9 @@ Acknowledgements
 
    Thanks to Diego Lopez for shepherding the document and Mahesh
    Jethanandani for the AD review.
+
+   Thanks to Christopher Inacio, Éric Vyncke, Gorry Fairhurst, Ketan
+   Talaulikar, Deb Cooley, and Mike Bishop for the IESG review.
 
 Contributors
 
