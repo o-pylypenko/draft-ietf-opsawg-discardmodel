@@ -444,9 +444,8 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to not
-         matching a valid forwarding entry, including IP packets
-         not matching a valid route and MPLS packets not matching
-         a valid Incoming Label Map (ILM) entry.";
+         matching a valid route. MPLS packets with an invalid
+         label are reported under 'invalid-label'.";
     }
     leaf neighbor-resolution-failure {
       type yang:counter64;
@@ -496,9 +495,11 @@ module ietf-packet-discard-reporting-common {
       type yang:counter64;
       description
         "The number of received packets discarded due to an
-         invalid MPLS label.";
+         invalid MPLS label, i.e., a top label with no valid
+         Incoming Label Map (ILM) entry.";
       reference
-        "RFC 3031: Multiprotocol Label Switching Architecture";
+        "RFC 3031: Multiprotocol Label Switching Architecture,
+         Section 3.18";
     }
   }
 
