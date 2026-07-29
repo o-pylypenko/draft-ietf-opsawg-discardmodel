@@ -443,9 +443,10 @@ module ietf-packet-discard-reporting-common {
     leaf no-route {
       type yang:counter64;
       description
-        "The number of received packets discarded due to not
-         matching a valid route. MPLS packets with an invalid
-         label are reported under 'invalid-label'.";
+        "The number of received packets discarded because the
+         destination address does not match a valid entry in the
+         routing table. For MPLS packets, see 'invalid-label';
+         for SRv6 packets, see 'invalid-sid'.";
     }
     leaf neighbor-resolution-failure {
       type yang:counter64;
@@ -476,14 +477,17 @@ module ietf-packet-discard-reporting-common {
     leaf invalid-sid {
       type yang:counter64;
       description
-        "The number of received packets discarded due to an
-         invalid Segment Routing over IPv6 (SRv6) segment
-         identifier (SID).
+        "The number of received packets discarded because the
+         Segment Routing over IPv6 (SRv6) segment identifier
+         (SID) does not match a valid entry in the local SID
+         table. This is the SRv6 equivalent of 'no-route'.
          This counter is incremented only by the node processing
          the SID (i.e., where the packet's destination address
          matches a locally instantiated SID); transit nodes that
          forward the packet without processing the SRH do not
-         increment it.";
+         increment it.
+         For SR-MPLS, SID lookup failures are reported under
+         'invalid-label'.";
       reference
         "RFC 8402: Segment Routing Architecture
          RFC 8660: Segment Routing with the MPLS Data Plane
@@ -494,9 +498,11 @@ module ietf-packet-discard-reporting-common {
     leaf invalid-label {
       type yang:counter64;
       description
-        "The number of received packets discarded due to an
-         invalid MPLS label, i.e., a top label with no valid
-         Incoming Label Map (ILM) entry.";
+        "The number of received packets discarded because the
+         MPLS label does not match a valid entry in the label
+         lookup table, i.e., there is no matching Incoming
+         Label Map (ILM) entry. This is the MPLS equivalent
+         of 'no-route'.";
       reference
         "RFC 3031: Multiprotocol Label Switching Architecture,
          Section 3.18";
