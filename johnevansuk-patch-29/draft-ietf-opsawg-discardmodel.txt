@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 29 January 2027                                          Nvidia
+Expires: 30 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            28 July 2026
+                                                            29 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 January 2027.
+   This Internet-Draft will expire on 30 January 2027.
 
 Copyright Notice
 
@@ -173,11 +173,12 @@ Table of Contents
    while maintaining consistency through clear semantics.
 
    The scope of this document is limited to reporting Layer 3 (including
-   MPLS) packet discards and Layer 2 frame discards.  The reported
-   signals may trigger automated mitigation actions; the definition and
-   execution of those actions are deployment-specific.  Protocol actions
-   associated with a discard (e.g., ICMP error message generation) are
-   governed by the applicable protocol specifications and local policy.
+   MPLS [RFC3031]) packet discards and Layer 2 frame discards.  The
+   reported signals may trigger automated mitigation actions; the
+   definition and execution of those actions are deployment-specific.
+   Protocol actions associated with a discard (e.g., ICMP error message
+   generation) are governed by the applicable protocol specifications
+   and local policy.
 
    Section 3 describes the problem space and requirements.  Section 4
    explains the design rationale.  Section 5 defines the IM and its
@@ -2266,6 +2267,11 @@ Table of Contents
               and W. Weiss, "An Architecture for Differentiated
               Services", RFC 2475, DOI 10.17487/RFC2475, December 1998,
               <https://www.rfc-editor.org/rfc/rfc2475>.
+
+   [RFC3031]  Rosen, E., Viswanathan, A., and R. Callon, "Multiprotocol
+              Label Switching Architecture", RFC 3031,
+              DOI 10.17487/RFC3031, January 2001,
+              <https://www.rfc-editor.org/rfc/rfc3031>.
 
    [RFC3688]  Mealling, M., "The IETF XML Registry", BCP 81, RFC 3688,
               DOI 10.17487/RFC3688, January 2004,
