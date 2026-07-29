@@ -445,8 +445,10 @@ module ietf-packet-discard-reporting-common {
       description
         "The number of received packets discarded because the
          destination address does not match a valid entry in the
-         routing table. MPLS packets with an invalid label are
-         reported under 'invalid-label'.";
+         routing table. This includes packets discarded after
+         outer header removal when the exposed IP header does
+         not match a valid entry in the routing table. MPLS label
+         lookup failures are reported under 'invalid-label'.";
     }
     leaf neighbor-resolution-failure {
       type yang:counter64;
@@ -484,7 +486,9 @@ module ietf-packet-discard-reporting-common {
          the SID (i.e., where the packet's destination address
          matches a locally instantiated SID); transit nodes that
          forward the packet without processing the SRH do not
-         increment it.
+         increment it. Discards of SRv6 packets whose
+         destination address does not match a valid route are
+         reported under 'no-route'.
          For SR-MPLS, SID lookup failures are reported under
          'invalid-label'.";
       reference
