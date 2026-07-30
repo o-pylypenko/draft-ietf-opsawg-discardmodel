@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-26T01:23:22.506055+00:00",
+  "timestamp": "2026-07-30T01:10:24.448857+00:00",
   "repo": "o-pylypenko/draft-ietf-opsawg-discardmodel",
   "labels": [
     {
@@ -5519,7 +5519,7 @@
       "labels": [],
       "body": "4 new informative references (5082, 5085, 6192, 8029), 0 new normative. Text-only; no YANG changes.",
       "createdAt": "2026-07-17T11:35:38Z",
-      "updatedAt": "2026-07-19T01:51:07Z",
+      "updatedAt": "2026-07-29T17:30:15Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "5d2918dbabea068860c99df209c795b4a26dac67",
@@ -5870,7 +5870,7 @@
       "labels": [],
       "body": "LLM-assisted; Prompt: \"Review the draft for typos, grammar, and British spelling consistency\"\n",
       "createdAt": "2026-07-22T06:21:09Z",
-      "updatedAt": "2026-07-22T19:06:12Z",
+      "updatedAt": "2026-07-29T17:30:16Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "more-fixes-1",
       "baseRefOid": "a023d608ec5ce7596fe80770aef1a66c06b0a480",
@@ -6325,7 +6325,7 @@
       "labels": [],
       "body": "The datatracker runs yanglint + pyang, so the -15 validation failure went uncaught",
       "createdAt": "2026-07-23T16:53:33Z",
-      "updatedAt": "2026-07-23T16:55:54Z",
+      "updatedAt": "2026-07-29T17:30:08Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "0815fb7917a8290eb2cc65d8e6fc55132645f01b",
@@ -6402,7 +6402,7 @@
       "labels": [],
       "body": "yanglint 2.1.30 complains 'Augment target node \"qos/class\" in grouping \"qos\" was not found' because it cannot resolve uses/augment when the grouping is instantiated inside an sx:structure (fixed upstream in [libyang](https://github.com/CESNET/libyang/commit/6485c51be7150f1c73a6c49ff74520457bf0c3f1))",
       "createdAt": "2026-07-23T17:06:00Z",
-      "updatedAt": "2026-07-24T09:09:41Z",
+      "updatedAt": "2026-07-29T01:59:28Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "acfd63f47c532a8ed72a85cbd101bc8178ec2726",
@@ -6477,7 +6477,7 @@
       "labels": [],
       "body": "I think this will clarify \"which node counts\" for corner cases like ttl, invalid-sid, invalid-label -- srv6 concern Eric raised is, in fact, generic.",
       "createdAt": "2026-07-23T22:35:09Z",
-      "updatedAt": "2026-07-24T09:15:21Z",
+      "updatedAt": "2026-07-29T17:30:08Z",
       "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
       "baseRefName": "main",
       "baseRefOid": "c9244404c03c1126d41ed206c70d0443e2893d84",
@@ -6601,6 +6601,175 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 154,
+      "id": "PR_kwDOOCO1i873aHqk",
+      "title": "Ketan's DISCUSS: mpls clarification in scope",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/154",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Introduction scope statement now uses the Ketan's proposed form: \"Layer 3 (including MPLS [RFC3031]) packet discards and Layer 2 frame discards\", placing MPLS explicitly within Layer 3 rather than as a third category alongside L2 and L3.",
+      "createdAt": "2026-07-28T11:17:25Z",
+      "updatedAt": "2026-07-29T15:33:37Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "a9c4163fdb7e1f600fe396d4d5afde41fe35e04d",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-29",
+      "headRefOid": "c73e22fc8c0201771f04b41fae7708655a41acb4",
+      "closedAt": "2026-07-29T01:57:00Z",
+      "mergedAt": "2026-07-29T01:57:00Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "b5da45aa12a76b8d98862af04a11d67991449cbc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHhN3nQ",
+          "commit": {
+            "abbreviatedOid": "af213b8"
+          },
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-07-28T16:20:21Z",
+          "updatedAt": "2026-07-28T16:20:22Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\nThe scope of this document is limited to reporting Layer 3 (including MPLS {{!RFC3031}}) packet discards and Layer 2 frame discards. The reported signals may trigger automated mitigation actions; the definition and execution of those actions are deployment-specific. Protocol actions associated with a discard (e.g., ICMP error message generation) are governed by the applicable protocol specifications and local policy.\n```",
+              "createdAt": "2026-07-28T16:20:21Z",
+              "updatedAt": "2026-07-28T16:20:22Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 155,
+      "id": "PR_kwDOOCO1i873aOL_",
+      "title": "Ketan's DISCUSS:",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/155",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "no-route leaf description broadened from \"valid route\" to \"valid forwarding entry\", explicitly covering MPLS packets with no matching Incoming Label Map (ILM) entry alongside IP packets with no matching route; Section 5.2 prose updated to match.\r\n\r\nText and description-only; no structural YANG changes.",
+      "createdAt": "2026-07-28T11:21:26Z",
+      "updatedAt": "2026-07-29T17:29:34Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "b5da45aa12a76b8d98862af04a11d67991449cbc",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-30",
+      "headRefOid": "fa5d8d889c99cdc2c10726583356e8a00f6857f8",
+      "closedAt": "2026-07-29T17:29:34Z",
+      "mergedAt": "2026-07-29T17:29:34Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "6982f720db4e580790ef7e74f4c663808793c445"
+      },
+      "comments": [
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "This creates an overlap with `invalid-label`",
+          "createdAt": "2026-07-28T15:50:12Z",
+          "updatedAt": "2026-07-28T15:50:12Z"
+        },
+        {
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Correction to the earlier version of this PR: the no-ILM case is reported under invalid-label, not no-route, as invalid-label was defined as the MPLS equivalent of no-route. The three lookup-failure counters now carry parallel definitions with cross-references: no-route (no valid entry in the routing table, referring MPLS to invalid-label and SRv6 to invalid-sid), invalid-label (no valid entry in the label lookup table, i.e., no matching ILM entry, the MPLS equivalent of no-route), and invalid-sid (no valid entry in the local SID table, the SRv6 equivalent of no-route, with SR-MPLS referred to invalid-label).\r\nText and description-only; no structural YANG changes.",
+          "createdAt": "2026-07-29T10:59:42Z",
+          "updatedAt": "2026-07-29T10:59:42Z"
+        },
+        {
+          "author": "o-pylypenko",
+          "authorAssociation": "OWNER",
+          "body": "1. invalid-sid is specifically when there's instantiated sid (`packet's ... matches a locally instantiated SID`)\r\n2. SRv6 packet drop on transit node due to destination address missing is a `no-route`; and `invalid-sid` excludes transit packets anyway, I propose to remove SRv6 redirect from no-route\r\n3. I think `no-route` description should scope which MPLS packets are going under `invalid-label` -- in cases of `MPLS->IPv4` lookup it's a `no-route` event.",
+          "createdAt": "2026-07-29T16:08:29Z",
+          "updatedAt": "2026-07-29T16:10:52Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOCO1i88AAAABHsAsJQ",
+          "commit": {
+            "abbreviatedOid": "fd220d5"
+          },
+          "author": "johnevansuk",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "lgtm - thanks Oleks",
+          "createdAt": "2026-07-29T16:56:56Z",
+          "updatedAt": "2026-07-29T16:56:56Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 156,
+      "id": "PR_kwDOOCO1i874HFIa",
+      "title": "Ketan's DISCUSS: mpls clarification in scope (#154)",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/156",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "* Ketan's DISCUSS: \r\n\r\nIntroduction scope statement now uses the Ketan's proposed form: \"Layer 3 (including MPLS [RFC3031]) packet discards and Layer 2 frame discards\", placing MPLS explicitly within Layer 3 rather than as a third category alongside L2 and L3.\r\n\r\n* Update draft-ietf-opsawg-discardmodel.md\r\n\r\n---------",
+      "createdAt": "2026-07-29T17:04:40Z",
+      "updatedAt": "2026-07-29T17:05:58Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "johnevansuk-patch-30",
+      "baseRefOid": "fd220d561a3908fd295373c1cf6a91ee610ac2da",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "main",
+      "headRefOid": "b5da45aa12a76b8d98862af04a11d67991449cbc",
+      "closedAt": "2026-07-29T17:05:57Z",
+      "mergedAt": "2026-07-29T17:05:57Z",
+      "mergedBy": "johnevansuk",
+      "mergeCommit": {
+        "oid": "fa5d8d889c99cdc2c10726583356e8a00f6857f8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 157,
+      "id": "PR_kwDOOCO1i874IS-x",
+      "title": "Refine no-route and invalid-sid boundaries (Oleks review)",
+      "url": "https://github.com/o-pylypenko/draft-ietf-opsawg-discardmodel/pull/157",
+      "state": "MERGED",
+      "author": "johnevansuk",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "no-route: now states that MPLS packets whose IP lookup fails after label disposition report here, with label lookup failures cross-referenced to invalid-label (addresses Oleks's MPLS->IPv4 lookup comment).\r\n\r\ninvalid-sid: adds cross-reference sending SRv6 route-lookup misses to no-route.\r\n\r\nDescription-only; no structural changes.",
+      "createdAt": "2026-07-29T17:48:26Z",
+      "updatedAt": "2026-07-29T18:54:38Z",
+      "baseRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "baseRefName": "main",
+      "baseRefOid": "6982f720db4e580790ef7e74f4c663808793c445",
+      "headRepository": "o-pylypenko/draft-ietf-opsawg-discardmodel",
+      "headRefName": "johnevansuk-patch-19",
+      "headRefOid": "60ec7e046d4a83be6e1942060bfc33c1deede4c8",
+      "closedAt": "2026-07-29T18:54:38Z",
+      "mergedAt": "2026-07-29T18:54:38Z",
+      "mergedBy": "o-pylypenko",
+      "mergeCommit": {
+        "oid": "388c9adbed833ca877d8a145aa4ce300cde63887"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
