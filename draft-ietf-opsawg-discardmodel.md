@@ -653,7 +653,8 @@ rt:control-plane-protocol/pdr:traffic-discard-stats, if:statistics/pdr:traffic-d
 IANA is requested to register the following URIs in the "ns" registry within the "IETF XML Registry" group {{!RFC3688}}:
 
 ~~~~
-   URI:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
+   URI:
+     urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-common
    Registrant Contact:  The IESG.
    XML:  N/A; the requested URI is an XML namespace.
 
