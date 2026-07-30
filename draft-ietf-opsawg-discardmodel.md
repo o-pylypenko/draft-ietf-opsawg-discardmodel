@@ -679,7 +679,8 @@ IANA is requested to register the following URIs in the "ns" registry within the
 
    Name:  ietf-packet-discard-reporting-sx
    Maintained by IANA?  N
-   Namespace:  urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
+   Namespace:
+     urn:ietf:params:xml:ns:yang:ietf-packet-discard-reporting-sx
    Prefix:  pdr-sx
    Reference:  RFC XXXX
 
