@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 30 January 2027                                          Nvidia
+Expires: 31 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            29 July 2026
+                                                            30 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 January 2027.
+   This Internet-Draft will expire on 31 January 2027.
 
 Copyright Notice
 
@@ -1054,7 +1054,8 @@ Table of Contents
            "The number of received packets discarded because the
             destination address does not match a valid entry in the
             routing table. This includes packets discarded after
-            outer header removal when the exposed IP header does
+            outer header removal (e.g., MPLS label disposition or
+            tunnel decapsulation) when the exposed IP header does
             not match a valid entry in the routing table. MPLS label
             lookup failures are reported under 'invalid-label'.";
        }
