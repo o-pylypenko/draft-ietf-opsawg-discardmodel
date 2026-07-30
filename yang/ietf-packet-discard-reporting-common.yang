@@ -446,7 +446,8 @@ module ietf-packet-discard-reporting-common {
         "The number of received packets discarded because the
          destination address does not match a valid entry in the
          routing table. This includes packets discarded after
-         outer header removal when the exposed IP header does
+         outer header removal (e.g., MPLS label disposition or 
+         tunnel decapsulation) when the exposed IP header does
          not match a valid entry in the routing table. MPLS label
          lookup failures are reported under 'invalid-label'.";
     }
