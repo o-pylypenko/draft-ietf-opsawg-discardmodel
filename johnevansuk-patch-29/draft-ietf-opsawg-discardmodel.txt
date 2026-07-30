@@ -5,14 +5,14 @@
 Operations and Management Area Working Group               J. Evans, Ed.
 Internet-Draft                                                Individual
 Intended status: Standards Track                       O. Pylypenko, Ed.
-Expires: 30 January 2027                                          Nvidia
+Expires: 31 January 2027                                          Nvidia
                                                                  J. Haas
                                                                      HPE
                                                                A. Kadosh
                                                      Cisco Systems, Inc.
                                                        M. Boucadair, Ed.
                                                                   Orange
-                                                            29 July 2026
+                                                            30 July 2026
 
 
         Information and Data Models for Packet Discard Reporting
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 January 2027.
+   This Internet-Draft will expire on 31 January 2027.
 
 Copyright Notice
 
@@ -1051,8 +1051,13 @@ Table of Contents
        leaf no-route {
          type yang:counter64;
          description
-           "The number of received packets discarded due to not
-            matching a valid route.";
+           "The number of received packets discarded because the
+            destination address does not match a valid entry in the
+            routing table. This includes packets discarded after
+            outer header removal (e.g., MPLS label disposition or
+            tunnel decapsulation) when the exposed IP header does
+            not match a valid entry in the routing table. MPLS label
+            lookup failures are reported under 'invalid-label'.";
        }
        leaf neighbor-resolution-failure {
          type yang:counter64;
@@ -1090,7 +1095,11 @@ Table of Contents
             the SID (i.e., where the packet's destination address
             matches a locally instantiated SID); transit nodes that
             forward the packet without processing the SRH do not
-            increment it.";
+            increment it. Discards of SRv6 packets whose
+            destination address does not match a valid route are
+            reported under 'no-route'.
+            For SR-MPLS, SID lookup failures are reported under
+            'invalid-label'.";
          reference
            "RFC 8402: Segment Routing Architecture
             RFC 8660: Segment Routing with the MPLS Data Plane
@@ -1101,10 +1110,13 @@ Table of Contents
        leaf invalid-label {
          type yang:counter64;
          description
-           "The number of received packets discarded due to an
-            invalid MPLS label.";
+           "The number of received packets discarded because the
+            top MPLS label does not match a valid Incoming Label
+            Map (ILM) entry. This is the MPLS equivalent of
+            'no-route'.";
          reference
-           "RFC 3031: Multiprotocol Label Switching Architecture";
+           "RFC 3031: Multiprotocol Label Switching Architecture,
+            Section 3.18";
        }
      }
 
