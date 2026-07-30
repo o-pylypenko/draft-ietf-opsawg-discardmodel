@@ -649,7 +649,7 @@ module ietf-packet-discard-reporting-common {
          DoS traffic.
 
          Where a DoS attack is mitigated using an ACL or a null
-         route, those discards are reported under 'acl' or 
+         route, those discards are reported under 'acl' or
          'null-route' respectively, not under this counter, since
          the association with DoS mitigation is known only to the
          operator.";
